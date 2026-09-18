@@ -1,0 +1,6 @@
+{
+  "extends": "@venusprotocol/typescript-config/base.json",
+  "compilerOptions": {
+    "types": ["vitest/globals"]
+  }
+}

@@ -1,0 +1,3 @@
+.white-glass-study { display: none; }
+:root[data-glass-version='v6'] .white-glass-study { display: block; }
+.white-glass-study > div { background: #f7f8f9; color: #18202b; }

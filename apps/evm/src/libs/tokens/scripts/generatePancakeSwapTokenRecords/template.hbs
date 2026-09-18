@@ -1,0 +1,13 @@
+import { Token } from 'types';
+
+export const tokens: Token[] = [
+  {{#each .}}
+  {
+    symbol: '{{ symbol }}',
+    decimals: {{ decimals }},
+    chainId: {{ chainId }},
+    address: '{{ address }}',
+    iconSrc: '{{ logoURI }}',
+  },
+  {{/each}}
+];

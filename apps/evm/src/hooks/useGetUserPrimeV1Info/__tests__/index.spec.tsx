@@ -1,0 +1,76 @@
+import { waitFor } from '@testing-library/dom';
+import BigNumber from 'bignumber.js';
+import type { Mock } from 'vitest';
+
+import fakeAccountAddress from '__mocks__/models/address';
+import { poolData } from '__mocks__/models/pools';
+import {
+  useGetPools,
+  useGetPrimeStatus,
+  useGetPrimeToken,
+  useGetXvsVaultUserInfo,
+} from 'clients/api';
+import { type UseIsFeatureEnabledInput, useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
+import { renderHook } from 'testUtils/render';
+import { useGetUserPrimeV1Info } from '..';
+
+const fakePrimeStatus = {
+  claimWaitingPeriodSeconds: 600,
+  userClaimTimeRemainingSeconds: 600,
+  claimedPrimeTokenCount: 0,
+  primeMarkets: [],
+  primeTokenLimit: 1000,
+  primeMinimumStakedXvsMantissa: new BigNumber('10000000000000000000'),
+  xvsVault: '',
+  xvsVaultPoolId: 1,
+  rewardTokenAddress: '',
+};
+
+vi.unmock('hooks/useGetUserPrimeV1Info');
+
+describe('useGetUserPrimeV1Info', () => {
+  beforeEach(() => {
+    (useIsFeatureEnabled as Mock).mockImplementation(
+      ({ name }: UseIsFeatureEnabledInput) => name === 'prime',
+    );
+
+    (useGetPools as Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: {
+        pools: poolData,
+      },
+    }));
+
+    (useGetPrimeStatus as Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: fakePrimeStatus,
+    }));
+
+    (useGetXvsVaultUserInfo as Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: {
+        stakedAmountMantissa: new BigNumber('100000000000000000000'),
+        pendingWithdrawalsTotalAmountMantissa: new BigNumber('10000000000000000000'),
+      },
+    }));
+
+    (useGetPrimeToken as Mock).mockImplementation(() => ({
+      isLoading: false,
+      data: {
+        exists: false,
+      },
+    }));
+  });
+
+  it('returns data in the correct format', async () => {
+    const { result } = renderHook(() =>
+      useGetUserPrimeV1Info({
+        accountAddress: fakeAccountAddress,
+      }),
+    );
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current.data).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,18 @@
+/* Restrained metal gradients keep every stop legible on light glass. */
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] [data-apy-badge-text='prime'] {
+  --apy-badge-text-gradient: linear-gradient(110deg, #70432f 0%, #9a6248 45%, #794632 72%, #925c43 100%);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] [data-apy-badge-text='campaign'] {
+  --apy-badge-text-gradient: linear-gradient(110deg, #71500d 0%, #92701b 45%, #76500c 72%, #896217 100%);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] [data-apy-badge-text] {
+  background-image: var(--apy-badge-text-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+}

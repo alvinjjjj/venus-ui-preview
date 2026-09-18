@@ -1,0 +1,58 @@
+# Compiled outputs
+dist
+dist-server
+tmp
+build
+out-tsc
+out
+
+# Local environment variables
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+.codex/
+settings.local.json
+
+# Dependencies
+node_modules
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+bundleStats.html
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Misc
+connect.lock
+coverage
+libpeerconnection.log
+npm-debug.log
+testem.log
+typings
+.turbo
+.yarn/*
+!.yarn/plugins/
+!.yarn/plugins/**
+storybook-static
+yarn-error.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Playwright
+playwright-report
+test-results
+.last-run.json

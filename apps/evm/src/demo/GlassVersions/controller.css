@@ -1,0 +1,18 @@
+.preview-controller { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 100020; width: 176px; padding: 12px; border: 1px solid rgb(255 255 255 / 16%); border-radius: 8px; background: rgb(24 26 32 / 92%); color: #f5f6f8; box-shadow: 0 8px 28px #0004; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font: 14px/1.4 sans-serif; }
+.preview-controller button, .preview-controller a { cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 8px !important; color: inherit; padding: 0; text-decoration: none; }
+.preview-controller button:focus-visible, .preview-controller a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+.preview-controller-heading { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
+.preview-controller-heading button { width: 32px; height: 32px; }
+.preview-dpad { display: grid; grid-template: repeat(3,44px) / repeat(3,44px); gap: 4px; justify-content: center; margin: 4px 0 12px; }
+.preview-v1 { grid-area: 1 / 2; }.preview-v3 { grid-area: 2 / 1; }.preview-v6 { grid-area: 2 / 3; }.preview-v5 { grid-area: 3 / 2; }
+.preview-current { grid-area: 2 / 2; display: grid; place-items: center; font-size: 11px; opacity: .6; }
+.preview-controller button[aria-pressed='true'], .preview-controller a[aria-current] { background: #0879d1; color: #fff; }
+.preview-controller button:hover, .preview-controller a:hover { box-shadow: inset 0 0 0 1px rgb(150 170 190 / 45%); }
+.preview-tools { display: flex; justify-content: space-between; border-top: 1px solid rgb(140 150 170 / 24%); padding-top: 8px; }
+.preview-tools > * { position: relative; width: 44px; height: 44px; }
+.preview-tools svg, .preview-tools img { width: 20px; height: 20px; color: currentColor; }
+.preview-tools [data-tip]:is(:hover,:focus-visible)::after { content: attr(data-tip); position: absolute; bottom: calc(100% + 8px); right: 0; padding: 6px 8px; border-radius: 4px; background: #101216; color: white; white-space: nowrap; font-size: 12px; pointer-events: none; }
+.preview-controller[data-collapsed='true'] { width: 52px; height: 52px; padding: 0; }
+.preview-launcher { width: 100%; height: 100%; font-weight: 600; }
+:root[data-liquidity-theme='light'] .preview-controller { background: rgb(250 251 253 / 94%); color: #17191e; border-color: rgb(30 40 55 / 16%); }
+:root[data-liquidity-theme='light'] .preview-tools img { filter: brightness(0); }

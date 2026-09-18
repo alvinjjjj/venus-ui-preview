@@ -1,0 +1,17 @@
+.venus-prime-icon-dark,
+.venus-prime-icon-light {
+  display: none;
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  object-fit: contain;
+}
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-prime-icon-original { display: none; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']):not([data-liquidity-theme='light']) .venus-prime-icon-dark,
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] .venus-prime-icon-light { display: block; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-campaign-icon {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  object-fit: contain;
+}

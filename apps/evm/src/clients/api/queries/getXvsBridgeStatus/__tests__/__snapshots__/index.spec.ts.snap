@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getXvsBridgeStatus > returns the correct data 1`] = `
+{
+  "dailyLimitResetTimestamp": "1705273290",
+  "maxDailyLimitUsd": "450",
+  "maxSingleTransactionLimitUsd": "9",
+  "totalTransferredLast24HourUsd": "9.310366874",
+}
+`;

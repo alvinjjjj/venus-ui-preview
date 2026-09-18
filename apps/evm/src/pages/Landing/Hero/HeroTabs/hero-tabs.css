@@ -1,0 +1,11 @@
+.venus-hero-independent-actions { display: none; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-hero-independent-actions {
+  display: flex;
+  gap: calc(var(--spacing) * 3);
+}
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-hero-legacy-actions { display: none; }
+
+/* Local chart contrast against the V5 panel, using the existing neutral token. */
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-hero-earnings-chart {
+  --hero-bar-muted: color-mix(in srgb, var(--color-light-grey) 40%, transparent);
+}

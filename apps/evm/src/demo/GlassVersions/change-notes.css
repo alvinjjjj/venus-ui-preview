@@ -1,0 +1,15 @@
+.change-notes-toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+.change-notes-toggle input { accent-color: var(--color-blue); width: 16px; height: 16px; }
+.change-notes-layer { position: fixed; inset: 0; z-index: 100010; pointer-events: none; }
+.change-notes-layer .change-note-pin { position: absolute; width: 28px; height: 28px; border-radius: 50% !important; padding: 0; background: #0879d1; color: #fff; border: 2px solid #fff; box-shadow: 0 2px 6px #0005; pointer-events: auto; cursor: pointer; font: 600 12px/1 sans-serif; }
+.change-note-pin:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+.change-note-detail { position: absolute; right: 16px; top: 96px; max-height: calc(100dvh - 192px); overflow: auto; width: min(320px, calc(100vw - 32px)); padding: 16px; border-radius: 8px; background: #fff; color: #17191e; box-shadow: 0 4px 24px #0004; pointer-events: auto; font: 14px/1.5 sans-serif; }
+.change-note-detail > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.change-note-detail button { width: 28px; height: 28px; cursor: pointer; font-size: 20px; }
+.change-note-detail p { margin: 8px 0; }
+.change-note-detail small { color: #525966; }
+.change-note-history { list-style: none; padding: 0; margin: 16px 0; }
+.change-note-history li + li { border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px; }
+.change-note-history time { font-size: 12px; font-weight: 600; color: #525966; }
+.change-notes-index-toggle { position: absolute; left: 16px; bottom: 16px; pointer-events: auto; padding: 8px 12px; border-radius: 8px; background: #0879d1; color: white; cursor: pointer; }
+.change-note-detail .change-note-index-item { display: block; width: 100%; height: auto; padding: 8px 0; font-size: 14px; text-align: left; }

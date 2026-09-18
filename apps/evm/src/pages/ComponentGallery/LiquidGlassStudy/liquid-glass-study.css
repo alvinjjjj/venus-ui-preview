@@ -1,0 +1,71 @@
+:root:not([data-glass-version='v6']) .liquid-glass-study {
+  display: none;
+}
+
+/* Local study values describe the optical material; shared design tokens remain unchanged. */
+.liquid-glass-study__stage {
+  display: grid;
+  place-items: center;
+  min-height: calc(var(--spacing) * 44);
+  padding: calc(var(--spacing) * 8);
+  border-radius: calc(var(--spacing) * 4);
+  background: radial-gradient(ellipse at 28% 85%, color-mix(in srgb, var(--color-blue) 22%, transparent), transparent 65%), var(--color-background);
+}
+.liquid-glass-study__button {
+  --glass-x: 50%;
+  --glass-y: 50%;
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 4);
+  min-height: calc(var(--spacing) * 13);
+  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 6);
+  border: 0;
+  border-radius: 999px;
+  color: var(--color-white);
+  background: rgb(255 255 255 / 7%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 420ms cubic-bezier(.22, 1.35, .36, 1), box-shadow 240ms ease-out;
+}
+.liquid-glass-study__button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--glass-x) var(--glass-y), rgb(255 255 255 / 22%), transparent 70%);
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+.liquid-glass-study__button:hover::before,
+.liquid-glass-study__button:focus-visible::before { opacity: .65; }
+.liquid-glass-study__button[data-pressed='true'],
+.liquid-glass-study__button:active {
+  transform: scale(.965, .94);
+  transition-duration: 100ms;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 40%), 0 2px 5px rgb(0 0 0 / 8%);
+}
+.liquid-glass-study__button[data-pressed='true']::before,
+.liquid-glass-study__button:active::before { opacity: 1; }
+.liquid-glass-study__button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: var(--spacing);
+}
+[data-liquidity-theme='light'] .liquid-glass-study__button {
+  background: rgb(255 255 255 / 32%);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 85%), inset 0 -1px 1px rgb(45 78 110 / 10%), 0 4px 10px rgb(30 55 85 / 8%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass-study__button { transition: none; transform: none !important; }
+  .liquid-glass-study__button::before { transition: none; }
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .liquid-glass-study__button { background: var(--color-dark-blue); }
+}

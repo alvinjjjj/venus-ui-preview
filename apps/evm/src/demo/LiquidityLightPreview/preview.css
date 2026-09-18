@@ -1,0 +1,59 @@
+/* Read from Venus UI Kits_new / Color variables on 2026-09-11.
+   Demo theme adapter from legacy dApp names to Figma's Light mode semantics.
+   Applies across demo routes; shared source token definitions are unchanged. */
+:root[data-liquidity-theme='light'] {
+  color-scheme: light;
+
+  --color-background-rgb: 253 253 254; /* surface/background/default */
+  --color-background-hover-rgb: 243 244 246;
+  --color-background-active-rgb: 255 255 255; /* header&footer */
+  --color-background-disabled-rgb: 236 236 236;
+  --color-dark-blue-rgb: 255 255 255; /* surface/pop-up/fill */
+  --color-dark-blue-hover-rgb: 230 230 230; /* surface/line/stroke */
+  --color-dark-blue-active-rgb: 243 244 246; /* surface/interactive/default */
+  --color-dark-blue-disabled-rgb: 236 236 236;
+  --color-dark-grey-rgb: 236 238 241;
+  --color-dark-grey-hover-rgb: 226 229 234;
+  --color-dark-grey-active-rgb: 215 219 226;
+  --color-dark-grey-disabled-rgb: 236 236 236;
+  --color-light-grey-rgb: 75 85 99; /* text/secondary/default */
+  --color-light-grey-hover-rgb: 16 18 24;
+  --color-light-grey-active-rgb: 16 18 24;
+  --color-light-grey-disabled-rgb: 170 179 202;
+  --color-white-rgb: 16 18 24; /* legacy foreground -> text/primary/default */
+  --color-blue-rgb: 42 147 232;
+  --color-blue-hover-rgb: 11 121 208;
+  --color-blue-active-rgb: 13 136 224;
+  --color-blue-disabled-rgb: 236 236 236;
+  --color-green-rgb: 0 153 107;
+  --color-green-hover-rgb: 0 179 132;
+  --color-green-active-rgb: 0 126 89;
+  --color-red-rgb: 220 42 53;
+  --color-red-hover-rgb: 240 69 79;
+  --color-red-active-rgb: 185 28 38;
+  --color-cards-rgb: 255 255 255;
+  --color-lightGrey-rgb: 230 230 230;
+  --color-grey-rgb: 75 85 99;
+  --color-greyBlue-rgb: 236 238 241;
+  --color-mediumBlue-rgb: 11 121 208;
+  --color-darkBlue-rgb: 13 136 224;
+}
+
+/* Primary action labels retain Figma text/primary/on-accent (white). */
+:root[data-liquidity-theme='light'] :is(button, a).bg-blue:not(:disabled) {
+  color: #fff;
+}
+
+:root[data-liquidity-theme='light'] body {
+  background-color: var(--color-background);
+  color: var(--color-white);
+}
+
+/* surface/pop-up/stroke is slate/600 in the Light mode collection. */
+:root[data-liquidity-theme='light'] dialog .border-blue.bg-dark-blue {
+  border-color: #30354a;
+}
+
+:root[data-liquidity-theme='light'] .bg-blue:not(:disabled) {
+  color: #fff;
+}

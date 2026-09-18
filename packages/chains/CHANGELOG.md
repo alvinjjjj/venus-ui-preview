@@ -1,0 +1,248 @@
+# @venusprotocol/chains
+
+## 0.31.2
+
+### Patch Changes
+
+- 293d3be: add support for the Venus Hub receipt tokens vhUSDT, vhUSDC and vhU
+
+## 0.31.1
+
+### Patch Changes
+
+- d22d3c1: add support for vceBTC and Solv venue
+
+## 0.31.0
+
+### Minor Changes
+
+- e49100e: feat: update hBnb address
+
+## 0.30.0
+
+### Minor Changes
+
+- df4cd99: add support for hBNB on BSC testnet + add default token icon
+
+## 0.29.0
+
+### Minor Changes
+
+- 99fcdca: fix issue with Trade chart + Arbitrum Sepolia RPC
+
+## 0.28.0
+
+### Minor Changes
+
+- 47b13ac: add support for SKHYB + update bStock icons
+
+## 0.27.0
+
+### Minor Changes
+
+- d0df71a: Add base Liquidity Hub page and types
+
+## 0.26.0
+
+### Minor Changes
+
+- bd9d0ca: add institutional vaults
+
+## 0.25.0
+
+### Minor Changes
+
+- 6cbc22a: Update yarn and add a minimal age for dependencies
+
+## 0.24.2
+
+### Patch Changes
+
+- 00dae25: automatically delete hosted images of old chains package versions
+- 046d317: update the PoolLens contract address on Ethereum
+
+## 0.24.1
+
+### Patch Changes
+
+- a0e18e6: update the PoolLens contract address on Ethereum
+
+## 0.24.0
+
+### Minor Changes
+
+- 080e478: add support for Swap & Repay flow using updated SwapRouter contract
+
+## 0.23.0
+
+### Minor Changes
+
+- 4d02e6b: list XAUm
+- 4d02e6b: list XAUm
+
+## 0.22.0
+
+### Minor Changes
+
+- 859b79c: update swap & supply feature
+
+## 0.21.0
+
+### Minor Changes
+
+- 68b31bb: add chainId property to tokens
+- 68b31bb: add U token record
+- 68b31bb: add responsive menu
+- 68b31bb: add PT-clisBNBx-25JUN2026 token record
+- 68b31bb: add support for multiple languages
+- 68b31bb: new hero and market list for landing
+- 68b31bb: update components to match new designs
+
+### Patch Changes
+
+- 68b31bb: new landing phase 2
+- 68b31bb: migrate landing to evm
+
+## 0.20.0
+
+### Minor Changes
+
+- c42dee1: add PT-clisBNBx-25JUN2026 token record
+
+## 0.19.1
+
+### Patch Changes
+
+- b0ac390: do not block build pipeline when vToken is missing
+
+## 0.19.0
+
+### Minor Changes
+
+- 3f5c86c: remove temporary fix for the updated VenusLens contract address
+
+## 0.18.0
+
+### Minor Changes
+
+- 9710833: add temporary fix to handle VenusLens address change after Fermi upgrade
+
+## 0.17.0
+
+### Minor Changes
+
+- d33118e: add U token record
+
+## 0.16.0
+
+### Minor Changes
+
+- fd57b15: tailwind css upgrade to v4
+
+## 0.15.0
+
+### Minor Changes
+
+- 0c85f14: add auto-reload when passing hardforks (updated)
+
+## 0.14.0
+
+### Minor Changes
+
+- ea8c0df: add auto-reload ui support for new hardforks config
+
+## 0.13.1
+
+### Patch Changes
+
+- 4ec9c9a: convert timestamps to ISO format
+
+## 0.13.0
+
+### Minor Changes
+
+- 525eb14: support dynamic block times and fermi hardfork/fourier upgrade
+
+## 0.12.0
+
+### Minor Changes
+
+- 773edf6: handle Fourier hardfork on opBNB testnet
+
+## 0.11.0
+
+### Minor Changes
+
+- dc04c9f: list vTokens in chains package
+
+## 0.10.0
+
+### Minor Changes
+
+- b685500: Restore PT-USDe-30OCT2025
+
+## 0.9.0
+
+### Minor Changes
+
+- bd9590d: publish chains package
+
+## 0.8.0
+
+### Minor Changes
+
+- 574e424: updated page architecture
+
+## 0.7.0
+
+### Minor Changes
+
+- 1a9a121: remove Berachain-related code
+
+## 0.6.0
+
+### Minor Changes
+
+- c3433cb: consolidate pool and market pages
+
+## 0.5.1
+
+### Patch Changes
+
+- 0a11f7f: remove code related to Maxwell Hardfork
+
+## 0.5.0
+
+### Minor Changes
+
+- 2cd83aa: add support for Maxwell Fork of the BNB Chain
+
+## 0.4.0
+
+### Minor Changes
+
+- 7ef8def: add metadata for Berachain Mainnet and Bepolia
+
+## 0.3.0
+
+### Minor Changes
+
+- 3b969c8: fix timestamp of Lorentz upgrade
+
+## 0.2.0
+
+### Minor Changes
+
+- c3a7872: add support for automatic chain upgrades
+
+## 0.1.1
+
+### Patch Changes
+
+- b753dcc: update zkSync name to ZKsync
+
+## 0.1.0
+
+### Minor Changes
+
+- 68311e8: add Unichain promotional material

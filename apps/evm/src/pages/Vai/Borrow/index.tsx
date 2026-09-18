@@ -1,0 +1,291 @@
+import BigNumber from 'bignumber.js';
+import { useEffect, useMemo } from 'react';
+import { Controller, type SubmitHandler, useFormState, useWatch } from 'react-hook-form';
+
+import {
+  useGetMintableVai,
+  useGetPool,
+  useGetVaiTreasuryPercentage,
+  useMintVai,
+} from 'clients/api';
+import {
+  AcknowledgementToggle,
+  Delimiter,
+  LabeledInlineContent,
+  NoticeWarning,
+  Spinner,
+} from 'components';
+import { PLACEHOLDER_KEY } from 'constants/placeholders';
+import { VENUS_PRIME_DOC_URL } from 'constants/production';
+import { Link } from 'containers/Link';
+import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
+import { useIsUserPrime } from 'hooks/useIsUserPrime';
+import { handleError } from 'libs/errors';
+import { useGetToken } from 'libs/tokens';
+import { useTranslation } from 'libs/translations';
+import { useAccountAddress } from 'libs/wallet';
+import {
+  convertTokensToMantissa,
+  formatPercentageToReadableValue,
+  formatTokensToReadableValue,
+  shouldShowAccountHealth,
+} from 'utilities';
+
+import { NULL_ADDRESS } from 'constants/address';
+import { HEALTH_FACTOR_MODERATE_THRESHOLD } from 'constants/healthFactor';
+import { AccountPoolDailyEarnings } from 'containers/AccountPoolDailyEarnings';
+import { AccountPoolHealth } from 'containers/AccountPoolHealth';
+import { RhfSubmitButton, RhfTokenTextField } from 'containers/Form';
+import { useChain } from 'hooks/useChain';
+import useDebounceValue from 'hooks/useDebounceValue';
+import { useSimulatePoolMutations } from 'hooks/useSimulatePoolMutations';
+import type { BalanceMutation } from 'types';
+import { getLimitTokens } from './getLimitTokens';
+import TEST_IDS from './testIds';
+import type { FormValues } from './types';
+import { useForm } from './useForm';
+
+export const Borrow: React.FC = () => {
+  const { t, Trans } = useTranslation();
+  const { accountAddress } = useAccountAddress();
+  const isUserConnected = !!accountAddress;
+  const { corePoolComptrollerContractAddress } = useChain();
+
+  const vai = useGetToken({
+    symbol: 'VAI',
+  })!;
+
+  const { data: getLegacyPoolData } = useGetPool({
+    accountAddress,
+    poolComptrollerAddress: corePoolComptrollerContractAddress || NULL_ADDRESS,
+  });
+  const legacyPool = getLegacyPoolData?.pool;
+
+  const { isUserPrime, isLoading: isGetIsUserPrimeLoading } = useIsUserPrime({
+    accountAddress,
+  });
+  const isPrimeEnabled = useIsFeatureEnabled({
+    name: 'prime',
+  });
+
+  const isUserMissingPrimeToken = isUserConnected && isPrimeEnabled && !isUserPrime;
+
+  const { mutateAsync: mintVai } = useMintVai();
+
+  const { data: vaiTreasuryData } = useGetVaiTreasuryPercentage();
+  const feePercentage = vaiTreasuryData?.percentage;
+
+  const readableBorrowApr = formatPercentageToReadableValue(legacyPool?.vai?.borrowAprPercentage);
+
+  const { data: mintableVaiData, isLoading: isGetMintableVaiLoading } = useGetMintableVai(
+    {
+      accountAddress: accountAddress || NULL_ADDRESS,
+    },
+    {
+      enabled: !!accountAddress,
+    },
+  );
+
+  const [limitTokens, safeLimitTokens] = getLimitTokens({ legacyPool, mintableVaiData, vai });
+
+  const {
+    form: { control, handleSubmit, setValue, reset, trigger },
+  } = useForm({
+    ...mintableVaiData,
+    vaiPriceCents: legacyPool?.vai?.tokenPriceCents,
+    userBorrowBalanceCents: legacyPool?.userBorrowBalanceCents,
+    userLiquidationThresholdCents: legacyPool?.userLiquidationThresholdCents,
+  });
+  const { errors } = useFormState({ control });
+
+  const inputValue = useWatch({ control, name: 'amountTokens' });
+  const _debouncedInputAmountTokens = useDebounceValue(inputValue);
+  const debouncedInputAmountTokens = new BigNumber(_debouncedInputAmountTokens || 0);
+
+  const balanceMutations: BalanceMutation[] = [
+    {
+      type: 'vai',
+      amountTokens: debouncedInputAmountTokens,
+      action: 'borrow',
+    },
+  ];
+
+  const { data: getSimulatedPoolData } = useSimulatePoolMutations({
+    pool: legacyPool,
+    balanceMutations,
+  });
+  const simulatedPool = getSimulatedPoolData?.pool;
+
+  const feeTokens =
+    feePercentage && debouncedInputAmountTokens.multipliedBy(feePercentage).dividedBy(100);
+
+  const readableFee = useMemo(() => {
+    if (!feePercentage || !feeTokens) {
+      return PLACEHOLDER_KEY;
+    }
+
+    const readableFeeVai = formatTokensToReadableValue({
+      value: feeTokens,
+      token: vai,
+    });
+
+    const readableFeePercentage = formatPercentageToReadableValue(feePercentage);
+
+    return `${readableFeeVai} (${readableFeePercentage})`;
+  }, [feePercentage, feeTokens, vai]);
+
+  const readableLimit = formatTokensToReadableValue({
+    value: limitTokens,
+    token: vai,
+  });
+
+  const isRiskyOperation =
+    simulatedPool?.userHealthFactor !== undefined &&
+    simulatedPool.userHealthFactor < HEALTH_FACTOR_MODERATE_THRESHOLD &&
+    !errors.amountTokens;
+
+  // Trigger revalidation of acknowledgeRisk field when it is rendered or removed. This is a
+  // workaround to make sure React Hook Form initializes the field correctly
+  useEffect(() => {
+    if (isRiskyOperation) {
+      trigger('acknowledgeRisk');
+    }
+  }, [trigger, isRiskyOperation]);
+
+  // Reset form when user disconnects their wallet
+  useEffect(() => {
+    if (!accountAddress) {
+      setValue('amountTokens', '', {
+        shouldValidate: true,
+        shouldTouch: true,
+        shouldDirty: true,
+      });
+    }
+  }, [accountAddress, setValue]);
+
+  const onSubmit: SubmitHandler<FormValues> = async ({ amountTokens }) => {
+    const amountMantissa = convertTokensToMantissa({
+      value: new BigNumber(amountTokens),
+      token: vai,
+    });
+
+    try {
+      await mintVai({ amountMantissa });
+
+      // Reset form on successful submission
+      reset();
+    } catch (error) {
+      handleError({ error });
+    }
+  };
+
+  const isInitialLoading = isGetMintableVaiLoading || isGetIsUserPrimeLoading;
+
+  if (isInitialLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      {isUserMissingPrimeToken && (
+        <NoticeWarning
+          data-testid={TEST_IDS.primeOnlyWarning}
+          description={
+            <Trans
+              i18nKey="vai.borrow.primeOnlyWarning"
+              components={{
+                WhiteText: <span className="text-white" />,
+                Link: <Link href={VENUS_PRIME_DOC_URL} />,
+              }}
+            />
+          }
+        />
+      )}
+
+      <div className="space-y-3">
+        <RhfTokenTextField<FormValues>
+          control={control}
+          name="amountTokens"
+          rules={{ required: true }}
+          disabled={!isUserConnected || isUserMissingPrimeToken}
+          token={vai}
+          rightMaxButton={{
+            label: t('vai.borrow.amountTokensInput.limitButtonLabel'),
+            onClick: () =>
+              setValue('amountTokens', safeLimitTokens.toFixed(), {
+                shouldValidate: true,
+                shouldTouch: true,
+                shouldDirty: true,
+              }),
+          }}
+        />
+      </div>
+
+      <div className="space-y-3">
+        <LabeledInlineContent
+          label={t('vai.borrow.availableAmount.label')}
+          tooltip={t('vai.borrow.availableAmount.tooltip')}
+        >
+          {readableLimit}
+        </LabeledInlineContent>
+
+        <LabeledInlineContent
+          iconSrc={vai}
+          label={t('vai.borrow.borrowApr.label')}
+          tooltip={t('vai.borrow.borrowApr.tooltip')}
+        >
+          {readableBorrowApr}
+        </LabeledInlineContent>
+
+        {feeTokens?.isGreaterThan(0) && (
+          <LabeledInlineContent
+            iconSrc="fee"
+            iconClassName="text-lightGrey"
+            label={t('vai.borrow.fee.label')}
+          >
+            {readableFee}
+          </LabeledInlineContent>
+        )}
+      </div>
+
+      {isUserConnected && legacyPool && (
+        <>
+          <Delimiter />
+
+          {shouldShowAccountHealth({ pool: legacyPool, simulatedPool }) && (
+            <AccountPoolHealth pool={legacyPool} simulatedPool={simulatedPool} />
+          )}
+
+          <AccountPoolDailyEarnings pool={legacyPool} simulatedPool={simulatedPool} />
+        </>
+      )}
+
+      {isRiskyOperation && (
+        <Controller
+          name="acknowledgeRisk"
+          control={control}
+          render={({ field }) => (
+            <AcknowledgementToggle
+              label={t('marketForm.acknowledgements.riskyOperation.label')}
+              tooltip={t('marketForm.acknowledgements.riskyOperation.tooltip')}
+              {...field}
+            />
+          )}
+        />
+      )}
+
+      <RhfSubmitButton
+        requiresConnectedWallet
+        analyticVariant="vai_borrow_form"
+        control={control}
+        enabledLabel={t('vai.borrow.submitButton.borrowLabel')}
+        disabledLabel={
+          // Only show disabled label when error concerns the amount entered
+          errors.acknowledgeRisk
+            ? t('vai.borrow.submitButton.borrowLabel')
+            : t('vai.borrow.submitButton.enterValidAmountLabel')
+        }
+      />
+    </form>
+  );
+};

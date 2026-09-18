@@ -1,0 +1,149 @@
+import { Form, Formik, type useFormikContext } from 'formik';
+import { useMemo, useState } from 'react';
+import { useParams } from 'react-router';
+
+import type { CreateProposalInput } from 'clients/api';
+import { Modal } from 'components';
+import { routes } from 'constants/routing';
+import { useNavigate } from 'hooks/useNavigate';
+import { handleError } from 'libs/errors';
+import { useTranslation } from 'libs/translations';
+import formatProposalPayload from 'pages/Governance/ProposalList/CreateProposalModal/formatProposalPayload';
+import { ProposalType } from 'types';
+
+import ProposalWizard, {
+  type ProposalWizardSteps,
+  getCurrentStep,
+  getPreviousStep,
+} from './ProposalWizard';
+import checkImportErrors from './checkImportErrors';
+import importJsonProposal from './importJsonProposal';
+import proposalSchema, { type FormValues, initialActionData } from './proposalSchema';
+import { useStyles } from './styles';
+
+interface CreateProposalProps {
+  isOpen: boolean;
+  handleClose: () => void;
+  createProposal: (data: Omit<CreateProposalInput, 'accountAddress'>) => Promise<unknown>;
+  isCreateProposalLoading: boolean;
+}
+
+export type ProposalFormContext = ReturnType<typeof useFormikContext<FormValues>>;
+
+export const CreateProposal: React.FC<CreateProposalProps> = ({
+  isOpen,
+  handleClose,
+  createProposal,
+  isCreateProposalLoading,
+}) => {
+  const newProposalStep = useParams()['*'];
+
+  const matchProposalInfoStep = newProposalStep === 'proposal-info';
+  const matchProposalDescriptionsStep = newProposalStep === 'proposal-descriptions';
+  const matchProposalActionsStep = newProposalStep === 'proposal-actions';
+  const matchProposalPreviewStep = newProposalStep === 'proposal-preview';
+  const currentStep = getCurrentStep({
+    matchProposalInfoStep,
+    matchProposalDescriptionsStep,
+    matchProposalActionsStep,
+    matchProposalPreviewStep,
+  });
+
+  const { navigate } = useNavigate();
+  const styles = useStyles();
+  const { t } = useTranslation();
+  const [proposalMode, setProposalMode] = useState<'file' | 'manual'>('manual');
+
+  const handleImportProposal = async (file: File | null, formikContext: ProposalFormContext) => {
+    const { setValues, validateForm } = formikContext;
+    if (file) {
+      try {
+        const values = await importJsonProposal(file);
+        await setValues(values);
+
+        const errors = await validateForm(values);
+        checkImportErrors(errors);
+
+        setProposalMode('file');
+        navigate(routes.governanceProposalPreview.path);
+      } catch (error) {
+        handleError({ error });
+      }
+    }
+  };
+
+  const titles = useMemo(() => {
+    const initialSteps: { [Key in ProposalWizardSteps]?: string } = {
+      'proposal-create': t('vote.createProposalModal.createProposal'),
+    };
+
+    if (proposalMode === 'file') {
+      return {
+        ...initialSteps,
+        'proposal-preview': t('vote.pages.confirmation'),
+      };
+    }
+
+    return {
+      ...initialSteps,
+      'proposal-info': t('vote.pages.proposalInformation'),
+      'proposal-descriptions': t('vote.pages.votingOptions'),
+      'proposal-actions': t('vote.pages.actions'),
+      'proposal-preview': t('vote.pages.confirmation'),
+    };
+  }, [proposalMode, t]);
+
+  const handleBackAction = () => {
+    const previousStep = getPreviousStep(currentStep, proposalMode);
+    navigate(`${routes.governance.path}/${previousStep}`);
+  };
+
+  const handleCreateProposal = async (formValues: FormValues) => {
+    try {
+      const payload = formatProposalPayload(formValues);
+      await createProposal(payload);
+
+      handleClose();
+    } catch (error) {
+      handleError({ error });
+    }
+  };
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      handleClose={handleClose}
+      handleBackAction={currentStep !== 'proposal-create' ? handleBackAction : undefined}
+      title={titles[currentStep]}
+      css={styles.modal}
+    >
+      <Formik
+        initialValues={{
+          actions: [initialActionData],
+          description: '',
+          forDescription: '',
+          againstDescription: '',
+          abstainDescription: '',
+          title: '',
+          proposalType: ProposalType.NORMAL,
+        }}
+        validationSchema={proposalSchema}
+        onSubmit={handleCreateProposal}
+        validateOnBlur
+        validateOnMount
+        validateOnChange
+      >
+        <Form>
+          <ProposalWizard
+            handleImportProposal={handleImportProposal}
+            setProposalMode={setProposalMode}
+            isCreateProposalLoading={isCreateProposalLoading}
+            currentStep={currentStep}
+          />
+        </Form>
+      </Formik>
+    </Modal>
+  );
+};
+
+export default CreateProposal;

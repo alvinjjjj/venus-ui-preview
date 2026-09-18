@@ -1,0 +1,116 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useGetAsset > returns the correct asset 1`] = `
+{
+  "asset": {
+    "badDebtMantissa": 6789000000000000000n,
+    "borrowApyPercentage": "-2.3062487835658776",
+    "borrowBalanceCents": "70925716",
+    "borrowBalanceTokens": "1852935.597521220541385584",
+    "borrowCapTokens": "1.15792089237316195423570985008687907853269984665640564039457584007913129639935e+77",
+    "borrowPointDistributions": [
+      {
+        "description": "Fake point distribution description",
+        "extraInfoUrl": "https://fake.url",
+        "incentive": "3x points",
+        "logoUrl": "fake-xvs-asset",
+        "title": "Fake points",
+      },
+    ],
+    "borrowTokenDistributions": [
+      {
+        "apyPercentage": "4.17469243006608279",
+        "dailyDistributedTokens": "9999999.5",
+        "isActive": true,
+        "token": {
+          "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+          "chainId": 97,
+          "decimals": 18,
+          "iconSrc": "fake-xvs-asset",
+          "symbol": "XVS",
+        },
+        "type": "venus",
+      },
+    ],
+    "borrowerCount": 10,
+    "cashTokens": "10",
+    "collateralFactor": 0.5,
+    "disabledTokenActions": [],
+    "exchangeRateVTokens": "49.589181233",
+    "isBorrowable": true,
+    "isBorrowableByUser": true,
+    "isCollateralOfUser": true,
+    "isGated": false,
+    "isProtectionModeEnabled": false,
+    "isRestricted": false,
+    "liquidationPenaltyPercentage": 4,
+    "liquidationThresholdPercentage": 50,
+    "liquidityCents": "8036465875",
+    "reserveFactor": 0.25,
+    "reserveTokens": "1000",
+    "supplierCount": 100,
+    "supplyApyPercentage": "0.05225450324405023",
+    "supplyBalanceCents": "278311516",
+    "supplyBalanceTokens": "19339683254955736",
+    "supplyCapTokens": "1.15792089237316195423570985008687907853269984665640564039457584007913129639935e+77",
+    "supplyPointDistributions": [
+      {
+        "description": "Fake point distribution description",
+        "extraInfoUrl": "https://fake.url",
+        "incentive": "3x points",
+        "logoUrl": "fake-xvs-asset",
+        "title": "Fake points",
+      },
+    ],
+    "supplyTokenDistributions": [
+      {
+        "apyPercentage": "0.11720675342484096",
+        "dailyDistributedTokens": "9999999.5",
+        "isActive": true,
+        "token": {
+          "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+          "chainId": 97,
+          "decimals": 18,
+          "iconSrc": "fake-xvs-asset",
+          "symbol": "XVS",
+        },
+        "type": "venus",
+      },
+    ],
+    "tokenBorrowPriceCents": "127.86734",
+    "tokenPriceCents": "127.86734",
+    "tokenPriceOracleAddress": "0x0000000000000000000000000000000000000000",
+    "tokenSupplyPriceCents": "127.86734",
+    "userBorrowBalanceCents": "0",
+    "userBorrowBalanceProtectedCents": "0",
+    "userBorrowBalanceTokens": "0",
+    "userBorrowLimitSharePercentage": 0,
+    "userCollateralFactor": 0.5,
+    "userLiquidationThresholdPercentage": 50,
+    "userSupplyBalanceCents": "11508",
+    "userSupplyBalanceProtectedCents": "11508",
+    "userSupplyBalanceTokens": "90",
+    "userWalletBalanceCents": "12786",
+    "userWalletBalanceTokens": "100",
+    "vToken": {
+      "address": "0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+      "chainId": 97,
+      "decimals": 8,
+      "symbol": "vXVS",
+      "underlyingToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+    },
+  },
+}
+`;
+
+exports[`useGetAsset > returns undefined when no matching asset is found 1`] = `
+{
+  "asset": undefined,
+}
+`;

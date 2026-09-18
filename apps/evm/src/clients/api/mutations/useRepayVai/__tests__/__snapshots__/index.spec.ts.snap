@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useRepayVai > calls useSendTransaction with correct parameters 2`] = `
+[
+  [
+    {
+      "queryKey": [
+        "GET_POOLS",
+      ],
+    },
+  ],
+  [
+    {
+      "queryKey": [
+        "GET_TOKEN_ALLOWANCE",
+        {
+          "accountAddress": "0x3d759121234cd36F8124C21aFe1c6852d2bEd848",
+          "chainId": 97,
+          "spenderAddress": "0xfakeVaiControllerContractAddress",
+          "tokenAddress": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        },
+      ],
+    },
+  ],
+]
+`;

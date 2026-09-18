@@ -1,0 +1,4 @@
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) [data-select-option][data-preview-state='hover']:not(:disabled) { background: rgb(128 128 128 / 14%); }
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) [data-select-option]:disabled { pointer-events: none; }
+.dropdown-states [data-trigger-preview='Active'] [data-select-trigger] { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+.dropdown-states [data-trigger-preview='Active'] [data-select-trigger] > span > svg:last-child { transform: rotate(180deg); }

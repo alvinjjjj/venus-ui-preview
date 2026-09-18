@@ -1,0 +1,11 @@
+.venus-market-reward-preview { display: none; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-markets-page .venus-market-reward-preview { display: inline-flex; }
+/* Badges retain their compact pill shape, independently of the button-size studies. */
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-glass-version='v6'] #root .venus-reward-preview button {
+  height: calc(var(--spacing) * 6);
+  min-height: 0;
+  padding: var(--spacing);
+  border-radius: 999px !important;
+  font-size: var(--text-sm);
+  line-height: 1;
+}

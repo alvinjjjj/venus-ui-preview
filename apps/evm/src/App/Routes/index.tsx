@@ -1,0 +1,344 @@
+import { categories } from 'pages/ComponentGallery/categories';
+import { useEffect, useLayoutEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router';
+
+import { PAGE_CONTAINER_ID } from 'constants/layout';
+import { Subdirectory, routes } from 'constants/routing';
+import { Layout } from 'containers/Layout';
+import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
+
+import { DISCORD_SERVER_URL } from 'constants/production';
+import { Redirect } from 'containers/Redirect';
+import { safeLazyLoad } from 'utilities';
+import { MarketRedirect } from './MarketRedirect';
+import PageSuspense from './PageSuspense';
+
+const Landing = safeLazyLoad(() => import('pages/Landing'));
+const Markets = safeLazyLoad(() => import('pages/Markets'));
+const Market = safeLazyLoad(() => import('pages/Market'));
+const Dashboard = safeLazyLoad(() => import('pages/Dashboard'));
+const Port = safeLazyLoad(() => import('pages/Port'));
+const Governance = safeLazyLoad(() => import('pages/Governance'));
+const Proposal = safeLazyLoad(() => import('pages/Proposal'));
+const Swap = safeLazyLoad(() => import('pages/Swap'));
+const Vai = safeLazyLoad(() => import('pages/Vai'));
+const Vaults = safeLazyLoad(() => import('pages/Vaults'));
+const Voter = safeLazyLoad(() => import('pages/Voter'));
+const VoterLeaderboard = safeLazyLoad(() => import('pages/VoterLeaderboard'));
+const PrimeCalculator = safeLazyLoad(() => import('pages/PrimeCalculator'));
+const PrimeLeaderboard = safeLazyLoad(() => import('pages/PrimeLeaderboard'));
+const Bridge = safeLazyLoad(() => import('pages/Bridge'));
+const Stats = safeLazyLoad(() => import('pages/Stats'));
+const Skills = safeLazyLoad(() => import('pages/Skills'));
+const PrivacyPolicy = safeLazyLoad(() => import('pages/PrivacyPolicy'));
+const TermsOfUse = safeLazyLoad(() => import('pages/TermsOfUse'));
+const FixedTermVaultTermsOfUse = safeLazyLoad(() => import('pages/FixedTermVaultTermsOfUse'));
+const Trade = safeLazyLoad(() => import('pages/Trade'));
+const LiquidityHubs = safeLazyLoad(() => import('pages/LiquidityHubs'));
+const LiquidityHub = safeLazyLoad(() => import('pages/LiquidityHub'));
+
+const ComponentGallery = safeLazyLoad(() => import('pages/ComponentGallery'));
+
+const AppRoutes = () => {
+  const location = useLocation();
+  const swapRouteEnabled = useIsFeatureEnabled({ name: 'swapRoute' });
+  const vaiRouteEnabled = useIsFeatureEnabled({ name: 'vaiRoute' });
+  const bridgeEnabled = useIsFeatureEnabled({ name: 'bridgeRoute' });
+  const tradeRouteEnabled = useIsFeatureEnabled({ name: 'trade' });
+  const primeCalculatorEnabled = useIsFeatureEnabled({
+    name: 'primeCalculator',
+  });
+  const statsRouteEnabled = useIsFeatureEnabled({ name: 'statsRoute' });
+  const primeLeaderboardEnabled = useIsFeatureEnabled({ name: 'primeLeaderboard' });
+  const liquidityHubEnabled = useIsFeatureEnabled({ name: 'liquidityHub' });
+
+  // Scroll to the top of the page on route change
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
+  useLayoutEffect(() => {
+    document.getElementById(PAGE_CONTAINER_ID)?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant',
+    });
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (window.location.pathname.startsWith('/discord')) {
+      window.location.replace(DISCORD_SERVER_URL);
+    }
+  }, []);
+
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="component" element={<Navigate to="buttons" replace />} />
+        {categories.map(category => (
+          <Route
+            key={category}
+            path={`component/${category}`}
+            element={
+              <PageSuspense>
+                <ComponentGallery />
+              </PageSuspense>
+            }
+          />
+        ))}
+
+        <Route
+          path="c1"
+          element={
+            <PageSuspense>
+              <ComponentGallery />
+            </PageSuspense>
+          }
+        />
+        <Route
+          index
+          element={
+            <PageSuspense>
+              <Landing />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={Subdirectory.DASHBOARD}
+          element={
+            <PageSuspense>
+              <Dashboard />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={Subdirectory.PORT}
+          element={
+            <PageSuspense>
+              <Port />
+            </PageSuspense>
+          }
+        />
+
+        <Route path={Subdirectory.MARKETS}>
+          <Route
+            index
+            element={
+              <PageSuspense>
+                <Markets />
+              </PageSuspense>
+            }
+          />
+
+          <Route
+            path={Subdirectory.MARKET}
+            element={
+              <PageSuspense>
+                <Market />
+              </PageSuspense>
+            }
+          />
+        </Route>
+
+        {primeCalculatorEnabled && (
+          <Route
+            path={Subdirectory.PRIME_CALCULATOR}
+            element={
+              <PageSuspense>
+                <PrimeCalculator />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        <Route path={Subdirectory.VAULTS}>
+          <Route
+            index
+            element={
+              <PageSuspense>
+                <Vaults />
+              </PageSuspense>
+            }
+          />
+        </Route>
+
+        {/* TODO: refactor to use nested routes (see VEN-2235) */}
+        <Route
+          path={`${routes.governance.path}/*`}
+          element={
+            <PageSuspense>
+              <Governance />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={routes.governanceLeaderBoard.path}
+          element={
+            <PageSuspense>
+              <VoterLeaderboard />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={routes.governanceVoter.path}
+          element={
+            <PageSuspense>
+              <Voter />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={routes.governanceProposal.path}
+          element={
+            <PageSuspense>
+              <Proposal />
+            </PageSuspense>
+          }
+        />
+
+        {tradeRouteEnabled && (
+          <Route
+            path={Subdirectory.TRADE}
+            element={
+              <PageSuspense>
+                <Trade />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {swapRouteEnabled && (
+          <Route
+            path={Subdirectory.SWAP}
+            element={
+              <PageSuspense>
+                <Swap />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {vaiRouteEnabled && (
+          <Route
+            path={Subdirectory.VAI}
+            element={
+              <PageSuspense>
+                <Vai />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {bridgeEnabled && (
+          <Route
+            path={Subdirectory.BRIDGE}
+            element={
+              <PageSuspense>
+                <Bridge />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {statsRouteEnabled && (
+          <Route
+            path={Subdirectory.STATS}
+            element={
+              <PageSuspense>
+                <Stats />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {primeLeaderboardEnabled && (
+          <Route
+            path={Subdirectory.PRIME_LEADERBOARD}
+            element={
+              <PageSuspense>
+                <PrimeLeaderboard />
+              </PageSuspense>
+            }
+          />
+        )}
+
+        {liquidityHubEnabled && (
+          <Route path={Subdirectory.LIQUIDITY_HUBS}>
+            <Route
+              index
+              element={
+                <PageSuspense>
+                  <LiquidityHubs />
+                </PageSuspense>
+              }
+            />
+
+            <Route
+              path={Subdirectory.LIQUIDITY_HUB}
+              element={
+                <PageSuspense>
+                  <LiquidityHub />
+                </PageSuspense>
+              }
+            />
+          </Route>
+        )}
+
+        <Route
+          path={Subdirectory.SKILLS}
+          element={
+            <PageSuspense>
+              <Skills />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={Subdirectory.PRIVACY_POLICY}
+          element={
+            <PageSuspense>
+              <PrivacyPolicy />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={Subdirectory.TERMS_OF_USE}
+          element={
+            <PageSuspense>
+              <TermsOfUse />
+            </PageSuspense>
+          }
+        />
+
+        <Route
+          path={Subdirectory.FIXED_TERM_VAULT_TERMS_OF_USE}
+          element={
+            <PageSuspense>
+              <FixedTermVaultTermsOfUse />
+            </PageSuspense>
+          }
+        />
+
+        {/* Redirect old pages to new ones */}
+        <Route path="/account/*" element={<Redirect to={routes.dashboard.path} />} />
+        <Route path="/staking/*" element={<Redirect to={routes.vaults.path} />} />
+        <Route
+          path="/pool/:poolComptrollerAddress/market/:vTokenAddress"
+          element={<MarketRedirect />}
+        />
+        <Route
+          path="/pool/:poolComptrollerAddress"
+          element={<Redirect to={routes.markets.path} />}
+        />
+
+        {/* Redirect to Core pool if no route matches */}
+        <Route path="*" element={<Redirect to={routes.landing.path} />} />
+      </Route>
+    </Routes>
+  );
+};
+
+export default AppRoutes;

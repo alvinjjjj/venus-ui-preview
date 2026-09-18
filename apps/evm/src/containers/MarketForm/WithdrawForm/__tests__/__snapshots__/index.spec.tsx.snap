@@ -1,0 +1,67 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WithdrawForm > let user withdraw full supply succeeds 1`] = `
+[
+  {
+    "amountMantissa": "10000000",
+    "poolComptrollerContractAddress": "0x94d1820b2d1c7c7452a163983dc888cec546b77d",
+    "poolName": "Venus",
+    "unwrap": false,
+    "vToken": {
+      "address": "0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+      "chainId": 97,
+      "decimals": 8,
+      "symbol": "vXVS",
+      "underlyingToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+    },
+    "withdrawFullSupply": true,
+  },
+]
+`;
+
+exports[`WithdrawForm > lets user withdraw partial supply succeeds 1`] = `
+[
+  {
+    "amountMantissa": "1000000000000000000",
+    "poolComptrollerContractAddress": "0x94d1820b2d1c7c7452a163983dc888cec546b77d",
+    "poolName": "Venus",
+    "unwrap": false,
+    "vToken": {
+      "address": "0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+      "chainId": 97,
+      "decimals": 8,
+      "symbol": "vXVS",
+      "underlyingToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+    },
+    "withdrawFullSupply": false,
+  },
+]
+`;
+
+exports[`WithdrawForm > renders correct available amount when asset liquidity is the limiting factor 1`] = `"Available0.5 XVS"`;
+
+exports[`WithdrawForm > renders correct available amount when user borrow limit is the limiting factor 1`] = `"Available19.8 XVS"`;
+
+exports[`WithdrawForm > renders correct available amount when user health factor is the limiting factor 1`] = `"Available19.8 XVS"`;
+
+exports[`WithdrawForm > renders correct available amount when user supply balance is the limiting factor 1`] = `"Available1 XVS"`;
+
+exports[`WithdrawForm > updates input value correctly when clicking on max button when asset is a collateral and asset liquidity is the limiting factor 1`] = `"0.5"`;
+
+exports[`WithdrawForm > updates input value correctly when clicking on max button when asset is a collateral and user borrow limit is the limiting factor 1`] = `"19.8"`;
+
+exports[`WithdrawForm > updates input value correctly when clicking on max button when asset is a collateral and user health factor is the limiting factor 1`] = `"0"`;
+
+exports[`WithdrawForm > updates input value correctly when clicking on max button when asset is a collateral and user supply balance is the limiting factor 1`] = `"1"`;

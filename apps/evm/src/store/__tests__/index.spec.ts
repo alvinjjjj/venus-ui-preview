@@ -1,0 +1,105 @@
+import {
+  DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE,
+  MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE,
+  MINIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE,
+} from 'constants/swap';
+import { ChainId } from 'types';
+import { extractEnumValues } from 'utilities/extractEnumValues';
+import { initialUserSettings, useStore } from '..';
+
+const allChainIds = extractEnumValues(ChainId);
+
+describe('store', () => {
+  describe('userSettings', () => {
+    it('sets correct initial user settings', () => {
+      expect(useStore.getState().userSettings).toEqual(initialUserSettings);
+    });
+  });
+
+  describe('setUserSettings', () => {
+    it('updates user settings correctly', () => {
+      useStore.getState().setUserSettings({
+        settings: {
+          gaslessTransactions: false,
+        },
+      });
+
+      expect(useStore.getState().userSettings).toEqual(
+        allChainIds.reduce(
+          (acc, chainId) => ({
+            ...acc,
+            [chainId]: {
+              ...initialUserSettings[chainId],
+              gaslessTransactions: false,
+            },
+          }),
+          {},
+        ),
+      );
+    });
+
+    it('updates user settings correctly when passing chainIds', () => {
+      useStore.getState().setUserSettings({
+        settings: {
+          gaslessTransactions: false,
+          doNotShowImportPositionsModal: true,
+        },
+        chainIds: [ChainId.BSC_TESTNET, ChainId.ARBITRUM_SEPOLIA],
+      });
+
+      expect(useStore.getState().userSettings).toEqual({
+        ...initialUserSettings,
+        [ChainId.BSC_TESTNET]: {
+          gaslessTransactions: false,
+          doNotShowImportPositionsModal: true,
+        },
+        [ChainId.ARBITRUM_SEPOLIA]: {
+          gaslessTransactions: false,
+          doNotShowImportPositionsModal: true,
+        },
+      });
+    });
+  });
+
+  describe('persist merge', () => {
+    it('clamps persisted slippage tolerance above the maximum', () => {
+      const merge = useStore.persist.getOptions().merge;
+
+      const mergedState = merge?.(
+        {
+          userSettings: {
+            [ChainId.BSC_TESTNET]: {
+              slippageTolerancePercentage: String(MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE + 1),
+            },
+            [ChainId.ARBITRUM_SEPOLIA]: {
+              slippageTolerancePercentage: String(MINIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE / 10),
+            },
+            [ChainId.OPBNB_MAINNET]: {
+              slippageTolerancePercentage: 'invalid',
+            },
+            [ChainId.ZKSYNC_MAINNET]: {
+              gaslessTransactions: false,
+              slippageTolerancePercentage: String(MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE),
+            },
+          },
+          setUserSettings: useStore.getState().setUserSettings,
+        },
+        useStore.getInitialState(),
+      );
+
+      expect(mergedState?.userSettings[ChainId.BSC_TESTNET]).toEqual({
+        slippageTolerancePercentage: String(DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE),
+      });
+      expect(mergedState?.userSettings[ChainId.ARBITRUM_SEPOLIA]).toEqual({
+        slippageTolerancePercentage: String(DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE),
+      });
+      expect(mergedState?.userSettings[ChainId.OPBNB_MAINNET]).toEqual({
+        slippageTolerancePercentage: String(DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE),
+      });
+      expect(mergedState?.userSettings[ChainId.ZKSYNC_MAINNET]).toEqual({
+        gaslessTransactions: false,
+        slippageTolerancePercentage: String(MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE),
+      });
+    });
+  });
+});

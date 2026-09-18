@@ -1,0 +1,11 @@
+/* A neutral specimen table keeps alignment stable across all three materials. */
+.component-matrix-wrap { overflow-x: auto; border: 1px solid var(--color-dark-blue-hover); border-radius: calc(var(--spacing) * 3); }
+.component-matrix { width: 100%; min-width: calc(var(--spacing) * 240); border-collapse: collapse; table-layout: fixed; }
+.component-matrix th, .component-matrix td { text-align: left; padding: calc(var(--spacing) * 6); }
+.component-matrix thead { background: var(--color-background-active); }
+.component-matrix th { font-size: var(--text-b1r); color: var(--color-light-grey); font-weight: 400; }
+.component-matrix th:first-child { width: calc(var(--spacing) * 28); }
+.component-matrix tbody tr { border-top: 1px solid var(--color-dark-blue-hover); }
+.component-matrix td { height: calc(var(--spacing) * 24); }
+.component-gallery nav a[aria-current='page'] { color: var(--color-white); text-decoration: underline; text-underline-offset: calc(var(--spacing) * 2); }
+.component-matrix td:nth-child(3) .venus-primary-action { filter: brightness(.92); }

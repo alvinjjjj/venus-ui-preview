@@ -1,0 +1,14 @@
+import { tokens } from '../../tokens/underlyingTokens';
+import type { VToken } from '../../types';
+
+export const {{ tokenFileName }}: VToken[] = [
+  {{#each vTokens}}
+  {
+    chainId: {{ chainId }},
+    address: '{{ address }}',
+    decimals: 8,
+    symbol: '{{{ symbol }}}',
+    underlyingToken: tokens[{{chainId}}][{{ underlyingTokenIndex }}],
+  },
+  {{/each}}
+];

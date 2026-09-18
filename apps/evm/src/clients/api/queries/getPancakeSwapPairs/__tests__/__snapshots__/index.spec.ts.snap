@@ -1,0 +1,723 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getPancakeSwapPairs > returns pairs in the right format on success 1`] = `
+{
+  "pairs": [
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x2da36ed63C8DBC76Fb12B6BdF71D399A07586f1c",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0xc01e65D6aB40c7d9fFD6be7829A479379D9ABB07",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x23Ec7009caBA76d3a0756c98dF6a650a3B0eAC8E",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x547C884cA56fb9e442ea05fEE73e6f21caEa933A",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x99BD785146aed59e179E839b01e57e7031f48a01",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0xd7F82e3BBeBdba3A7524a05B3fBd65aAC03D8503",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`getPancakeSwapPairs > skips token combinations for which a pair address could not be generated 1`] = `
+{
+  "pairs": [
+    Pair {
+      "liquidityToken": Token {
+        "address": "0xc01e65D6aB40c7d9fFD6be7829A479379D9ABB07",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x23Ec7009caBA76d3a0756c98dF6a650a3B0eAC8E",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x2da36ed63C8DBC76Fb12B6BdF71D399A07586f1c",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "BUSD",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x547C884cA56fb9e442ea05fEE73e6f21caEa933A",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0x99BD785146aed59e179E839b01e57e7031f48a01",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "ETH",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+    Pair {
+      "liquidityToken": Token {
+        "address": "0xd7F82e3BBeBdba3A7524a05B3fBd65aAC03D8503",
+        "chainId": 97,
+        "decimals": 18,
+        "isNative": false,
+        "isToken": true,
+        "name": "Pancake LPs",
+        "projectLink": undefined,
+        "symbol": "Cake-LP",
+      },
+      "tokenAmounts": [
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "WBNB",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            1000000000,
+          ],
+        },
+        CurrencyAmount2 {
+          "currency": Token {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "isNative": false,
+            "isToken": true,
+            "name": undefined,
+            "projectLink": undefined,
+            "symbol": "XVS",
+          },
+          "decimalScale": JSBI [
+            660865024,
+            931322574,
+          ],
+          "denominator": JSBI [
+            1,
+          ],
+          "numerator": JSBI [
+            926258176,
+            1,
+          ],
+        },
+      ],
+    },
+  ],
+}
+`;

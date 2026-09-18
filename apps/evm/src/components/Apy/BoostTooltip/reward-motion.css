@@ -1,0 +1,54 @@
+/* Each pointer entry plays one sequence; the APY text stays still. */
+.venus-apy-boost-stars {
+  position: relative;
+  display: inline-block;
+  height: calc(var(--spacing) * 4);
+  width: calc(var(--spacing) * 4 * 16 / 17);
+  aspect-ratio: 16 / 17;
+  flex-shrink: 0;
+}
+
+/* Isolate the three stars without changing the original artwork or gradient. */
+.venus-reward-star {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--reward-star-image) center / 100% 100% no-repeat;
+}
+.venus-reward-star-large {
+  clip-path: polygon(37.5% 5.88%, 100% 5.88%, 100% 70.59%, 56.25% 70.59%, 56.25% 50%, 31.25% 50%, 31.25% 26.47%, 37.5% 26.47%);
+  --reward-delay: 0ms;
+}
+.venus-reward-star-medium {
+  clip-path: polygon(0 50%, 31.25% 50%, 50% 64.71%, 50% 100%, 0 100%);
+  --reward-delay: 180ms;
+}
+.venus-reward-star-small {
+  clip-path: inset(0 62.5% 73.53% 0);
+  --reward-delay: 360ms;
+}
+
+@keyframes venus-reward-glint {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.65; }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-apy-boost:hover .venus-reward-star,
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-apy-boost-stars:hover .venus-reward-star {
+    animation: venus-reward-glint 800ms ease-in-out var(--reward-delay) 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-apy-boost:focus-visible .venus-reward-star {
+    animation: venus-reward-glint 800ms ease-in-out var(--reward-delay) 1;
+  }
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] .venus-reward-star {
+  background: var(--color-green);
+  mask: var(--reward-star-image) center / 100% 100% no-repeat;
+  -webkit-mask: var(--reward-star-image) center / 100% 100% no-repeat;
+}

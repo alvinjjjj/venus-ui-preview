@@ -1,0 +1,1090 @@
+import type { Token as PSToken } from '@pancakeswap/sdk';
+import type { ChainId, Token, VToken, VhToken } from '@venusprotocol/chains';
+import type { Omit } from '@wagmi/core/internal';
+import type BigNumber from 'bignumber.js';
+import type {
+  LIQUIDITY_HUB_TX_TYPES,
+  MARKET_TX_TYPES,
+  TRADE_TX_TYPES,
+} from 'constants/marketTxTypes';
+import type { VError } from 'libs/errors';
+import type { Address, ByteArray, Hex } from 'viem';
+
+export { ChainId, type Token, type VToken, type Chain, type VhToken } from '@venusprotocol/chains';
+
+export type NonNullableFields<T> = Required<{
+  [P in keyof T]: NonNullable<T[P]>;
+}>;
+
+export type Environment =
+  | 'storybook'
+  | 'ci'
+  | 'local'
+  | 'preview' // Automatically generated environments when opening PRs and fixed preview environments
+  | 'production';
+
+export type Network =
+  | 'testnet'
+  | 'mainnet-preview' // mainnet too, but will hit the preview API
+  | 'mainnet';
+
+export type TransactionType = 'chain' | 'layerZero' | 'biconomy';
+
+export type TokenAction =
+  | 'swapAndSupply'
+  | 'swapAndRepay'
+  | 'boost'
+  | 'supply'
+  | 'withdraw'
+  | 'borrow'
+  | 'repay'
+  | 'repayWithCollateral'
+  | 'enterMarket'
+  | 'exitMarket'
+  | 'vault';
+
+export interface TokenBalance {
+  token: Token;
+  balanceMantissa: BigNumber;
+}
+
+export interface VTokenBalance {
+  vToken: VToken;
+  balanceMantissa: BigNumber;
+}
+
+export interface RewardDistributorDistribution {
+  type: 'venus';
+  token: Token;
+  apyPercentage: BigNumber;
+  dailyDistributedTokens: BigNumber;
+  isActive: boolean;
+}
+
+export interface PrimeDistribution {
+  type: 'prime';
+  token: Token;
+  apyPercentage: BigNumber;
+  isActive: boolean;
+}
+
+export interface PrimeSimulationDistribution {
+  type: 'primeSimulation';
+  token: Token;
+  apyPercentage: BigNumber;
+  isActive: boolean;
+  referenceValues: {
+    userSupplyBalanceTokens: BigNumber;
+    userBorrowBalanceTokens: BigNumber;
+    userXvsStakedTokens: BigNumber;
+  };
+}
+
+export interface MerklDistribution {
+  type: 'merkl';
+  token: Token;
+  apyPercentage: BigNumber;
+  dailyDistributedTokens: BigNumber;
+  isActive: boolean;
+  collateralGate?: {
+    isUserEligible: boolean;
+    maxApyPercentage: BigNumber;
+  };
+  rewardDetails: {
+    appName: string;
+    claimUrl: string;
+    marketAddress: Address;
+    merklCampaignIdentifier: string;
+    description: string;
+    tags: string[];
+    aprPercentage?: number;
+    // Only served for collateral-gated campaigns
+    eligibleBorrowAmountUsd?: number;
+    participatingCollateralAddresses?: Address[];
+    eligibleBorrowMarketAddresses?: Address[];
+  };
+}
+
+export interface GenericDistribution {
+  type: 'intrinsic' | 'off-chain' | 'yield-to-maturity' | 'liquidity-hub-intrinsic';
+  token: Token;
+  apyPercentage: BigNumber;
+  dailyDistributedTokens: BigNumber;
+  isActive: boolean;
+  rewardDetails: {
+    name: string;
+    description: string;
+  };
+}
+
+export type TokenDistribution =
+  | RewardDistributorDistribution
+  | PrimeDistribution
+  | PrimeSimulationDistribution
+  | MerklDistribution
+  | GenericDistribution;
+
+export interface PointDistribution {
+  title: string;
+  description?: string;
+  logoUrl?: string;
+  extraInfoUrl?: string;
+  incentive?: string;
+}
+
+export interface Asset {
+  vToken: VToken;
+  tokenPriceCents: BigNumber;
+  tokenSupplyPriceCents: BigNumber;
+  tokenBorrowPriceCents: BigNumber;
+  isProtectionModeEnabled: boolean;
+  tokenPriceOracleAddress: Address;
+  isBorrowable: boolean;
+  reserveFactor: number;
+  collateralFactor: number;
+  badDebtMantissa: bigint;
+  liquidityCents: BigNumber;
+  reserveTokens: BigNumber;
+  cashTokens: BigNumber; // TODO: rename to liquidityTokens
+  exchangeRateVTokens: BigNumber;
+  liquidationThresholdPercentage: number;
+  liquidationPenaltyPercentage: number;
+  supplierCount: number;
+  borrowerCount: number;
+  borrowApyPercentage: BigNumber;
+  supplyApyPercentage: BigNumber;
+  supplyBalanceTokens: BigNumber;
+  supplyBalanceCents: BigNumber;
+  borrowBalanceTokens: BigNumber;
+  borrowBalanceCents: BigNumber;
+  supplyTokenDistributions: TokenDistribution[];
+  borrowTokenDistributions: TokenDistribution[];
+  supplyPointDistributions: PointDistribution[];
+  borrowPointDistributions: PointDistribution[];
+  disabledTokenActions: TokenAction[];
+  borrowCapTokens: BigNumber;
+  supplyCapTokens: BigNumber;
+  isRestricted: boolean;
+  isGated: boolean;
+  category?: string;
+  marketCategory?: MarketCategory;
+  // User-specific props
+  // TODO: make these optional so they can be set to undefined when no wallet is
+  // connected
+  userSupplyBalanceTokens: BigNumber;
+  userSupplyBalanceCents: BigNumber;
+  userSupplyBalanceProtectedCents: BigNumber;
+  userBorrowBalanceTokens: BigNumber;
+  userBorrowBalanceCents: BigNumber;
+  userBorrowBalanceProtectedCents: BigNumber;
+  userWalletBalanceTokens: BigNumber;
+  userWalletBalanceCents: BigNumber;
+  userCollateralFactor: number;
+  userLiquidationThresholdPercentage: number;
+  userBorrowLimitSharePercentage: number;
+  isBorrowableByUser: boolean;
+  isCollateralOfUser: boolean;
+}
+
+export interface BalanceMutationBase {
+  amountTokens: BigNumber;
+  label?: string;
+  description?: string;
+}
+
+export interface AssetBalanceMutation extends BalanceMutationBase {
+  type: 'asset';
+  vTokenAddress: Address;
+  action: 'borrow' | 'repay' | 'withdraw' | 'supply';
+  balanceTokens?: BigNumber;
+  enableAsCollateralOfUser?: boolean;
+}
+
+export interface LiquidityHubBalanceMutation extends BalanceMutationBase {
+  type: 'liquidityHub';
+  vhTokenAddress: Address;
+  action: 'withdraw' | 'supply';
+}
+
+export interface VaiBalanceMutation extends BalanceMutationBase {
+  type: 'vai';
+  action: 'borrow' | 'repay';
+}
+
+export type BalanceMutation =
+  | AssetBalanceMutation
+  | LiquidityHubBalanceMutation
+  | VaiBalanceMutation;
+
+export interface SwapRouterAddressMapping {
+  [poolComptrollerAddress: string]: string;
+}
+
+export interface EModeAssetSettings {
+  vToken: VToken;
+  collateralFactor: number;
+  liquidationThresholdPercentage: number;
+  liquidationPenaltyPercentage: number;
+  isBorrowable: boolean;
+}
+
+export interface EModeGroup {
+  id: number;
+  name: string;
+  isActive: boolean;
+  assetSettings: EModeAssetSettings[];
+  isIsolated: boolean;
+}
+
+export interface PoolVai {
+  token: Token;
+  tokenPriceCents: BigNumber;
+  borrowAprPercentage: BigNumber;
+  userBorrowBalanceTokens?: BigNumber;
+  userBorrowBalanceCents?: BigNumber;
+}
+
+export interface MarketCategory {
+  tag: string;
+  label: string;
+  order: number;
+}
+
+export interface Pool {
+  comptrollerAddress: Address;
+  name: string;
+  isIsolated: boolean;
+  assets: Asset[];
+  eModeGroups: EModeGroup[];
+  vai?: PoolVai;
+  // User-specific props
+  userSupplyBalanceCents?: BigNumber;
+  userBorrowBalanceCents?: BigNumber;
+  userBorrowLimitCents?: BigNumber;
+  userBorrowLimitProtectedCents?: BigNumber;
+  userBorrowBalanceProtectedCents?: BigNumber;
+  userLiquidationThresholdCents?: BigNumber;
+  userYearlyEarningsCents?: BigNumber;
+  userHealthFactor?: number;
+  userEModeGroup?: EModeGroup;
+}
+
+export interface LiquidityHubSourceCollateral {
+  token: Token;
+  liquidationThresholdPercentage: BigNumber;
+}
+
+export interface LiquidityHubSource {
+  name: string;
+  address: Address;
+  allocationTokens: BigNumber;
+  allocationCents: BigNumber;
+  supplyCapCents: BigNumber;
+  liquidityTokens: BigNumber;
+  liquidityCents: BigNumber;
+  supplyApyPercentage: BigNumber;
+  supplyTokenDistributions: TokenDistribution[];
+  collaterals: LiquidityHubSourceCollateral[];
+  lockEndDate?: Date;
+}
+
+export type LiquidityHubYieldGroupType = 'core' | 'flux' | 'frv';
+
+export interface LiquidityHubYieldGroup {
+  address: Address;
+  type: LiquidityHubYieldGroupType;
+  nameTranslationKey: string;
+  iconSrc: string;
+  bgClassName: string;
+  allocationTokens: BigNumber;
+  allocationCents: BigNumber;
+  allocationCapPercentage: BigNumber;
+  supplyCapTokens: BigNumber;
+  supplyCapCents: BigNumber;
+  liquidityTokens: BigNumber;
+  liquidityCents: BigNumber;
+  averageSupplyApyPercentage: BigNumber;
+  paused: boolean;
+  sources: LiquidityHubSource[];
+}
+
+export interface LiquidityHub {
+  vhToken: VhToken;
+  tokenPriceCents: BigNumber;
+  supplyBalanceTokens: BigNumber;
+  supplyBalanceCents: BigNumber;
+  liquidityTokens: BigNumber;
+  liquidityCents: BigNumber;
+  supplyCapTokens: BigNumber;
+  withdrawCapTokens: BigNumber;
+  supplyApyPercentage: BigNumber;
+  performanceFeePercentage: BigNumber;
+  redeemFeePercentage: BigNumber;
+  pricePerShare: BigNumber;
+  supplierCount: number;
+  supplyTokenDistributions: TokenDistribution[];
+  yieldGroups: LiquidityHubYieldGroup[];
+  tokenPriceOracleAddress?: Address;
+  operatorAddress?: Address;
+  // User-specific props
+  userWalletBalanceTokens?: BigNumber;
+  userWalletBalanceCents?: BigNumber;
+  userSupplyBalanceTokens?: BigNumber;
+  userSupplyBalanceCents?: BigNumber;
+  userYearlyEarningsCents?: BigNumber;
+  userVhTokenBalanceTokens?: BigNumber;
+  userVhTokenMaxRedeemTokens?: BigNumber;
+  userWithdrawCapTokens?: BigNumber;
+  userSupplyCapTokens?: BigNumber;
+}
+
+export enum RemoteProposalState {
+  Pending,
+  Bridged,
+  Queued,
+  Canceled,
+  Expired,
+  Executed,
+  Failed,
+}
+
+export enum ProposalState {
+  Pending,
+  Active,
+  Canceled,
+  Defeated,
+  Succeeded,
+  Queued,
+  Expired,
+  Executed,
+}
+
+export interface ProposalAction {
+  actionIndex: number;
+  callData: Hex | ByteArray;
+  signature: string;
+  target: string;
+  value: string;
+}
+
+export interface DescriptionV2 {
+  version: 'v2';
+  title: string;
+  description: string;
+  forDescription: string;
+  againstDescription: string;
+  abstainDescription: string;
+}
+
+export interface DescriptionV1 {
+  version: 'v1';
+  title: string;
+  description: string;
+  forDescription?: undefined;
+  againstDescription?: undefined;
+  abstainDescription?: undefined;
+}
+
+export enum ProposalType {
+  NORMAL,
+  FAST_TRACK,
+  CRITICAL,
+}
+
+export enum VoteSupport {
+  Against,
+  For,
+  Abstain,
+}
+
+export type ProposalVoter = {
+  proposalId: number;
+  address: Address;
+  reason: string | undefined;
+  support: VoteSupport;
+  votesMantissa: BigNumber;
+};
+
+export type ForVoter = Omit<ProposalVoter, 'support'> & {
+  support: VoteSupport.For;
+};
+
+export type AgainstVoter = Omit<ProposalVoter, 'support'> & {
+  support: VoteSupport.Against;
+};
+
+export type AbstainVoter = Omit<ProposalVoter, 'support'> & {
+  support: VoteSupport.Abstain;
+};
+
+export interface Proposal {
+  proposalId: number;
+  description: DescriptionV1 | DescriptionV2;
+  againstVotesMantissa: BigNumber;
+  forVotesMantissa: BigNumber;
+  abstainedVotesMantissa: BigNumber;
+  proposalType: ProposalType;
+  state: ProposalState;
+  endBlock: number;
+  proposerAddress: Address;
+  totalVotesMantissa: BigNumber;
+  proposalActions: ProposalAction[];
+  forVotes: ForVoter[];
+  againstVotes: AgainstVoter[];
+  abstainVotes: AbstainVoter[];
+  remoteProposals: RemoteProposal[];
+  blockNumber?: number;
+  userVoteSupport?: VoteSupport;
+  endDate?: Date;
+  executedDate?: Date;
+  queuedDate?: Date;
+  expiredDate?: Date;
+  executionEtaDate?: Date;
+  cancelDate?: Date;
+  startDate?: Date;
+  createdDate?: Date;
+  createdTxHash?: string;
+  cancelTxHash?: string;
+  executedTxHash?: string;
+  queuedTxHash?: string;
+}
+
+export interface RemoteProposal {
+  proposalId: number;
+  chainId: ChainId;
+  state: RemoteProposalState;
+  proposalActions: ProposalAction[];
+  remoteProposalId?: number;
+  bridgedDate?: Date;
+  failedDate?: Date;
+  failedTxHash?: string;
+  canceledDate?: Date;
+  canceledTxHash?: string;
+  queuedDate?: Date;
+  queuedTxHash?: string;
+  executionEtaDate?: Date;
+  executedDate?: Date;
+  executedTxHash?: string;
+  expiredDate?: Date;
+}
+
+export interface JsonProposal {
+  meta?: {
+    title?: string;
+    description?: string;
+    forDescription?: string;
+    againstDescription?: string;
+    abstainDescription?: string;
+  };
+  type?: number;
+  signatures?: string[];
+  targets?: (string | number)[];
+  params?: (string | (string | number)[])[][];
+  values?: string[];
+}
+
+export interface VotersDetails {
+  result: {
+    proposalId: number;
+    address: Address;
+    votesMantissa: BigNumber;
+    reason?: string;
+    support: VoteSupport;
+  }[];
+}
+
+export interface RewardsDistributor {
+  vTokenAddress: string;
+  rewardTokenAddress: string;
+  lastRewardingSupplyBlockOrTimestamp: BigNumber;
+  lastRewardingBorrowBlockOrTimestamp: BigNumber;
+  supplySpeed: BigNumber;
+  borrowSpeed: BigNumber;
+  supplyApyPercentage: BigNumber;
+  borrowApyPercentage: BigNumber;
+  priceMantissa: BigNumber;
+  rewardsDistributorContractAddress: string;
+}
+
+export interface Market {
+  vTokenAddress: string;
+  borrowerCount: number;
+  supplierCount: number;
+  supplyApyPercentage: BigNumber;
+  borrowApyPercentage: BigNumber;
+  borrowRatePerBlockOrTimestamp: BigNumber;
+  supplyRatePerBlockOrTimestamp: BigNumber;
+  exchangeRateMantissa: BigNumber;
+  underlyingTokenAddress: string;
+  underlyingTokenPriceMantissa: BigNumber;
+  supplyCapsMantissa: BigNumber;
+  borrowCapsMantissa: BigNumber;
+  cashMantissa: BigNumber;
+  reserveFactorMantissa: BigNumber;
+  collateralFactorMantissa: BigNumber;
+  totalReservesMantissa: BigNumber;
+  totalBorrowsMantissa: BigNumber;
+  totalSupplyMantissa: BigNumber;
+  estimatedPrimeBorrowApyBoost: BigNumber | undefined;
+  estimatedPrimeSupplyApyBoost: BigNumber | undefined;
+  pausedActionsBitmap: number;
+  isListed: boolean;
+  rewardsDistributors: RewardsDistributor[];
+}
+
+export interface MarketSnapshot {
+  blockNumber: number;
+  blockTimestamp: number;
+  borrowApyPercentage: number;
+  supplyApyPercentage: number;
+  totalBorrowCents: number;
+  totalSupplyCents: number;
+}
+
+export interface LiquidityHubSnapshot {
+  blockNumber: number;
+  blockTimestamp: number;
+  supplyApyPercentage: number;
+  totalSupplyCents: number;
+  pricePerShare: number;
+}
+
+export type TransactionEvent =
+  | 'Mint'
+  | 'Transfer'
+  | 'Borrow'
+  | 'RepayBorrow'
+  | 'Redeem'
+  | 'Approval'
+  | 'LiquidateBorrow'
+  | 'ReservesAdded'
+  | 'ReservesReduced'
+  | 'MintVAI'
+  | 'Withdraw'
+  | 'RepayVAI'
+  | 'Deposit'
+  | 'VoteCast'
+  | 'ProposalCreated'
+  | 'ProposalQueued'
+  | 'ProposalExecuted'
+  | 'ProposalCanceled';
+
+export enum TransactionCategory {
+  vtoken = 'vtoken',
+  vai = 'vai',
+  vote = 'vote',
+}
+
+export interface Transaction {
+  amountMantissa: BigNumber;
+  blockNumber: number;
+  category: TransactionCategory;
+  event: TransactionEvent;
+  from: string;
+  to: string;
+  timestamp: Date;
+  transactionHash: string;
+  logIndex: number;
+  token: Token;
+}
+
+export enum VaultStatus {
+  Inactive = 'inactive',
+  Deposit = 'deposit',
+  Locked = 'locked',
+  Pending = 'pending',
+  Refund = 'refund',
+  Repaying = 'repaying',
+  Claim = 'claim',
+  Liquidated = 'liquidated',
+  Paused = 'paused',
+}
+
+export enum VaultVenue {
+  Venus = 'venus',
+  Pendle = 'pendle',
+  Institution = 'institution',
+}
+
+export enum VaultType {
+  Venus = 'venus',
+  Pendle = 'pendle',
+  Institutional = 'institutional',
+}
+
+export enum VaultCategory {
+  STABLECOINS = 'stablecoins',
+  YIELD_TOKENS = 'yieldTokens',
+  GOVERNANCE = 'governance',
+}
+
+interface BaseVault {
+  vaultType: VaultType;
+  category: VaultCategory;
+  venue: VaultVenue;
+  venueName: string;
+  venueIconSrc: string;
+  status: VaultStatus;
+  key: string;
+  stakedToken: Token;
+  rewardToken: Token;
+  stakedTokenPriceCents: BigNumber;
+  rewardTokenPriceCents: BigNumber;
+  stakeAprPercentage: number;
+  stakeBalanceMantissa: BigNumber;
+  stakeBalanceCents: number;
+  venueAddress?: Address;
+  userStakeBalanceMantissa?: BigNumber;
+  userStakeBalanceCents?: number;
+  lockingPeriodMs?: number;
+  poolIndex?: number;
+}
+
+export type VenusVault = BaseVault & {
+  isPaused: boolean;
+  dailyEmissionMantissa: BigNumber;
+  dailyEmissionCents: number;
+  userHasPendingWithdrawalsFromBeforeUpgrade?: boolean;
+};
+
+export type PendleVault = BaseVault & {
+  vaultAddress: Address;
+  maturityDate: Date;
+  liquidityCents: BigNumber;
+  asset: Asset;
+  poolComptrollerContractAddress: Address;
+  poolName: string;
+  rewardToken: Token;
+  venueUrl?: string;
+  vaultDeploymentDate?: Date;
+};
+
+export type InstitutionalVault = BaseVault & {
+  vaultAddress: Address;
+  reserveFactor: number;
+  isSettled: boolean;
+  realizedAprPercentage?: number;
+  stakeLimitMantissa: BigNumber;
+  stakeMinMantissa: BigNumber;
+  userRedeemLimitMantissa: BigNumber;
+  venueUrl?: string;
+  collateralToken: Token;
+  userYieldTokens?: BigNumber;
+  userWithdrawLimitMantissa: BigNumber;
+  userMinIndividualStakeMantissa?: BigNumber;
+  vaultDeploymentDate?: Date;
+  openStartDate?: Date;
+  openEndDate?: Date;
+  lockEndDate?: Date;
+  maturityDate?: Date;
+  settlementDate?: Date;
+};
+
+export type Vault = VenusVault | PendleVault | InstitutionalVault;
+
+export interface VoterAccount {
+  address: Address;
+  proposalsVoted: number;
+  stakedVotesMantissa: BigNumber;
+  voteWeightPercent: string;
+  votesMantissa: BigNumber;
+  delegate?: Address;
+}
+
+export interface LockedDeposit {
+  amountMantissa: BigNumber;
+  unlockedAt: Date;
+}
+
+export type VoteDetail = {
+  proposalId: number;
+  votesMantissa: BigNumber;
+  support: VoteSupport;
+};
+
+export type VoterTransaction = {
+  category: string;
+  event: string;
+  transactionHash: string;
+  logIndex: number;
+  from: string;
+  to: string;
+  tokenAddress: string;
+  amountMantissa: BigNumber;
+  blockNumber: number;
+  timestamp: Date;
+};
+
+export interface Voter {
+  balanceMantissa: BigNumber;
+  delegateCount: number;
+  delegateAddress: string;
+  delegating: boolean;
+  votesMantissa: BigNumber;
+  txs: VoterTransaction[];
+}
+
+export type VoterHistory = Proposal & {
+  support: VoteSupport;
+  reason: string | undefined;
+};
+
+export type SwapDirection = 'exactAmountIn' | 'exactAmountOut';
+
+interface SwapBase {
+  fromToken: Token;
+  toToken: Token;
+  exchangeRate: BigNumber;
+  direction: SwapDirection;
+  priceImpactPercentage: number;
+  routePath: Address[];
+}
+
+export interface ExactAmountInSwap extends SwapBase {
+  fromTokenAmountSoldMantissa: BigNumber;
+  expectedToTokenAmountReceivedMantissa: BigNumber;
+  minimumToTokenAmountReceivedMantissa: BigNumber;
+  direction: 'exactAmountIn';
+}
+
+export interface ExactAmountOutSwap extends SwapBase {
+  expectedFromTokenAmountSoldMantissa: BigNumber;
+  maximumFromTokenAmountSoldMantissa: BigNumber;
+  toTokenAmountReceivedMantissa: BigNumber;
+  direction: 'exactAmountOut';
+}
+
+export type Swap = ExactAmountInSwap | ExactAmountOutSwap;
+
+export type SwapError =
+  | 'INSUFFICIENT_LIQUIDITY'
+  | 'WRAPPING_UNSUPPORTED'
+  | 'UNWRAPPING_UNSUPPORTED';
+
+export type PSTokenCombination = [PSToken, PSToken];
+
+export type SwapQuoteDirection = 'exact-in' | 'exact-out' | 'approximate-out';
+
+interface SwapQuoteBase {
+  fromToken: Token;
+  toToken: Token;
+  direction: SwapQuoteDirection;
+  priceImpactPercentage: number;
+  callData: Hex;
+}
+
+export interface ExactInSwapQuote extends SwapQuoteBase {
+  fromTokenAmountSoldMantissa: bigint;
+  expectedToTokenAmountReceivedMantissa: bigint;
+  minimumToTokenAmountReceivedMantissa: bigint;
+  direction: 'exact-in';
+}
+
+export interface ExactOutSwapQuote extends SwapQuoteBase {
+  toTokenAmountReceivedMantissa: bigint;
+  expectedFromTokenAmountSoldMantissa: bigint;
+  maximumFromTokenAmountSoldMantissa: bigint;
+  direction: 'exact-out';
+}
+
+export interface ApproximateOutSwapQuote extends SwapQuoteBase {
+  fromTokenAmountSoldMantissa: bigint;
+  expectedToTokenAmountReceivedMantissa: bigint;
+  minimumToTokenAmountReceivedMantissa: bigint;
+  direction: 'approximate-out';
+}
+
+export type SwapQuote = ExactInSwapQuote | ExactOutSwapQuote | ApproximateOutSwapQuote;
+export type SwapQuoteError = VError<'swapQuote' | 'interaction'>;
+
+export type ImportableProtocol = 'aave';
+
+interface ImportableSupplyPositionBase {
+  protocol: ImportableProtocol;
+  tokenAddress: Address;
+  userSupplyBalanceMantissa: bigint;
+  supplyApyPercentage: number;
+}
+
+export interface ImportableAaveSupplyPosition extends ImportableSupplyPositionBase {
+  protocol: 'aave';
+  aTokenAddress: Address;
+  userATokenBalanceMantissa: bigint;
+  userATokenBalanceWithInterestsMantissa: bigint;
+}
+
+export type ImportableSupplyPosition = ImportableAaveSupplyPosition;
+
+export interface TradePosition {
+  chainId: ChainId;
+  positionAccountAddress: Address;
+  longAsset: Asset;
+  longBalanceTokens: BigNumber;
+  longBalanceCents: number;
+  shortAsset: Asset;
+  shortBalanceTokens: BigNumber;
+  shortBalanceCents: number;
+  dsaAsset: Asset;
+  dsaBalanceTokens: BigNumber;
+  dsaBalanceCents: number;
+  dsaUtilizedBalanceTokens: BigNumber;
+  dsaUtilizedBalanceCents: number;
+  netValueCents: number;
+  netApyPercentage: number;
+  unrealizedPnlCents: number;
+  unrealizedPnlPercentage: number;
+  liquidationPriceTokens: BigNumber;
+  entryPriceTokens: BigNumber;
+  leverageFactor: number;
+  pool: Pool;
+}
+
+export interface TxFormError<C extends string = string> {
+  code: C;
+  message?: string;
+}
+
+export type TradeTxType = (typeof TRADE_TX_TYPES)[number];
+
+export type MarketTxType = (typeof MARKET_TX_TYPES)[number];
+
+export type LiquidityHubTxType = (typeof LIQUIDITY_HUB_TX_TYPES)[number];
+
+export type TxType = TradeTxType | MarketTxType | LiquidityHubTxType;
+
+export interface TxAmount {
+  token: Token;
+  amountTokens: BigNumber;
+  amountCents: number;
+}
+
+export interface BaseTx {
+  hash: string;
+  blockTimestamp: Date;
+  blockNumber: string;
+  accountAddress: Address;
+  contractAddress: Address;
+  chainId: ChainId;
+  amounts?: TxAmount[];
+}
+
+export interface MarketTx extends BaseTx {
+  txType: MarketTxType;
+  poolName: string;
+  vToken: VToken;
+}
+
+export interface LiquidityHubTx extends BaseTx {
+  txType: LiquidityHubTxType;
+  vhToken: VhToken;
+}
+
+export interface TradeTx extends BaseTx {
+  txType: TradeTxType;
+  cycleId: string;
+}
+
+export type Tx = MarketTx | LiquidityHubTx | TradeTx;
+
+export enum ApiOhlcInterval {
+  '1m' = '1m',
+  '5m' = '5m',
+  '15m' = '15m',
+  '30m' = '30m',
+  '1h' = '1h',
+  '4h' = '4h',
+  '1d' = '1d',
+}
+
+export interface ApiTokenPrice {
+  tokenWrappedAddress: Address | null;
+  priceMantissa: string;
+  priceSource: 'oracle' | 'merkl' | 'coingecko';
+  priceOracleAddress: Address | null;
+  isPriceInvalid: boolean;
+  hasErrorFetchingPrice: boolean;
+  isPriceProtected: boolean;
+  supplyPriceMantissa: string | null;
+  borrowPriceMantissa: string | null;
+}
+
+export enum PrimeCycleStatus {
+  Active = 'active',
+  Finalized = 'finalized',
+}
+
+export interface PrimeCycle {
+  cycleIndex: number;
+  startsAt: Date;
+  endsAt: Date;
+  mintLimitUsed: number;
+  status?: PrimeCycleStatus;
+  anchorBlockNum?: string;
+  totalRewardPoolCents?: string;
+  finalizedAt?: Date;
+}
+
+export type PrimeVersion = 1 | 2;
+
+export interface MarketHistoryDataPoint {
+  blockTimestamp: number;
+  supplyApyPercentage?: number;
+  borrowApyPercentage?: number;
+  totalSupplyCents?: number;
+  totalBorrowCents?: number;
+}
+
+export type ApiRewardType =
+  | 'venus'
+  | 'merkl'
+  | 'intrinsic'
+  | 'off-chain'
+  | 'yield-to-maturity'
+  | 'liquidity-hub-intrinsic';
+
+export interface ApiReward {
+  marketAddress: Address;
+  rewardTokenAddress: Address;
+  lastRewardingSupplyBlockOrTimestamp: string;
+  lastRewardingBorrowBlockOrTimestamp: string;
+  supplySpeed: string;
+  borrowSpeed: string;
+  supplyApyRatio: string;
+  borrowApyRatio: string;
+  priceMantissa: string;
+  rewardsDistributorContractAddress: Address;
+  isActive: boolean;
+}
+
+export interface ApiVenusReward extends ApiReward {
+  rewardType: 'venus';
+  rewardDetails: null;
+}
+
+export interface ApiMerklReward extends ApiReward {
+  rewardType: 'merkl';
+  rewardDetails: {
+    appName: string;
+    claimUrl: string;
+    merklCampaignId: string;
+    description: string;
+    merklCampaignIdentifier: string;
+    tags: string[];
+    apr?: number;
+    // Only served for collateral-gated campaigns
+    tvlUsd?: number;
+    participatingCollateralAddresses?: Address[];
+    eligibleBorrowMarketAddresses?: Address[];
+  };
+}
+
+export interface ApiIntrinsicApyReward extends ApiReward {
+  rewardType: 'intrinsic';
+  rewardDetails: {
+    name: string;
+    description: string;
+  };
+}
+
+export type ApiOffChainApyReward = Omit<ApiIntrinsicApyReward, 'rewardType'> & {
+  rewardType: 'off-chain' | 'yield-to-maturity' | 'liquidity-hub-intrinsic';
+};
+
+export type PointsProgram = 'ethena' | 'etherfi' | 'kelp' | 'solv' | 'aster';
+
+export interface ApiPointsDistribution {
+  action: 'supply' | 'borrow';
+  pointsProgram: PointsProgram;
+  title: string;
+  incentive?: string;
+  description?: string;
+  extraInfoUrl?: string;
+  startDate?: Date;
+  endDate?: Date;
+  logoUrl?: string;
+}
+
+export type ApiRewardDistributor =
+  | ApiVenusReward
+  | ApiMerklReward
+  | ApiIntrinsicApyReward
+  | ApiOffChainApyReward;
+
+export interface ApiLiquidityHubExposure {
+  tokenAddress: Address;
+  collateralResourceAddress: Address;
+  liquidationThresholdMantissa?: string;
+}
+
+export interface ApiLiquidityHubResource {
+  resourceAddress: Address;
+  adapterAddress: Address;
+  kind: LiquidityHubYieldGroupType;
+  name: string | null;
+  allocationMantissa: string;
+  allocationUsdMantissa: string | null;
+  apyRatio: string;
+  rewardsDistributors: ApiRewardDistributor[];
+  liquidityMantissa: string;
+  capMantissa: string | null;
+  capUsdMantissa: string | null;
+  isPaused: boolean;
+  lockEndTime: number | null;
+  exposure: ApiLiquidityHubExposure[];
+}
+
+export interface ApiLiquidityHubYieldGroup {
+  yieldGroupAddress: Address;
+  kind: LiquidityHubYieldGroupType | null;
+  totalUnderlyingMantissa: string;
+  totalUnderlyingUsdMantissa: string | null;
+  spotApyRatio: string;
+  absoluteCapMantissa: string | null;
+  absoluteCapUsdMantissa: string | null;
+  percentageCapRatio: string;
+  effectiveCapMantissa: string | null;
+  maxDepositMantissa: string;
+  maxWithdrawMantissa: string;
+  isPaused: boolean;
+  depositQueuePosition: number | null;
+  withdrawQueuePosition: number | null;
+  resources: ApiLiquidityHubResource[];
+}
+
+export interface ApiLiquidityHub {
+  hubAddress: Address;
+  underlyingTokenAddress: Address;
+  name: string | null;
+  symbol: string | null;
+  hubTokenDecimals: number;
+  underlyingTokenDecimals: number;
+  operatorAddress: Address | null;
+  tokenPriceOracleAddress: Address;
+  tokenPriceUsdMantissa: string | null;
+  totalUnderlyingMantissa: string;
+  totalUnderlyingUsdMantissa: string | null;
+  hubTokenSupplyMantissa: string;
+  exchangeRateMantissa: string;
+  pricePerShare: string;
+  blendedApyRatio: string;
+  rewardsDistributors: ApiRewardDistributor[];
+  supplyCapacityMantissa: string | null;
+  supplyCapacityUsdMantissa: string | null;
+  liquidityMantissa: string;
+  liquidityUsdMantissa: string | null;
+  suppliersCount: number | null;
+  maxWithdrawalSizeMantissa: string;
+  managementFeeRatio: string;
+  performanceFeeRatio: string;
+  redeemFeeRatio: string;
+  isPaused: boolean;
+  yieldGroups: ApiLiquidityHubYieldGroup[];
+  userWalletBalanceMantissa?: string | null;
+  userWalletBalanceUsdMantissa?: string | null;
+  userHubTokenBalanceMantissa?: string | null;
+  userUnderlyingBalanceMantissa?: string | null;
+  userUnderlyingBalanceUsdMantissa?: string | null;
+  userMaxDepositMantissa?: string | null;
+  userMaxRedeemMantissa?: string | null;
+  userMaxWithdrawMantissa?: string | null;
+}

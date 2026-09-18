@@ -1,0 +1,53 @@
+{
+  "balance": "0",
+  "delegateCount": 1,
+  "delegates": "0x315deBE419d9f9aec19807609b396Ef33a9c44C0",
+  "txs": [
+    {
+      "id": "b3adc24f-3db6-407e-8a02-da11a6033ff9",
+      "category": "vote",
+      "event": "ProposalExecuted",
+      "transactionHash": "0x8ef7a72736d49f4babd624c8dc353589a1d659fe9995f358cca8c2305f21b2ba",
+      "logIndex": 23,
+      "from": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706",
+      "to": "",
+      "tokenAddress": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "amountMantissa": "0",
+      "blockNumber": 33507543,
+      "timestamp": 1695219527,
+      "createdAt": "2023-09-20T14:19:28.000Z",
+      "updatedAt": "2023-09-20T14:19:28.000Z"
+    },
+    {
+      "id": "e13dd361-c9fd-4185-b03e-81ef5059c80f",
+      "category": "vote",
+      "event": "ProposalQueued",
+      "transactionHash": "0x149cbd8512f6566dfb366d0c67ed46709f00f5dc0f819039b8636b1e4b33211c",
+      "logIndex": 11,
+      "from": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706",
+      "to": "",
+      "tokenAddress": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "amountMantissa": "0",
+      "blockNumber": 33506948,
+      "timestamp": 1695217742,
+      "createdAt": "2023-09-20T13:49:16.000Z",
+      "updatedAt": "2023-09-20T13:49:16.000Z"
+    },
+    {
+      "id": "24060d38-a4b2-4a5c-a814-2618e8678aa3",
+      "category": "vote",
+      "event": "VoteCast",
+      "transactionHash": "0xee454374e8e6fa44c025fd7b0a2c6f2511dabd45c5764fe67f4649754bf49edb",
+      "logIndex": 7,
+      "from": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706",
+      "to": "",
+      "tokenAddress": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "amountMantissa": "605461000000000000000000",
+      "blockNumber": 33506326,
+      "timestamp": 1695215876,
+      "createdAt": "2023-09-20T13:18:02.000Z",
+      "updatedAt": "2023-09-20T13:18:02.000Z"
+    }
+  ],
+  "votes": "0"
+}

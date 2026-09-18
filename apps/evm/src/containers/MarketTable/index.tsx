@@ -1,0 +1,228 @@
+import { cn } from '@venusprotocol/ui';
+import { useMemo, useState } from 'react';
+import type { Address } from 'viem';
+
+import { Card, Table, type TableProps, TableRowControl } from 'components';
+import { routes } from 'constants/routing';
+import { Controls } from 'containers/Controls';
+import { MarketFormModal } from 'containers/MarketFormModal';
+import { SwitchChainNotice } from 'containers/SwitchChainNotice';
+import { useBreakpointUp } from 'hooks/responsive';
+import { useCollateral } from 'hooks/useCollateral';
+import { handleError } from 'libs/errors';
+import { useTranslation } from 'libs/translations';
+import { useAccountChainId, useChainId } from 'libs/wallet';
+import type { Asset, EModeGroup } from 'types';
+import pauseIconSrc from './pause.svg';
+import type { ColumnKey } from './types';
+import { useColumns } from './useColumns';
+import { useControls } from './useControls';
+
+export * from './types';
+
+export interface MarketTableProps
+  extends Partial<
+    Omit<TableProps<Asset>, 'columns' | 'rowKeyIndex' | 'initialOrder' | 'getRowHref'>
+  > {
+  assets: Asset[];
+  categoryFilter?: boolean;
+  poolName: string;
+  poolComptrollerContractAddress: Address;
+  columns: ColumnKey[];
+  modalColumn?: boolean;
+  userEModeGroup?: EModeGroup;
+  eModeGroups?: EModeGroup[];
+  isolatedModeGroup?: EModeGroup;
+  controls?: boolean;
+  rowControl?: boolean;
+  initialOrder?: {
+    orderBy: ColumnKey;
+    orderDirection: 'asc' | 'desc';
+  };
+  marketType?: 'supply' | 'borrow';
+  className?: string;
+}
+
+export const MarketTable: React.FC<MarketTableProps> = ({
+  assets,
+  categoryFilter = false,
+  poolName,
+  poolComptrollerContractAddress,
+  marketType,
+  columns: columnKeys,
+  userEModeGroup,
+  eModeGroups,
+  isolatedModeGroup,
+  initialOrder,
+  breakpoint,
+  title,
+  modalColumn = true,
+  controls = true,
+  rowControl = true,
+  isFetching,
+  header,
+  className,
+  ...otherTableProps
+}) => {
+  const { t } = useTranslation();
+
+  const [selectedAsset, setSelectedAsset] = useState<Asset>();
+  const handleCloseMarketModal = () => setSelectedAsset(undefined);
+
+  const { toggleCollateral } = useCollateral();
+
+  // The fallback breakpoint is just to satisfy TS here, it is not actually used
+  const _isBreakpointUp = useBreakpointUp(breakpoint || '2xl');
+  const isBreakpointUp = !!breakpoint && _isBreakpointUp;
+
+  const {
+    assets: filteredAssets,
+    categories,
+    hiddenPausedAssetsExist,
+    searchValue,
+    onSearchValueChange,
+    selectedCategories,
+    onSelectedCategoriesChange,
+  } = useControls({
+    assets,
+    applyUserSettings: controls,
+    poolComptrollerAddress: poolComptrollerContractAddress,
+  });
+
+  const { chainId: currentChainId } = useChainId();
+  const { chainId: accountChainId } = useAccountChainId();
+  const isOnWrongChain = accountChainId !== currentChainId;
+
+  const handleCollateralChange = async (asset: Asset) => {
+    try {
+      await toggleCollateral({
+        asset,
+        poolName,
+        comptrollerAddress: poolComptrollerContractAddress,
+      });
+    } catch (error) {
+      handleError({ error });
+    }
+  };
+
+  const columns = useColumns({
+    columnKeys,
+    collateralOnChange: handleCollateralChange,
+    userEModeGroup,
+    eModeGroups,
+    marketType,
+  });
+
+  const formattedInitialOrder = useMemo(() => {
+    if (!initialOrder) {
+      return undefined;
+    }
+
+    const orderByColumn = columns.find(column => column.key === initialOrder.orderBy);
+
+    return (
+      orderByColumn && {
+        orderBy: orderByColumn,
+        orderDirection: initialOrder.orderDirection,
+      }
+    );
+  }, [columns, initialOrder]);
+
+  const renderRowControl = (row: Asset) => {
+    const handleRowControlClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      setSelectedAsset(row);
+    };
+
+    return <TableRowControl className="-ml-6" onClick={handleRowControlClick} />;
+  };
+
+  const getRowHref = (row: Asset) =>
+    routes.market.path
+      .replace(':poolComptrollerAddress', poolComptrollerContractAddress)
+      .replace(':vTokenAddress', row.vToken.address);
+
+  return (
+    <>
+      <Table
+        controls={controls}
+        getRowHref={getRowHref}
+        columns={columns}
+        data={filteredAssets}
+        className={cn(title && 'pt-4 sm:pt-4', className)}
+        title={title}
+        rowKeyExtractor={row => `market-table-row-${marketType}-${row.vToken.address}`}
+        initialOrder={formattedInitialOrder}
+        header={
+          (header || controls || (columnKeys.includes('collateral') && isOnWrongChain)) && (
+            <div className="space-y-4">
+              {(controls || header) && (
+                <div className={cn('flow-root space-y-4', isBreakpointUp && 'space-y-0')}>
+                  {header}
+
+                  {controls && (
+                    <Controls
+                      searchValue={searchValue}
+                      onSearchValueChange={onSearchValueChange}
+                      searchInputPlaceholder={t('marketTable.search.placeholder')}
+                      showPausedAssetsToggle
+                      categories={categoryFilter ? categories : undefined}
+                      selectedCategories={selectedCategories}
+                      onSelectedCategoriesChange={onSelectedCategoriesChange}
+                    />
+                  )}
+                </div>
+              )}
+
+              {columnKeys.includes('collateral') && <SwitchChainNotice />}
+            </div>
+          )
+        }
+        placeholder={
+          controls &&
+          !isFetching &&
+          !searchValue &&
+          filteredAssets.length === 0 &&
+          hiddenPausedAssetsExist && (
+            <Card
+              className={cn(
+                'flex flex-col items-center text-center py-16 border-0 sm:py-16',
+                isBreakpointUp && 'pt-14 pb-10 sm:pt-14 sm:pb-10',
+              )}
+            >
+              <img
+                src={pauseIconSrc}
+                alt={t('marketTable.pausedAssetsPlaceholder.imgAlt')}
+                className="mb-4 w-10"
+              />
+
+              <h4 className="font-semibold mb-1">
+                {selectedCategories.length > 0
+                  ? t('marketTable.pausedAssetsPlaceholder.selectedCategoriesTitle')
+                  : t('marketTable.pausedAssetsPlaceholder.title')}
+              </h4>
+
+              <p className="text-sm text-grey">
+                {t('marketTable.pausedAssetsPlaceholder.description')}
+              </p>
+            </Card>
+          )
+        }
+        breakpoint={breakpoint}
+        isFetching={isFetching}
+        renderRowControl={rowControl ? renderRowControl : undefined}
+        {...otherTableProps}
+      />
+
+      {selectedAsset && (
+        <MarketFormModal
+          asset={selectedAsset}
+          poolComptrollerAddress={poolComptrollerContractAddress}
+          onClose={handleCloseMarketModal}
+        />
+      )}
+    </>
+  );
+};

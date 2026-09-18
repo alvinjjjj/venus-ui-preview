@@ -1,0 +1,9 @@
+.venus-campaign-icon-v5 { display: none; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-campaign-icon-original { display: none; }
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-campaign-icon-v5 {
+  display: block;
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  object-fit: contain;
+}

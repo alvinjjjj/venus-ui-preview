@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`pages/Swap/useGetSwapInfo/formatToSwap > formats trade to swap correctly when direction is "exactAmountIn" 1`] = `
+{
+  "direction": "exactAmountIn",
+  "exchangeRate": "1",
+  "expectedToTokenAmountReceivedMantissa": "10000000000000000000",
+  "fromToken": {
+    "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "chainId": 97,
+    "decimals": 18,
+    "iconSrc": "fake-busd-asset",
+    "symbol": "BUSD",
+  },
+  "fromTokenAmountSoldMantissa": "10000000000000000000",
+  "minimumToTokenAmountReceivedMantissa": "9000000000000000000",
+  "priceImpactPercentage": 0.001,
+  "routePath": [
+    "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+  ],
+  "toToken": {
+    "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+    "chainId": 97,
+    "decimals": 18,
+    "iconSrc": "fake-xvs-asset",
+    "symbol": "XVS",
+  },
+}
+`;
+
+exports[`pages/Swap/useGetSwapInfo/formatToSwap > formats trade to swap correctly when direction is "exactAmountOut" 1`] = `
+{
+  "direction": "exactAmountOut",
+  "exchangeRate": "1",
+  "expectedFromTokenAmountSoldMantissa": "10000000000000000000",
+  "fromToken": {
+    "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "chainId": 97,
+    "decimals": 18,
+    "iconSrc": "fake-busd-asset",
+    "symbol": "BUSD",
+  },
+  "maximumFromTokenAmountSoldMantissa": "11000000000000000000",
+  "priceImpactPercentage": 0.001,
+  "routePath": [
+    "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+    "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+  ],
+  "toToken": {
+    "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+    "chainId": 97,
+    "decimals": 18,
+    "iconSrc": "fake-xvs-asset",
+    "symbol": "XVS",
+  },
+  "toTokenAmountReceivedMantissa": "10000000000000000000",
+}
+`;

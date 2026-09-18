@@ -1,0 +1,63 @@
+{
+  "limit": 100,
+  "page": 0,
+  "result": [
+    {
+      "address": "0x2ce1d0ffd7e869d9df33e28552b12ddded326706",
+      "voteWeight": "0.3948365670826356053",
+      "proposalsVoted": 405,
+      "votesMantissa": "6.05461e+23",
+      "stakedVotesMantissa": "6.05561e+23",
+      "delegate": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706"
+    },
+    {
+      "address": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc",
+      "voteWeight": "0.00003260627580328342",
+      "proposalsVoted": 0,
+      "votesMantissa": "50000000000000000000",
+      "stakedVotesMantissa": "55000000000000000000",
+      "delegate": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc"
+    },
+    {
+      "address": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A",
+      "voteWeight": "0.26227211824242645333",
+      "proposalsVoted": 16,
+      "votesMantissa": "4.02180426591398612445922e+23",
+      "stakedVotesMantissa": "1.00000054991398612445922e+23",
+      "delegate": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A"
+    },
+    {
+      "address": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D",
+      "voteWeight": "0.19125097865572056809",
+      "proposalsVoted": 31,
+      "votesMantissa": "3.020803716e+23",
+      "stakedVotesMantissa": "3.020803716e+23",
+      "delegate": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D"
+    },
+    {
+      "address": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C",
+      "voteWeight": "0.19564012962507825585",
+      "proposalsVoted": 25,
+      "votesMantissa": "3.000037949832e+23",
+      "stakedVotesMantissa": "3.000037949832e+23",
+      "delegate": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C"
+    },
+    {
+      "address": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7",
+      "voteWeight": "0.00000652125516065668",
+      "proposalsVoted": 0,
+      "votesMantissa": "10000000000000000000",
+      "stakedVotesMantissa": "10000000000000000000",
+      "delegate": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7"
+    },
+    {
+      "address": "0x54950126D02532F852920A04f46359E617F48f3D",
+      "voteWeight": "0",
+      "proposalsVoted": 0,
+      "votesMantissa": "0",
+      "stakedVotesMantissa": "310413900000000000000",
+      "delegate": null
+    }
+  ],
+  "total": 7
+}

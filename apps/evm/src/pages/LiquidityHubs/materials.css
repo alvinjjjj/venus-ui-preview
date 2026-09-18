@@ -1,0 +1,74 @@
+/* Reference trials scoped to Liquidity Hubs. Material tokens describe Atlas-like
+   satin controls and Legend-like frosted notes; baseline design tokens stay intact. */
+:root[data-glass-version='v2']:has(.liquidity-hubs-page, .component-gallery) {
+  --glass-radius: 16px;
+  --glass-fill: color-mix(in srgb, var(--color-background) 94%, transparent);
+  --glass-edge: rgb(216 225 235 / 16%);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 10%);
+  --glass-shadow: 0 12px 32px rgb(0 0 0 / 12%);
+  --glass-button-top: #70b5e7;
+  --glass-button-bottom: #2673aa;
+  --glass-button-shadow: inset 0 1px 1px rgb(255 255 255 / 65%), inset 0 -2px 2px rgb(0 31 62 / 22%), 0 3px 6px rgb(0 0 0 / 18%);
+}
+:root[data-glass-version='v2']:has(.liquidity-hubs-page, .component-gallery) body {
+  background-image: radial-gradient(ellipse at 50% 0%, rgb(165 183 201 / 9%), transparent 65%);
+}
+:root[data-glass-version='v3']:has(.liquidity-hubs-page, .component-gallery) {
+  --glass-radius: 16px;
+  --glass-fill: color-mix(in srgb, var(--color-background-hover) 85%, transparent);
+  --glass-edge: rgb(227 223 214 / 12%);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 12%);
+  --glass-shadow: 0 24px 48px rgb(0 0 0 / 16%);
+  --glass-button-radius: 12px;
+  --glass-button-top: #424b53;
+  --glass-button-bottom: #343d46;
+  --glass-button-shadow: inset 0 1px 0 rgb(255 255 255 / 20%), 0 2px 5px rgb(0 0 0 / 12%);
+}
+:root[data-glass-version='v3']:has(.liquidity-hubs-page, .component-gallery) body {
+  background-image: radial-gradient(ellipse at 10% 10%, rgb(178 157 127 / 12%), transparent 65%), radial-gradient(ellipse at 95% 80%, rgb(136 156 161 / 10%), transparent 65%);
+}
+:root[data-glass-version='v3'][data-liquidity-theme='light']:has(.liquidity-hubs-page, .component-gallery) {
+  --glass-fill: rgb(253 252 248 / 86%);
+  --glass-edge: rgb(255 255 255 / 85%);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 95%);
+  --glass-shadow: 0 24px 48px rgb(70 59 43 / 10%);
+}
+:root[data-glass-version='v2'][data-liquidity-theme='light']:has(.liquidity-hubs-page, .component-gallery) {
+  --glass-fill: rgb(255 255 255 / 80%);
+  --glass-edge: rgb(111 132 151 / 18%);
+  --glass-highlight: inset 0 1px 0 white;
+  --glass-shadow: 0 12px 32px rgb(46 66 86 / 6%);
+}
+:root:is([data-glass-version='v2'],[data-glass-version='v3']):has(.liquidity-hubs-page, .component-gallery) .venus-primary-action:not(:disabled) {
+  text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+}
+:root:is([data-glass-version='v2'],[data-glass-version='v3']) .liquidity-hubs-table {
+  backdrop-filter: none;
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+:root[data-glass-version='v3'] .liquidity-hubs-stat-header > .venus-glass-card {
+  padding: calc(var(--spacing) * 6) calc(var(--spacing) * 8);
+}
+:root:is([data-glass-version='v2'],[data-glass-version='v3']) .liquidity-hubs-table input {
+  box-shadow: none;
+}
+@media (hover:hover) {
+  :root:is([data-glass-version='v2'],[data-glass-version='v3']):has(.liquidity-hubs-page, .component-gallery) .venus-primary-action:not(:disabled):hover {
+    filter: brightness(1.05);
+  }
+}
+@media (max-width:767px) {
+  :root:is([data-glass-version='v2'],[data-glass-version='v3']) .liquidity-hubs-table {
+    background: transparent;
+    box-shadow: none;
+  }
+  :root:is([data-glass-version='v2'],[data-glass-version='v3']) .liquidity-hubs-table .venus-glass-card {
+    background: var(--glass-fill);
+    border-color: var(--glass-edge);
+    box-shadow: var(--glass-highlight);
+  }
+}
+/* Icons inside tinted controls need the same contrast as their labels. */
+:root:is([data-glass-version='v2'],[data-glass-version='v3']):has(.liquidity-hubs-page, .component-gallery) .venus-primary-action:not(:disabled) svg {
+  color: #fff;
+}

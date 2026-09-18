@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SwapDetails > renders correctly 1`] = `"Slippage tolerance0.5%Price impact0.87%"`;

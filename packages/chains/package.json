@@ -1,0 +1,63 @@
+{
+  "name": "@venusprotocol/chains",
+  "version": "0.31.2",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VenusProtocol/venus-protocol-interface/tree/main/packages/chains"
+  },
+  "files": [
+    "build"
+  ],
+  "main": "./build/index.mjs",
+  "module": "./build/index.mjs",
+  "types": "./build/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.mts",
+      "require": "./build/index.mjs",
+      "import": "./build/index.mjs"
+    }
+  },
+  "scripts": {
+    "start": "yarn run build -- --watch ./src",
+    "test": "vitest run",
+    "build": "tsdown -d ./build",
+    "deploy-images": "src/scripts/deployImages/index.ts",
+    "clean": "rm -rf .turbo && rm -rf node_modules",
+    "lint": "biome check .",
+    "tsc": "tsc --noEmit",
+    "generate-token-icon-manifest": "rimraf src/generated/manifests/tokenIcons.json && tsx src/scripts/generateManifest/index.ts --dirPath=tokens --outputFileName=tokenIcons.ts",
+    "generate-chain-icon-manifest": "rimraf src/generated/manifests/chainIcon.json && tsx src/scripts/generateManifest/index.ts --dirPath=chains --outputFileName=chainIcons.ts",
+    "generate-v-tokens": "rimraf src/generated/vTokens && dotenvx run -f .env -- tsx src/scripts/generateVTokens/index.ts",
+    "generate-manifests": "npm-run-all --parallel generate-token-icon-manifest generate-chain-icon-manifest",
+    "generate": "genversion --es6 --semi src/constants/version.ts && yarn run generate-manifests && yarn run generate-v-tokens && yarn run build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.6.4",
+    "@rollup/plugin-url": "^8.0.2",
+    "@types/semver": "^7.5.8",
+    "@venusprotocol/isolated-pools": "4.4.0-slim",
+    "@venusprotocol/typescript-config": "*",
+    "@venusprotocol/venus-protocol": "10.3.0-slim",
+    "@vercel/blob": "^2.0.0",
+    "commander": "^14.0.1",
+    "genversion": "^3.2.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^19.2.0",
+    "rimraf": "^6.0.1",
+    "semver": "^7.7.1",
+    "tsdown": "^0.19.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.1.6",
+    "viem": "^2.23.1",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.51.0"
+  }
+}

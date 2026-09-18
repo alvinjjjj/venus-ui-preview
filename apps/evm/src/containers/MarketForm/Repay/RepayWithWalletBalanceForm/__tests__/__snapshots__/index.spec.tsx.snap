@@ -1,0 +1,53 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RepayWithWalletBalanceForm > displays the wallet spending limit correctly and lets user revoke it 1`] = `"Spending limit10 XVS"`;
+
+exports[`RepayWithWalletBalanceForm > lets user repay borrowed tokens then calls onClose callback on success 1`] = `
+[
+  {
+    "amountMantissa": "1000000000000000000",
+    "poolComptrollerContractAddress": "0x94d1820b2d1c7c7452a163983dc888cec546b77d",
+    "poolName": "Venus",
+    "repayFullLoan": false,
+    "vToken": {
+      "address": "0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+      "chainId": 97,
+      "decimals": 8,
+      "symbol": "vXVS",
+      "underlyingToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+    },
+    "wrap": false,
+  },
+]
+`;
+
+exports[`RepayWithWalletBalanceForm > lets user repay full loan 1`] = `
+[
+  {
+    "amountMantissa": "1e+21",
+    "poolComptrollerContractAddress": "0x94d1820b2d1c7c7452a163983dc888cec546b77d",
+    "poolName": "Venus",
+    "repayFullLoan": true,
+    "vToken": {
+      "address": "0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+      "chainId": 97,
+      "decimals": 8,
+      "symbol": "vXVS",
+      "underlyingToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+    },
+    "wrap": false,
+  },
+]
+`;

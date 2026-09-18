@@ -1,0 +1,31 @@
+import { cn } from '@venusprotocol/ui';
+import { Button, Icon } from 'components';
+import { PAGE_CONTAINER_ID } from 'constants/layout';
+
+import { useStore } from 'containers/Layout/store';
+import { forwardRef } from 'react';
+
+const ScrollToTop = forwardRef<HTMLButtonElement>((_, ref) => {
+  const isVisible = useStore(state => state.isScrollToTopVisible);
+  const isCloseToBottom = useStore(state => state.isCloseToBottom);
+
+  const handleScrollToTop = () => {
+    document.getElementById(PAGE_CONTAINER_ID)?.scrollTo({ behavior: 'smooth', top: 0 });
+  };
+
+  return (
+    <Button
+      ref={ref}
+      className={cn(
+        'bg-lightGrey fixed bottom-3 right-3 h-10 w-10 rounded-full border-0 p-0 shadow transition-all lg:hidden',
+        isVisible ? 'opacity-100' : 'pointer-events-none opacity-0',
+        isCloseToBottom ? '-translate-y-[125%]' : 'translate-y-0',
+      )}
+      onClick={handleScrollToTop}
+    >
+      <Icon className="h-3 w-[10px]" name="arrowUpFull" />
+    </Button>
+  );
+});
+
+export default ScrollToTop;

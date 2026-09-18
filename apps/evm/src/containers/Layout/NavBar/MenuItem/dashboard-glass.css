@@ -1,0 +1,75 @@
+/* Apple variant navigation stays typographic; glass is reserved for actions. */
+:root[data-glass-version='v6'] #root [data-header-navigation] {
+ background: transparent;
+ box-shadow: none;
+ backdrop-filter: none;
+ color: var(--color-light-grey);
+ font-weight: 400;
+ text-decoration: none;
+ transform: none;
+ transition: color 160ms ease-out;
+}
+:root[data-glass-version='v6'] #root [data-header-navigation]:is(:hover, :active, :focus-visible, [aria-current='page'], [data-navigation-active='true']) {
+ background: transparent;
+ color: #fff;
+ font-weight: 600;
+ box-shadow: none;
+ transform: none;
+}
+/* Keep the same emphasis readable against the light header. */
+:root[data-glass-version='v6'][data-liquidity-theme='light'] #root [data-header-navigation]:is(:hover, :active, :focus-visible, [aria-current='page'], [data-navigation-active='true']) {
+ color: var(--color-white);
+}
+:root[data-glass-version='v6'] #root [data-header-navigation]:focus-visible {
+ outline: 2px solid var(--color-blue);
+ outline-offset: var(--spacing);
+}
+@media (prefers-reduced-motion: reduce) {
+ :root[data-glass-version='v6'] #root [data-header-navigation] { transition: none; }
+}
+
+/* Compact logo and shared spacing rhythm for the Apple variant header. */
+:root[data-glass-version='v6'] #root .venus-header-logo img { height: calc(var(--spacing) * 6); width: auto; }
+:root[data-glass-version='v6'] #root .venus-header-logo { padding-block: calc(var(--spacing) * 5); }
+:root[data-glass-version='v6'] #root .venus-header-links { column-gap: var(--spacing); }
+:root[data-glass-version='v6'] #root .venus-header-actions { column-gap: calc(var(--spacing) * 2); }
+@media (min-width: 1024px) {
+ :root[data-glass-version='v6'] #root .venus-header-row { padding-inline: calc(var(--spacing) * 6); }
+ :root[data-glass-version='v6'] #root .venus-header-logo { padding-inline: 0; }
+ :root[data-glass-version='v6'] #root .venus-header-leading { column-gap: calc(var(--spacing) * 3); }
+ :root[data-glass-version='v6'] #root .venus-header-row [data-header-navigation] { padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4); line-height: calc(var(--spacing) * 5); }
+}
+
+/* Compact header: 64px keeps the 48px desktop controls comfortably centered. */
+:root[data-glass-version='v6'] #root .venus-header-row { height: calc(var(--spacing) * 16); }
+:root[data-glass-version='v6'] #root .venus-header-logo { padding-block: calc(var(--spacing) * 3); }
+:root[data-glass-version='v6'] #root .venus-mobile-navigation { top: calc(var(--spacing) * 16); }
+
+/* Place the announcement beside its label, before the dropdown chevron. */
+:root[data-glass-version='v6'] #root [data-header-navigation] > .venus-navigation-badge {
+ position: static;
+ order: 1;
+ flex-shrink: 0;
+}
+:root[data-glass-version='v6'] #root [data-header-navigation] > :not(span) { order: 2; }
+
+
+/* Connected state retains its original identity icon and address. */
+:root[data-glass-version='v6'] #root .venus-connected-wallet {
+ border-radius: 999px;
+ background: rgb(255 255 255 / 7%);
+ box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), 0 3px 8px rgb(0 0 0 / 10%);
+ font-size: 14px;
+}
+:root[data-glass-version='v6'] #root .venus-connected-wallet > div {
+ border-radius: inherit;
+ background: transparent;
+}
+:root[data-glass-version='v6'] #root .venus-connected-wallet:hover > div { background: rgb(255 255 255 / 6%); }
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-navigation-chevron {
+  transition: transform 220ms ease-out, rotate 220ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-navigation-chevron { transition: none; }
+}

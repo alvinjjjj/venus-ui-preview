@@ -1,0 +1,3 @@
+[data-motion-study] { display: none; }
+:root[data-glass-version='blue-v2'] [data-motion-study='blue-v2'],
+:root[data-glass-version='v3'] [data-motion-study='v3'] { display: block; }

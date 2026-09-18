@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getXvsVaultUserInfo > returns user info related to XVS vault in correct format on success 1`] = `
+{
+  "pendingWithdrawalsTotalAmountMantissa": "2000000000000000000",
+  "rewardDebtAmountMantissa": "1000000000000000000",
+  "stakedAmountMantissa": "30000000000000000000",
+}
+`;

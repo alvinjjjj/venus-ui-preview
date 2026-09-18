@@ -1,0 +1,205 @@
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import BigNumber from 'bignumber.js';
+import type { Mock } from 'vitest';
+
+import fakeAccountAddress from '__mocks__/models/address';
+import { pendleBnbVault } from '__mocks__/models/vaults';
+import { useGetBalanceOf, useGetPendleSwapQuote, useStakeInPendleVault } from 'clients/api';
+import type { GetPendleSwapQuoteOutput } from 'clients/api';
+import { NULL_ADDRESS } from 'constants/address';
+import { useGetContractAddress } from 'hooks/useGetContractAddress';
+import { useGetUserSlippageTolerance } from 'hooks/useGetUserSlippageTolerance';
+import useTokenApproval from 'hooks/useTokenApproval';
+import { en } from 'libs/translations';
+import { renderComponent } from 'testUtils/render';
+import { convertTokensToMantissa, formatTokensToReadableValue } from 'utilities';
+import type { Address } from 'viem';
+
+import { DepositForm } from '..';
+
+vi.mock('hooks/useGetUserSlippageTolerance');
+vi.mock('hooks/useDebounceValue', () => ({
+  default: (value: unknown) => value,
+}));
+
+const fakePendlePtVaultAddress = '0xfakePendlePtVaultContractAddress' as Address;
+const fakePendleMarketAddress = '0xfakePendleMarketAddress' as Address;
+const fakeWalletBalanceMantissa = new BigNumber('12000000000000000000');
+type GetPendleSwapQuoteCall = [
+  Parameters<typeof useGetPendleSwapQuote>[0],
+  Parameters<typeof useGetPendleSwapQuote>[1],
+];
+
+const vault = pendleBnbVault;
+
+const fakeSwapQuote: GetPendleSwapQuoteOutput = {
+  estimatedReceivedTokensMantissa: new BigNumber('3100000000000000000'),
+  feeCents: new BigNumber(25),
+  priceImpactPercentage: 0.1,
+  pendleMarketAddress: fakePendleMarketAddress,
+  contractCallParamsName: [],
+  contractCallParams: [] as unknown as GetPendleSwapQuoteOutput['contractCallParams'],
+  requiredApprovals: [],
+};
+
+describe('DepositForm', () => {
+  beforeEach(() => {
+    (useGetBalanceOf as Mock).mockReturnValue({
+      data: {
+        balanceMantissa: fakeWalletBalanceMantissa,
+      },
+      isLoading: false,
+    });
+
+    (useGetContractAddress as Mock).mockReturnValue({
+      address: fakePendlePtVaultAddress,
+    });
+
+    (useGetUserSlippageTolerance as Mock).mockReturnValue({
+      userSlippageTolerancePercentage: 0.5,
+    });
+
+    (useGetPendleSwapQuote as Mock).mockImplementation(
+      (_input: unknown, options?: { enabled?: boolean }) => ({
+        data: options?.enabled ? fakeSwapQuote : undefined,
+        error: null,
+        isLoading: false,
+      }),
+    );
+
+    (useStakeInPendleVault as Mock).mockReturnValue({
+      mutateAsync: vi.fn().mockResolvedValue(undefined),
+    });
+
+    (useTokenApproval as Mock).mockReturnValue({
+      isTokenApproved: true,
+      isWalletSpendingLimitLoading: false,
+      isApproveTokenLoading: false,
+      isRevokeWalletSpendingLimitLoading: false,
+      walletSpendingLimitTokens: new BigNumber(100),
+      approveToken: vi.fn(),
+      revokeWalletSpendingLimit: vi.fn().mockResolvedValue(undefined),
+    });
+  });
+
+  it('displays the disconnected state and skips the amount field', async () => {
+    renderComponent(<DepositForm vault={vault} onClose={vi.fn()} />);
+
+    await waitFor(() =>
+      expect(screen.getByText(en.vault.modals.connectWalletMessage)).toBeInTheDocument(),
+    );
+    expect(screen.queryByPlaceholderText('0.00')).not.toBeInTheDocument();
+
+    expect(useGetBalanceOf).toHaveBeenCalledWith(
+      {
+        accountAddress: NULL_ADDRESS,
+        token: vault.stakedToken,
+      },
+      {
+        enabled: false,
+      },
+    );
+  });
+
+  it('caps the available amount by the remaining supply cap and requests a quote for that amount', async () => {
+    const expectedLimit = new BigNumber(3);
+
+    renderComponent(<DepositForm vault={vault} onClose={vi.fn()} />, {
+      accountAddress: fakeAccountAddress,
+    });
+    const input = screen.getByPlaceholderText('0.00') as HTMLInputElement;
+
+    const readableLimit = formatTokensToReadableValue({
+      value: expectedLimit,
+      token: vault.stakedToken,
+    });
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: readableLimit,
+      }),
+    );
+
+    await waitFor(() => expect(input.value).toBe('3'));
+    await waitFor(() =>
+      expect(useTokenApproval).toHaveBeenCalledWith(
+        expect.objectContaining({
+          accountAddress: fakeAccountAddress,
+          spenderAddress: fakePendlePtVaultAddress,
+          token: vault.stakedToken,
+        }),
+      ),
+    );
+
+    expect(
+      (useGetPendleSwapQuote as Mock).mock.calls.some(call => {
+        const [quoteInput, quoteOptions] = call as GetPendleSwapQuoteCall;
+
+        return (
+          quoteInput.fromToken === vault.stakedToken &&
+          quoteInput.toToken === vault.rewardToken &&
+          quoteInput.amountTokens.toFixed() === '3' &&
+          quoteInput.slippagePercentage === 0.5 &&
+          quoteOptions?.enabled === true
+        );
+      }),
+    ).toBe(true);
+  });
+
+  it('submits the deposit with the swap quote and closes the modal', async () => {
+    const onClose = vi.fn();
+    const deposit = vi.fn().mockResolvedValue(undefined);
+    const expectedAmountTokens = new BigNumber(3);
+
+    (useStakeInPendleVault as Mock).mockReturnValue({
+      mutateAsync: deposit,
+    });
+
+    renderComponent(<DepositForm vault={vault} onClose={onClose} />, {
+      accountAddress: fakeAccountAddress,
+    });
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: formatTokensToReadableValue({
+          value: expectedAmountTokens,
+          token: vault.stakedToken,
+        }),
+      }),
+    );
+
+    await waitFor(() =>
+      expect(useStakeInPendleVault).toHaveBeenLastCalledWith({
+        pendleMarketAddress: fakePendleMarketAddress,
+        isNative: true,
+      }),
+    );
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', {
+          name: en.vault.modals.deposit,
+        }),
+      ).toBeEnabled(),
+    );
+
+    fireEvent.click(
+      screen.getByRole('button', {
+        name: en.vault.modals.deposit,
+      }),
+    );
+
+    await waitFor(() => expect(deposit).toHaveBeenCalledTimes(1));
+    expect(deposit).toHaveBeenCalledWith({
+      swapQuote: fakeSwapQuote,
+      type: 'deposit',
+      fromToken: vault.stakedToken,
+      toToken: vault.rewardToken,
+      amountMantissa: convertTokensToMantissa({
+        value: expectedAmountTokens,
+        token: vault.stakedToken,
+      }),
+      vToken: vault.asset.vToken,
+    });
+    await waitFor(() => expect(onClose).toHaveBeenCalledTimes(1));
+  });
+});

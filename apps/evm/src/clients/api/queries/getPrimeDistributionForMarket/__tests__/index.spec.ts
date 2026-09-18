@@ -1,0 +1,36 @@
+import type { Address, PublicClient } from 'viem';
+
+import { vUsdtCorePool } from '__mocks__/models/vTokens';
+
+import { getPrimeDistributionForMarket } from '..';
+
+vi.mock('libs/contracts');
+
+describe('getPrimeDistributionForMarket', () => {
+  it('returns the amount of rewards distributed for a given market', async () => {
+    const rewards = '1000000000';
+    const fakePrimeContractAddress = '0x00000000000000000000000000000000PrImE';
+
+    const readContractMock = vi.fn(async () => BigInt(rewards));
+
+    const fakePublicClient = {
+      readContract: readContractMock,
+    } as unknown as PublicClient;
+
+    const response = await getPrimeDistributionForMarket({
+      vTokenAddress: vUsdtCorePool.address,
+      primeContractAddress: fakePrimeContractAddress as Address,
+      primeVersion: 1,
+      publicClient: fakePublicClient,
+    });
+
+    expect(readContractMock).toHaveBeenCalledTimes(1);
+    expect(readContractMock).toHaveBeenCalledWith({
+      address: fakePrimeContractAddress,
+      abi: expect.any(Object),
+      functionName: 'incomeDistributionYearly',
+      args: [vUsdtCorePool.address],
+    });
+    expect(response).toMatchSnapshot();
+  });
+});

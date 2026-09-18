@@ -1,0 +1,81 @@
+import { waitFor } from '@testing-library/react';
+import { useSearchParams } from 'react-router';
+import type { Mock } from 'vitest';
+
+import { renderHook } from 'testUtils/render';
+
+import { PAGE_PARAM_DEFAULT_KEY, useUrlPagination } from '..';
+
+vi.mock('react-router', async () => {
+  const actual = (await vi.importActual('react-router')) as any;
+
+  return {
+    ...actual,
+    useSearchParams: vi.fn(),
+  };
+});
+
+describe('useUrlPagination', () => {
+  it('defaults to page 1 if no page param is set', () => {
+    const mockSearchParams = new URLSearchParams();
+    const mockSetSearchParams = vi.fn();
+
+    (useSearchParams as Mock).mockImplementation(() => [mockSearchParams, mockSetSearchParams]);
+
+    const { result } = renderHook(() => useUrlPagination());
+
+    expect(result.current.currentPage).toBe(0);
+    expect(mockSetSearchParams).toHaveBeenCalledWith(expect.any(Function), { replace: true });
+  });
+
+  it('returns current page correctly when page param is set', () => {
+    const mockSearchParams = new URLSearchParams();
+    mockSearchParams.set(PAGE_PARAM_DEFAULT_KEY, '3');
+    const mockSetSearchParams = vi.fn();
+
+    (useSearchParams as Mock).mockImplementation(() => [mockSearchParams, mockSetSearchParams]);
+
+    const { result } = renderHook(() => useUrlPagination());
+
+    expect(result.current.currentPage).toBe(2);
+  });
+
+  it.each(['0', '-1', 'abc', '1.5'])(
+    'falls back to the first page when the page param is invalid (%s)',
+    invalidPage => {
+      const mockSearchParams = new URLSearchParams();
+      mockSearchParams.set(PAGE_PARAM_DEFAULT_KEY, invalidPage);
+      const mockSetSearchParams = vi.fn();
+
+      (useSearchParams as Mock).mockImplementation(() => [mockSearchParams, mockSetSearchParams]);
+
+      const { result } = renderHook(() => useUrlPagination());
+
+      expect(result.current.currentPage).toBe(0);
+      expect(mockSetSearchParams).toHaveBeenCalledWith(expect.any(Function), { replace: true });
+    },
+  );
+
+  it('sets the page index correctly', async () => {
+    const mockSearchParams = new URLSearchParams({
+      [PAGE_PARAM_DEFAULT_KEY]: '9999',
+    });
+    const mockSetSearchParams = vi.fn();
+
+    (useSearchParams as Mock).mockImplementation(() => [mockSearchParams, mockSetSearchParams]);
+
+    const { result } = renderHook(() => useUrlPagination());
+
+    result.current.setCurrentPage(2);
+
+    await waitFor(() =>
+      expect(mockSetSearchParams).toHaveBeenCalledWith(expect.any(Function), undefined),
+    );
+
+    const mockSetSearchParamsInput = mockSetSearchParams.mock.calls[0][0];
+    expect(mockSetSearchParams.mock.calls[0]).toHaveLength(2);
+    expect(mockSetSearchParamsInput(mockSearchParams)).toEqual({
+      [PAGE_PARAM_DEFAULT_KEY]: '3',
+    });
+  });
+});

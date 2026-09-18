@@ -1,0 +1,30 @@
+import type { DropdownProps } from 'components/Dropdown';
+
+export interface SelectOption<TValue extends string | number = string | number> {
+  disabled?: boolean;
+  value: TValue;
+  label:
+    | string
+    | React.ReactNode
+    | ((context: { isRenderedInButton: boolean }) => string | React.ReactNode);
+}
+
+export interface SelectProps<TValue extends string | number = string | number>
+  extends Pick<DropdownProps, 'optionClassName' | 'triggerOnHover' | 'modalPortalContainer'> {
+  value: TValue;
+  options: SelectOption<TValue>[];
+  onChange: (newValue: TValue) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
+  name?: string;
+  'data-testid'?: string;
+  placeLabelToLeft?: boolean;
+  label?: string;
+  className?: string;
+  dropdownClassName?: string;
+  buttonClassName?: string;
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
+  menuTitle?: string;
+  menuPosition?: 'left' | 'right';
+  disabled?: boolean;
+}

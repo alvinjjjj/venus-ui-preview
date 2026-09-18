@@ -1,0 +1,66 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getTokenBalances > returns token balances in the right format on success 1`] = `
+{
+  "tokenBalances": [
+    {
+      "balanceMantissa": "1000000000000000000",
+      "token": {
+        "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-busd-asset",
+        "symbol": "BUSD",
+      },
+    },
+    {
+      "balanceMantissa": "1000000000000000000",
+      "token": {
+        "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-lisusd-asset",
+        "symbol": "lisUSD",
+      },
+    },
+  ],
+}
+`;
+
+exports[`getTokenBalances > returns token balances, including native token, in the right format on success 1`] = `
+{
+  "tokenBalances": [
+    {
+      "balanceMantissa": "1000000000000000000",
+      "token": {
+        "address": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-busd-asset",
+        "symbol": "BUSD",
+      },
+    },
+    {
+      "balanceMantissa": "1000000000000000000",
+      "token": {
+        "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-lisusd-asset",
+        "symbol": "lisUSD",
+      },
+    },
+    {
+      "balanceMantissa": "1000000000000000000",
+      "token": {
+        "address": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-bnb-asset",
+        "isNative": true,
+        "symbol": "BNB",
+      },
+    },
+  ],
+}
+`;

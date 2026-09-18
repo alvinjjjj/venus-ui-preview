@@ -1,0 +1,1426 @@
+import {
+  type MutationObserverOptions,
+  type QueryObserverOptions,
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
+
+import fakeAddress from '__mocks__/models/address';
+import { assetData } from '__mocks__/models/asset';
+import { importablePositions } from '__mocks__/models/importablePositions';
+import { liquidityHubSnapshots } from '__mocks__/models/liquidityHubSnapshots';
+import { liquidityHubs } from '__mocks__/models/liquidityHubs';
+import { poolData } from '__mocks__/models/pools';
+import { primeEstimationData } from '__mocks__/models/primeEstimation';
+import { usdc, xvs } from '__mocks__/models/tokens';
+import { tradePositions } from '__mocks__/models/trade';
+import { transactions } from '__mocks__/models/transactions';
+import { fixedRatedVaults, vaults } from '__mocks__/models/vaults';
+import voters from '__mocks__/models/voters';
+
+import FunctionKey from 'constants/functionKey';
+
+import { proposals } from '__mocks__/models/proposals';
+import type { Token, VToken } from 'types';
+import type { Address } from 'viem';
+import type { GetBalanceOfInput } from '../queries/getBalanceOf';
+import type { GetTokenBalancesInput } from '../queries/getTokenBalances';
+import type { GetVTokenBalancesInput } from '../queries/getVTokenBalances';
+
+export const queryClient = {
+  invalidateQueries: vi.fn(),
+};
+
+// Queries
+export const getIsAddressAuthorized = vi.fn(async accountAddress => fakeAddress !== accountAddress);
+export const useGetIsAddressAuthorized = vi.fn((accountAddress: Address) =>
+  useQuery({
+    queryKey: [FunctionKey.GET_IS_ADDRESS_AUTHORIZED],
+    queryFn: () => getIsAddressAuthorized(accountAddress),
+  }),
+);
+
+export const getBlockNumber = vi.fn(async () => 51236217);
+export const useGetBlockNumber = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_BLOCK_NUMBER],
+    queryFn: getBlockNumber,
+  }),
+);
+
+export const getVaiTreasuryPercentage = vi.fn();
+export const useGetVaiTreasuryPercentage = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VAI_TREASURY_PERCENTAGE],
+    queryFn: getVaiTreasuryPercentage,
+  }),
+);
+
+export const getProportionalCloseTolerancePercentage = vi.fn(() => ({
+  proportionalCloseTolerancePercentage: 2,
+}));
+export const useGetProportionalCloseTolerancePercentage = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPORTIONAL_CLOSE_TOLERANCE_PERCENTAGE],
+    queryFn: getProportionalCloseTolerancePercentage,
+  }),
+);
+
+export const getDsaVTokens = vi.fn(async () => ({
+  dsaVTokenAddresses: [
+    poolData[0].assets[0].vToken.address,
+    poolData[0].assets[1].vToken.address,
+    poolData[0].assets[2].vToken.address,
+  ],
+}));
+export const useGetDsaVTokens = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_DSA_V_TOKENS],
+    queryFn: getDsaVTokens,
+  }),
+);
+
+export const getMarketHistory = vi.fn();
+export const useGetMarketHistory = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_MARKET_HISTORY],
+    queryFn: getMarketHistory,
+  }),
+);
+
+export const getTokenPairKLineCandles = vi.fn(() => ({
+  candles: [],
+}));
+export const useGetTokenPairKLineCandles = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_TOKEN_PAIR_K_LINE_CANDLES],
+    queryFn: getTokenPairKLineCandles,
+  }),
+);
+
+export const getMintableVai = vi.fn();
+export const useGetMintableVai = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_MINTABLE_VAI],
+    queryFn: getMintableVai,
+  }),
+);
+
+export const getPendingRewards = vi.fn();
+export const useGetPendingRewards = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PENDING_REWARDS],
+    queryFn: getPendingRewards,
+  }),
+);
+
+export const getVTokenBalance = vi.fn();
+export const useGetVTokenBalance = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_V_TOKEN_BALANCE],
+    queryFn: getVTokenBalance,
+  }),
+);
+
+export const getAllowance = vi.fn();
+export const useGetAllowance = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_TOKEN_ALLOWANCE],
+    queryFn: getAllowance,
+  }),
+);
+
+export const getBalanceOf = vi.fn();
+export const useGetBalanceOf = vi.fn((input: Omit<GetBalanceOfInput, 'signer'>) =>
+  useQuery({
+    queryKey: [
+      FunctionKey.GET_BALANCE_OF,
+      {
+        accountAddress: input.accountAddress,
+        tokenAddress: input.token?.address,
+      },
+    ],
+    queryFn: () => getBalanceOf(input),
+  }),
+);
+
+export const getTokenBalances = vi.fn(async ({ tokens }: { tokens: Token[] }) => ({
+  tokenBalances: tokens.map(token => ({
+    token,
+    balanceMantissa: new BigNumber('10000000000000000000'),
+  })),
+}));
+
+export const useGetTokenBalances = vi.fn(
+  (input: GetTokenBalancesInput, options?: Partial<QueryObserverOptions>) =>
+    useQuery({
+      queryKey: [FunctionKey.GET_TOKEN_BALANCES],
+      queryFn: () => getTokenBalances(input),
+      ...options,
+    }),
+);
+
+export const getVTokenBalances = vi.fn(async ({ vTokens }: { vTokens: VToken[] }) => ({
+  vTokenBalances: vTokens.map(vToken => ({
+    vToken,
+    balanceMantissa: new BigNumber('10000000000000000000'),
+  })),
+}));
+
+export const useGetVTokenBalances = vi.fn(
+  (input: GetVTokenBalancesInput, options?: Partial<QueryObserverOptions>) =>
+    useQuery({
+      queryKey: [FunctionKey.GET_VTOKEN_BALANCES],
+      queryFn: () => getVTokenBalances(input),
+      ...options,
+    }),
+);
+
+export const getProposalMinQuorumVotes = vi.fn();
+export const useGetProposalMinQuorumVotes = () =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_MIN_QUORUM_VOTES],
+    queryFn: getProposalMinQuorumVotes,
+  });
+
+export const getVTokenInterestRateModel = vi.fn();
+export const useGetVTokenInterestRateModel = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_V_TOKEN_INTEREST_RATE_MODEL],
+    queryFn: getVTokenInterestRateModel,
+  }),
+);
+
+export const getVTokenApySimulations = vi.fn();
+export const useGetVTokenApySimulations = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_V_TOKEN_APY_SIMULATIONS],
+    queryFn: getVTokenApySimulations,
+  }),
+);
+
+export const getVTokenSupplyRate = vi.fn();
+
+export const getVTokenBorrowRate = vi.fn();
+
+export const getVenusVaiVaultDailyRate = vi.fn();
+export const useGetVenusVaiVaultDailyRate = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VENUS_VAI_VAULT_DAILY_RATE],
+    queryFn: getVenusVaiVaultDailyRate,
+  }),
+);
+
+export const getXvsVaultPoolCount = vi.fn();
+export const useGetXvsVaultPoolCount = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_POOLS_COUNT],
+    queryFn: getXvsVaultPoolCount,
+  }),
+);
+
+export const getXvsVaultUserPendingWithdrawalsFromBeforeUpgrade = vi.fn();
+export const useGetXvsVaultUserPendingWithdrawalsFromBeforeUpgrade = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_PENDING_WITHDRAWALS_FROM_BEFORE_UPGRADE],
+    queryFn: getXvsVaultUserPendingWithdrawalsFromBeforeUpgrade,
+  }),
+);
+
+export const getIpLocation = vi.fn(async () => ({
+  countryCode: 'US',
+}));
+export const useGetIpLocation = vi.fn((options?: Partial<QueryObserverOptions>) =>
+  useQuery({
+    queryKey: [FunctionKey.GET_IP_LOCATION],
+    queryFn: getIpLocation,
+    ...options,
+  }),
+);
+
+export const useGetPools = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    pools: poolData,
+  },
+}));
+
+export const useGetPool = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    pool: poolData[0],
+  },
+}));
+
+export const getLiquidityHubs = vi.fn(async () => ({
+  liquidityHubs,
+}));
+
+export const useGetLiquidityHubs = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    liquidityHubs,
+  },
+}));
+
+export const useGetChainIdsWithIsolatedPoolPosition = vi.fn(() => ({
+  isLoading: false,
+  chainIds: [],
+}));
+
+export const getLiquidityHub = vi.fn(async () => ({
+  liquidityHub: liquidityHubs[0],
+}));
+
+export const useGetLiquidityHub = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    liquidityHub: liquidityHubs[0],
+  },
+}));
+
+export const getLiquidityHubHistory = vi.fn(async () => ({
+  liquidityHubSnapshots,
+}));
+
+export const useGetLiquidityHubHistory = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    liquidityHubSnapshots,
+  },
+}));
+
+export const useGetSimulatedPool = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    pool: undefined,
+  },
+}));
+
+export const useGetPrimeVaultConfig = vi.fn(() => ({
+  isLoading: false,
+  data: undefined,
+}));
+
+export const useGetAsset = vi.fn(() => ({
+  isLoading: false,
+  data: {
+    assets: assetData[0],
+  },
+}));
+
+export const useGetVaults = vi.fn(() => ({
+  isLoading: false,
+  data: vaults,
+}));
+
+export const getXvsVaultPoolInfo = vi.fn();
+export const useGetXvsVaultPoolInfo = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_POOL_INFOS],
+    queryFn: getXvsVaultPoolInfo,
+  }),
+);
+
+export const getXvsVaultsTotalDailyDistributedXvs = vi.fn();
+export const useGetXvsVaultsTotalDailyDistributedXvs = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_DAILY_REWARD_TOKENS],
+    queryFn: getXvsVaultsTotalDailyDistributedXvs,
+  }),
+);
+
+export const getXvsVaultTotalAllocationPoints = vi.fn();
+export const useGetXvsVaultTotalAllocationPoints = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_TOTAL_ALLOCATION_POINTS],
+    queryFn: getXvsVaultTotalAllocationPoints,
+  }),
+);
+
+export const getXvsVaultLockedDeposits = vi.fn();
+export const useGetXvsVaultLockedDeposits = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_WITHDRAWAL_REQUESTS],
+    queryFn: getXvsVaultLockedDeposits,
+  }),
+);
+
+export const getXvsVaultUserInfo = vi.fn(() => ({
+  stakedAmountMantissa: new BigNumber('1000000'),
+}));
+
+export const useGetXvsVaultUserInfo = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_USER_INFO],
+    queryFn: getXvsVaultUserInfo,
+  }),
+);
+
+export const getCurrentVotes = vi.fn(async () => ({
+  votesMantissa: new BigNumber(100000000000000000),
+}));
+export const useGetCurrentVotes = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_CURRENT_VOTES],
+    queryFn: getCurrentVotes,
+  }),
+);
+
+export const getProposals = vi.fn(async () => ({
+  proposals,
+  total: 100,
+}));
+export const useGetProposals = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSALS],
+    queryFn: getProposals,
+  }),
+);
+
+export const getProposal = vi.fn(async () => proposals[0]);
+export const useGetProposal = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL],
+    queryFn: getProposal,
+  }),
+);
+
+export const getVoters = vi.fn(async () => voters);
+export const useGetVoters = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTERS],
+    queryFn: getVoters,
+  }),
+);
+
+export const getVoterHistory = vi.fn();
+export const useGetVoterHistory = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTER_HISTORY],
+    queryFn: getVoterHistory,
+  }),
+);
+
+export const getVoterDetails = vi.fn();
+export const useGetVoterDetails = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTER_DETAILS],
+    queryFn: getVoterDetails,
+  }),
+);
+
+export const getVoteReceipt = vi.fn();
+export const useGetVoteReceipt = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTE_RECEIPT],
+    queryFn: getVoteReceipt,
+  }),
+);
+
+export const getVaiVaultUserInfo = vi.fn();
+export const useGetVaiVaultUserInfo = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VAI_VAULT_USER_INFO],
+    queryFn: getVaiVaultUserInfo,
+  }),
+);
+
+export const useGetVestingVaults = vi.fn(() => ({
+  data: [],
+  isLoading: false,
+}));
+
+export const getVoteDelegateAddress = vi.fn();
+export const useGetVoteDelegateAddress = () =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTE_DELEGATE_ADDRESS, fakeAddress],
+    queryFn: getVoteDelegateAddress,
+  });
+
+export const getLatestProposalIdByProposer = vi.fn();
+export const useGetLatestProposalIdByProposer = () =>
+  useQuery({
+    queryKey: [FunctionKey.GET_LATEST_PROPOSAL_ID_BY_PROPOSER, fakeAddress],
+    queryFn: getLatestProposalIdByProposer,
+  });
+export const useGetActiveProposal = vi.fn();
+
+export const getVoterAccounts = vi.fn();
+export const useGetVoterAccounts = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VOTER_ACCOUNTS],
+    queryFn: getVoterAccounts,
+  }),
+);
+
+export const getProposalThreshold = vi.fn(async () => new BigNumber('10000000000000000000000'));
+export const useGetProposalThreshold = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_THRESHOLD],
+    queryFn: getProposalThreshold,
+  }),
+);
+
+export const getProposalState = vi.fn();
+export const useGetProposalState = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_STATE],
+    queryFn: getProposalState,
+  }),
+);
+
+export const getProposalEta = vi.fn();
+export const useGetProposalEta = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_ETA],
+    queryFn: getProposalEta,
+  }),
+);
+
+export const getPancakeSwapPairs = vi.fn();
+export const useGetPancakeSwapPairs = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PANCAKE_SWAP_PAIRS],
+    queryFn: getPancakeSwapPairs,
+  }),
+);
+
+export const getPrimeToken = vi.fn(async () => ({
+  isAccountPrime: false,
+}));
+export const useGetPrimeToken = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_TOKEN],
+    queryFn: getPrimeToken,
+  }),
+);
+
+export const getIsUserPrime = vi.fn(async () => ({
+  isPrime: false,
+}));
+export const useGetIsUserPrime = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_IS_USER_PRIME],
+    queryFn: getIsUserPrime,
+  }),
+);
+
+export const getPrimeStatus = vi.fn(async () => ({}));
+export const useGetPrimeStatus = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_STATUS],
+    queryFn: getPrimeStatus,
+  }),
+);
+
+export const getHypotheticalPrimeApys = vi.fn();
+export const useGetHypotheticalPrimeApys = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_HYPOTHETICAL_PRIME_APYS],
+    queryFn: getHypotheticalPrimeApys,
+  }),
+);
+
+export const getIsUserPrimeV2 = vi.fn(async () => ({
+  isPrimeHolder: false,
+}));
+export const useGetIsUserPrimeV2 = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_IS_USER_PRIME_V2],
+    queryFn: getIsUserPrimeV2,
+  }),
+);
+
+export const getLatestAppVersion = vi.fn();
+export const useGetLatestAppVersion = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_LATEST_APP_VERSION],
+    queryFn: getLatestAppVersion,
+  }),
+);
+
+export const getTokenUsdPrice = vi.fn(async () => ({ tokenPriceUsd: new BigNumber('1') }));
+export const useGetTokenUsdPrice = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_TOKEN_USD_PRICE],
+    queryFn: getTokenUsdPrice,
+  }),
+);
+
+export const getTokenListUsdPrice = vi.fn(async ({ tokens }: { tokens?: unknown[] } = {}) =>
+  Array.from({ length: tokens?.length || 0 }, () => ({
+    tokenPriceUsd: new BigNumber('1'),
+  })),
+);
+export const useGetTokenListUsdPrice = vi.fn(
+  (
+    { tokens }: { tokens: { address?: string }[] },
+    options?: {
+      enabled?: boolean;
+    },
+  ) =>
+    useQuery({
+      queryKey: [
+        FunctionKey.GET_TOKEN_USD_PRICE,
+        tokens?.map(token => ({
+          tokenAddress: token.address,
+        })),
+      ],
+      queryFn: () => getTokenListUsdPrice({ tokens }),
+      enabled: (options?.enabled === undefined || options.enabled) && Array.isArray(tokens),
+    }),
+);
+
+export const getPrimeEstimation = vi.fn(async () => primeEstimationData);
+export const useGetPrimeEstimation = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_ESTIMATION],
+    queryFn: getPrimeEstimation,
+  }),
+);
+
+export const getPrimeUserPendingRewards = vi.fn(async () => ({
+  blockNumber: '1',
+  isPrimeHolder: true,
+  rank: 2,
+  totalCurrentCycleUsdMantissa: '18400000000000000000000',
+  rewards: [],
+}));
+export const useGetPrimeUserPendingRewards = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_USER_PENDING_REWARDS],
+    queryFn: getPrimeUserPendingRewards,
+  }),
+);
+
+export const getPrimeEffectiveStake = vi.fn(async () => ({
+  effectiveStakeMantissa: new BigNumber('542500000').multipliedBy(1e18),
+  totalStakedMantissa: new BigNumber('5432').multipliedBy(1e18),
+}));
+export const useGetPrimeEffectiveStake = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_EFFECTIVE_STAKE],
+    queryFn: getPrimeEffectiveStake,
+  }),
+);
+
+export const getPrimeMultiplierTiers = vi.fn(async () => ({
+  tiers: [
+    { durationSeconds: 2592000, multiplierMantissa: new BigNumber('1.3e18') },
+    { durationSeconds: 5184000, multiplierMantissa: new BigNumber('1.6e18') },
+    { durationSeconds: 7776000, multiplierMantissa: new BigNumber('2e18') },
+  ],
+}));
+export const useGetPrimeMultiplierTiers = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_MULTIPLIER_TIERS],
+    queryFn: getPrimeMultiplierTiers,
+  }),
+);
+
+export const getPrimeDeposits = vi.fn(async () => ({
+  deposits: [],
+}));
+export const useGetPrimeDeposits = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_DEPOSITS],
+    queryFn: getPrimeDeposits,
+  }),
+);
+
+export const getPrimeTokenLimit = vi.fn(async () => ({
+  tokenLimit: 500,
+}));
+export const useGetPrimeTokenLimit = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_TOKEN_LIMIT],
+    queryFn: getPrimeTokenLimit,
+  }),
+);
+
+export const getPrimeMinimumStake = vi.fn(async () => ({
+  blockNumber: '1',
+  computedAt: null,
+  tokenLimit: 500,
+  totalTokens: 500,
+  mintThresholdMantissa: null,
+  minimumStakeMantissa: new BigNumber('10000').multipliedBy(1e18).toFixed(),
+  lastPrimeHolderAddress: xvs.address,
+  lastPrimeHolderEffectiveStakeMantissa: new BigNumber('10000').multipliedBy(1e18).toFixed(),
+  reason: 'last_position' as const,
+}));
+export const useGetPrimeMinimumStake = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_MINIMUM_STAKE],
+    queryFn: getPrimeMinimumStake,
+  }),
+);
+
+export const getPrimeCurrentCycle = vi.fn(async () => ({
+  cycle: {
+    cycleIndex: 1,
+    status: 'active',
+    startsAt: new Date('2026-06-01T00:00:00Z'),
+    endsAt: new Date('2026-07-01T00:00:00Z'),
+    anchorBlockNum: null,
+    mintLimitUsed: 0,
+  },
+  pendingPool: {
+    blockNumber: '1',
+    computedAt: new Date('2026-06-17T00:00:00Z'),
+    primeHolderCount: 500,
+    totalCurrentCycleUsdMantissa: '462300000000000000000000',
+    currentEstimatedTotalUsdMantissa: '600000000000000000000000',
+    byRewardToken: [
+      {
+        rewardTokenAddress: usdc.address,
+        totalCurrentCycleUsdMantissa: '280400000000000000000000',
+      },
+      {
+        rewardTokenAddress: xvs.address,
+        totalCurrentCycleUsdMantissa: '171900000000000000000000',
+      },
+    ],
+  },
+}));
+export const useGetPrimeCurrentCycle = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_CURRENT_CYCLE],
+    queryFn: getPrimeCurrentCycle,
+  }),
+);
+
+export const getPrimeLeaderboard = vi.fn(async () => ({
+  blockNumber: '1',
+  computedAt: new Date('2026-06-17T00:00:00Z'),
+  page: 1,
+  limit: 10,
+  total: 2,
+  entries: [
+    {
+      userAddress: fakeAddress,
+      rank: 1,
+      effectiveStakeMantissa: new BigNumber('613500000').multipliedBy(1e18).toFixed(),
+      totalStakedMantissa: '0',
+      isPrimeHolder: true,
+    },
+    {
+      userAddress: fakeAddress,
+      rank: 2,
+      effectiveStakeMantissa: new BigNumber('542500000').multipliedBy(1e18).toFixed(),
+      totalStakedMantissa: '0',
+      isPrimeHolder: true,
+    },
+  ],
+}));
+export const useGetPrimeLeaderboard = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_LEADERBOARD],
+    queryFn: getPrimeLeaderboard,
+  }),
+);
+
+export const getPrimeRewardsLeaderboard = vi.fn(async () => ({
+  blockNumber: '1',
+  computedAt: new Date('2026-06-17T00:00:00Z'),
+  page: 1,
+  limit: 10,
+  total: 1,
+  entries: [
+    {
+      userAddress: fakeAddress,
+      totalCurrentCycleUsdMantissa: '500000000000000000000',
+      byRewardToken: [
+        {
+          rewardTokenAddress: usdc.address,
+          currentCycleUsdMantissa: '40000000000000000000000',
+        },
+        { rewardTokenAddress: xvs.address, currentCycleUsdMantissa: '22360000000000000000000' },
+      ],
+    },
+  ],
+}));
+export const useGetPrimeRewardsLeaderboard = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_REWARDS_LEADERBOARD],
+    queryFn: getPrimeRewardsLeaderboard,
+  }),
+);
+
+export const getPrimeCycle = vi.fn(async () => ({
+  cycle: {
+    cycleIndex: 1,
+    status: 'finalized',
+    startsAt: new Date('2026-05-01T00:00:00Z'),
+    endsAt: new Date('2026-06-01T00:00:00Z'),
+    mintLimitUsed: 0,
+    totalRewardPoolCents: '46230000',
+    finalizedAt: new Date('2026-06-01T00:00:00Z'),
+  },
+  markets: [],
+  ranking: [
+    {
+      userAddress: fakeAddress,
+      finalRank: 1,
+      finalEffectiveStakeMantissa: new BigNumber('542500000').multipliedBy(1e18).toFixed(),
+      finalTotalStakedMantissa: '0',
+    },
+  ],
+}));
+export const useGetPrimeCycle = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_CYCLE],
+    queryFn: getPrimeCycle,
+  }),
+);
+
+export const getPrimeUserCycleRewards = vi.fn(async () => ({
+  rank: 2,
+  effectiveStakeMantissa: new BigNumber('542500000').multipliedBy(1e18).toFixed(),
+  totalRewardUsdMantissa: '18400000000000000000000',
+  markets: [
+    {
+      marketAddress: usdc.address,
+      rewardTokenAddress: usdc.address,
+      totalRewardUsdMantissa: '11400000000000000000000',
+    },
+    {
+      marketAddress: xvs.address,
+      rewardTokenAddress: xvs.address,
+      totalRewardUsdMantissa: '7000000000000000000000',
+    },
+  ],
+}));
+export const useGetPrimeUserCycleRewards = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_USER_CYCLE_REWARDS],
+    queryFn: getPrimeUserCycleRewards,
+  }),
+);
+
+export const getPrimeDistributionForMarket = vi.fn(async () => ({
+  totalDistributedMantissa: new BigNumber('1230000000000000000000000'),
+}));
+export const useGetPrimeDistributionForMarket = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PRIME_DISTRIBUTION_FOR_MARKET],
+    queryFn: getPrimeDistributionForMarket,
+  }),
+);
+
+export const getVaiVaultPaused = vi.fn(async () => ({
+  isVaultPaused: false,
+}));
+export const useGetVaiVaultPaused = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_VAI_VAULT_PAUSED],
+    queryFn: getVaiVaultPaused,
+  }),
+);
+
+export const getXvsVaultPaused = vi.fn(async () => ({
+  isVaultPaused: false,
+}));
+export const useGetXvsVaultPaused = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_VAULT_PAUSED],
+    queryFn: getXvsVaultPaused,
+  }),
+);
+
+export const getPaymasterInfo = vi.fn(async () => ({
+  balanceMantissa: new BigNumber('100000000000000000'),
+  canSponsorTransactions: true,
+}));
+export const useGetPaymasterInfo = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PAYMASTER_INFO],
+    queryFn: getPaymasterInfo,
+  }),
+);
+
+export const getXvsBridgeFeeEstimation = vi.fn(async () => ({
+  estimatedFeeMantissa: new BigNumber('12000000'),
+}));
+export const useGetXvsBridgeFeeEstimation = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_BRIDGE_FEE_ESTIMATION],
+    queryFn: getXvsBridgeFeeEstimation,
+  }),
+);
+
+export const getXvsBridgeStatus = vi.fn(async () => ({
+  dailyLimitResetTimestamp: new BigNumber('0'),
+  maxDailyLimitUsd: new BigNumber('0'),
+  totalTransferredLast24HourUsd: new BigNumber('0'),
+  maxSingleTransactionLimitUsd: new BigNumber('0'),
+}));
+export const useGetXvsBridgeStatus = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_BRIDGE_STATUS],
+    queryFn: getXvsBridgeStatus,
+  }),
+);
+
+export const getXvsBridgeMintStatus = vi.fn(async () => ({
+  minterToCapMantissa: new BigNumber('500000000000000000000000'),
+  bridgeAmountMintedMantissa: new BigNumber('10000000000000000'),
+}));
+export const useGetXvsBridgeMintStatus = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_XVS_BRIDGE_MINT_STATUS],
+    queryFn: getXvsBridgeMintStatus,
+  }),
+);
+
+export const getPoolDelegateApprovalStatus = vi.fn(async () => undefined);
+export const useGetPoolDelegateApprovalStatus = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_POOL_DELEGATE_APPROVAL_STATUS],
+    queryFn: getPoolDelegateApprovalStatus,
+  }),
+);
+
+export const getVTokenUtilizationRate = vi.fn(async () => ({
+  utilizationRatePercentage: 10,
+}));
+export const useGetVTokenUtilizationRate = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_V_TOKEN_UTILIZATION_RATE],
+    queryFn: getVTokenUtilizationRate,
+  }),
+);
+
+export const getTradeReduceSwapQuotes = vi.fn();
+export const useGetTradeReduceSwapQuotes = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_TRADE_REDUCE_SWAP_QUOTES],
+    queryFn: getTradeReduceSwapQuotes,
+  }),
+);
+
+export const getAddressDomainName = vi.fn(async () => undefined);
+export const useGetAddressDomainName = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_ADDRESS_DOMAIN_NAME],
+    queryFn: getAddressDomainName,
+  }),
+);
+
+export const getXvsVaultPendingWithdrawalsBalance = vi.fn(async () => ({
+  balanceMantissa: 0,
+}));
+
+export const getBurnedWBnb = vi.fn(async () => ({
+  burnedWBnbMantissa: 10000000000000000000000n,
+}));
+export const useGetBurnedWBnb = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_BURNED_BNB],
+    queryFn: getBurnedWBnb,
+  }),
+);
+
+export const getImportablePositions = vi.fn(async () => importablePositions);
+export const useGetImportablePositions = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_IMPORTABLE_POSITIONS],
+    queryFn: getImportablePositions,
+  }),
+);
+
+export const getAccountPerformanceHistory = vi.fn(async () => ({
+  performanceHistory: [
+    {
+      blockNumber: 1,
+      blockTimestampMs: 1714828100000,
+      netWorthCents: 10000,
+    },
+    {
+      blockNumber: 3,
+      blockTimestampMs: 1714828200000,
+      netWorthCents: 11000,
+    },
+    {
+      blockNumber: 5,
+      blockTimestampMs: 1714828300000,
+      netWorthCents: 9000,
+    },
+    {
+      blockNumber: 7,
+      blockTimestampMs: 1714828400000,
+      netWorthCents: 8000,
+    },
+    {
+      blockNumber: 9,
+      blockTimestampMs: 1714828500000,
+      netWorthCents: 20000,
+    },
+  ],
+  startOfDayNetWorthCents: 8500,
+}));
+export const useGetAccountPerformanceHistory = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_ACCOUNT_PERFORMANCE_HISTORY],
+    queryFn: getAccountPerformanceHistory,
+  }),
+);
+
+export const getAccountTransactionHistory = vi.fn(async () => transactions);
+export const useGetAccountTransactionHistory = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_ACCOUNT_TRANSACTION_HISTORY],
+    queryFn: getAccountTransactionHistory,
+  }),
+);
+
+export const getSwapQuote = vi.fn(async () => ({
+  swapQuote: undefined,
+}));
+export const useGetSwapQuote = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_SWAP_QUOTE],
+    queryFn: getSwapQuote,
+  }),
+);
+
+export const getPendleSwapQuote = vi.fn();
+export const useGetPendleSwapQuote = vi.fn(
+  (_input: never, options?: Partial<QueryObserverOptions>) =>
+    useQuery({
+      queryKey: [FunctionKey.GET_PENDLE_SWAP_QUOTE],
+      queryFn: getPendleSwapQuote,
+      ...options,
+    }),
+);
+
+export const getMarketsTvl = vi.fn(async () => ({
+  suppliedSumCents: '100000000000',
+  borrowedSumCents: '10000000000',
+  liquiditySumCents: '900000000000',
+  marketCount: 99,
+  poolCount: 9,
+  chainCount: 12,
+}));
+
+export const useGetMarketsTvl = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_MARKETS_TVL],
+    queryFn: getMarketsTvl,
+  }),
+);
+
+export const getProposalCount = vi.fn(async () => ({
+  proposalCount: 3,
+}));
+export const useGetProposalCount = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_COUNT],
+    queryFn: getProposalCount,
+  }),
+);
+
+export const getRawTradePositions = vi.fn(async () => ({
+  positions: tradePositions,
+}));
+export const useGetRawTradePositions = vi.fn(() =>
+  useQuery({
+    queryKey: [FunctionKey.GET_RAW_TRADE_POSITIONS],
+    queryFn: getRawTradePositions,
+  }),
+);
+
+export const useKLineWebSocket = vi.fn();
+
+// Mutations
+export const useApproveToken = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useMintVai = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useRepayVai = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useEnterMarket = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useExitMarket = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useRepay = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useSupply = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useWithdraw = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useSupplyToLiquidityHub = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useWithdrawFromLiquidityHub = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useMigrateCoreSupplyToLiquidityHub = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useStakeInPendleVault = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useWithdrawFromPendleVault = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useBorrow = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useOpenLeveragedPosition = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useOpenTradePosition = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useCloseTradePosition = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useCloseTradePositionWithLoss = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useCloseTradePositionWithProfit = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useReduceTradePositionWithProfit = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useReduceTradePositionWithLoss = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useIncreaseTradePosition = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useSupplyTradePositionCollateral = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useWithdrawTradePositionCollateral = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useRepayWithCollateral = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const withdrawXvs = vi.fn();
+export const useWithdrawXvs = (options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: withdrawXvs,
+    ...options,
+  });
+
+export const useSetVoteDelegate = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useCreateProposal = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useCancelProposal = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useExecuteProposal = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useQueueProposal = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useStakeInXvsVault = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useStakeInVaiVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useVote = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useWithdrawFromVaiVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useRequestWithdrawalFromXvsVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useExecuteWithdrawalFromXvsVault = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useSwapTokens = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useSwapTokensAndRepay = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useSwapTokensAndSupply = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useClaimRewards = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useStakeInVault = vi.fn(() => ({
+  stake: vi.fn(),
+  isLoading: false,
+}));
+
+export const useClaimPrimeToken = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useBridgeXvs = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useUpdatePoolDelegateStatus = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useImportSupplyPosition = vi.fn(
+  (_variables: never, options?: MutationObserverOptions) =>
+    useMutation({
+      mutationFn: vi.fn(),
+      ...options,
+    }),
+);
+
+export const useSetEModeGroup = vi.fn((_variables: never, options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useGetFixedRatedVaults = vi.fn(() => ({
+  data: fixedRatedVaults,
+  isLoading: false,
+}));
+
+export const getFixedRatedVaults = vi.fn(async () => fixedRatedVaults);
+
+export const useGetFixedRatedVaultUserStakedTokens = vi.fn(() => ({
+  data: [],
+  isLoading: false,
+}));
+
+export const getFixedRatedVaultUserStakedTokens = vi.fn(async () => []);
+
+export const useGetInstitutionalVaultUserMetrics = vi.fn(() => ({
+  data: [],
+  isLoading: false,
+}));
+
+export const getInstitutionalVaultUserMetrics = vi.fn(async () => []);
+
+export const useGetInstitutionalVaultUserData = vi.fn(() => ({
+  data: [],
+  isLoading: false,
+}));
+
+export const getInstitutionalVaultUserData = vi.fn(async () => []);
+
+export const useStakeIntoInstitutionalVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useRedeemFromInstitutionalVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);
+
+export const useWithdrawFromInstitutionalVault = vi.fn((options?: MutationObserverOptions) =>
+  useMutation({
+    mutationFn: vi.fn(),
+    ...options,
+  }),
+);

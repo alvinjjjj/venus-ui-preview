@@ -1,0 +1,96 @@
+/* VanMoof-inspired material samples. Local optical values, not global tokens:
+   a translucent 135deg fill, soft backdrop and a narrow reflected edge. */
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .button-texture-family {
+  --button-glass-fill: linear-gradient(135deg, rgb(25 111 175 / 94%), rgb(12  70 130 / 90%));
+  --button-glass-edge: linear-gradient(135deg, rgb(255 255 255 / 48%), rgb(255 255 255 / 10%) 45%, rgb(255 255 255 / 23%));
+  --button-glass-ink: #fff;
+  --button-glass-shadow: 0 4px 10px rgb(0 0 0 / 14%);
+}
+:root[data-glass-version='v2'] .button-texture-family {
+  --button-glass-fill: linear-gradient(135deg, rgb(24 110 170 / 94%) 10%, rgb(10  70 126 / 92%) 90%);
+}
+:root[data-glass-version='v3'] .button-texture-family {
+  --button-glass-fill: linear-gradient(135deg, rgb(64 67 70 / 80%) 10%, rgb(34 36 39 / 65%) 90%);
+}
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .button-texture-family[data-button-family='secondary'] {
+  --button-glass-fill: linear-gradient(135deg, rgb(255 255 255 / 9%) 10%, rgb(255 255 255 / 3%) 90%);
+  --button-glass-ink: var(--color-white);
+}
+:root[data-liquidity-theme='light'] .button-texture-family[data-button-family='secondary'] {
+  --button-glass-fill: linear-gradient(135deg, rgb(255 255 255 / 85%) 10%, rgb(229 235 240 / 42%) 90%);
+  --button-glass-edge: linear-gradient(135deg, rgb(255 255 255 / 95%), rgb(75 91 110 / 24%) 70%, rgb(255 255 255 / 70%));
+  --button-glass-shadow: 0 3px 8px rgb(35 50 65 / 8%);
+}
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family:not([data-button-family='text']) button[data-venus-button-size] {
+  background: var(--button-glass-fill) padding-box, var(--button-glass-edge) border-box;
+  border: 1px solid transparent;
+  color: var(--button-glass-ink);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), var(--button-glass-shadow);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  text-shadow: none;
+  filter: none;
+  transform: none;
+  transition: box-shadow 180ms ease-out, filter 180ms ease-out, transform 180ms ease-out;
+}
+@media (hover: hover) {
+  :root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family:not([data-button-family='text']) button[data-venus-button-size]:not(:disabled):hover {
+    filter: brightness(1.12);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), 0 5px 12px rgb(0 0 0 / 16%);
+    transform: translateY(-1px);
+  }
+}
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family:not([data-button-family='text']) :is(td:nth-child(3) button, button:active):not(:disabled) {
+  filter: brightness(.93);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 12%);
+  transform: translateY(0);
+}
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family:not([data-button-family='text']) button:disabled {
+  opacity: .48;
+  box-shadow: none;
+  filter: saturate(.35);
+  cursor: not-allowed;
+}
+:root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: calc(var(--spacing));
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-version='v2'], [data-glass-version='v3']) .component-gallery .button-texture-family button[data-venus-button-size] {
+    transition: none;
+    transform: none;
+  }
+}
+
+
+
+/* Consistent sample geometry and optional V1 perimeter highlight. */
+:root:not([data-glass-version='v6']) #root .component-gallery button[data-venus-button-size] { border-radius: 8px !important; }
+.highlight-column { display: none; }
+:root[data-glass-version='v1'] .component-gallery .highlight-column { display: table-cell; }
+:root[data-glass-version='v1'] .component-gallery .component-matrix { min-width: calc(var(--spacing) * 280); }
+@property --button-orbit {
+ syntax: '<angle>';
+ initial-value: 0deg;
+ inherits: false;
+}
+:root #root .component-gallery .button-highlight { position: relative; isolation: isolate; }
+.button-highlight::after {
+ content: '';
+ position: absolute;
+ inset: -1px;
+ padding: 1px;
+ border-radius: inherit;
+ pointer-events: none;
+ background: conic-gradient(from var(--button-orbit), transparent 0deg 245deg, rgb(143 209 255 / 20%) 285deg, rgb(220 242 255 / 95%) 325deg, transparent 360deg);
+ -webkit-mask: linear-gradient(#fff 0 0) content-box xor, linear-gradient(#fff 0 0);
+ mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0);
+ animation: button-perimeter-light 3.6s linear infinite;
+}
+:root[data-liquidity-theme='light'] .button-highlight::after {
+ background: conic-gradient(from var(--button-orbit), transparent 0deg 245deg, rgb(20 105 170 / 20%) 285deg, rgb(18 98 167 / 90%) 325deg, transparent 360deg);
+}
+@keyframes button-perimeter-light { to { --button-orbit: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+ .button-highlight::after { animation: none; --button-orbit: 45deg; }
+}

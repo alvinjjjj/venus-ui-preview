@@ -1,0 +1,81 @@
+import { cn } from '@venusprotocol/ui';
+import { useTranslation } from 'libs/translations';
+import type { FC, HTMLAttributes } from 'react';
+import { VaultStatus } from 'types';
+
+type StatusLabelStatus = VaultStatus | 'supply';
+
+export interface StatusLabelProps extends HTMLAttributes<HTMLDivElement> {
+  status: StatusLabelStatus;
+  size?: 'md';
+}
+
+export const StatusLabel: FC<StatusLabelProps> = ({ status, className, children, ...props }) => {
+  const { t } = useTranslation();
+
+  let variantClassName = '';
+
+  switch (status) {
+    case VaultStatus.Claim:
+    case VaultStatus.Locked:
+      variantClassName = cn('border-green bg-green/10');
+      break;
+    case VaultStatus.Refund:
+      variantClassName = cn('border-yellow bg-yellow/10');
+      break;
+    case VaultStatus.Deposit:
+    case 'supply':
+      variantClassName = cn('border-blue bg-blue/10');
+      break;
+    default:
+      variantClassName = cn('border-dark-grey-hover bg-dark-grey');
+  }
+
+  let label = '';
+
+  switch (status) {
+    case VaultStatus.Claim:
+      label = t('vault.filter.claim');
+      break;
+    case VaultStatus.Refund:
+      label = t('vault.filter.refund');
+      break;
+    case VaultStatus.Deposit:
+      label = t('vault.filter.deposit');
+      break;
+    case VaultStatus.Locked:
+      label = t('vault.filter.locked');
+      break;
+    case VaultStatus.Paused:
+      label = t('vault.filter.paused');
+      break;
+    case VaultStatus.Pending:
+      label = t('vault.filter.pending');
+      break;
+    case VaultStatus.Repaying:
+      label = t('vault.filter.repaying');
+      break;
+    case VaultStatus.Inactive:
+      label = t('vault.filter.inactive');
+      break;
+    case VaultStatus.Liquidated:
+      label = t('vault.filter.liquidated');
+      break;
+    case 'supply':
+      label = t('dashboard.topMarkets.supplyButton.label');
+      break;
+  }
+
+  return (
+    <div
+      className={cn(
+        'flex justify-center items-center border border-solid rounded-full py-1 px-3 text-light-grey-active text-b1r',
+        variantClassName,
+        className,
+      )}
+      {...props}
+    >
+      {label}
+    </div>
+  );
+};

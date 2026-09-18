@@ -1,0 +1,70 @@
+import { cn } from '@venusprotocol/ui';
+import { AnimatePresence, motion } from 'motion/react';
+import { createPortal } from 'react-dom';
+
+import { Notice } from 'components/Notice';
+
+import { useStore } from '../store';
+import TEST_IDS from './testIds';
+
+const ANIMATION_BASE_DURATION_S = 0.75;
+const EASE = [0.23, 1, 0.32, 1];
+
+const NotificationCenter: React.FC = () => {
+  const notifications = useStore(state => state.notifications);
+
+  return createPortal(
+    <ul
+      className="fixed right-0 top-4 z-999999 max-h-full w-full max-w-[500px] px-4 md:top-6 md:px-6"
+      data-testid={TEST_IDS.container}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        {notifications.map(({ id, variant = 'info', ...otherNotificationProps }) => (
+          <motion.li
+            key={id}
+            className={cn(
+              'mb-2 last:mb-0 rounded-lg border backdrop-blur-lg overflow-hidden',
+              (variant === 'info' || variant === 'loading') && 'bg-blue/10 border-lightGrey',
+              variant === 'error' && 'bg-red/10 border-red',
+              variant === 'success' && 'bg-green/10 border-green',
+              variant === 'warning' && 'bg-orange/10 border-orange',
+            )}
+            layout
+            initial={{ x: '110%' }}
+            animate={{
+              x: 0,
+              transition: {
+                x: {
+                  ease: EASE,
+                  duration: ANIMATION_BASE_DURATION_S,
+                  delay: (ANIMATION_BASE_DURATION_S * 1) / 3,
+                },
+                opacity: {
+                  ease: EASE,
+                  duration: ANIMATION_BASE_DURATION_S,
+                },
+              },
+            }}
+            exit={{
+              opacity: 0,
+              y: 20,
+            }}
+            transition={{
+              ease: EASE,
+              duration: ANIMATION_BASE_DURATION_S,
+            }}
+          >
+            <Notice
+              variant={variant}
+              className="bg-transparent border-transparent backdrop-blur-none rounded-none"
+              {...otherNotificationProps}
+            />
+          </motion.li>
+        ))}
+      </AnimatePresence>
+    </ul>,
+    document.body,
+  );
+};
+
+export default NotificationCenter;

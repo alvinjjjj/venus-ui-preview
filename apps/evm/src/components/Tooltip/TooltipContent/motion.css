@@ -1,0 +1,5 @@
+/* Keep Radix positioning intact; remove only the entry/exit motion. */
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-tooltip-content {
+  animation: none !important;
+  transition: none !important;
+}

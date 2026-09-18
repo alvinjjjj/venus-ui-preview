@@ -1,0 +1,16 @@
+export type ColumnKey =
+  | 'asset'
+  | 'assetAndChain'
+  | 'supplyApy'
+  | 'labeledSupplyApy'
+  | 'borrowApy'
+  | 'labeledBorrowApy'
+  | 'pool'
+  | 'collateral'
+  | 'userSupplyBalance'
+  | 'userBorrowBalance'
+  | 'borrowBalance'
+  | 'supplyBalance'
+  | 'liquidity'
+  | 'userBorrowLimitSharePercentage'
+  | 'userWalletBalance';

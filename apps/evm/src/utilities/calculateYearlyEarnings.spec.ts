@@ -1,0 +1,24 @@
+import { assetData as assets } from '__mocks__/models/asset';
+
+import {
+  calculateYearlyEarningsForAsset,
+  calculateYearlyEarningsForAssets,
+} from './calculateYearlyEarnings';
+
+describe('utilities/calculateYearlyEarnings', () => {
+  test('calculates yearly Earnings for single asset', () => {
+    const earnings = calculateYearlyEarningsForAsset({
+      asset: assets[0],
+    });
+
+    expect(earnings.toFixed()).toMatchInlineSnapshot(`"19.5016014174559981452"`);
+  });
+
+  test('calculates yearly Earnings for array assets', () => {
+    const earnings = calculateYearlyEarningsForAssets({
+      assets,
+    });
+
+    expect(earnings?.toFixed()).toMatchInlineSnapshot(`"1531.00666454662583935848"`);
+  });
+});

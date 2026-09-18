@@ -1,0 +1,39 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".nvmrc", "tsconfig.json", "vite.config.ts"],
+  "globalEnv": ["CLI_ALCHEMY_API_KEY", "CLI_NODE_REAL_API_KEY"],
+  "tasks": {
+    "generate": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "outputs": ["coverage/**/*"]
+    },
+    "build": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": ["build/**/*"]
+    },
+    "lint": {
+      "cache": false
+    },
+    "lint:styles": {
+      "cache": false
+    },
+    "tsc": {
+      "cache": false
+    },
+    "format": {},
+    "extract-translations": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,123 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getVoterAccounts > Gets called with correct default arguments 1`] = `
+[
+  {
+    "address": "0x2ce1d0ffd7e869d9df33e28552b12ddded326706",
+    "delegate": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706",
+    "proposalsVoted": 405,
+    "stakedVotesMantissa": "6.05561e+23",
+    "voteWeightPercent": "37.611282059369953834",
+    "votesMantissa": "6.05461e+23",
+  },
+  {
+    "address": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc",
+    "delegate": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc",
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "55000000000000000000",
+    "voteWeightPercent": "0.003106003694653326",
+    "votesMantissa": "50000000000000000000",
+  },
+  {
+    "address": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A",
+    "delegate": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A",
+    "proposalsVoted": 16,
+    "stakedVotesMantissa": "1.00000054991398612445922e+23",
+    "voteWeightPercent": "24.983477818202700664",
+    "votesMantissa": "4.02180426591398612445922e+23",
+  },
+  {
+    "address": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D",
+    "delegate": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D",
+    "proposalsVoted": 31,
+    "stakedVotesMantissa": "3.020803716e+23",
+    "voteWeightPercent": "18.765255005436995803",
+    "votesMantissa": "3.020803716e+23",
+  },
+  {
+    "address": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C",
+    "delegate": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C",
+    "proposalsVoted": 25,
+    "stakedVotesMantissa": "3.000037949832e+23",
+    "voteWeightPercent": "18.636257912556765705",
+    "votesMantissa": "3.000037949832e+23",
+  },
+  {
+    "address": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7",
+    "delegate": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7",
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "10000000000000000000",
+    "voteWeightPercent": "0.000621200738930665",
+    "votesMantissa": "10000000000000000000",
+  },
+  {
+    "address": "0x54950126D02532F852920A04f46359E617F48f3D",
+    "delegate": undefined,
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "310413900000000000000",
+    "voteWeightPercent": "0",
+    "votesMantissa": "0",
+  },
+]
+`;
+
+exports[`getVoterAccounts > returns formatted Voter Accounts 1`] = `
+[
+  {
+    "address": "0x2ce1d0ffd7e869d9df33e28552b12ddded326706",
+    "delegate": "0x2Ce1d0ffD7E869D9DF33e28552b12DdDed326706",
+    "proposalsVoted": 405,
+    "stakedVotesMantissa": "6.05561e+23",
+    "voteWeightPercent": "37.611282059369953834",
+    "votesMantissa": "6.05461e+23",
+  },
+  {
+    "address": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc",
+    "delegate": "0xD4a9F68DEbed2F8D7cE0115d415cc992AB0BFbcc",
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "55000000000000000000",
+    "voteWeightPercent": "0.003106003694653326",
+    "votesMantissa": "50000000000000000000",
+  },
+  {
+    "address": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A",
+    "delegate": "0xFEdD302cFAFC03A7d4DFC99342fe20E0521C265A",
+    "proposalsVoted": 16,
+    "stakedVotesMantissa": "1.00000054991398612445922e+23",
+    "voteWeightPercent": "24.983477818202700664",
+    "votesMantissa": "4.02180426591398612445922e+23",
+  },
+  {
+    "address": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D",
+    "delegate": "0x6eACe20E1F89D0B24e5B295Af1802dfBc730B37D",
+    "proposalsVoted": 31,
+    "stakedVotesMantissa": "3.020803716e+23",
+    "voteWeightPercent": "18.765255005436995803",
+    "votesMantissa": "3.020803716e+23",
+  },
+  {
+    "address": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C",
+    "delegate": "0xD2e106A978D766Bc9F6FdA296C7EC1c23839067C",
+    "proposalsVoted": 25,
+    "stakedVotesMantissa": "3.000037949832e+23",
+    "voteWeightPercent": "18.636257912556765705",
+    "votesMantissa": "3.000037949832e+23",
+  },
+  {
+    "address": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7",
+    "delegate": "0x2EF706339560Ffd848c04bcD1b611edE0a0b79b7",
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "10000000000000000000",
+    "voteWeightPercent": "0.000621200738930665",
+    "votesMantissa": "10000000000000000000",
+  },
+  {
+    "address": "0x54950126D02532F852920A04f46359E617F48f3D",
+    "delegate": undefined,
+    "proposalsVoted": 0,
+    "stakedVotesMantissa": "310413900000000000000",
+    "voteWeightPercent": "0",
+    "votesMantissa": "0",
+  },
+]
+`;

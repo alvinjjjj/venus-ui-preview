@@ -1,0 +1,81 @@
+import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
+
+import type { Asset, AssetBalanceMutation, Pool } from 'types';
+
+import { useTranslation } from 'libs/translations';
+import type { TxFormError } from 'types';
+import { validatePoolBalanceMutations } from 'utilities';
+import type { FormErrorCode, FormValues } from './types';
+
+interface UseFormValidationInput {
+  asset: Asset;
+  pool: Pool;
+  balanceMutations: AssetBalanceMutation[];
+  simulatedPool?: Pool;
+  formValues: FormValues;
+  limitTokens: BigNumber;
+}
+
+interface UseFormValidationOutput {
+  isFormValid: boolean;
+  formError?: TxFormError<FormErrorCode>;
+}
+
+const useFormValidation = ({
+  asset,
+  pool,
+  balanceMutations,
+  simulatedPool,
+  limitTokens,
+  formValues,
+}: UseFormValidationInput): UseFormValidationOutput => {
+  const { t } = useTranslation();
+
+  const commonFormError = validatePoolBalanceMutations({
+    t,
+    pool,
+    simulatedPool,
+    balanceMutations,
+    userAcknowledgesRisk: formValues.acknowledgeRisk,
+  });
+
+  const formError = useMemo<TxFormError<FormErrorCode> | undefined>(() => {
+    if (!pool?.userBorrowLimitCents || pool.userBorrowLimitCents.isEqualTo(0)) {
+      return {
+        code: 'NO_COLLATERALS',
+        message: t('marketForm.error.noCollateral', {
+          tokenSymbol: asset.vToken.underlyingToken.symbol,
+        }),
+      };
+    }
+
+    if (commonFormError) {
+      return commonFormError;
+    }
+
+    const fromTokenAmountTokens = formValues.amountTokens
+      ? new BigNumber(formValues.amountTokens)
+      : undefined;
+
+    if (!fromTokenAmountTokens || fromTokenAmountTokens.isLessThanOrEqualTo(0)) {
+      return {
+        code: 'EMPTY_TOKEN_AMOUNT',
+      };
+    }
+
+    if (fromTokenAmountTokens.isGreaterThan(limitTokens)) {
+      return {
+        code: 'HIGHER_THAN_AVAILABLE_AMOUNT',
+        message: t('marketForm.error.higherThanAvailableAmount'),
+      };
+    }
+  }, [asset, pool, commonFormError, limitTokens, formValues.amountTokens, t]);
+
+  return {
+    isFormValid: !formError,
+    formError,
+  };
+};
+
+export default useFormValidation;

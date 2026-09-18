@@ -1,0 +1,55 @@
+/* V1 reference: Liquidity-Hub 1030:82914 (dark), 1436:92746 (light).
+   Section colors differ from the legacy line token; keep this mapping local. */
+:root[data-glass-version='v1'] .liquidity-hubs-page {
+  --hub-section-fill: transparent;
+  --hub-section-stroke: #30354a;
+}
+:root[data-glass-version='v1'][data-liquidity-theme='light'] .liquidity-hubs-page {
+  --hub-section-fill: #f9f9f9;
+}
+:root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card {
+  border-radius: 0;
+  align-items: center;
+  gap: calc(var(--spacing) * 3);
+}
+:root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card > .w-px {
+  background: var(--color-dark-blue);
+}
+:root[data-glass-version='v1'][data-liquidity-theme='light'] .liquidity-hubs-stat-header > .venus-glass-card > .w-px {
+  background: var(--color-dark-blue-hover);
+}
+:root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card .text-p3r,
+:root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card .text-p2s {
+  font-size: var(--text-b1r);
+  line-height: 1.5;
+}
+:root[data-glass-version='v1'] .liquidity-hubs-table td:first-child > div {
+  gap: calc(var(--spacing) * 3);
+  font-size: var(--text-p3r);
+}
+:root[data-glass-version='v1'] .liquidity-hubs-table td:first-child > div > .relative {
+  width: calc(var(--spacing) * 8);
+  height: calc(var(--spacing) * 8);
+}
+@media (min-width: 640px) {
+  :root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card { gap: calc(var(--spacing) * 6); }
+  :root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card .text-p3r { font-size: var(--text-p3r); }
+  :root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card .text-p2s { font-size: var(--text-p2s); }
+}
+@media (min-width: 768px) {
+  :root[data-glass-version='v1'] .liquidity-hubs-table { background: var(--hub-section-fill); border-color: var(--hub-section-stroke); }
+  :root[data-glass-version='v1'] .liquidity-hubs-table thead { border-color: var(--hub-section-stroke); }
+  :root[data-glass-version='v1'] .liquidity-hubs-table [class*='@2xl:max-w-75'] { max-width: calc(var(--spacing) * 55); }
+}
+@media (min-width: 1280px) {
+  :root[data-glass-version='v1'] .liquidity-hubs-stat-header { align-items: flex-start; }
+  :root[data-glass-version='v1'] .liquidity-hubs-stat-header > .venus-glass-card { min-height: calc(var(--spacing) * 18); }
+}
+@media (min-width: 640px) {
+  :root[data-glass-version='v1'] div:has(> .liquidity-hubs-page) { padding-top: calc(var(--spacing) * 12); }
+}
+:root[data-glass-version='v1'] .liquidity-hubs-table table { table-layout: fixed; }
+:root[data-glass-version='v1'] .liquidity-hubs-table th:last-child,
+:root[data-glass-version='v1'] .liquidity-hubs-table td:last-child { width: calc(var(--spacing) * 10); }
+.liquidity-hubs-token-unit { display: none; }
+:root[data-glass-version='v1'] .liquidity-hubs-token-unit { display: inline; }

@@ -1,0 +1,175 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 2`] = `
+{
+  "data": {
+    "amount": 100n,
+    "chainId": 97,
+    "gasLimit": 100000n,
+    "recipient": "0xa258a693A403b7e98fd05EE9e1558C760308cFC7",
+    "sender": "0x3d759121234cd36F8124C21aFe1c6852d2bEd848",
+    "tokenAddress": "0xfakeAXVSAddress",
+  },
+  "type": "transferFrom",
+}
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 3`] = `
+{
+  "data": {
+    "abi": Any<Array>,
+    "args": [
+      "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "0xa258a693A403b7e98fd05EE9e1558C760308cFC7",
+    ],
+    "chainId": 97,
+    "functionName": "withdraw",
+    "gasLimit": 100000n,
+    "to": "0xfakeAaveV3PoolContractAddress",
+  },
+  "type": "default",
+}
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 4`] = `
+{
+  "data": {
+    "amount": 100n,
+    "chainId": 97,
+    "gasLimit": 100000n,
+    "spender": "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+    "tokenAddress": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+  },
+  "type": "approve",
+}
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 5`] = `
+{
+  "data": {
+    "abi": Any<Array>,
+    "args": [
+      "0x3d759121234cd36F8124C21aFe1c6852d2bEd848",
+      100n,
+    ],
+    "chainId": 97,
+    "functionName": "mintBehalf",
+    "gasLimit": 100000n,
+    "to": "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+  },
+  "type": "default",
+}
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 6`] = `
+[
+  [
+    {
+      "instructions": [
+        {
+          "calls": [],
+          "chainId": 97,
+        },
+        {
+          "calls": [],
+          "chainId": 97,
+        },
+        {
+          "calls": [],
+          "chainId": 97,
+        },
+        {
+          "calls": [],
+          "chainId": 97,
+        },
+      ],
+      "sponsorship": true,
+      "trigger": {
+        "amount": 20000000000000000000n,
+        "approvalAmount": 24000240000000000000n,
+        "chainId": 97,
+        "gasLimit": 500000n,
+        "tokenAddress": "0xfakeAXVSAddress",
+      },
+    },
+  ],
+]
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 7`] = `
+[
+  [
+    {
+      "queryKey": [
+        "GET_V_TOKEN_BALANCES_ALL",
+      ],
+    },
+  ],
+  [
+    {
+      "queryKey": [
+        "GET_POOLS",
+      ],
+    },
+  ],
+  [
+    {
+      "queryKey": [
+        "GET_V_TOKEN_BALANCE",
+        {
+          "accountAddress": "0x3d759121234cd36F8124C21aFe1c6852d2bEd848",
+          "chainId": 97,
+          "vTokenAddress": "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+        },
+      ],
+    },
+  ],
+  [
+    {
+      "queryKey": [
+        "GET_IMPORTABLE_POSITIONS",
+        {
+          "accountAddress": "0x3d759121234cd36F8124C21aFe1c6852d2bEd848",
+          "chainId": 97,
+        },
+      ],
+    },
+  ],
+]
+`;
+
+exports[`useImportSupplyPosition > returns a Fusion quote on success 8`] = `
+[
+  [
+    {
+      "input": {
+        "position": {
+          "aTokenAddress": "0xfakeAXVSAddress",
+          "protocol": "aave",
+          "supplyApyPercentage": 99.99,
+          "tokenAddress": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+          "userATokenBalanceMantissa": 20000000000000000000n,
+          "userATokenBalanceWithInterestsMantissa": 24000000000000000000n,
+          "userSupplyBalanceMantissa": 40000000000000000000n,
+        },
+        "vToken": {
+          "address": "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+          "chainId": 97,
+          "decimals": 8,
+          "symbol": "vUSDC",
+          "underlyingToken": {
+            "address": "0x16227D60f7a0e586C66B005219dfc887D13C9531",
+            "chainId": 97,
+            "decimals": 6,
+            "iconSrc": "fake-usdc-asset",
+            "symbol": "USDC",
+          },
+        },
+      },
+      "transactionHash": undefined,
+      "transactionReceipt": undefined,
+    },
+  ],
+]
+`;

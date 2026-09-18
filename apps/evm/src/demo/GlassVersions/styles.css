@@ -1,0 +1,167 @@
+/* Demo-only material tokens: three comparable glass treatments, preserving source colors. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) {
+  --glass-fill: color-mix(in srgb, var(--color-background-active) 88%, transparent);
+  --glass-edge: color-mix(in srgb, var(--color-light-grey) 18%, transparent);
+  --glass-blur: 12px;
+  --glass-radius: 16px;
+  --glass-shadow: 0 8px 24px rgb(0 0 0 / 6%);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 12%);
+  background: var(--color-background);
+}
+:root[data-glass-version='v2'] {
+  --glass-fill: color-mix(in srgb, var(--color-background-active) 64%, transparent);
+  --glass-edge: rgb(180 207 235 / 32%);
+  --glass-blur: 24px;
+  --glass-radius: 20px;
+  --glass-shadow: 0 16px 48px rgb(20 60 100 / 12%);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 42%), inset 0 -1px 0 rgb(255 255 255 / 8%);
+}
+:root[data-glass-version='v3'] {
+  --glass-fill: color-mix(in srgb, var(--color-background-active) 76%, transparent);
+  --glass-edge: rgb(161 190 223 / 28%);
+  --glass-blur: 32px;
+  --glass-radius: 24px;
+  --glass-shadow: 0 24px 64px rgb(0 20 50 / 18%), 0 4px 12px rgb(0 0 0 / 6%);
+  --glass-highlight: inset 0 2px 0 rgb(255 255 255 / 28%);
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) body {
+  background-image: radial-gradient(ellipse at 10% 5%, rgb(85 157 225 / 10%), transparent 55%);
+  background-attachment: fixed;
+}
+:root[data-glass-version='v2'] body {
+  background-image: radial-gradient(ellipse at 5% 20%, rgb(96 188 233 / 24%), transparent 55%), radial-gradient(ellipse at 95% 65%, rgb(151 156 224 / 18%), transparent 50%);
+}
+:root[data-glass-version='v3'] body {
+  background-image: radial-gradient(ellipse at 70% 0%, rgb(113 164 215 / 24%), transparent 55%), radial-gradient(ellipse at 0% 80%, rgb(103 141 175 / 16%), transparent 45%);
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-glass-card {
+  background: var(--glass-fill);
+  border-color: var(--glass-edge);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(125%);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) a.venus-glass-card:hover {
+  border-color: var(--color-blue);
+  box-shadow: var(--glass-highlight), 0 16px 40px rgb(42 147 232 / 16%);
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) nav > div:first-child,
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) footer {
+  background: var(--glass-fill);
+  backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-edge);
+}
+.glass-version-picker { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.glass-version-picker button { padding:8px 12px; border-radius:8px; color:var(--color-light-grey); cursor:pointer; border:1px solid transparent; }
+.glass-version-picker button[aria-pressed='true'] { color:var(--color-blue); background:color-mix(in srgb,var(--color-blue) 12%,transparent); border-color:color-mix(in srgb,var(--color-blue) 30%,transparent); }
+.glass-version-picker button:focus-visible { outline:2px solid var(--color-blue); outline-offset:2px; }
+@media (prefers-reduced-motion:reduce) { :root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-glass-card { transition:none; } }
+@supports not (backdrop-filter:blur(1px)) { :root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-glass-card { background:var(--color-background-active); } }
+/* Inner data groups stay flat so the outer panel carries the material. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-glass-card .venus-glass-card {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+/* Navigation must paint above transformed banners and backdrop-filtered cards. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-navigation { z-index: 50; isolation: isolate; }
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-navigation > div:first-child {
+  backdrop-filter: none;
+  background: var(--color-background-active);
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-navigation-menu {
+  background: var(--color-background-active);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--glass-radius);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 24%), inset 0 1px 0 rgb(255 255 255 / 16%);
+}
+/* Refined material family: softer edges, quieter data panels, tinted controls. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) {
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 10%);
+  --glass-edge: color-mix(in srgb, var(--color-light-grey) 15%, transparent);
+  --glass-button-radius: 12px;
+  --glass-button-top: #1689e5;
+  --glass-button-bottom: #0868ba;
+  --glass-button-shadow: 0 4px 12px rgb(0 72 140 / 18%);
+}
+:root[data-glass-version='v2'] {
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 28%);
+  --glass-edge: rgb(163 197 225 / 24%);
+  --glass-fill: color-mix(in srgb, var(--color-background-active) 78%, transparent);
+  --glass-button-radius: 999px;
+  --glass-button-top: #278fd8;
+  --glass-button-bottom: #0963a7;
+  --glass-button-shadow: 0 8px 22px rgb(12 113 181 / 26%), inset 0 1px 0 rgb(255 255 255 / 45%);
+}
+:root[data-glass-version='v3'] {
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 18%);
+  --glass-fill: color-mix(in srgb, var(--color-background-active) 90%, transparent);
+  --glass-button-radius: 16px;
+  --glass-button-top: #38516b;
+  --glass-button-bottom: #21374e;
+  --glass-button-shadow: 0 8px 20px rgb(0 20 40 / 24%), inset 0 1px 0 rgb(255 255 255 / 30%);
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-primary-action:not(:disabled):not([aria-disabled='true']) {
+  background: linear-gradient(180deg,var(--glass-button-top),var(--glass-button-bottom));
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: var(--glass-button-radius);
+  box-shadow: var(--glass-button-shadow);
+  transition: filter 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+@media (hover:hover) {
+  :root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-primary-action:not(:disabled):not([aria-disabled='true']):hover { filter:brightness(1.1); transform:translateY(-1px); }
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-primary-action:not(:disabled):active { transform:translateY(0); filter:brightness(.96); }
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-primary-action:focus-visible { outline:2px solid var(--color-blue); outline-offset:3px; }
+@media (prefers-reduced-motion:reduce) {
+  :root:is([data-glass-version="v2"], [data-glass-version="v3"]) .venus-primary-action { transition:none !important; transform:none !important; }
+}
+
+/* Layout embellishments belong only to modified variants. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .glass-dashboard-overview { border-width:1px; padding:24px; }
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .glass-dashboard-tabs { border-width:1px; padding:16px; }
+@media (min-width:640px) {
+  :root:is([data-glass-version="v2"], [data-glass-version="v3"]) .glass-dashboard-tabs { padding:24px; }
+}
+
+/* CellGroup is intentionally unpadded in V1. Glass needs an inset inside its curved edge. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) .liquidity-hubs-stat-header > .venus-glass-card {
+  padding: calc(var(--spacing) * 4) calc(var(--spacing) * 6);
+  flex-shrink: 0;
+  max-width: 100%;
+}
+
+/* User-requested 8/16px button corners for modified Venus versions only. */
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) [data-venus-button-size]:not(.account-preview *) {
+  border-radius: 16px !important;
+}
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) [data-venus-button-size="xs"]:not(.account-preview *),
+:root:is([data-glass-version="v2"], [data-glass-version="v3"]) [data-venus-button-size="sm"]:not(.account-preview *) {
+  border-radius: 8px !important;
+}
+
+/* Keep backdrop sampling open across the header, including V3. */
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-navigation {
+ isolation: auto;
+}
+:root[data-glass-version='v6'] .venus-navigation > div:first-child {
+ border-bottom: 1px solid rgb(161 190 223 / 28%);
+}
+:root:is([data-glass-version='v3'], [data-glass-version='v6'])[data-liquidity-theme='light'] .venus-navigation > div:first-child {
+ border-bottom: 1px solid rgb(128 128 128 / 22%);
+}
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-navigation-menu {
+ animation: none !important;
+ backdrop-filter: blur(24px) saturate(120%) !important;
+ -webkit-backdrop-filter: blur(24px) saturate(120%) !important;
+}
+:root[data-glass-version='v3'][data-liquidity-theme='light'] body {
+ background: #fff !important;
+ background-image: none !important;
+}
+:root[data-glass-version='v3'][data-liquidity-theme='light'] #page-container {
+ background: #fff !important;
+ background-image: none !important;
+}

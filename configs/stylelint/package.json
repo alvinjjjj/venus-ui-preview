@@ -1,0 +1,14 @@
+{
+  "name": "@venusprotocol/stylelint-config",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-scss": "^6.1.0"
+  }
+}

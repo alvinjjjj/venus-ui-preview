@@ -1,0 +1,244 @@
+import BigNumber from 'bignumber.js';
+import { useWatch } from 'react-hook-form';
+
+import {
+  useGetPendleSwapQuote,
+  useGetVTokenBalance,
+  useWithdraw,
+  useWithdrawFromPendleVault,
+} from 'clients/api';
+import { NoticeInfo } from 'components';
+import { NULL_ADDRESS } from 'constants/address';
+import { PLACEHOLDER_KEY } from 'constants/placeholders';
+import { Link } from 'containers/Link';
+import { VaultForm } from 'containers/VaultForm';
+import useDebounceValue from 'hooks/useDebounceValue';
+import { useGetUserSlippageTolerance } from 'hooks/useGetUserSlippageTolerance';
+import { useNow } from 'hooks/useNow';
+import { useVaultForm } from 'hooks/useVaultForm';
+import { useTranslation } from 'libs/translations';
+import type { PendleVault } from 'types';
+import {
+  convertMantissaToTokens,
+  convertTokensToMantissa,
+  formatTokensToReadableValue,
+} from 'utilities';
+
+import { useGetContractAddress } from 'hooks/useGetContractAddress';
+import { VError } from 'libs/errors';
+import { useAccountAddress } from 'libs/wallet';
+import type { PendleVaultAction } from '../../types';
+import { Footer } from '../Footer';
+
+const PENDLE_SITE_URL =
+  'https://app.pendle.finance/trade/dashboard/overview/positions?timeframe=allTime';
+
+export interface WithdrawFormProps {
+  vault: PendleVault;
+  onClose: () => void;
+}
+
+export const WithdrawForm: React.FC<WithdrawFormProps> = ({ vault, onClose }) => {
+  const { accountAddress } = useAccountAddress();
+  const { t, Trans } = useTranslation();
+  const now = useNow();
+
+  const { address: pendlePtVaultAddress } = useGetContractAddress({ name: 'PendlePtVault' });
+
+  const hasMatured = !!vault.maturityDate && now.getTime() > vault.maturityDate.getTime();
+
+  const actionMode: PendleVaultAction = hasMatured ? 'redeemAtMaturity' : 'withdraw';
+
+  const fromToken = vault.rewardToken;
+  const toToken = vault.stakedToken;
+  const fromTokenPriceCents = vault.rewardTokenPriceCents;
+
+  const userStakedTokens = convertMantissaToTokens({
+    value: vault.userStakeBalanceMantissa ?? new BigNumber(0),
+    token: vault.asset.vToken.underlyingToken,
+  });
+
+  const limitFromTokens = userStakedTokens;
+
+  const form = useVaultForm({
+    limitFromTokens,
+    fromToken,
+  });
+
+  const unsafeFromAmountTokensFieldValue = useWatch({
+    control: form.control,
+    name: 'fromAmountTokens',
+  });
+  const fromAmountTokensFieldValue = unsafeFromAmountTokensFieldValue ?? '0';
+
+  const debouncedFromAmountTokens = useDebounceValue(fromAmountTokensFieldValue);
+  const fromAmountTokens = new BigNumber(debouncedFromAmountTokens);
+
+  const { userSlippageTolerancePercentage } = useGetUserSlippageTolerance();
+
+  const {
+    data: swapQuote,
+    error: swapQuoteError,
+    isLoading: isGetSwapQuoteLoading,
+  } = useGetPendleSwapQuote(
+    {
+      fromToken,
+      toToken,
+      amountTokens: fromAmountTokens,
+      slippagePercentage: userSlippageTolerancePercentage,
+    },
+    {
+      enabled:
+        !hasMatured && fromAmountTokens.isGreaterThan(0) && fromAmountTokens.lte(limitFromTokens),
+    },
+  );
+
+  const { mutateAsync: withdraw } = useWithdrawFromPendleVault({
+    pendleMarketAddress: swapQuote?.pendleMarketAddress ?? NULL_ADDRESS,
+  });
+
+  const { mutateAsync: withdrawAfterMaturity } = useWithdraw();
+
+  // After maturity we redeem directly from the vToken (same flow as the Market page), so we need the
+  // user's actual vToken balance to initiate the transaction.
+  const { data: getVTokenBalanceData, isLoading: isGetVTokenBalanceLoading } = useGetVTokenBalance(
+    {
+      accountAddress: accountAddress ?? NULL_ADDRESS,
+      vTokenAddress: vault.asset.vToken.address,
+    },
+    {
+      enabled: !!accountAddress && hasMatured,
+    },
+  );
+  const vTokenBalanceMantissa = getVTokenBalanceData?.balanceMantissa;
+
+  const estimatedReceivedTokens = swapQuote?.estimatedReceivedTokensMantissa
+    ? convertMantissaToTokens({
+        value: swapQuote.estimatedReceivedTokensMantissa,
+        token: toToken,
+      })
+    : undefined;
+
+  const estDiffAmount = estimatedReceivedTokens?.minus(fromAmountTokens);
+
+  const estDiffAmountReadable =
+    actionMode === 'redeemAtMaturity'
+      ? formatTokensToReadableValue({
+          value: new BigNumber(0),
+          token: toToken,
+        })
+      : estDiffAmount
+        ? `≈ ${formatTokensToReadableValue({
+            value: estDiffAmount.negated(),
+            token: toToken,
+          })}`
+        : PLACEHOLDER_KEY;
+
+  const handleSubmit = async () => {
+    // Read the amount from the form directly instead of the closure variable: the closure can
+    // capture a stale value (empty string) from an earlier render, which would produce NaN.
+    const currentFromAmountTokens = form.getValues('fromAmountTokens') ?? '0';
+    const withdrawFull = currentFromAmountTokens === limitFromTokens.toFixed();
+
+    const amountMantissa = convertTokensToMantissa({
+      value: new BigNumber(withdrawFull ? userStakedTokens : currentFromAmountTokens),
+      token: vault.asset.vToken,
+    });
+
+    if (!hasMatured && !swapQuote) {
+      throw new VError({
+        type: 'unexpected',
+        code: 'somethingWentWrong',
+      });
+    }
+
+    if (hasMatured) {
+      // A full redeem needs the exact vToken balance, while a partial redeem (redeemUnderlying)
+      // needs the amount expressed in the underlying token's decimals. This mirrors the Market page
+      // WithdrawForm logic and avoids the decimals mismatch that caused redeem reverts.
+      const withdrawAmountMantissa = withdrawFull
+        ? vTokenBalanceMantissa
+        : convertTokensToMantissa({
+            value: new BigNumber(currentFromAmountTokens),
+            token: vault.asset.vToken.underlyingToken,
+          });
+
+      if (!withdrawAmountMantissa) {
+        throw new VError({
+          type: 'unexpected',
+          code: 'somethingWentWrong',
+        });
+      }
+
+      await withdrawAfterMaturity({
+        poolName: vault.poolName,
+        poolComptrollerContractAddress: vault.poolComptrollerContractAddress,
+        vToken: vault.asset.vToken,
+        withdrawFullSupply: withdrawFull,
+        unwrap: fromToken.isNative,
+        amountMantissa: withdrawAmountMantissa,
+      });
+    } else if (swapQuote) {
+      await withdraw({
+        swapQuote,
+        type: 'withdraw',
+        fromToken,
+        toToken,
+        amountMantissa,
+        vToken: vault.asset.vToken,
+      });
+    }
+
+    onClose();
+  };
+
+  return (
+    <div className="space-y-4">
+      <VaultForm
+        onSubmit={handleSubmit}
+        form={form}
+        fromToken={fromToken}
+        limitFromTokens={limitFromTokens}
+        fromTokenFieldLabel={t('vault.modals.withdraw')}
+        submitButtonLabel={t('vault.modals.withdraw')}
+        fromTokenPriceCents={fromTokenPriceCents.toNumber()}
+        swapQuote={swapQuote}
+        swapQuoteError={swapQuoteError ?? undefined}
+        swapFromToken={actionMode !== 'redeemAtMaturity' ? fromToken : undefined}
+        swapToToken={actionMode !== 'redeemAtMaturity' ? toToken : undefined}
+        isLoading={isGetSwapQuoteLoading || (hasMatured && isGetVTokenBalanceLoading)}
+        delegateeAddress={pendlePtVaultAddress}
+        vaultPoolComptrollerContractAddress={vault.poolComptrollerContractAddress}
+        footer={
+          <Footer
+            actionMode={actionMode}
+            vault={vault}
+            fromToken={fromToken}
+            toToken={toToken}
+            userStakedTokens={userStakedTokens}
+            userSlippageTolerancePercentage={userSlippageTolerancePercentage}
+            swapQuote={swapQuote}
+            estDiffAmountReadable={estDiffAmountReadable}
+          />
+        }
+      />
+
+      {!!accountAddress && (
+        <NoticeInfo
+          description={
+            hasMatured ? (
+              <Trans
+                i18nKey="vault.modals.afterMaturityPendleDisclaimer"
+                components={{
+                  Link: <Link href={PENDLE_SITE_URL} />,
+                }}
+              />
+            ) : (
+              t('vault.modals.maturityPendleDisclaimer')
+            )
+          }
+        />
+      )}
+    </div>
+  );
+};

@@ -1,0 +1,16 @@
+/* V5 shares the library's 8px shape across pages and body-portaled controls. */
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) :is(
+  [data-venus-button-variant],
+  [data-header-navigation],
+  [data-select-trigger],
+  .venus-connected-wallet,
+  .venus-account-address-study,
+  .liquid-glass-study__button,
+  button
+) {
+  border-radius: var(--radius-lg) !important;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-dropdown-surface {
+  border-radius: var(--radius-lg) !important;
+}

@@ -1,0 +1,99 @@
+import createDeepMerge from '@fastify/deepmerge';
+import {
+  DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE,
+  MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE,
+  MINIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE,
+} from 'constants/swap';
+import { ChainId } from 'types';
+import { extractEnumValues } from 'utilities/extractEnumValues';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+
+export interface UserChainSettings {
+  gaslessTransactions: boolean;
+  showPausedAssets: boolean;
+  showUserAssetsOnly: boolean;
+  doNotShowImportPositionsModal: boolean;
+  slippageTolerancePercentage: string;
+  doNotShowUserBalances: boolean;
+  doNotExpandGuide: boolean;
+  doNotShowGatedAssetModal: boolean;
+  doNotShowVipModal: boolean;
+  doNotShowFixedRateVaultsAdBanner: boolean;
+}
+
+type UserSettings = Partial<Record<ChainId, Partial<UserChainSettings>>>;
+
+export interface State {
+  userSettings: UserSettings;
+  setUserSettings: (input: {
+    settings: Partial<UserChainSettings>;
+    chainIds?: ChainId[];
+  }) => void;
+}
+
+const deepMerge = createDeepMerge({ all: true });
+
+const allChainIds = extractEnumValues(ChainId);
+export const initialUserSettings: UserSettings = {
+  [ChainId.ZKSYNC_MAINNET]: {
+    gaslessTransactions: true,
+  },
+  [ChainId.ZKSYNC_SEPOLIA]: {
+    gaslessTransactions: true,
+  },
+};
+
+export const useStore = create<State>()(
+  persist(
+    immer(set => ({
+      userSettings: initialUserSettings,
+      setUserSettings: ({ settings, chainIds = allChainIds }) =>
+        set(state =>
+          chainIds.forEach(chainId => {
+            if (!state.userSettings[chainId]) {
+              state.userSettings[chainId] = {};
+            }
+
+            state.userSettings[chainId] = {
+              ...state.userSettings[chainId],
+              ...settings,
+            };
+          }),
+        ),
+    })),
+    {
+      name: 'venus-global-store',
+      merge: (persisted, current) => {
+        const state = deepMerge(current, persisted) as State;
+
+        const userSettings = Object.entries(state.userSettings).reduce<UserSettings>(
+          (acc, [chainId, settings]) => {
+            const parsedSlippageTolerancePercentage = Number(settings.slippageTolerancePercentage);
+            const isSlippageTolerancePercentageValid =
+              Number.isFinite(parsedSlippageTolerancePercentage) &&
+              parsedSlippageTolerancePercentage >= MINIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE &&
+              parsedSlippageTolerancePercentage <= MAXIMUM_SLIPPAGE_TOLERANCE_PERCENTAGE;
+
+            return {
+              ...acc,
+              [chainId]: {
+                ...settings,
+                slippageTolerancePercentage: isSlippageTolerancePercentageValid
+                  ? settings.slippageTolerancePercentage
+                  : String(DEFAULT_SLIPPAGE_TOLERANCE_PERCENTAGE),
+              },
+            };
+          },
+          state.userSettings,
+        );
+
+        return {
+          ...state,
+          userSettings,
+        };
+      },
+    },
+  ),
+);

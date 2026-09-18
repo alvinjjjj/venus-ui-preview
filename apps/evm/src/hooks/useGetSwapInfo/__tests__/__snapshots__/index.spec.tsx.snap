@@ -1,0 +1,69 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`pages/Swap/useGetSwapInfo > exactAmountIn > returns swap in correct format if a trade is found 1`] = `
+{
+  "error": undefined,
+  "isLoading": false,
+  "swap": {
+    "direction": "exactAmountIn",
+    "exchangeRate": "0.499374217772215269",
+    "expectedToTokenAmountReceivedMantissa": "499374217772215269",
+    "fromToken": {
+      "address": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+      "chainId": 97,
+      "decimals": 18,
+      "iconSrc": "fake-bnb-asset",
+      "isNative": true,
+      "symbol": "BNB",
+    },
+    "fromTokenAmountSoldMantissa": "1000000000000000000",
+    "minimumToTokenAmountReceivedMantissa": "496889768927577382",
+    "priceImpactPercentage": 50.06,
+    "routePath": [
+      "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+      "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+    ],
+    "toToken": {
+      "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "chainId": 97,
+      "decimals": 18,
+      "iconSrc": "fake-xvs-asset",
+      "symbol": "XVS",
+    },
+  },
+}
+`;
+
+exports[`pages/Swap/useGetSwapInfo > exactAmountOut > returns swap in correct format if a trade is found 1`] = `
+{
+  "error": undefined,
+  "isLoading": false,
+  "swap": {
+    "direction": "exactAmountOut",
+    "exchangeRate": "0.49875",
+    "expectedFromTokenAmountSoldMantissa": "1002506265664160402",
+    "fromToken": {
+      "address": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+      "chainId": 97,
+      "decimals": 18,
+      "iconSrc": "fake-bnb-asset",
+      "isNative": true,
+      "symbol": "BNB",
+    },
+    "maximumFromTokenAmountSoldMantissa": "1007518796992481204",
+    "priceImpactPercentage": 50.13,
+    "routePath": [
+      "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+      "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+    ],
+    "toToken": {
+      "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+      "chainId": 97,
+      "decimals": 18,
+      "iconSrc": "fake-xvs-asset",
+      "symbol": "XVS",
+    },
+    "toTokenAmountReceivedMantissa": "500000000000000000",
+  },
+}
+`;

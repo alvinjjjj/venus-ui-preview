@@ -1,0 +1,40 @@
+import type { Pool } from 'types';
+
+import { useGetMarketsPagePath } from 'hooks/useGetMarketsPagePath';
+import { useTranslation } from 'libs/translations';
+import { Placeholder } from '../Placeholder';
+import { IsolatedPoolsDeprecationNotice } from './IsolatedPoolsDeprecationNotice';
+import { Positions } from './Positions';
+
+export interface MarketsProps {
+  pool: Pool;
+}
+
+export const Markets: React.FC<MarketsProps> = ({ pool }) => {
+  const { t } = useTranslation();
+  const { marketsPagePath } = useGetMarketsPagePath();
+
+  const userHasPositions = pool.assets.some(
+    asset =>
+      asset.userSupplyBalanceTokens.isGreaterThan(0) ||
+      asset.userBorrowBalanceTokens.isGreaterThan(0) ||
+      asset.isCollateralOfUser,
+  );
+
+  return (
+    <>
+      <IsolatedPoolsDeprecationNotice className="mb-4" />
+
+      {userHasPositions ? (
+        <Positions pools={[pool]} />
+      ) : (
+        <Placeholder
+          iconName="venus"
+          title={t('account.pools.placeholder.title')}
+          to={marketsPagePath}
+          buttonSize="sm"
+        />
+      )}
+    </>
+  );
+};

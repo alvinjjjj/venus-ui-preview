@@ -1,0 +1,55 @@
+/* Approved C material, shared by all V2 Button consumers, including portals.
+   Scoped optical tokens keep other versions and the private account untouched. */
+:root[data-glass-version='v2'] [data-venus-button-size]:not(.account-preview *) {
+  border-radius: 8px !important;
+  --v2-button-fill: linear-gradient(135deg, #345983, #203b60 70%, #1c3555);
+  --v2-button-inset-fill: linear-gradient(135deg, #14263d, #1c3554);
+  --v2-button-ink: #fff;
+  --v2-button-hover-ink: #c8dff9;
+  --v2-button-edge: rgb(112 157 206 / 30%);
+  --v2-button-depth: inset 0 1px 0 rgb(175 206 242 / 22%), 0 5px 12px rgb(0 0 0 / 16%);
+  --v2-button-inset: inset 2px 3px 7px rgb(0 0 0 / 30%), inset -1px -1px 2px rgb(122 170 217 / 14%);
+}
+:root[data-glass-version='v2'] [data-venus-button-variant]:not([data-venus-button-variant='primary']):not(.account-preview *) {
+  --v2-button-fill: color-mix(in srgb, var(--color-background) 88%, #345983);
+  --v2-button-inset-fill: color-mix(in srgb, var(--color-background) 80%, #345983);
+  --v2-button-ink: var(--color-white);
+  --v2-button-hover-ink: var(--color-white);
+  --v2-button-depth: inset 0 1px 0 rgb(175 206 242 / 12%), 0 2px 5px rgb(0 0 0 / 9%);
+  --v2-button-inset: inset 1px 2px 4px rgb(0 0 0 / 16%);
+}
+:root[data-glass-version='v2'] [data-venus-button-variant]:not([data-venus-button-variant='text']):not(.account-preview *) {
+  background: var(--v2-button-fill) !important;
+  color: var(--v2-button-ink) !important;
+  border: 1px solid var(--v2-button-edge) !important;
+  box-shadow: var(--v2-button-depth) !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+  transition: box-shadow 220ms ease-out, color 220ms ease-out, background 220ms ease-out !important;
+}
+@media (hover: hover) {
+  :root[data-glass-version='v2'] [data-venus-button-variant]:not([data-venus-button-variant='text']):not(:disabled):not([aria-disabled='true']):not(.account-preview *):hover {
+    background: var(--v2-button-inset-fill) !important;
+    color: var(--v2-button-hover-ink) !important;
+    box-shadow: var(--v2-button-inset) !important;
+  }
+}
+:root[data-glass-version='v2'] [data-venus-button-variant]:not([data-venus-button-variant='text']):not(:disabled):not([aria-disabled='true']):not(.account-preview *):is(:active, [data-venus-button-active='true']) {
+  background: var(--v2-button-inset-fill) !important;
+  color: var(--v2-button-hover-ink) !important;
+  box-shadow: var(--v2-button-inset) !important;
+}
+:root[data-glass-version='v2'] [data-venus-button-variant]:not([data-venus-button-variant='text']):not(.account-preview *):is(:disabled, [aria-disabled='true']) {
+  opacity: .45 !important;
+  box-shadow: none !important;
+  filter: saturate(.35) !important;
+  cursor: not-allowed;
+}
+:root[data-glass-version='v2'] [data-venus-button-size]:not(.account-preview *):focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-version='v2'] [data-venus-button-size]:not(.account-preview *) { transition: none !important; }
+}

@@ -1,0 +1,470 @@
+import { cn } from '@venusprotocol/ui';
+import { RewardBadgePreview } from 'demo/RewardBadgePreview';
+
+import {
+  AssetApy,
+  EModeIcon,
+  InfoIcon,
+  IsolatedAssetIndicator,
+  LayeredValues,
+  ProgressBar,
+  ProtectionModeIndicator,
+  type TableColumn,
+  Toggle,
+  TokenIcon,
+  TokenIconWithSymbol,
+  Tooltip,
+} from 'components';
+import { HidableUserBalance } from 'containers/HidableUserBalance';
+import { useTranslation } from 'libs/translations';
+import { useAccountChainId, useChainId } from 'libs/wallet';
+import type { Asset, EModeGroup } from 'types';
+import {
+  areTokensEqual,
+  compareBigNumbers,
+  compareBooleans,
+  formatCentsToReadableValue,
+  formatPercentageToReadableValue,
+  formatTokensToReadableValue,
+  getBestDistributionApys,
+  isAssetPaused,
+  isCollateralActionDisabled,
+} from 'utilities';
+import type { ColumnKey } from '../types';
+
+// Translation keys: do not remove this comment
+// t('marketTable.columnKeys.asset')
+// t('marketTable.columnKeys.assetAndChain')
+// t('marketTable.columnKeys.supplyApy')
+// t('marketTable.columnKeys.labeledSupplyApy')
+// t('marketTable.columnKeys.borrowApy')
+// t('marketTable.columnKeys.labeledBorrowApy')
+// t('marketTable.columnKeys.collateral')
+// t('marketTable.columnKeys.supplyBalance')
+// t('marketTable.columnKeys.borrowBalance')
+// t('marketTable.columnKeys.userBorrowBalance')
+// t('marketTable.columnKeys.userSupplyBalance')
+// t('marketTable.columnKeys.userWalletBalance')
+// t('marketTable.columnKeys.userBorrowLimitSharePercentage')
+// t('marketTable.columnKeys.liquidity')
+// t('marketTable.columnKeys.price')
+
+// t('marketTable.columnSelectOptionLabel.asset')
+// t('marketTable.columnSelectOptionLabel.supplyApy')
+// t('marketTable.columnSelectOptionLabel.labeledSupplyApy')
+// t('marketTable.columnSelectOptionLabel.borrowApy')
+// t('marketTable.columnSelectOptionLabel.labeledBorrowApy')
+// t('marketTable.columnSelectOptionLabel.collateral')
+// t('marketTable.columnSelectOptionLabel.supplyBalance')
+// t('marketTable.columnSelectOptionLabel.borrowBalance')
+// t('marketTable.columnSelectOptionLabel.userBorrowBalance')
+// t('marketTable.columnSelectOptionLabel.userSupplyBalance')
+// t('marketTable.columnSelectOptionLabel.userWalletBalance')
+// t('marketTable.columnSelectOptionLabel.userBorrowLimitSharePercentage')
+// t('marketTable.columnSelectOptionLabel.liquidity')
+// t('marketTable.columnSelectOptionLabel.price')
+
+export const useColumns = ({
+  columnKeys,
+  collateralOnChange,
+  userEModeGroup,
+  eModeGroups,
+  marketType,
+}: {
+  columnKeys: ColumnKey[];
+  collateralOnChange: (asset: Asset) => void;
+  userEModeGroup?: EModeGroup;
+  eModeGroups?: EModeGroup[];
+  marketType?: 'supply' | 'borrow';
+}) => {
+  const { t, Trans } = useTranslation();
+  const { chainId: accountChainId } = useAccountChainId();
+  const { chainId } = useChainId();
+  const isAccountOnWrongChain = accountChainId !== chainId;
+
+  const columns: TableColumn<Asset>[] = columnKeys.map((column, index) => {
+    let columnLabel: React.ReactNode | string = t(`marketTable.columnKeys.${column}`);
+
+    if (column === 'borrowApy' || column === 'labeledBorrowApy') {
+      columnLabel = (
+        <Trans
+          i18nKey={`marketTable.columnKeys.${column}`}
+          components={{
+            InfoIcon: (
+              <InfoIcon
+                tooltip={t('marketTable.columnTooltips.borrowApy')}
+                className={cn('ml-1', column === 'labeledBorrowApy' && 'mr-1')}
+              />
+            ),
+          }}
+        />
+      );
+    } else if (column === 'supplyApy' || column === 'labeledSupplyApy') {
+      columnLabel = (
+        <Trans
+          i18nKey={`marketTable.columnKeys.${column}`}
+          components={{
+            InfoIcon: (
+              <InfoIcon tooltip={t('marketTable.columnTooltips.supplyApy')} className="ml-1 mr-1" />
+            ),
+          }}
+        />
+      );
+    }
+
+    const align = index === 0 ? 'left' : 'right';
+
+    return {
+      key: column,
+      label: columnLabel,
+      selectOptionLabel: t(`marketTable.columnSelectOptionLabel.${column}`),
+      align,
+      renderCell: asset => {
+        const isInUserEModeGroup = (userEModeGroup?.assetSettings || []).some(a =>
+          areTokensEqual(a.vToken, asset.vToken),
+        );
+
+        const isPaused = isAssetPaused({
+          disabledTokenActions: asset.disabledTokenActions,
+        });
+
+        const indicatorsDom = (
+          <div className="flex items-center gap-x-3">
+            {userEModeGroup && isInUserEModeGroup && (
+              <Tooltip
+                className="inline-flex items-center"
+                content={
+                  userEModeGroup.isIsolated
+                    ? t('marketTable.assetColumn.isolationMode', {
+                        eModeGroupName: userEModeGroup.name,
+                      })
+                    : t('marketTable.assetColumn.eMode', {
+                        eModeGroupName: userEModeGroup.name,
+                      })
+                }
+              >
+                <EModeIcon className="size-5" isIsolated={userEModeGroup.isIsolated} />
+              </Tooltip>
+            )}
+
+            {asset.isProtectionModeEnabled && (
+              <ProtectionModeIndicator
+                variant="icon"
+                tooltipType={marketType ?? 'list'}
+                tokenName={asset.vToken.underlyingToken.symbol}
+                tokenSupplyPriceCents={asset.tokenSupplyPriceCents}
+                tokenBorrowPriceCents={asset.tokenBorrowPriceCents}
+                userSupplyBalanceCents={asset.userSupplyBalanceProtectedCents}
+                userBorrowBalanceCents={asset.userBorrowBalanceProtectedCents}
+              />
+            )}
+
+            {isPaused && (
+              <InfoIcon
+                iconClassName="text-orange"
+                iconName="attention"
+                tooltip={t('marketTable.assetColumn.pausedAssetTooltip')}
+              />
+            )}
+          </div>
+        );
+
+        if (column === 'asset' || column === 'assetAndChain') {
+          const showIsolatedIndicator =
+            column === 'asset' &&
+            asset.collateralFactor === 0 &&
+            !asset.isBorrowable &&
+            !!eModeGroups?.some(
+              group =>
+                group.isIsolated &&
+                group.assetSettings.some(settings => areTokensEqual(settings.vToken, asset.vToken)),
+            );
+
+          return (
+            <div className="flex min-w-0 items-center space-x-1">
+              {showIsolatedIndicator ? (
+                <div className="flex min-w-[5rem] items-center gap-x-3">
+                  <TokenIcon token={asset.vToken.underlyingToken} size="xl" className="shrink-0" />
+
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-x-1">
+                      <p className="truncate font-semibold">
+                        {asset.vToken.underlyingToken.symbol}
+                      </p>
+
+                      {indicatorsDom}
+                    </div>
+
+                    <IsolatedAssetIndicator />
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-x-1">
+                  <TokenIconWithSymbol
+                    token={asset.vToken.underlyingToken}
+                    displayChain={column === 'assetAndChain'}
+                    size={column === 'assetAndChain' ? 'md' : 'xl'}
+                    className="min-w-[5rem]"
+                  />
+
+                  {indicatorsDom}
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        if (
+          column === 'supplyApy' ||
+          column === 'borrowApy' ||
+          column === 'labeledSupplyApy' ||
+          column === 'labeledBorrowApy'
+        ) {
+          return (
+            <div className={cn('venus-market-apy-cell flex items-center gap-1 flex-wrap', align === 'right' && 'justify-end')}>
+            <AssetApy
+              className={cn('venus-market-apy', isPaused && 'text-grey', align === 'right' && 'justify-end')}
+              asset={asset}
+              type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'}
+            />
+            {asset.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255' && (
+              <span className="venus-market-reward-preview">
+                <RewardBadgePreview token={asset.vToken.underlyingToken} type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'} />
+              </span>
+            )}
+            </div>
+          );
+        }
+
+        if (column === 'collateral') {
+          const collateralActionDisabled = isCollateralActionDisabled({
+            disabledTokenActions: asset.disabledTokenActions,
+            isCollateralOfUser: asset.isCollateralOfUser,
+          });
+
+          return (
+            <Toggle
+              className="py-1"
+              onChange={() => collateralOnChange(asset)}
+              value={
+                asset.isCollateralOfUser && (!userEModeGroup || asset.userCollateralFactor > 0)
+              }
+              disabled={
+                isAccountOnWrongChain ||
+                collateralActionDisabled ||
+                (userEModeGroup && asset.userCollateralFactor === 0)
+              }
+            />
+          );
+        }
+
+        if (column === 'liquidity') {
+          return (
+            <LayeredValues
+              className={cn(isPaused && 'text-grey')}
+              topValue={formatTokensToReadableValue({
+                value: asset.cashTokens,
+                token: asset.vToken.underlyingToken,
+                addSymbol: false,
+              })}
+              bottomValue={formatCentsToReadableValue({
+                value: asset.liquidityCents,
+              })}
+            />
+          );
+        }
+
+        if (column === 'userWalletBalance') {
+          return (
+            <LayeredValues
+              className={cn(isPaused && 'text-grey')}
+              topValue={formatTokensToReadableValue({
+                value: asset.userWalletBalanceTokens,
+                token: asset.vToken.underlyingToken,
+                addSymbol: false,
+              })}
+              bottomValue={formatCentsToReadableValue({
+                value: asset.userWalletBalanceCents,
+              })}
+            />
+          );
+        }
+
+        if (column === 'userSupplyBalance') {
+          return (
+            <HidableUserBalance>
+              <LayeredValues
+                className={cn(isPaused && 'text-grey')}
+                topValue={formatTokensToReadableValue({
+                  value: asset.userSupplyBalanceTokens,
+                  token: asset.vToken.underlyingToken,
+                  addSymbol: false,
+                })}
+                bottomValue={formatCentsToReadableValue({
+                  value: asset.userSupplyBalanceCents,
+                })}
+              />
+            </HidableUserBalance>
+          );
+        }
+
+        if (column === 'userBorrowBalance') {
+          return (
+            <HidableUserBalance>
+              <LayeredValues
+                className={cn(isPaused && 'text-grey')}
+                topValue={formatTokensToReadableValue({
+                  value: asset.userBorrowBalanceTokens,
+                  token: asset.vToken.underlyingToken,
+                  addSymbol: false,
+                })}
+                bottomValue={formatCentsToReadableValue({
+                  value: asset.userBorrowBalanceCents,
+                })}
+              />
+            </HidableUserBalance>
+          );
+        }
+
+        if (column === 'supplyBalance') {
+          return (
+            <LayeredValues
+              topValueClassName="venus-total-supply-amount"
+              className={cn(isPaused && 'text-grey')}
+              topValue={formatTokensToReadableValue({
+                value: asset.supplyBalanceTokens,
+                token: asset.vToken.underlyingToken,
+                addSymbol: false,
+              })}
+              bottomValue={formatCentsToReadableValue({
+                value: asset.supplyBalanceCents,
+              })}
+            />
+          );
+        }
+
+        if (column === 'borrowBalance') {
+          return (
+            <LayeredValues
+              className={cn(isPaused && 'text-grey')}
+              topValue={formatTokensToReadableValue({
+                value: asset.borrowBalanceTokens,
+                token: asset.vToken.underlyingToken,
+                addSymbol: false,
+              })}
+              bottomValue={formatCentsToReadableValue({
+                value: asset.borrowBalanceCents,
+              })}
+            />
+          );
+        }
+
+        if (column === 'userBorrowLimitSharePercentage') {
+          return (
+            <HidableUserBalance>
+              <div className="flex items-center justify-start sm:justify-end [&>:first-of-type]:mr-2">
+                <span className={cn(isPaused ? 'text-grey' : 'text-white')}>
+                  {formatPercentageToReadableValue(asset.userBorrowLimitSharePercentage)}
+                </span>
+
+                <ProgressBar
+                  min={0}
+                  max={100}
+                  progressBars={[
+                    {
+                      value: Math.min(Math.max(asset.userBorrowLimitSharePercentage, 0), 100),
+                    },
+                  ]}
+                  className="w-13"
+                />
+              </div>
+            </HidableUserBalance>
+          );
+        }
+      },
+      sortRows:
+        column === 'asset' || column === 'assetAndChain'
+          ? undefined
+          : (rowA, rowB, direction) => {
+              if (column === 'borrowApy' || column === 'labeledBorrowApy') {
+                const rowABorrowApy = rowA.borrowApyPercentage.minus(
+                  getBestDistributionApys({ asset: rowA }).totalBorrowApyBoostPercentage,
+                );
+                const rowBBorrowApy = rowB.borrowApyPercentage.minus(
+                  getBestDistributionApys({ asset: rowB }).totalBorrowApyBoostPercentage,
+                );
+
+                return compareBigNumbers(rowABorrowApy, rowBBorrowApy, direction);
+              }
+
+              if (column === 'supplyApy' || column === 'labeledSupplyApy') {
+                const rowASupplyApy = rowA.supplyApyPercentage.plus(
+                  getBestDistributionApys({ asset: rowA }).totalSupplyApyBoostPercentage,
+                );
+                const rowBSupplyApy = rowB.supplyApyPercentage.plus(
+                  getBestDistributionApys({ asset: rowB }).totalSupplyApyBoostPercentage,
+                );
+
+                return compareBigNumbers(rowASupplyApy, rowBSupplyApy, direction);
+              }
+
+              // Put rows of tokens that can't be enabled as collateral at the
+              // bottom of the list
+              if (column === 'collateral' && rowA.userCollateralFactor === 0) return 1;
+              if (column === 'collateral' && rowB.userCollateralFactor === 0) return -1;
+              // Sort other rows normally
+              if (column === 'collateral') {
+                return compareBooleans(rowA.isCollateralOfUser, rowB.isCollateralOfUser, direction);
+              }
+
+              if (column === 'liquidity') {
+                return compareBigNumbers(rowA.liquidityCents, rowB.liquidityCents, direction);
+              }
+
+              if (column === 'userWalletBalance') {
+                return compareBigNumbers(
+                  rowA.userWalletBalanceCents,
+                  rowB.userWalletBalanceCents,
+                  direction,
+                );
+              }
+
+              if (column === 'userSupplyBalance') {
+                return compareBigNumbers(
+                  rowA.userSupplyBalanceCents,
+                  rowB.userSupplyBalanceCents,
+                  direction,
+                );
+              }
+
+              if (column === 'userBorrowBalance' || column === 'userBorrowLimitSharePercentage') {
+                return compareBigNumbers(
+                  rowA.userBorrowBalanceCents,
+                  rowB.userBorrowBalanceCents,
+                  direction,
+                );
+              }
+
+              if (column === 'supplyBalance') {
+                return compareBigNumbers(
+                  rowA.supplyBalanceCents,
+                  rowB.supplyBalanceCents,
+                  direction,
+                );
+              }
+
+              if (column === 'borrowBalance') {
+                return compareBigNumbers(
+                  rowA.borrowBalanceCents,
+                  rowB.borrowBalanceCents,
+                  direction,
+                );
+              }
+
+              return 0;
+            },
+    };
+  });
+
+  return columns;
+};

@@ -1,0 +1,2764 @@
+{
+  "account": {
+    "circularGradient": "Chuyển màu tròn",
+    "hubs": {
+      "placeholder": {
+        "title": "Chưa có vị thế trung tâm thanh khoản"
+      }
+    },
+    "isolatedPoolsDeprecationNotice": {
+      "description": "Các pool cô lập đã bị ngừng hoàn toàn. Bạn vẫn còn vị thế trên {{chainNames}}. Hãy trả hết khoản vay và rút tài sản của bạn. <LearnMore>Tìm hiểu thêm</LearnMore>"
+    },
+    "marketBreakdown": {
+      "tables": {
+        "borrowTableTitle": "Đã vay",
+        "eModeHeader": {
+          "illustrationAltText": "Hình minh họa E-mode",
+          "title": "E-mode: <UnderlinedText>{{eModeGroupName}}</UnderlinedText>"
+        },
+        "isolatedModeHeader": {
+          "title": "Chế độ Isolated: <UnderlinedText>{{groupName}}</UnderlinedText>"
+        },
+        "supplyTableTitle": "Đã cung cấp",
+        "tabletBorrowTabTitle": "Đã vay",
+        "tabletSupplyTabTitle": "Đã cung cấp",
+        "tabletTitle": "Tài sản"
+      }
+    },
+    "performanceChart": {
+      "absolutePerformance": "Hiệu suất tuyệt đối",
+      "dataPoint": {
+        "date": "{{ date, textual }}"
+      },
+      "errorState": {
+        "failedToFetchMessage": "Không thể lấy lịch sử tài khoản",
+        "refetchButtonLabel": "Thử lại"
+      },
+      "netWorth": {
+        "label": "Giá trị ròng",
+        "tooltip": "Tài sản ròng khả dụng sau khi tính đến lượng cung cấp trong vault và các khoản vay",
+        "tooltipWithVai": "Tài sản ròng khả dụng sau khi tính đến lượng cung cấp trong vault, các khoản vay và VAI đã đúc"
+      },
+      "periodOption": {
+        "oneYear": "1N",
+        "sixMonths": "6T",
+        "thirtyDays": "30N"
+      },
+      "placeholderText": "Đang tạo báo cáo, có thể mất đến một phút",
+      "todaysChange": "Thay đổi hôm nay",
+      "xAxisValue": "{{ date, numeric }}"
+    },
+    "placeholder": {
+      "buttonLabel": "Duyệt"
+    },
+    "pools": {
+      "placeholder": {
+        "title": "Chưa có vị thế thị trường"
+      }
+    },
+    "settings": {
+      "gaslessTransactions": {
+        "switchLabel": "Bật giao dịch không gas trên {{chainName}}"
+      }
+    },
+    "summary": {
+      "cellGroup": {
+        "dailyEarnings": "Thu nhập hằng ngày",
+        "healthFactor": "Hệ số an toàn",
+        "healthFactorTooltip": "Thanh lý tại < 1.0",
+        "mintedVai": "VAI đã đúc",
+        "netApy": "APY ròng",
+        "netApyTooltip": "Tỷ lệ phần trăm tổng số dư cung cấp của bạn nhận được dưới dạng lãi hằng năm",
+        "netApyWithVaultStakeTooltip": "Tỷ lệ phần trăm tổng số dư cung cấp và lượng cung cấp trong vault của bạn nhận được dưới dạng lãi hằng năm",
+        "totalBorrow": "Tổng vay",
+        "totalSupply": "Tổng cung cấp",
+        "totalVaultStake": "Tổng cung cấp trong vault"
+      },
+      "title": "Tóm tắt"
+    },
+    "tabs": {
+      "hubs": "Trung tâm",
+      "markets": "Thị trường",
+      "settings": "Cài đặt",
+      "transactions": "Giao dịch",
+      "vaults": "Kho"
+    },
+    "transactions": {
+      "date": {
+        "full": "{{ date, textual }}",
+        "time": "{{ date, time }}"
+      },
+      "placeholder": {
+        "description": "Giao dịch của bạn sẽ hiển thị ở đây",
+        "title": "Chưa có giao dịch"
+      },
+      "selects": {
+        "source": {
+          "all": "Tất cả nguồn"
+        },
+        "txType": {
+          "all": "Tất cả giao dịch"
+        }
+      },
+      "today": "Hôm nay",
+      "txSource": {
+        "liquidityHub": "Trung tâm thanh khoản",
+        "trade": "Trade",
+        "venusCore": "Venus Core"
+      },
+      "txText": {
+        "enterMarket": "<Styled>Đã bật</Styled> {{vTokenSymbol}} làm tài sản thế chấp",
+        "exitMarket": "<Styled>Đã tắt</Styled> {{vTokenSymbol}} làm tài sản thế chấp"
+      },
+      "txType": {
+        "borrow": "Vay",
+        "enterMarket": "Bật tài sản thế chấp",
+        "exitMarket": "Tắt tài sản thế chấp",
+        "mint": "Cung cấp",
+        "mintFromCollateral": "Di chuyển",
+        "positionClosedWithLoss": "Đóng (lỗ)",
+        "positionClosedWithProfit": "Đóng (lãi)",
+        "positionIncreased": "Tăng",
+        "positionOpened": "Mở",
+        "positionReducedWithLoss": "Đã giảm (lỗ)",
+        "positionReducedWithProfit": "Đã giảm (lãi)",
+        "principalSupplied": "Cung cấp",
+        "principalWithdrawn": "Rút",
+        "realizedPnl": "Lãi/lỗ đã thực hiện",
+        "redeem": "Rút",
+        "repay": "Hoàn trả"
+      },
+      "yesterday": "Hôm qua"
+    },
+    "vaults": {
+      "placeholder": {
+        "title": "Chưa có vị thế trong kho"
+      }
+    }
+  },
+  "accountData": {
+    "balanceUpdate": {
+      "borrowBalance": "Số dư vay",
+      "supplyBalance": "Số dư cung cấp"
+    }
+  },
+  "accountHealth": {
+    "borrowed": "Đã vay:",
+    "borrowedSpotTooltip": "Giá trị vay này được tính dựa trên giá spot của tài sản vay và sẽ được sử dụng để xác định tình trạng sức khỏe tài khoản của bạn.",
+    "healthFactor": {
+      "label": "Hệ số an toàn",
+      "tooltip": "Thanh lý tại < 1.0"
+    },
+    "liquidationThreshold": "Ngưỡng thanh lý:",
+    "liquidationThresholdShort": "LT:",
+    "liquidationThresholdTooltip": "LT = Ngưỡng thanh lý<LineBreak/>Khi số dư vay của bạn đạt đến giá trị này, vị thế của bạn sẽ đủ điều kiện bị thanh lý.<LineBreak/><LineBreak/>Tìm hiểu thêm về <Link>cách tính</Link>.",
+    "tooltip": "Số dư vay:<LineBreak/>{{borrowBalance}} ({{borrowLimitUsedPercentage}} hạn mức vay)<LineBreak/><LineBreak/>Hạn mức vay:<LineBreak/>{{borrowLimit}}",
+    "tooltipProtection": "Số dư vay (Bảo vệ):<LineBreak/>{{borrowBalanceProtected}} ({{protectedBorrowLimitUsedPercentage}} hạn mức vay)<LineBreak/><LineBreak/>Số dư vay (spot): {{borrowBalance}}<LineBreak/>Hạn mức vay: {{borrowLimitProtected}}"
+  },
+  "accountLiquidityHubDailyEarnings": {
+    "label": "Thu nhập hằng ngày"
+  },
+  "accountModal": {
+    "disconnectButtonLabel": "Ngắt kết nối"
+  },
+  "accountPoolDailyEarnings": {
+    "label": "Thu nhập hằng ngày"
+  },
+  "adBanner": {
+    "startNow": "Bắt đầu ngay"
+  },
+  "announcements": {
+    "bethUpdate": {
+      "description": "Binance đã tạm dừng rút BETH vào 2023-04-26. Chúng tôi khuyến nghị người dùng giảm mức tiếp xúc với BETH trên Venus. Việc vay đã bị tạm dừng. Chuyển BETH sang WBETH on-chain theo tỷ lệ 1:1 <Link>tại đây</Link>."
+    },
+    "sxpDisabling": {
+      "description": "Theo khuyến nghị từ Gauntlet, việc vay và cung cấp SXP đã bị tạm dừng do lo ngại SXP chuyển sang chuỗi mới và dự kiến thanh khoản SXP giảm."
+    },
+    "trxMigration": {
+      "description": "Venus hỗ trợ token TRX mới trong một thị trường mới. Việc vay và cung cấp cho token TRX cũ đã bị tạm dừng. Xem thêm tại <Link>thông báo chính thức của Binance</Link>."
+    },
+    "tusdMigration": {
+      "description": "Venus hỗ trợ token TUSD mới trong một thị trường mới. Việc vay và cung cấp cho token TUSD cũ đã bị tạm dừng. Xem thêm tại <Link>thông báo chính thức của Binance</Link>."
+    }
+  },
+  "approveDelegateSteps": {
+    "approveDelegateButton": {
+      "text": "Phê duyệt hợp đồng ủy quyền",
+      "tooltip": "Chúng tôi cần phê duyệt hợp đồng ủy quyền để thực hiện thao tác này thay bạn."
+    },
+    "step1": "Bước 1"
+  },
+  "approveTokenSteps": {
+    "approveTokenButton": {
+      "text": "Phê duyệt {{tokenSymbol}}",
+      "tooltip": "Chúng tôi cần quyền phê duyệt chi tiêu cho bất kỳ token nào bạn muốn sử dụng với giao thức Venus."
+    },
+    "step1": "Bước 1",
+    "step2": "Bước 2"
+  },
+  "appVersionChecker": {
+    "newVersionMessage": "Có phiên bản mới của Venus. Tải lại trang để sử dụng ngay."
+  },
+  "apy": {
+    "boost": {
+      "iconAlt": "Biểu tượng thị trường được boost",
+      "tooltip": {
+        "borrowApy": {
+          "description": "Lãi tích lũy khi vay tài sản này từ Venus Protocol.",
+          "name": "APY vay"
+        },
+        "collateralGatedMerklReward": {
+          "description": "Mức thưởng tối đa trên thị trường này, được tính trên số dư vay đủ điều kiện hiện tại là {{amount}}. Nó chỉ áp dụng khi khoản vay {{tokenSymbol}} của bạn được thế chấp bằng bStock, và vị thế của bạn hiện chưa đủ điều kiện."
+        },
+        "defaultMerklRewardName": "Phần thưởng Merkl",
+        "externalRewardDescription": "Phần thưởng từ chương trình bên ngoài này có thể được nhận qua <AppLink>ứng dụng chính thức</AppLink> của họ. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+        "intrinsicApy": {
+          "description": "Lợi suất nội tại từ chính tài sản cơ sở — ví dụ phần thưởng gửi. Lợi suất này đến từ các nguồn bên ngoài và không được Venus Protocol đảm bảo.",
+          "name": "APY nội tại"
+        },
+        "liquidityHubIntrinsicApy": {
+          "description": "Lợi suất nội tại nhận được khi cung cấp tài sản cơ sở vào <AppLink>Trung tâm thanh khoản của Venus</AppLink>. vhToken tích lũy lợi suất này thông qua tỷ lệ quy đổi tăng dần thay vì phần thưởng có thể nhận — bạn nhận được tự động khi rút.",
+          "name": "APY nội tại của Trung tâm thanh khoản"
+        },
+        "offChainApy": {
+          "description": "Lợi suất bổ sung từ các hoạt động off-chain như airdrop hoặc chiến dịch khuyến mãi do bên thứ ba quản lý. Lợi suất này không được Venus Protocol đảm bảo.",
+          "name": "APY off-chain"
+        },
+        "pointDistribution": {
+          "learnMore": "Tìm hiểu thêm"
+        },
+        "primeDistribution": {
+          "description": "Venus Prime thưởng cho người dùng tận tâm bằng phần thưởng được boost. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+          "name": "APY Prime"
+        },
+        "supplyApy": {
+          "description": "Tổng lợi suất nhận được khi cung cấp tài sản vào Venus Protocol.",
+          "name": "APY cung cấp"
+        },
+        "xvsDistribution": {
+          "description": "Phần thưởng phân phối được khởi xướng và triển khai bởi cộng đồng Venus phi tập trung. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+          "name": "Phân phối XVS"
+        },
+        "yieldToMaturityApy": {
+          "description": "Lợi suất này đại diện cho lợi nhuận thường niên hóa từ việc mua token PT với giá chiết khấu bằng tài sản cơ sở và nắm giữ đến khi đáo hạn. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+          "name": "APY đến hạn"
+        }
+      }
+    },
+    "merklBadge": {
+      "logoAlt": "Logo chiến dịch Merkl",
+      "tooltip": {
+        "leadLine": "Thế chấp khoản vay của bạn bằng bStock để đưa APY vay về {{apy}}."
+      }
+    },
+    "primeBadge": {
+      "logoAlt": "Logo Prime",
+      "tooltip": {
+        "calculatorLink": "Tính phần thưởng Prime của bạn",
+        "primeBorrowSimulation": "APY được boost bởi Prime dựa trên mức vay trung bình của người dùng {{borrowBalance}} và khoản gửi trong vault {{xvsStaked}}.",
+        "primeDocLink": "Tìm hiểu thêm",
+        "primeMarket": "APY được boost bởi Prime.",
+        "primeSupplySimulation": "APY được boost bởi Prime dựa trên mức cung cấp trung bình của người dùng {{supplyBalance}} và khoản gửi trong vault {{xvsStaked}}."
+      }
+    }
+  },
+  "apyBreakdown": {
+    "borrowApy": "APY vay",
+    "distributionApy": "APY phân phối",
+    "distributionTooltip": "Phần thưởng phân phối được khởi xướng và triển khai bởi cộng đồng Venus phi tập trung. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+    "externalDistributionApy": "{{description}} APY",
+    "intrinsicApy": "APY nội tại",
+    "intrinsicApyTooltip": "APY nhận trực tiếp từ tài sản (ví dụ gửi hoặc phần thưởng bên ngoài), tách biệt với lợi suất cho vay của Venus. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+    "liquidityHubIntrinsicApy": "APY nội tại của Trung tâm thanh khoản",
+    "liquidityHubIntrinsicApyTooltip": "Lợi suất nội tại nhận được khi cung cấp tài sản cơ sở vào <AppLink>Trung tâm thanh khoản của Venus</AppLink>. vhToken tích lũy lợi suất này thông qua tỷ lệ quy đổi tăng dần thay vì phần thưởng có thể nhận — bạn nhận được tự động khi rút.",
+    "netApy": {
+      "label": "APY ròng",
+      "tooltip": "Tổng APY của tất cả các thị trường liên quan"
+    },
+    "offChainApy": "APY off-chain",
+    "offChainApyTooltip": "Lợi suất bổ sung từ các hoạt động off-chain như airdrop hoặc chiến dịch khuyến mãi do bên thứ ba quản lý. Venus protocol không đảm bảo và không chịu trách nhiệm.",
+    "primeApy": "APY Prime",
+    "supplyApy": "APY cung cấp",
+    "totalApy": {
+      "borrowApyLabel": "Tổng APY vay",
+      "borrowApyTooltip": "APY vay - APY phân phối",
+      "supplyApyLabel": "Tổng APY cung cấp",
+      "supplyApyTooltip": "APY cung cấp + APY phân phối"
+    },
+    "yieldToMaturityApy": "APY đến hạn",
+    "yieldToMaturityApyTooltip": "Lợi suất này đại diện cho lợi nhuận thường niên hóa từ việc mua token PT với giá chiết khấu bằng tài sản cơ sở và nắm giữ đến khi đáo hạn. Venus protocol không đảm bảo và không chịu trách nhiệm."
+  },
+  "apyChart": {
+    "date": {
+      "full": "{{ date, numeric }}",
+      "short": "{{ date, numericWithTime }}"
+    },
+    "tooltipItemLabels": {
+      "borrowApy": "APY vay",
+      "date": "Ngày",
+      "supplyApy": "APY cung cấp",
+      "totalBorrow": "Tổng vay",
+      "totalStaked": "Tổng đã cung cấp",
+      "totalSupply": "Tổng cung cấp",
+      "unitPrice": "Đơn giá"
+    }
+  },
+  "asset": {
+    "marketInfo": {
+      "title": "Thông tin thị trường"
+    }
+  },
+  "assetAccessor": {
+    "assetNotAvailable": "Tài sản này không khả dụng tại quốc gia của bạn",
+    "disabledActionNotice": {
+      "boost": "Tăng cường đã bị vô hiệu hóa cho thị trường này",
+      "borrow": "Vay đã bị vô hiệu hóa cho thị trường này",
+      "repay": "Hoàn trả đã bị vô hiệu hóa cho thị trường này",
+      "supply": "Cung cấp đã bị vô hiệu hóa cho thị trường này",
+      "withdraw": "Rút đã bị vô hiệu hóa cho thị trường này"
+    },
+    "eModeBlockedActionNotice": {
+      "borrow": "Cài đặt E-mode của bạn không cho phép vay từ thị trường này. <Link>Quản lý E-mode</Link>"
+    },
+    "isolationModeBlockedActionNotice": {
+      "borrow": "Cài đặt chế độ cô lập của bạn không cho phép vay từ thị trường này. <Link>Quản lý E-mode</Link>"
+    }
+  },
+  "assetWarning": {
+    "modalTitle": "Token {{ poolName }}",
+    "modeInfoHint": "<LineBreak/>Truy cập phần <ModeInfoButton>thông tin chế độ</ModeInfoButton> để khám phá thêm các nhóm khả dụng.",
+    "modeOnly": {
+      "eMode": "{{tokenSymbol}} chỉ khả dụng trong E-mode. Truy cập phần <ModeInfoButton>thông tin chế độ</ModeInfoButton> để bật nhóm, hoặc duyệt <ShowAllMarketsButton>các tài sản khác</ShowAllMarketsButton>.",
+      "eModeAndIsolation": "{{tokenSymbol}} chỉ khả dụng trong E-mode và chế độ cô lập. Truy cập phần <ModeInfoButton>thông tin chế độ</ModeInfoButton> để bật một trong các nhóm, hoặc duyệt <ShowAllMarketsButton>các tài sản khác</ShowAllMarketsButton>.",
+      "isolation": "{{tokenSymbol}} chỉ khả dụng trong chế độ cô lập. Truy cập phần <ModeInfoButton>thông tin chế độ</ModeInfoButton> để bật nhóm, hoặc duyệt <ShowAllMarketsButton>các tài sản khác</ShowAllMarketsButton>."
+    },
+    "supplyDescription": "Cung cấp {{tokenSymbol}} vào Core Pool sẽ cho phép bạn vay token chỉ từ pool này. <ShowAllMarketsButton>Hiển thị tất cả thị trường</ShowAllMarketsButton>"
+  },
+  "availableBalance": {
+    "label": "Có sẵn"
+  },
+  "boostBanner": {
+    "description": "Đòn bẩy một lần nhấp để tăng lợi suất <White>tối đa 5x</White>.",
+    "rocketAltText": "Hình minh họa tên lửa",
+    "title": "Tăng cường đã khả dụng!"
+  },
+  "breadcrumbs": {
+    "bridge": "Cầu nối",
+    "dashboard": "Bảng điều khiển",
+    "governance": "Quản trị",
+    "leaderboard": "Bảng xếp hạng",
+    "liquidityHubs": "Trung tâm thanh khoản",
+    "markets": "Thị trường",
+    "primeCalculator": "Máy tính Prime",
+    "proposal": "Đề xuất #{{proposalId}}",
+    "swap": "Hoán đổi",
+    "vai": "VAI",
+    "vaults": "Kho"
+  },
+  "bridgePage": {
+    "amountInput": {
+      "label": "Số lượng",
+      "maxButtonLabel": "TỐI ĐA"
+    },
+    "bridgeGasFee": {
+      "label": "Phí gas bridge",
+      "tooltip": "Dùng để trả chi phí gas khi gửi giao dịch trên chuỗi đích"
+    },
+    "errors": {
+      "dailyTransactionLimitExceeded": {
+        "message": "Bạn không thể bridge nhiều hơn {{readableAmountTokens}} ({{readableAmountUsd}}) trên chuỗi đích do giới hạn 24 giờ. Giới hạn này sẽ được đặt lại vào {{ date, textualWithTime }}",
+        "submitButton": "Số lượng nhập vượt quá giới hạn hàng ngày"
+      },
+      "doesNotHaveEnoughNativeFunds": "Không đủ số dư {{tokenSymbol}}",
+      "doesNotHaveEnoughXvs": "Không đủ số dư {{tokenSymbol}}",
+      "mintCapReached": {
+        "message": "Bạn không thể bridge nhiều hơn {{readableAmountTokens}} do giới hạn đúc của bridge",
+        "submitButton": "Đã đạt giới hạn đúc của bridge"
+      },
+      "singleTransactionLimitExceeded": {
+        "message": "Bạn không thể bridge nhiều hơn {{readableAmountTokens}} ({{readableAmountUsd}}) trong một giao dịch trên chuỗi đích",
+        "submitButton": "Số lượng nhập vượt quá giới hạn"
+      }
+    },
+    "footer": {
+      "bridgeDocLink": "Cách bridge",
+      "poweredBy": "Được cung cấp bởi"
+    },
+    "fromChainSelect": {
+      "label": "Từ"
+    },
+    "submitButton": {
+      "label": {
+        "enterValidAmount": "Nhập số lượng hợp lệ",
+        "submit": "Xác nhận"
+      }
+    },
+    "toChainSelect": {
+      "label": "Đến"
+    },
+    "walletBalance": {
+      "label": "Số dư ví"
+    }
+  },
+  "chainExplorerLink": {
+    "content": "Xem trên {{domainName}}"
+  },
+  "chip": {
+    "proposalType": {
+      "critical": "Nghiêm trọng",
+      "fastTrack": "Nhanh"
+    }
+  },
+  "claimReward": {
+    "modal": {
+      "claimButton": {
+        "disabledLabel": "Chọn nhóm để nhận thưởng",
+        "enabledLabel": "Nhận"
+      },
+      "claimOn": "Nhận trên {{appName}}",
+      "externalRewards": "Phần thưởng bên ngoài",
+      "primeGroup": {
+        "disabledContractWarningMessage": "Hợp đồng Prime hiện đang tạm dừng. Lãi từ Prime vẫn tích lũy nhưng không thể nhận cho đến khi hợp đồng được mở lại.",
+        "name": "Prime"
+      },
+      "rewards": "Phần thưởng",
+      "title": "Nhận phần thưởng ({{chainName}})",
+      "vaultGroup": {
+        "disabledContractWarningMessage": "Vault này hiện đang tạm dừng. Lãi suất vẫn tích lũy nhưng không thể nhận cho đến khi vault được mở lại.",
+        "name": "{{stakedTokenSymbol}} vault"
+      },
+      "vestingVaultGroup": {
+        "name": "{{stakedTokenSymbol}} vesting vault"
+      }
+    }
+  },
+  "connectButton": {
+    "connect": "Kết nối ví",
+    "vipLogoAlt": "Logo VIP"
+  },
+  "connectWallet": {
+    "connectButton": "Kết nối ví"
+  },
+  "contractErrors": {
+    "actionPaused": "Thao tác này hiện đang bị tạm dừng trên thị trường này.",
+    "borrowCapExceeded": "Đã đạt giới hạn vay cho thị trường này.",
+    "insufficientCollateral": "Không đủ tài sản thế chấp cho thao tác này.",
+    "insufficientLiquidity": "Không đủ thanh khoản cho thao tác này.",
+    "notice": {
+      "copyDetails": "Sao chép chi tiết",
+      "errorLabel": "Lỗi",
+      "fallback": "Giao dịch sẽ thất bại. Vui lòng kiểm tra dữ liệu nhập và thử lại.",
+      "hideRawError": "Ẩn lỗi thô",
+      "showRawError": "Hiện lỗi thô"
+    },
+    "supplyCapExceeded": "Đã đạt giới hạn cung cấp cho thị trường này.",
+    "swapDeadlineExpire": "Phiên hoán đổi đã hết hạn. Vui lòng thử lại.",
+    "tooMuchRepay": "Số tiền trả vượt quá khoản vay còn lại của bạn."
+  },
+  "controls": {
+    "categoryFilter": {
+      "allCategories": "Tất cả danh mục",
+      "nCategories_other": "{{count}} danh mục",
+      "reset": "Đặt lại",
+      "title": "Chọn danh mục"
+    },
+    "pausedAssetsToggle": {
+      "label": "Tài sản tạm dừng"
+    },
+    "userAssetsOnlyToggle": {
+      "label": "Chỉ tài sản của tôi"
+    }
+  },
+  "dashboard": {
+    "guide": {
+      "completed": "Hoàn thành",
+      "step1": {
+        "description": "Kiếm lợi suất bằng cách cung cấp tài sản hoặc chuyển các vị thế hiện có của bạn sang giao thức Venus.",
+        "title": "Cung cấp / Di chuyển"
+      },
+      "step2": {
+        "description": "Vay tài sản để tăng cường chiến lược DeFi của bạn hoặc đòn bẩy thanh khoản chỉ với một cú nhấp.",
+        "title": "Vay / Đòn bẩy"
+      },
+      "step3": {
+        "description": "Cung cấp XVS vào vault và nhận lợi suất được tạo từ doanh thu của giao thức.",
+        "title": "Cung cấp XVS"
+      },
+      "uncompleted": "Chưa hoàn thành"
+    },
+    "hubs": {
+      "apy": "APY",
+      "dailyEarnings": "Thu nhập hàng ngày",
+      "dailyEarningsTooltip": "Thu nhập hàng ngày ước tính của bạn trên tất cả vị thế trung tâm thanh khoản đang hoạt động, dựa trên APY hiện tại của từng trung tâm. Thu nhập thực tế có thể khác nhau.",
+      "totalSuppliedValue": "Tổng giá trị đã cung cấp"
+    },
+    "overview": {
+      "30DayAbsolutePerformance": "30 ngày hiệu suất tuyệt đối",
+      "absolutePerformance": "Hiệu suất tuyệt đối",
+      "netWorth": {
+        "label": "Giá trị ròng",
+        "tooltip": "Tài sản ròng khả dụng sau khi tính lượng cung cấp trong vault và khoản vay",
+        "tooltipWithVai": "Tài sản ròng khả dụng sau khi tính lượng cung cấp trong vault, khoản vay và VAI đã mint"
+      },
+      "performanceChart": {
+        "errorState": {
+          "failedToFetchMessage": "Không thể tải lịch sử tài khoản",
+          "refetchButtonLabel": "Thử lại"
+        },
+        "placeholderText": "Đang tạo báo cáo, có thể mất tối đa một phút"
+      },
+      "periodOption": {
+        "oneYear": "1N",
+        "sixMonths": "6T",
+        "thirtyDays": "30N"
+      },
+      "summary": {
+        "cellGroup": {
+          "dailyEarnings": "Thu nhập hàng ngày",
+          "mintedVai": "VAI đã mint",
+          "netApy": "APY ròng",
+          "netApyTooltip": "Tỷ lệ phần trăm trên tổng số dư cung của bạn nhận được dưới dạng lãi suất hằng năm",
+          "netApyWithVaultStakeTooltip": "Tỷ lệ phần trăm trên tổng số dư cung và lượng cung cấp trong vault của bạn nhận được dưới dạng lãi suất hằng năm",
+          "totalBorrow": "Tổng số vay",
+          "totalSupply": "Tổng số cung",
+          "totalVaultStake": "Tổng cung cấp trong vault"
+        },
+        "title": "Tóm tắt"
+      },
+      "todaysChange": "Biến động hôm nay"
+    },
+    "performanceChart": {
+      "dataPoint": {
+        "date": "{{ date, textual }}"
+      },
+      "xAxisValue": "{{ date, numeric }}"
+    },
+    "previewCard": {
+      "apr": "APR",
+      "currentlySupplied": "Hiện đang cung cấp",
+      "totalSupplied": "Tổng đã cung cấp"
+    },
+    "topMarkets": {
+      "supplyButton": {
+        "label": "Cung cấp"
+      }
+    },
+    "vaults": {
+      "dailyEarnings": "Thu nhập hàng ngày",
+      "dailyEarningsTooltip": "Thu nhập hàng ngày ước tính của bạn trên tất cả các kho đang hoạt động, dựa trên lãi suất hiện tại hoặc APR cố định của mỗi kho. Thu nhập thực tế có thể khác nhau.",
+      "totalStakedValue": "Tổng giá trị đã cung cấp"
+    }
+  },
+  "eModeBanner": {
+    "exploreButtonLabel": "Khám phá",
+    "illustrationAltText": "Hình minh họa E-mode",
+    "manageEModeButtonLabel": "Quản lý E-mode",
+    "title": "Tăng sức mạnh vay với E-mode"
+  },
+  "eModeGroupList": {
+    "controls": {
+      "mobileSelectLabel": "Sắp xếp theo:",
+      "searchPlaceholder": "Tìm nhóm hoặc tài sản"
+    },
+    "group": {
+      "cannotDisable": {
+        "tooltip": {
+          "blockingPositions": "Bạn không thể tắt nhóm này vì bạn có vị thế vay với các tài sản không thể vay từ pool. <Link>Hiển thị vị thế của tôi</Link>",
+          "notEnoughCollateral": "Bạn không thể tắt nhóm này vì tổng giá trị tài sản thế chấp không đủ để phủ tổng dư nợ vay"
+        }
+      },
+      "cannotEnable": {
+        "modal": {
+          "description": "Bạn cần đóng các vị thế vay sau để bật nhóm <WhiteText>{{ eModeGroupName }}</WhiteText>:",
+          "repayButtonLabel": "Hoàn trả",
+          "title": "Vị thế của bạn"
+        },
+        "tooltip": {
+          "blockingPositions": "Bạn không thể bật nhóm này vì bạn có vị thế vay với các tài sản không thuộc nhóm đó. <Link>Hiển thị vị thế của tôi</Link>",
+          "notEnoughCollateral": "Bạn không thể bật nhóm này vì tổng giá trị tài sản thế chấp không đủ để phủ tổng dư nợ vay"
+        }
+      },
+      "disableButtonLabel": "Tắt",
+      "disabledNotice": "Nhóm này không còn được hỗ trợ. Tài khoản của bạn sẽ quay về tham số của Core Pool. Vui lòng chuyển sang nhóm khác hoặc tắt nó.",
+      "enableButtonLabel": "Bật",
+      "healthFactor": "Hệ số an toàn:",
+      "switchButtonLabel": "Chuyển"
+    },
+    "table": {
+      "columns": {
+        "asset": "Tài sản",
+        "collateral": "Tài sản thế chấp",
+        "isBorrowable": "Có thể vay",
+        "liquidationPenalty": "Phạt thanh lý",
+        "liquidationThreshold": "Ngưỡng thanh lý",
+        "maxLtv": "LTV tối đa"
+      }
+    }
+  },
+  "errors": {
+    "couldNotRetrieveSigner": "Không thể lấy signer, hãy đảm bảo ví của bạn đã mở khóa rồi tải lại trang",
+    "couldNotSwitchChain": "Không thể chuyển chain, hãy đảm bảo ví của bạn đã mở khóa rồi tải lại trang",
+    "missingAbstainDescription": "Đề xuất cần mô tả phiếu 'abstain'",
+    "missingAgainstDescription": "Đề xuất cần mô tả phiếu 'against'",
+    "missingDescription": "Không có mô tả đề xuất trong tệp",
+    "missingForDescription": "Đề xuất cần mô tả phiếu 'for'",
+    "missingParamForSignature": "Không có tham số tương ứng cho hàm",
+    "missingSafeWalletApiUrl": "Không thể lấy giao dịch Safe do cấu hình sai",
+    "missingTargetForSignature": "Không có mục tiêu tương ứng cho hàm",
+    "missingTitle": "Đề xuất cần có tiêu đề",
+    "noMetaKey": "Không có thông tin metadata trong tệp",
+    "noParamsKey": "Tệp không chứa danh sách tham số",
+    "noSignaturesKey": "Không có call signatures trong tệp",
+    "noSwapQuoteFound": "Không tìm thấy giao dịch hoán đổi.",
+    "noTargetsKey": "Tệp không chứa danh sách mục tiêu",
+    "noTypeKey": "Tệp không chỉ ra loại đề xuất",
+    "proposalNotFound": "Không tìm thấy đề xuất",
+    "somethingWentWrong": "Đã xảy ra lỗi",
+    "somethingWentWrongRetrievingTransactions": "Đã xảy ra lỗi khi lấy giao dịch",
+    "somethingWentWrongRetrievingVoterAccounts": "Đã xảy ra lỗi khi lấy tài khoản cử tri",
+    "somethingWentWrongRetrievingVoterDetails": "Đã xảy ra lỗi khi lấy chi tiết cử tri",
+    "somethingWentWrongRetrievingVoterHistory": "Đã xảy ra lỗi khi lấy lịch sử bỏ phiếu",
+    "undefinedAccountErrorMessage": "Tài khoản không xác định",
+    "validationError": "Xác thực thất bại cho đề xuất đã nhập:",
+    "walletNotConnected": "Ví chưa được kết nối"
+  },
+  "errorState": {
+    "defaultMessage": "Đã xảy ra lỗi"
+  },
+  "footer": {
+    "links": {
+      "documentation": "Tài liệu",
+      "privacyPolicy": "Chính sách quyền riêng tư",
+      "skills": "Kỹ năng Agent",
+      "termsOfUse": "Điều khoản sử dụng"
+    }
+  },
+  "gaslessTransactions": {
+    "chainLabel": "Miễn phí",
+    "errorModal": {
+      "cancel": "Hủy",
+      "description": "Bạn vẫn có thể gửi giao dịch này bằng cách tự trả phí gas",
+      "resendButtonLabel": "Gửi lại với gas",
+      "title": "Giao dịch không gas hiện không khả dụng"
+    },
+    "tooltip": {
+      "disabled": "Mạng này hỗ trợ giao dịch không gas, không cần phí, nhưng tính năng này hiện bị tắt trong cài đặt. Thêm thông tin <Link>tại đây</Link>",
+      "enabled": "Giao dịch trên mạng này không cần gas, không mất phí. Thêm thông tin <Link>tại đây</Link>"
+    }
+  },
+  "gatedAssetAcknowledgementModal": {
+    "acceptButtonLabel": "Tôi hiểu và xác nhận",
+    "description": "bStocks là chứng khoán được token hóa do BTECH Holdings Ltd (ADGM) phát hành. Thông tin được trình bày tại đây chỉ nhằm mục đích cung cấp thông tin và không cấu thành đề nghị, lời mời chào hoặc lời khuyên đầu tư. bStocks không được phân phối tại Hoa Kỳ, cho bất kỳ US Person nào, hoặc tại bất kỳ khu vực tài phán hạn chế nào khác. Đầu tư luôn đi kèm rủi ro; giá trị khoản đầu tư của bạn có thể giảm và bạn có thể không thu hồi được số tiền đã đầu tư. Để xem đầy đủ các công bố rủi ro, tài liệu pháp lý và danh sách các khu vực tài phán hạn chế, vui lòng truy cập <Link>bstocks.finance/prospectus</Link>.<LineBreak/><LineBreak/>Khi tiếp tục, bạn xác nhận rằng mình không phải là Restricted Person và việc truy cập sản phẩm này là hợp pháp trong khu vực tài phán của bạn.",
+    "rejectButtonLabel": "Tôi từ chối và rời đi",
+    "title": "Thông báo quan trọng"
+  },
+  "healthFactor": {
+    "label": {
+      "healthy": "An toàn",
+      "liquidation": "Thanh lý",
+      "moderate": "Trung bình",
+      "risky": "Rủi ro"
+    }
+  },
+  "importPositionsModal": {
+    "aave": {
+      "logoAlt": "Logo Aave",
+      "title": "Aave"
+    },
+    "emptyState": "Không có vị thế bên ngoài để nhập",
+    "gasLess": {
+      "label": "Miễn phí",
+      "tooltip": "Giao dịch để chuyển vị thế của bạn sang Venus được tài trợ bởi Venus Protocol"
+    },
+    "infoSection": {
+      "1": {
+        "description": "Nền tảng duy nhất với APY được boost từ lợi suất thực.",
+        "title": "Lợi suất tốt hơn"
+      },
+      "2": {
+        "description": "Tham gia nền tảng DeFi tạo giá trị nhất với tăng trưởng ổn định.",
+        "title": "Hiệu quả vốn cao nhất"
+      },
+      "3": {
+        "description": "Hợp đồng đã được kiểm chứng và được audit nhiều nhất trong lĩnh vực cho vay.",
+        "title": "Bảo mật cao"
+      },
+      "title": "Vì sao chọn Venus?"
+    },
+    "limitNotice": "Chỉ các vị thế có giá trị giữa <Number>{{min}}</Number> và <Number>{{max}}</Number> mới có thể được nhập vào Venus hiện tại.",
+    "position": {
+      "currentApy": {
+        "label": "APY hiện tại"
+      },
+      "importButtonLabel": "Nhập",
+      "missedYearlyGains": "Bạn đang bỏ lỡ <Number><Gains /> / năm</Number>",
+      "newApy": {
+        "label": "APY Venus"
+      }
+    },
+    "title": "Nhập vào Venus và kiếm nhiều hơn"
+  },
+  "interactive": {
+    "addToWallet": {
+      "modalTitle": "Thêm token vào ví"
+    },
+    "copy": {
+      "address": {
+        "modalTitle": "Sao chép địa chỉ token",
+        "name": "Địa chỉ",
+        "tooltip": "Sao chép địa chỉ"
+      }
+    },
+    "copyToClipboard": "Đã sao chép {{name}} vào clipboard",
+    "goTo": {
+      "modalTitle": "Đi tới hợp đồng token"
+    }
+  },
+  "interestRateChart": {
+    "currentUtilizationRateLabelValue": "Hiện tại ({{percentage}})",
+    "tooltipItemLabels": {
+      "borrowApy": "APY vay",
+      "supplyApy": "APY cung cấp",
+      "utilizationRate": "Tỷ lệ sử dụng"
+    }
+  },
+  "kLineChart": {
+    "disclaimer": {
+      "buttonLabel": "Định giá tổng hợp",
+      "description": "Dữ liệu giá được tổng hợp từ nhiều nguồn chỉ nhằm mục đích tham khảo. Giá AMM thực tế trên chuỗi có thể khác.",
+      "title": "Thông tin biểu đồ"
+    }
+  },
+  "labeledSlider": {
+    "0": "0%",
+    "100": "100%"
+  },
+  "landing": {
+    "benefits": {
+      "text1": "Truy cập trực tiếp thị trường tiền tệ bất biến trên chuỗi.",
+      "text2": "Tất cả tài sản của Venus Protocol tuân theo tiêu chuẩn BEP-20 và ERC-20.",
+      "text3": "Xây dựng trên các chuỗi tương thích EVM để giao dịch nhanh, an toàn và chi phí thấp.",
+      "title1": "Phi tập trung",
+      "title2": "BEP-20/ERC-20",
+      "title3": "Đa chuỗi"
+    },
+    "governance": {
+      "backgroundGradientAlt": "Minh họa nền",
+      "buttonLabel": "Diễn đàn quản trị",
+      "description": "Venus là một giao thức phi tập trung do cộng đồng dẫn dắt, cung cấp chức năng hàng đầu cho thị trường tiền mã hóa.",
+      "proposalCountLegend": "Các đề xuất cải tiến Venus đã được thực thi và vẫn đang tiếp tục",
+      "title": "Thị trường tiền tệ được quản trị<br />bởi cộng đồng"
+    },
+    "hero": {
+      "1Year": "1N",
+      "30Day": "30N",
+      "6Month": "6T",
+      "assets": "Tài sản",
+      "borrow": "Vay",
+      "earned": "Đã kiếm",
+      "earnedAmount": "Đã kiếm {{amount}}",
+      "earnNow": "Kiếm lợi nhuận ngay",
+      "from": "Từ {{percentage}}",
+      "highestApy": "APY cao nhất",
+      "monthNo": "Tháng {{number}}",
+      "startNow": "Bắt đầu ngay",
+      "subtitle": "Cho vay và vay đơn giản nhưng mạnh mẽ cho mọi chiến lược lợi suất DeFi.",
+      "supply": "Cung",
+      "supplyTips": "Dựa trên khoản gửi ban đầu 10.000 USD, lợi nhuận/lãi được cộng dồn theo từng block. <Link>Tìm hiểu thêm</Link>",
+      "title": "Thị trường tiền tệ<br /><hl>phổ quát</hl>",
+      "totalApy": "APY tổng",
+      "upToPercentage": "Lên đến {{percentage}}",
+      "venusTvl": "TVL của Venus",
+      "yearlyEarnings": "Thu nhập hằng năm",
+      "yearlyInterests": "Lãi hằng năm"
+    },
+    "markets": {
+      "button": {
+        "label": "Khám phá thêm"
+      },
+      "title": "Top thị trường trên Venus"
+    },
+    "protection": {
+      "bugBountyAlt": "Minh họa Bug Bounty",
+      "challengeText": "Tìm và báo cáo lỗ hổng trong mã của chúng tôi để đủ điều kiện nhận thưởng. Hãy đọc về chương trình bug bounty để biết thêm.",
+      "challengeTitle": "Thách thức mã nguồn và nhận thưởng",
+      "protectionAlt": "Minh họa bảo vệ",
+      "protectionText": "Kiểm toán bảo mật, giám sát 24/7 và quỹ rủi ro vững chắc giúp giao thức an toàn trong các sự kiện thị trường bất thường.",
+      "protectionTitle": "Ưu tiên bảo vệ"
+    },
+    "safety": {
+      "audit_one": "Kiểm toán",
+      "audit_other": "Các cuộc kiểm toán",
+      "otherAuditors": "+14 cuộc kiểm toán với <br />Fairyproof, Hacken và HashEx",
+      "scoreAlt": "Minh họa điểm số",
+      "securityScore": "Điểm bảo mật",
+      "text": "Giao dịch tự tin, biết rằng Venus luôn đặt sự an toàn của tài sản bạn lên hàng đầu",
+      "title": "An toàn trên hết",
+      "venusScored": "Venus được Certik đánh giá đứng <Link>thứ 3</Link> về bảo mật trên BNB Chain (Tháng 6, 2021)"
+    },
+    "venusPrime": {
+      "illustrationAlt": "Minh họa Venus Prime",
+      "imageAlt": "Minh họa Venus Prime",
+      "learnMore": "Tìm hiểu thêm",
+      "text": "Người dùng chuyên sâu của Venus Protocol có thể đúc Venus Prime Token để hưởng mức ưu đãi cho một số thị trường trong pool Venus core.",
+      "title": "<hl>Venus Prime</hl> <br />tăng cường lợi nhuận của bạn"
+    },
+    "wallets": {
+      "title": "Được nhiều người tin dùng"
+    }
+  },
+  "layout": {
+    "chainSelect": {
+      "label": "Chọn chain"
+    },
+    "header": {
+      "dashboardAdBanner": {
+        "buttonLabel": "Khám phá ngay",
+        "title": "USDT Fixed-Term Vault hiện đã ra mắt trên BNB Chain. Mục tiêu ≈4,2% APR."
+      },
+      "exposures": "Mức độ tiếp xúc",
+      "liquidity": "Thanh khoản",
+      "maxLtv": {
+        "label": "LTV tối đa",
+        "modeInfoHint": "<Link>Khám phá</Link> các tùy chọn LTV có sẵn.",
+        "tooltip": "LTV tối đa là hạn mức vay. Ở {{maxLtv}} LTV, 1 {{tokenSymbol}} làm tài sản thế chấp cho phép vay {{userCollateralFactor}} {{tokenSymbol}} giá trị tiền tệ."
+      },
+      "price": "Giá",
+      "resilientOracle": "Oracle bền vững",
+      "suppliers": "Người cung cấp",
+      "supply": "Cung cấp",
+      "utilizationRate": "Tỷ lệ sử dụng"
+    },
+    "menu": {
+      "beta": "beta",
+      "borrow": {
+        "label": "Vay"
+      },
+      "dashboard": {
+        "label": "Bảng điều khiển"
+      },
+      "earn": {
+        "label": "Kiếm lợi nhuận"
+      },
+      "label": "Trình đơn",
+      "new": "Mới",
+      "others": {
+        "bridge": {
+          "description": "Chuyển $XVS xuyên chuỗi trên Venus.",
+          "label": "Cầu nối"
+        },
+        "governance": {
+          "description": "Bỏ phiếu cho các đề xuất Venus bằng $XVS.",
+          "label": "Quản trị"
+        },
+        "label": "Khác",
+        "port": {
+          "description": "Nhập các vị thế cho vay không cần gas.",
+          "label": "Cổng"
+        },
+        "stats": {
+          "description": "Thông số rủi ro thời gian thực",
+          "label": "Thống kê"
+        },
+        "swap": {
+          "label": "Hoán đổi"
+        },
+        "trade": {
+          "description": "Long một bên, short bên kia, kiếm lời từ chênh lệch.",
+          "label": "Trade"
+        },
+        "vai": {
+          "description": "Mint stablecoin gốc của Venus.",
+          "label": "VAI"
+        }
+      },
+      "prime": {
+        "label": "Prime"
+      },
+      "settings": {
+        "gasLessTransactions": {
+          "label": "Bật giao dịch không gas trên {{chainName}}"
+        },
+        "language": {
+          "label": "Ngôn ngữ (beta)"
+        }
+      },
+      "subMenuItem": {
+        "button": {
+          "label": "Bắt đầu"
+        }
+      },
+      "vaults": {
+        "label": "Kho"
+      },
+      "venusLogoAlt": "Logo Venus"
+    },
+    "settingsModal": {
+      "title": "Cài đặt"
+    },
+    "sunsetModal": {
+      "description": "Chain này đã ngừng hoạt động. Vui lòng hoàn trả các khoản vay và rút tiền đã gửi của bạn.",
+      "title": "Ngừng hoạt động"
+    },
+    "testEnvWarning": "Đây là môi trường thử nghiệm. Không tương tác vì bất kỳ mục đích nào khác ngoài thử nghiệm. <Link>Truy cập trang web chính thức của Venus Protocol</Link>"
+  },
+  "layouts": {
+    "menu": {
+      "markets": {
+        "liquidityHub": {
+          "description": "Một lần cung cấp, tự động phân bổ qua nhiều nguồn lợi suất.",
+          "label": "Trung tâm thanh khoản"
+        },
+        "vaults": {
+          "description": "Kho cung cấp một chiến lược cho phần thưởng mục tiêu.",
+          "label": "Kho"
+        },
+        "venusCore": {
+          "description": "Cho vay và vay theo cách truyền thống với đòn bẩy dễ dùng, tối ưu.",
+          "label": "Venus Core"
+        },
+        "venusFlux": {
+          "description": "Cho vay và vay hiệu quả về vốn để tối ưu lợi suất.",
+          "label": "Venus Flux"
+        }
+      }
+    }
+  },
+  "legal": {
+    "lastUpdatedAt": "Cập nhật lần cuối: {{ date, textual }}"
+  },
+  "liquidityHub": {
+    "allocationDetails": {
+      "table": {
+        "allocationColumn": {
+          "title": "Phân bổ"
+        },
+        "averageApyColumn": {
+          "title": "APY"
+        },
+        "capDollarsColumn": {
+          "title": "Trần hiệu dụng",
+          "tooltip": "Trần hiệu dụng của một nhóm lợi suất",
+          "unlimited": "Không giới hạn"
+        },
+        "capPercentageColumn": {
+          "title": "Trần"
+        },
+        "liquidityColumn": {
+          "title": "Thanh khoản"
+        },
+        "sourceColumn": {
+          "title": "Nguồn"
+        }
+      },
+      "title": "Chi tiết phân bổ",
+      "unallocated": "Chưa phân bổ",
+      "yieldGroup": {
+        "allocationColumn": {
+          "title": "Phân bổ"
+        },
+        "apyColumn": {
+          "title": "APY"
+        },
+        "collateralColumn": {
+          "group": {
+            "asset": "Tài sản",
+            "liquidationThreshold": "Ngưỡng thanh lý"
+          },
+          "title": "Tài sản thế chấp"
+        },
+        "liquidityColumn": {
+          "title": "Thanh khoản"
+        },
+        "lockEndDateColumn": {
+          "date": "{{date, textualWithTime}}",
+          "title": "Ngày kết thúc khóa"
+        },
+        "nameColumn": {
+          "title": {
+            "market": "Thị trường",
+            "vault": "Kho"
+          }
+        },
+        "names": {
+          "core": "Venus Core",
+          "flux": "Venus Flux",
+          "frv": "Kho lãi suất cố định"
+        }
+      }
+    },
+    "info": {
+      "stats": {
+        "dailySupplyingInterests": "Lãi cung cấp hàng ngày",
+        "exchangeRate": {
+          "title": "Tỷ giá hối đoái",
+          "value": "1 {{vhTokenSymbol}} = {{ exchangeRate }} {{ underlyingTokenSymbol }}"
+        },
+        "operator": "Nhà vận hành",
+        "operatorAddress": "Địa chỉ nhà vận hành",
+        "operatorName": "Venus DAO",
+        "performanceFee": "Phí hiệu suất",
+        "redeemFee": "Phí đổi lại",
+        "riskDisclosures": {
+          "title": "Công bố rủi ro",
+          "value": "<Span>Bằng việc cung cấp vào, rút khỏi hoặc tương tác theo cách khác với Venus Liquidity Hub, bạn xác nhận và đồng ý rằng:</Span><Ul><Li>Bạn đang tương tác với các hợp đồng thông minh tự vận hành. Venus và các bên liên kết không bảo đảm về hiệu suất, tính bảo mật hoặc khả dụng của Liquidity Hub hay bất kỳ phần mềm, hợp đồng thông minh, mạng blockchain hoặc tích hợp bên thứ ba liên quan nào.</Li><Li>Việc cung cấp tài sản vào Liquidity Hub không mang lại năng lực vay và không cấu thành sản phẩm tiền gửi, khoản vay hay đầu tư. Bạn có thể không rút được vào mọi thời điểm và lợi nhuận, nếu có, không được bảo đảm.</Li><Li>Bạn tự chịu mọi rủi ro liên quan đến việc sử dụng Liquidity Hub và hoàn toàn chịu trách nhiệm xác định liệu nó có phù hợp với hoàn cảnh tài chính, mức chấp nhận rủi ro và năng lực kỹ thuật của mình hay không. Bạn có trách nhiệm tự thực hiện đánh giá độc lập, bao gồm việc xem xét mã nguồn liên quan và cấu hình on-chain.</Li><Li>Venus chỉ là nhà cung cấp công nghệ, không cung cấp dịch vụ đầu tư, tư vấn, ủy thác hay lưu ký, đồng thời không quản lý hoặc nắm giữ tài sản của bạn.</Li></Ul><Span>Tương tác của bạn với Liquidity Hub được điều chỉnh bởi <Link>Điều khoản sử dụng</Link>.</Span>"
+        },
+        "vhTokenContract": "Hợp đồng {{ vhTokenSymbol }}"
+      },
+      "title": "Thông tin hub"
+    },
+    "periodOption": {
+      "all": "Tất cả",
+      "oneWeek": "1W",
+      "oneYear": "1Y",
+      "thirtyDays": "30D",
+      "threeMonths": "3M"
+    }
+  },
+  "liquidityHubForm": {
+    "balanceUpdates": {
+      "corePool": "Pool cốt lõi",
+      "liquidityHub": "Trung tâm thanh khoản"
+    },
+    "error": {
+      "higherThanAvailableAmount": "Số tiền nhập vào cao hơn số tiền khả dụng",
+      "higherThanAvailableLiquidity": "Thanh khoản của trung tâm không đủ",
+      "higherThanSupplyCap": "Bạn không thể cung cấp quá {{userMaxSupplyAmount}} vào trung tâm thanh khoản này, vì giới hạn cung cấp của nó được đặt ở {{supplyCap}} và hiện đã có {{supplyBalance}} đang được cung cấp vào đó.",
+      "higherThanWalletSpendingLimit": "Số tiền bạn nhập vượt quá giới hạn chi tiêu của bạn cho tài sản này. Vui lòng thu hồi giới hạn chi tiêu hiện tại rồi đặt giới hạn mới để tiếp tục giao dịch này.",
+      "smallerThanMinimumAmount": "Bạn không thể di chuyển ít hơn {{minimumAmount}}",
+      "supplyCapReached": "Giới hạn cung cấp {{supplyCap}} của trung tâm thanh khoản này đã đạt tới. Bạn không thể tiếp tục cung cấp cho đến khi có khoản rút ra hoặc giới hạn cung cấp được tăng lên."
+    },
+    "rightMaxButtonLabel": "MAX",
+    "rightSafeMaxButtonLabel": "MAX an toàn",
+    "supplySubmitButtonLabel": "Cung cấp",
+    "supplyTab": {
+      "collateralTabTitle": "Tài sản thế chấp",
+      "walletTabTitle": "Ví"
+    },
+    "supplyTabTitle": "Cung cấp",
+    "withdrawSubmitButtonLabel": "Rút",
+    "withdrawTabTitle": "Rút"
+  },
+  "liquidityHubs": {
+    "description": "Được định tuyến qua các nguồn lợi suất của Venus Protocol theo chính sách do quản trị lựa chọn. Lợi suất tự động tích lũy.",
+    "header": "Trung tâm thanh khoản",
+    "stats": {
+      "hubs": "Trung tâm",
+      "totalLiquidity": "Tổng thanh khoản",
+      "totalSupply": "Tổng cung cấp"
+    },
+    "table": {
+      "columns": {
+        "asset": "Tài sản",
+        "exposure": {
+          "selectionOptionLabel": "Mức tiếp xúc",
+          "title": "Mức tiếp xúc <InfoIcon/>",
+          "tooltip": "Tài sản thế chấp của từng nguồn mà tài sản này đang cho vay tới"
+        },
+        "liquidity": "Thanh khoản",
+        "supplyApy": "APY cung cấp",
+        "totalSupply": "Tổng cung cấp"
+      },
+      "search": {
+        "placeholder": "Tìm kiếm tài sản"
+      }
+    }
+  },
+  "markdownEditor": {
+    "markdownTabLabel": "Viết",
+    "placeholder": "Không có nội dung để xem trước",
+    "previewTabLabel": "Xem trước"
+  },
+  "market": {
+    "borrowCapThreshold": {
+      "title": "Tổng vay",
+      "tooltip": "Số tiền tối đa có thể vay là {{amountDollars}} ({{amountTokens}})<LineBreak />Hạn mức vay: {{capTokens}}"
+    },
+    "borrowInfo": {
+      "title": "Thông tin vay"
+    },
+    "eModeInfo": {
+      "eMode": {
+        "title": "E-mode",
+        "tooltip": "Boosts capital efficiency for correlated assets (e.g. stablecoins, LSTs) with better collateral factors and lower liquidation costs."
+      },
+      "isolationMode": {
+        "title": "Chế độ cô lập",
+        "tooltip": "A risk-containment mode for newer or more volatile assets."
+      },
+      "link": "Hiển thị tất cả thị trường",
+      "table": {
+        "columns": {
+          "collateral": "Tài sản thế chấp",
+          "group": "Nhóm",
+          "isBorrowable": "Có thể vay",
+          "liquidationPenalty": "Phạt",
+          "liquidationThreshold": "Ngưỡng",
+          "maxLtv": "LTV tối đa"
+        }
+      }
+    },
+    "interestRateModel": {
+      "title": "Mô hình lãi suất"
+    },
+    "legends": {
+      "borrowApy": "APY vay",
+      "supplyApy": "APY cung cấp",
+      "utilizationRate": "Tỷ lệ sử dụng"
+    },
+    "marketInfo": {
+      "stats": {
+        "borrowerCountLabel": "Số người vay",
+        "collateralFactorLabel": "Hệ số thế chấp (Core)",
+        "dailyBorrowingInterestsLabel": "Lãi vay hằng ngày",
+        "dailyDistribution": "Phân phối {{tokenSymbol}} hằng ngày",
+        "dailySupplyingInterestsLabel": "Lãi cung cấp hằng ngày",
+        "exchangeRateLabel": "Tỷ giá",
+        "exchangeRateValue": "1 {{tokenSymbol}}={{rate}} {{vTokenSymbol}}",
+        "isBorrowableLabel": "Có thể vay (Core)",
+        "liquidationPenaltyLabel": "Phạt thanh lý (Core)",
+        "liquidationThresholdLabel": "Ngưỡng thanh lý (Core)",
+        "no": "Không",
+        "reserveFactorLabel": "Hệ số dự trữ",
+        "supplierCountLabel": "Số người cung cấp",
+        "yes": "Có"
+      }
+    },
+    "periodOption": {
+      "oneYear": "1N",
+      "sixMonths": "6T",
+      "thirtyDays": "30N"
+    },
+    "positionUnitPrice": "Đơn giá vị thế ({{ vhTokenSymbol }})",
+    "stats": {
+      "apy": "APY hiện tại",
+      "averageApy": "APY trung bình",
+      "liquidationPenalty": "Phạt thanh lý",
+      "liquidationThreshold": "Ngưỡng thanh lý"
+    },
+    "supplyCapThreshold": {
+      "title": "Tổng cung cấp",
+      "tooltip": "Số tiền tối đa có thể cung cấp là {{amountDollars}} ({{amountTokens}})"
+    },
+    "supplyInfo": {
+      "title": "Thông tin cung cấp"
+    }
+  },
+  "marketForm": {
+    "acknowledgements": {
+      "highPriceImpact": {
+        "label": "Tôi xác nhận tác động giá cao",
+        "tooltip": "Giao dịch này dự kiến có tác động giá trên {{priceImpactPercentage}}%"
+      },
+      "riskyOperation": {
+        "label": "Tôi xác nhận rủi ro liên quan",
+        "tooltip": "Hệ số an toàn của bạn sẽ thấp sau giao dịch này, làm tăng rủi ro thanh lý"
+      }
+    },
+    "availableAmount": "Có thể dùng",
+    "boostTabAltText": "Biểu tượng tên lửa",
+    "boostTabTitle": "Tăng cường",
+    "borrow": "Vay",
+    "borrowTabTitle": "Vay",
+    "collateral": "Tài sản thế chấp",
+    "collateralField": {
+      "label": "Tài sản thế chấp"
+    },
+    "error": {
+      "borrowCapReached": "Hạn mức vay {{assetBorrowCap}} của pool này đã đạt. Bạn không thể vay từ thị trường này cho đến khi các khoản vay được hoàn trả hoặc hạn mức vay được tăng.",
+      "higherThanAvailableAmount": "Số lượng nhập vượt quá số lượng có thể dùng",
+      "higherThanAvailableLiquidity": "Thanh khoản tài sản không đủ",
+      "higherThanBorrowBalance": "Số lượng nhập vượt quá số dư vay",
+      "higherThanBorrowCap": "Bạn không thể vay nhiều hơn {{userMaxBorrowAmount}} từ pool này vì hạn mức vay của thị trường là {{assetBorrowCap}} và hiện đang có {{assetBorrowBalance}} được vay.",
+      "higherThanRepayBalance": "Số lượng nhập vượt quá số dư hoàn trả",
+      "higherThanSupplyCap": "Bạn không thể cung cấp nhiều hơn {{userMaxSupplyAmount}} vào pool này vì hạn mức cung cấp của thị trường là {{assetSupplyCap}} và hiện đang có {{assetSupplyBalance}} được cung cấp.",
+      "higherThanWalletBalance": "Không đủ số dư {{tokenSymbol}}",
+      "higherThanWalletSpendingLimit": "Bạn đã nhập số lượng vượt quá hạn mức chi tiêu cho tài sản này. Vui lòng hủy hạn mức và đặt lại để tiếp tục giao dịch.",
+      "noCollateral": "Bạn cần cung cấp token và bật làm tài sản thế chấp trước khi có thể vay {{tokenSymbol}} từ pool này",
+      "noSwapQuoteFound": "Không tìm thấy giao dịch hoán đổi.",
+      "priceImpactTooHigh": "Tác động giá quá cao",
+      "smallerThanMinimumAmount": "Bạn không thể cung cấp ít hơn {{minAmount}} trong một lần",
+      "supplyCapReached": "Hạn mức cung cấp {{assetSupplyCap}} của pool này đã đạt. Bạn không thể cung cấp vào thị trường này cho đến khi có rút hoặc hạn mức cung cấp được tăng.",
+      "tooRisky": "Giao dịch này sẽ khiến tài khoản của bạn bị thanh lý"
+    },
+    "leverageFactor": "{{ leverageFactor }}x",
+    "leverageFactorModal": {
+      "maximumShortAmount": "Vị thế tối đa ở mức đòn bẩy hiện tại: {{ value }}",
+      "submitButtonLabel": "Xác nhận",
+      "title": "Hệ số đòn bẩy",
+      "warning": "Đòn bẩy ảnh hưởng đến mức sử dụng vốn của bạn và không thể thay đổi cho đến khi bạn thoát hoàn toàn khỏi vị thế."
+    },
+    "receiveNativeToken": {
+      "label": "Nhận {{tokenSymbol}}",
+      "tooltip": "Unwrap {{wrappedNativeTokenSymbol}} đã vay sang {{nativeTokenSymbol}}"
+    },
+    "repaidField": {
+      "label": "Khoản nợ cần trả"
+    },
+    "repay": {
+      "fullRepaymentWarning": "Giá trị giao dịch có thể cao hơn một chút so với số tiền vay hiện tại để bao gồm lãi phát sinh",
+      "swappingWithHighPriceImpactWarning": "Tác động giá của giao dịch này cao, có thể cho thấy hoán đổi bất lợi. Hãy đảm bảo tỷ giá và số lượng token trao đổi phù hợp kỳ vọng."
+    },
+    "repayTab": {
+      "collateralTabTitle": "Tài sản thế chấp",
+      "noCollateralWarning": "Bạn không có tài sản thế chấp để hoàn trả.",
+      "title": "Hoàn trả",
+      "walletBalanceTabTitle": "Ví"
+    },
+    "rightMaxButtonLabel": "TỐI ĐA",
+    "safeMaxButtonLabel": "TỐI ĐA AN TOÀN",
+    "submitButtonLabel": {
+      "boost": "Tăng cường",
+      "borrow": "Vay",
+      "enterValidAmount": "Nhập số lượng hợp lệ",
+      "repay": "Hoàn trả",
+      "supply": "Cung cấp",
+      "withdraw": "Rút"
+    },
+    "supply": "Cung cấp",
+    "supplyTabTitle": "Cung cấp",
+    "swapDetails": {
+      "label": {
+        "repay": "Bạn sẽ hoàn trả",
+        "supply": "Bạn sẽ cung cấp"
+      },
+      "value": {
+        "estimatedAmount": "≈ {{ value }}",
+        "exactAmount": "{{ value }}"
+      }
+    },
+    "walletBalance": "Số dư ví",
+    "withdrawTabTitle": "Rút"
+  },
+  "markets": {
+    "eMode": {
+      "table": {
+        "card": {
+          "header": {
+            "borrowable": "Có thể vay",
+            "collateral": "Tài sản thế chấp"
+          }
+        }
+      }
+    },
+    "errors": {
+      "accountError": "Yêu cầu tài khoản - Vui lòng kết nối ví.",
+      "collateralDisableError": "Lỗi tắt tài sản thế chấp - Đã xảy ra sự cố khi tắt {{assetName}} làm tài sản thế chấp. Vui lòng thử lại.",
+      "collateralEnableError": "Lỗi bật tài sản thế chấp - Đã xảy ra sự cố khi bật {{assetName}} làm tài sản thế chấp. Vui lòng thử lại.",
+      "collateralRequired": "Yêu cầu tài sản thế chấp - Vui lòng hoàn trả tất cả tài sản đã vay hoặc đặt tài sản khác làm thế chấp."
+    },
+    "header": {
+      "venusCore": {
+        "description": "Tài chính đơn giản và mạnh mẽ do cộng đồng dẫn dắt cho toàn cầu.",
+        "title": "Venus Core"
+      }
+    },
+    "isolatedEModeGroupTooltip": {
+      "content": "Sức mạnh vay của bạn tăng lên khi chỉ cung cấp tài sản trong nhóm {{ eModeGroupName }}",
+      "label": "Cô lập"
+    },
+    "tabs": {
+      "eMode": {
+        "eModeNotice": "Bật E-mode giúp tối đa hóa khả năng vay, tuy nhiên việc vay bị giới hạn trong các tài sản thuộc nhóm đã chọn. <Link>Tìm hiểu thêm</Link>",
+        "group": {
+          "cannotDisable": {
+            "tooltip": {
+              "blockingPositions": "Bạn không thể tắt nhóm này vì bạn có vị thế vay với các tài sản không thể vay từ pool. <Link>Hiển thị vị thế của tôi</Link>",
+              "notEnoughCollateral": "Bạn không thể tắt nhóm này vì tổng giá trị tài sản thế chấp không đủ để phủ tổng dư nợ vay"
+            }
+          },
+          "cannotEnable": {
+            "modal": {
+              "description": "Bạn cần đóng các vị thế vay sau để bật nhóm <WhiteText>{{ eModeGroupName }}</WhiteText>:",
+              "repayButtonLabel": "Hoàn trả",
+              "title": "Vị thế của bạn"
+            },
+            "tooltip": {
+              "blockingPositions": "Bạn không thể bật nhóm này vì bạn có vị thế vay với các tài sản không thuộc nhóm đó. <Link>Hiển thị vị thế của tôi</Link>",
+              "notEnoughCollateral": "Bạn không thể bật nhóm này vì tổng giá trị tài sản thế chấp không đủ để phủ tổng dư nợ vay"
+            }
+          },
+          "disableButtonLabel": "Tắt",
+          "disabledNotice": "Nhóm này không còn được hỗ trợ. Tài khoản của bạn sẽ quay về tham số của Core Pool. Vui lòng chuyển sang nhóm khác hoặc tắt nó.",
+          "enableButtonLabel": "Bật",
+          "healthFactor": "Hệ số an toàn:",
+          "switchButtonLabel": "Chuyển"
+        },
+        "isolationModeNotice": "Bật chế độ cô lập giúp tối đa hóa khả năng vay, tuy nhiên việc cung cấp và vay bị giới hạn trong các tài sản thuộc nhóm đã chọn. <Link>Tìm hiểu thêm</Link>",
+        "label": "E-mode",
+        "table": {
+          "columns": {
+            "asset": "Tài sản",
+            "collateral": "Tài sản thế chấp",
+            "isBorrowable": "Có thể vay",
+            "liquidationPenalty": "Phạt thanh lý",
+            "liquidationThreshold": "Ngưỡng thanh lý",
+            "maxLtv": "LTV tối đa",
+            "penalty": "Phạt",
+            "threshold": "Ngưỡng"
+          },
+          "mobileSelectLabel": "Sắp xếp theo:",
+          "searchPlaceholder": "Tìm tài sản hoặc nhóm"
+        }
+      },
+      "isolationMode": {
+        "label": "Chế độ cô lập"
+      },
+      "markets": {
+        "label": "Thị trường"
+      }
+    }
+  },
+  "marketTable": {
+    "assetColumn": {
+      "eMode": "Thị trường này thuộc nhóm E-mode {{eModeGroupName}}",
+      "isolated": "Cô lập",
+      "isolatedTooltip": "Tài sản này chỉ khả dụng trong chế độ cô lập tương ứng.",
+      "isolationMode": "Thị trường này thuộc nhóm chế độ cô lập {{eModeGroupName}}",
+      "pausedAssetTooltip": "Tài sản đã bị tạm dừng bởi Venus Governance. Việc vay và cung cấp đã bị vô hiệu hóa.",
+      "protectionMode": "Chế độ Bảo vệ đang hoạt động cho {{tokenName}} do biến động giá, ảnh hưởng đến giá thế chấp và giá vay. <LearnMore>Tìm hiểu thêm</LearnMore>",
+      "protectionModeBorrow": "Thị trường này đang trải qua biến động cao.<LineBreak/><LineBreak/> Giá trị vay được bảo vệ được tính là {{protectedValue}}, đại diện cho giá trị thận trọng tính vào hạn mức vay của bạn.",
+      "protectionModePair": "Chế độ Bảo vệ đang hoạt động cho {{tokenName}} do biến động giá, ảnh hưởng đến giá thế chấp và giá vay. <LearnMore>Tìm hiểu thêm</LearnMore>",
+      "protectionModeSupply": "Thị trường này đang trải qua biến động cao.<LineBreak/><LineBreak/> Giá trị thế chấp được bảo vệ được tính là {{protectedValue}}, đại diện cho giá trị thận trọng được sử dụng để xác định hạn mức vay của bạn."
+    },
+    "columnKeys": {
+      "asset": "Tài sản",
+      "assetAndChain": "Tài sản",
+      "borrowApy": "APY <InfoIcon />",
+      "borrowBalance": "Tổng vay",
+      "collateral": "Tài sản thế chấp",
+      "labeledBorrowApy": "APY vay <InfoIcon />",
+      "labeledSupplyApy": "APY cung cấp <InfoIcon />",
+      "liquidity": "Thanh khoản",
+      "price": "Giá",
+      "supplyApy": "APY <InfoIcon />",
+      "supplyBalance": "Tổng cung cấp",
+      "userBorrowBalance": "Số dư",
+      "userBorrowLimitSharePercentage": "% hạn mức",
+      "userSupplyBalance": "Số dư",
+      "userWalletBalance": "Ví"
+    },
+    "columnSelectOptionLabel": {
+      "asset": "Tài sản",
+      "borrowApy": "APY vay",
+      "borrowBalance": "Tổng vay",
+      "collateral": "Tài sản thế chấp",
+      "labeledBorrowApy": "APY vay",
+      "labeledSupplyApy": "APY cung cấp / LTV",
+      "liquidity": "Thanh khoản",
+      "price": "Giá",
+      "supplyApy": "APY cung cấp / LTV",
+      "supplyBalance": "Tổng cung cấp",
+      "userBorrowBalance": "Số dư vay",
+      "userBorrowLimitSharePercentage": "% hạn mức",
+      "userSupplyBalance": "Số dư cung cấp",
+      "userWalletBalance": "Số dư ví"
+    },
+    "columnTooltips": {
+      "borrowApy": "APY vay dương nghĩa là bạn sẽ trả lãi, âm nghĩa là bạn sẽ nhận lãi",
+      "supplyApy": "APY cung cấp dương nghĩa là bạn sẽ nhận lãi, âm nghĩa là bạn sẽ trả lãi"
+    },
+    "pausedAssetsPlaceholder": {
+      "description": "Vui lòng bật công tắc \"Tài sản tạm dừng\" để xem.",
+      "imgAlt": "Biểu tượng tạm dừng",
+      "selectedCategoriesTitle": "Tất cả tài sản trong các danh mục đã chọn đã bị tạm dừng",
+      "title": "Tất cả tài sản trong pool này đã bị tạm dừng"
+    },
+    "search": {
+      "placeholder": "Tìm tài sản"
+    }
+  },
+  "pagination": {
+    "currentPage": "Trang hiện tại",
+    "goToFirstPage": "Đến trang đầu",
+    "goToLastPage": "Đến trang cuối",
+    "goToNextPage": "Trang sau",
+    "goToPreviousPage": "Trang trước",
+    "itemOf": "Mục {{currentPageLastIndex}} trong {{itemsCount}}",
+    "itemsOf": "Mục {{firstItemNumber}} - {{currentPageLastIndex}} trong {{itemsCount}}"
+  },
+  "pendleVaultBanner": {
+    "description": "Lợi suất Pendle chỉ với một cú nhấp ngay trên <White>Venus</White>",
+    "illustrationAltText": "Hình minh họa kho",
+    "title": "Kho Pendle hiện đã mở"
+  },
+  "poolsStats": {
+    "cell": {
+      "assetsLabel": "Tài sản",
+      "availableLiquidityLabel": "Thanh khoản có sẵn",
+      "dailyXvsDistributionLabel": "Phân phối XVS hằng ngày",
+      "totalBorrowLabel": "Tổng vay",
+      "totalSupplyLabel": "Tổng cung cấp",
+      "treasuryLabel": "Kho bạc"
+    }
+  },
+  "primeButton": {
+    "primeLogoAlt": "Logo Venus Prime"
+  },
+  "primeCalculator": {
+    "borrowedTokens": {
+      "infos": {
+        "label": "Vay {{tokenSymbol}} đủ điều kiện",
+        "tooltip": "Hạn mức vay: {{borrowCapTokens}} ({{borrowCapUsd}})",
+        "tooltip_empty": "Hạn mức vay: -"
+      },
+      "textField": {
+        "label": "Đã vay {{tokenSymbol}}"
+      }
+    },
+    "rewardDetails": {
+      "fromBorrowedTokens": "Từ vay {{tokenSymbol}}",
+      "fromSuppliedTokens": "Từ cung cấp {{tokenSymbol}}",
+      "primeBorrowApy": {
+        "title": "APY vay Prime",
+        "tooltip": "Prime boost sẽ được thêm vào APY vay của thị trường. <Link>Tìm hiểu thêm</Link>"
+      },
+      "primeSupplyApy": {
+        "title": "APY cung cấp Prime",
+        "tooltip": "Prime boost sẽ được thêm vào APY cung cấp của thị trường. <Link>Tìm hiểu thêm</Link>"
+      },
+      "title": "Chi tiết phần thưởng",
+      "totalDailyRewards": {
+        "title": "Tổng phần thưởng hằng ngày",
+        "tooltip": "Tổng số phần thưởng phân phối cho người dùng Prime trong một ngày"
+      },
+      "yourDailyRewards": "Phần thưởng hằng ngày của bạn"
+    },
+    "stakedTokens": {
+      "infos": {
+        "error": "Để đủ điều kiện nhận thưởng Prime, cần cung cấp tối thiểu {{minimumXvsStaked}} XVS.",
+        "label": "XVS cung cấp đủ điều kiện",
+        "tooltip": "Tối đa {{maximumXvsStaked}} sẽ được tính cho phần thưởng Prime của bạn"
+      },
+      "textField": {
+        "label": "XVS đã cung cấp"
+      }
+    },
+    "suppliedTokens": {
+      "infos": {
+        "label": "Cung cấp {{tokenSymbol}} đủ điều kiện",
+        "tooltip": "Hạn mức cung cấp: {{supplyCapTokens}} ({{supplyCapUsd}})",
+        "tooltip_empty": "Hạn mức cung cấp: -"
+      },
+      "textField": {
+        "label": "Đã cung cấp {{tokenSymbol}}"
+      }
+    },
+    "tokenSelect": {
+      "label": "Mã thông báo"
+    },
+    "topMessage": "Bạn có thể dùng máy tính Prime để ước tính phần thưởng nhận được khi nắm giữ token Prime dựa trên vị thế của mình. <Link>Tìm hiểu thêm</Link>"
+  },
+  "primeLeaderboard": {
+    "description": "Stake XVS vào governance vault và nhận thêm phần thưởng Prime bên cạnh lợi nhuận của bạn.",
+    "endOfCycle": {
+      "cycleEnded": "Chu kỳ hiện tại đã kết thúc. Chu kỳ tiếp theo sẽ sớm bắt đầu.",
+      "days": "Ngày",
+      "deadline": "{{date, textualWithTime}}",
+      "helper": "Giữ vị trí trong top {{limit}} đến <Bold>{{deadline}}</Bold> để nhận thưởng Prime trong chu kỳ tiếp theo. <SummaryLink>Xem tổng kết Prime của chu kỳ trước</SummaryLink>.",
+      "helperEnded": "Giữ vị trí trong top {{limit}} đến <Bold>{{deadline}}</Bold> để nhận thưởng Prime trong chu kỳ tiếp theo.",
+      "hours": "Giờ",
+      "mins": "Phút",
+      "sec": "Giây",
+      "title": "Kết thúc chu kỳ"
+    },
+    "lastCycleSummary": {
+      "primeScoreLabel": "Điểm Prime",
+      "rankLabel": "Hạng của bạn",
+      "rankMissed": "Sắp được rồi! Bạn không nằm trong Top {{limit}} của chu kỳ trước. Hãy tăng mức stake để đủ điều kiện trong chu kỳ này.",
+      "rankNoStake": "Bạn chưa stake XVS ở chu kỳ trước. Hãy stake ngay để đủ điều kiện nhận Prime và kiếm thêm phần thưởng.",
+      "rankQualified": "Chúc mừng! Bạn nằm trong Top {{limit}} ở chu kỳ trước và đủ điều kiện nhận phần thưởng Prime.",
+      "title": "Tóm tắt Prime chu kỳ trước",
+      "userRewardsTitle": "Phần thưởng Prime của bạn trong chu kỳ trước"
+    },
+    "rankCard": {
+      "connectPrompt": "Kết nối ví để kiểm tra điều kiện Prime của bạn.",
+      "eligible": "Bạn hiện đủ điều kiện nhận Prime trong chu kỳ tiếp theo",
+      "notEligible": "Bạn hiện không đủ điều kiện nhận Prime trong chu kỳ tiếp theo.",
+      "primeScoreLabel": "Điểm Prime",
+      "rankLabel": "Hạng của bạn",
+      "rulesButton": "Quy tắc",
+      "stakeButton": "Stake XVS",
+      "stakeMore": "Stake thêm XVS để cạnh tranh Prime trong chu kỳ tiếp theo.",
+      "stakeMoreToCompete": "Stake thêm XVS để cạnh tranh Prime.",
+      "stakePrompt": "Stake XVS để cạnh tranh Prime.",
+      "stakeToReachTop": "Stake <Highlight>{{amount}} XVS</Highlight> để có cơ hội lọt vào top #{{limit}} trước khi kết thúc chu kỳ này và đủ điều kiện nhận Prime trong chu kỳ tiếp theo."
+    },
+    "rankCutoffNote": "Hạng <Rank/> hiện đang nắm giữ <Score/> điểm Prime với <Staked/> đã stake.",
+    "rankFooter": {
+      "learnMore": "Tìm hiểu thêm từ <LeaderboardLink>Prime Leaderboard</LeaderboardLink>"
+    },
+    "rankTable": {
+      "columns": {
+        "primeScore": "Điểm Prime",
+        "wallet": "Ví"
+      },
+      "rankBadgeAlt": "Huy hiệu hạng {{rank}}",
+      "walletTooltip": "Thứ hạng được tính toán trên chuỗi, hãy xác minh trên <BscScan>BscScan</BscScan>"
+    },
+    "rewardTable": {
+      "columns": {
+        "marketRewards": "Phần thưởng {{symbol}}",
+        "totalRewards": "Tổng phần thưởng",
+        "wallet": "Ví"
+      }
+    },
+    "rulesModal": {
+      "boostColumn": "Hệ số tăng",
+      "boostMax": "{{boost}} (tối đa)",
+      "contribution": "Với mỗi khoản nạp, đóng góp của bạn là <Highlight>XVS × hệ số tăng × số ngày nắm giữ</Highlight>. Tổng điểm Prime của bạn là tổng của tất cả các khoản nạp.",
+      "daysHeld": "{{range}} ngày",
+      "daysHeldColumn": "Số ngày nắm giữ",
+      "footer": "Để leo lên bảng xếp hạng: stake nhiều hơn và nắm giữ lâu hơn.",
+      "intro1": "<Highlight>Điểm Prime</Highlight> của bạn quyết định vị trí của bạn trên bảng xếp hạng. <Highlight>Top {{limit}}</Highlight> mỗi tháng sẽ trở thành người nắm giữ Prime và chia sẻ quỹ thưởng hàng tháng.",
+      "intro2": "Điểm số thưởng cho cả <Highlight>số lượng</Highlight> XVS bạn stake và <Highlight>thời gian</Highlight> bạn nắm giữ. Mỗi khoản nạp nhận được hệ số tăng trung thành dựa trên thời gian đã nắm giữ:",
+      "point1": "<Highlight>Cả hệ số tăng và số ngày đều giới hạn ở 90 ngày</Highlight> — nắm giữ lâu hơn không làm tăng thêm điểm trên mỗi XVS.",
+      "point2": "<Highlight>Rút tiền? Các khoản nạp mới nhất sẽ bị trừ trước.</Highlight> Khoản stake lâu nhất, có hệ số tăng cao nhất của bạn được bảo vệ.",
+      "point3": "Điểm số cập nhật <Highlight>theo thời gian thực</Highlight> — nhưng trạng thái Prime của bạn được chốt tại <Highlight>ảnh chụp hàng tháng.</Highlight>",
+      "thingsToKnowTitle": "Một vài điều cần biết:",
+      "title": "Quy tắc"
+    },
+    "tablesRefreshNote": "Làm mới mỗi giờ · Lần làm mới cuối: {{date, distanceToNow}} trước",
+    "tabs": {
+      "ranking": "Xếp hạng",
+      "rewards": "Phần thưởng Prime"
+    },
+    "title": "Bảng xếp hạng Prime",
+    "totalRewards": {
+      "title": "Tổng thưởng Prime đã phân phối",
+      "totalPoolLabel": "trên tổng <Highlight>{{amount}}</Highlight> phần thưởng chu kỳ này"
+    },
+    "userRewards": {
+      "cta": {
+        "borrowTooltip": "Vay {{tokenSymbol}} để nhận Prime APY này.",
+        "bothTooltip": "Cung cấp hoặc vay {{tokenSymbol}} để nhận Prime APY này.",
+        "supplyTooltip": "Cung cấp {{tokenSymbol}} để nhận Prime APY này."
+      },
+      "eligibleMessage": "Bạn hiện đủ điều kiện chia sẻ phần thưởng Prime trong chu kỳ này. Hãy cung cấp tài sản bên dưới để nhận phần thưởng.",
+      "notEligibleMessage": "Bạn hiện KHÔNG đủ điều kiện chia sẻ phần thưởng Prime trong chu kỳ này. Stake XVS để cạnh tranh Prime cho chu kỳ tiếp theo.",
+      "primeLogoAlt": "Logo Venus Prime",
+      "title": "Phần thưởng Prime của bạn trong chu kỳ này"
+    }
+  },
+  "primeStatusBanner": {
+    "becomePrimeTitle": "Bạn đã có thể trở thành người dùng Prime",
+    "claimButtonLabel": "Nhận token Prime",
+    "description": {
+      "primeCalculator": "Cung cấp thêm <WhiteText>{{stakeDelta}}</WhiteText> rồi đợi {{claimWaitingPeriod}} để nhận token Prime và tăng thu nhập. <Link>Tính phần thưởng Prime của bạn</Link>",
+      "primeDoc": "Cung cấp thêm <WhiteText>{{stakeDelta}}</WhiteText> rồi đợi {{claimWaitingPeriod}} để nhận token Prime và tăng thu nhập. <Link>Tìm hiểu thêm</Link>"
+    },
+    "noPrimeTokenWarning": {
+      "text": "Tất cả token Prime đã được nhận",
+      "tooltip": "Tất cả {{primeTokenLimit}} token Prime hiện đã được nhận. Một số có thể khả dụng nếu chủ sở hữu không còn đủ điều kiện hoặc nếu chúng tôi thêm số lượng."
+    },
+    "progressBar": {
+      "label": "Đã cung cấp: <WhiteText>{{userStakedXvsTokens}} / {{minXvsToStakeForPrimeTokens}}</WhiteText>"
+    },
+    "promotionalTitle": "Tăng thu nhập lên đến <GreenText>{{percentage}}</GreenText>",
+    "stakeButtonLabel": "Cung cấp XVS",
+    "tokensLeft": "Còn <WhiteText>{{count}}</WhiteText> token Prime",
+    "tokensLeft_one": "Còn <WhiteText>{{count}}</WhiteText> token Prime",
+    "tokensLeft_many": "Còn <WhiteText>{{count}}</WhiteText> token Prime",
+    "tokensLeft_other": "Còn <WhiteText>{{count}}</WhiteText> token Prime",
+    "waitForPrimeTitle": "{{claimWaitingPeriod}} để có thể nhận thưởng Prime"
+  },
+  "proposalList": {
+    "selectOptions": {
+      "all": {
+        "label": "Tất cả"
+      }
+    }
+  },
+  "proposalState": {
+    "active": "Đang hoạt động",
+    "bridged": "Đã bridge",
+    "canceled": "Đã hủy",
+    "defeated": "Defeated - Bị bác bỏ",
+    "executed": "Đã thực thi",
+    "expired": "Hết hạn",
+    "failed": "Thất bại",
+    "pending": "Đang chờ",
+    "queued": "Queued - Đang trong hàng đợi",
+    "succeeded": "Thành công"
+  },
+  "protectionModeIndicator": {
+    "detailedTooltip": "Thị trường này đang trải qua biến động cao.<LineBreak/><LineBreak/>Giá thế chấp được bảo vệ là {{collateralPrice}}, giá thận trọng được sử dụng để xác định hạn mức vay của bạn.<LineBreak/><LineBreak/>Giá vay được bảo vệ là {{borrowPrice}}, giá thận trọng được sử dụng để tính số lượng tài sản này có thể vay.",
+    "label": "Đã bảo vệ",
+    "pairTokenNames": "cả {{longToken}} và {{shortToken}}"
+  },
+  "requestWithdrawalFromVestingVaultForm": {
+    "withdrawalRequestList": {
+      "approveToken": {
+        "connectWalletMessage": "Vui lòng kết nối ví để xem yêu cầu rút"
+      },
+      "emptyState": "Bạn không có yêu cầu rút đang hoạt động",
+      "locked": "Khóa đến {{date, numericWithTime}}",
+      "title": "Yêu cầu rút",
+      "unlocked": "Đã mở khóa",
+      "withdrawButtonLabel": "Rút số dư đã mở khóa"
+    }
+  },
+  "selectTokenTextField": {
+    "searchInput": {
+      "placeholder": "Tìm tài sản"
+    }
+  },
+  "skillsPage": {
+    "footer": {
+      "tagline": "Được xây dựng cho cộng đồng Venus Protocol"
+    },
+    "header": {
+      "beta": "BETA",
+      "tagline": "Tự động hóa DeFi bằng AI cho Venus Protocol",
+      "title": "Venus Agent Skills"
+    },
+    "sections": {
+      "installation": {
+        "icon": "📦",
+        "note": {
+          "securityLabel": "🔐 Lưu ý bảo mật:",
+          "securityText": "Khóa riêng tư của bạn không bao giờ rời khỏi máy của bạn. Agent thực thi giao dịch cục bộ bằng ví của bạn.",
+          "warningLabel": "⚠️ Cảnh báo phiên bản BETA:",
+          "warningText": "Đây là bản beta. Hãy tự chịu rủi ro khi sử dụng. Chỉ dùng quỹ thử nghiệm hoặc số tiền nhỏ. Luôn kiểm tra giao dịch trước khi xác nhận."
+        },
+        "paragraph1": "Cài đặt Venus Agent Skills mất chưa đến 5 phút. Hãy làm theo các bước sau:",
+        "repository": {
+          "label": "Kho mã:"
+        },
+        "steps": {
+          "1": {
+            "text": "<Bold>Tải gói kỹ năng</Bold> từ <RepoLink>kho chính thức</RepoLink>"
+          },
+          "2": {
+            "text": "<Bold>Đặt vào thư mục skills của agent:</Bold>"
+          },
+          "3": {
+            "text": "<Bold>Cấu hình thông tin ví</Bold> trong tệp .env:"
+          },
+          "4": {
+            "text": "<Bold>Cài đặt dependencies:</Bold>"
+          },
+          "5": {
+            "text": "<Bold>Khởi động lại agent</Bold> để nạp kỹ năng mới"
+          }
+        },
+        "title": "Cách cài đặt"
+      },
+      "introduction": {
+        "features": {
+          "1": {
+            "description": "Trò chuyện với agent như người thật, không cần thuật ngữ kỹ thuật",
+            "title": "Lệnh ngôn ngữ tự nhiên"
+          },
+          "2": {
+            "description": "Nhận ngay APY trực tiếp, thanh khoản và số liệu thị trường",
+            "title": "Dữ liệu thị trường thời gian thực"
+          },
+          "3": {
+            "description": "AI phân tích ví của bạn và đề xuất chiến lược sinh lời tối ưu",
+            "title": "Gợi ý thông minh"
+          },
+          "4": {
+            "description": "Gửi, vay, hoàn trả và rút bằng các lệnh đơn giản",
+            "title": "Tự động hóa giao dịch"
+          },
+          "5": {
+            "description": "Đặt điều kiện như \"gửi khi APY > 3%\" rồi để agent tự xử lý",
+            "title": "Quy tắc giao dịch tự động"
+          },
+          "6": {
+            "description": "Theo dõi vị thế, Health Factor và lợi nhuận của bạn 24/7",
+            "title": "Theo dõi danh mục"
+          }
+        },
+        "highlight": "Phù hợp cho cả người mới DeFi và trader giàu kinh nghiệm muốn tiết kiệm thời gian và tối ưu lợi suất.",
+        "icon": "🚀",
+        "paragraph1": "Venus Agent Skills là framework tự động hóa bằng AI cho phép bạn tương tác với Venus Protocol bằng ngôn ngữ tự nhiên. Thay vì điều hướng các giao diện DeFi phức tạp, chỉ cần nói cho agent AI biết bạn muốn làm gì.",
+        "title": "Venus Agent Skills là gì?"
+      },
+      "verification": {
+        "dialog1": {
+          "agentIntro": "🤖 Agent: \"Có! Tôi đã cài kỹ năng Venus Protocol. Tôi có thể giúp bạn:",
+          "agentOutro": "Bạn muốn làm gì?\"",
+          "capabilities": {
+            "1": "Kiểm tra dữ liệu thị trường và APY",
+            "2": "Phân tích ví và vị thế Venus của bạn",
+            "3": "Nạp và rút tài sản",
+            "4": "Vay và hoàn trả khoản vay",
+            "5": "Thiết lập quy tắc giao dịch tự động"
+          },
+          "user": "👤 Bạn: \"Bạn đã cài kỹ năng Venus chưa?\""
+        },
+        "dialog2": {
+          "agent": "🤖 Agent đang lấy dữ liệu trực tiếp từ Venus Core Pool...",
+          "user": "👤 \"Hiển thị 5 thị trường có thanh khoản cao nhất\""
+        },
+        "dialog3": {
+          "agent": "🤖 Agent kiểm tra ví và hiển thị tổng gửi, tổng vay và Health Factor của bạn...",
+          "user": "👤 \"Vị thế hiện tại của tôi trên Venus Core/Flux là gì?\""
+        },
+        "dialog4": {
+          "agent": "🤖 Agent đang phân tích số dư ví của bạn và đề xuất chiến lược sinh lời tốt nhất...",
+          "user": "👤 \"Tôi muốn kiếm lợi nhuận\""
+        },
+        "highlight": "Nếu agent phản hồi dữ liệu thị trường hoặc đề xuất, xin chúc mừng! Venus Agent Skills đã được cài đặt và sẵn sàng sử dụng. 🎉",
+        "icon": "✅",
+        "paragraph1": "Sau khi cài đặt, hãy xác nhận Venus Agent Skills hoạt động đúng bằng cách trò chuyện với agent của bạn:",
+        "paragraph2": "Hãy thử các lệnh kiểm tra sau để đảm bảo mọi thứ hoạt động:",
+        "tip": {
+          "label": "💡 Mẹo:",
+          "text": "Hãy bắt đầu với các lệnh chỉ đọc (như kiểm tra thị trường) trước khi thực hiện giao dịch. Điều này giúp bạn làm quen với khả năng của agent."
+        },
+        "title": "Xác minh cài đặt"
+      }
+    },
+    "terminal": {
+      "sequence": {
+        "balance": {
+          "1": {
+            "amount": "0.004784",
+            "token": "BNB"
+          },
+          "2": {
+            "amount": "10.501949",
+            "token": "USDT"
+          },
+          "3": {
+            "amount": "4.000000",
+            "token": "USDC"
+          }
+        },
+        "header": {
+          "currentPosition": "Vị thế Venus hiện tại (Core Pool):",
+          "finalPosition": "Vị thế cuối cùng:",
+          "recommendation": "Khuyến nghị:",
+          "topMarkets": "Top 5 thị trường theo thanh khoản:",
+          "updatedPosition": "Vị thế sau cập nhật:",
+          "walletBalance": "Số dư ví hiện tại (BNB Chain):"
+        },
+        "market": {
+          "1": {
+            "borrow": "1.0841%",
+            "liquidity": "$356,095,914.68",
+            "name": "vBTC",
+            "supply": "0.1711%"
+          },
+          "2": {
+            "borrow": "0.8598%",
+            "liquidity": "$300,845,581.93",
+            "name": "vBNB",
+            "supply": "0.1648%"
+          },
+          "3": {
+            "borrow": "0.0514%",
+            "liquidity": "$130,654,243.33",
+            "name": "vSolvBTC",
+            "supply": "0.0002%"
+          },
+          "4": {
+            "borrow": "3.7054%",
+            "liquidity": "$109,840,237.54",
+            "name": "vUSDT",
+            "supply": "1.8415%"
+          },
+          "5": {
+            "borrow": "0.0000%",
+            "liquidity": "$91,022,728.98",
+            "name": "vasBNB",
+            "supply": "0.0000%"
+          }
+        },
+        "output": {
+          "analyzingWallet": "Đang phân tích ví và vị thế Venus của bạn...",
+          "borrowAfterCleanup": "  Khoản vay: $0.50 → ~$0.000001 (bụi)",
+          "cleaningBorrow": "Đang dọn dẹp vị thế vay...",
+          "depositAmount": "  Số lượng: 10 USDT → vUSDT (Core Pool)",
+          "fetchingMarkets": "Đang lấy dữ liệu thị trường Venus Core Pool...",
+          "healthAfterCleanup": "  Health Factor: 34.14 → ~17,656,287",
+          "initiatingDeposit": "Đang khởi tạo giao dịch gửi...",
+          "processingWithdrawal": "Đang xử lý rút tiền...",
+          "recommendationAmount": "   Số lượng đề xuất: 10 USDT",
+          "recommendationApy": "   APY dự kiến: ~1.84% (~0.184 USDT/năm)",
+          "recommendationTitle": "💡 Gửi USDT vào Venus Core Pool",
+          "ruleAction": "  Hành động: Gửi toàn bộ USDC trong ví",
+          "ruleId": "  Mã tác vụ: eadf856a-393b-4587-aa69-10b252c22efa",
+          "ruleInterval": "  Chu kỳ: Kiểm tra mỗi 10 phút",
+          "ruleTrigger": "  Điều kiện kích hoạt: APY gửi vUSDC > 3.0%",
+          "settingRule": "Đang thiết lập quy tắc gửi tự động...",
+          "walletUsdtAfterWithdrawal": "  USDT trong ví: 10.001736",
+          "withdrawalAmount": "  Số lượng: rút 10 USDT từ vUSDT"
+        },
+        "position": {
+          "current": {
+            "1": {
+              "label": "Tổng cung",
+              "value": "$11.003238"
+            },
+            "2": {
+              "label": "Tổng vay",
+              "value": "$0.500249"
+            },
+            "3": {
+              "label": "Health Factor",
+              "status": "rủi ro THẤP",
+              "value": "18.15"
+            }
+          },
+          "final": {
+            "1": {
+              "label": "Tổng cung",
+              "value": "$11.003250"
+            },
+            "2": {
+              "label": "Tổng vay",
+              "value": "~$0.000001"
+            },
+            "3": {
+              "label": "Health Factor",
+              "status": "rất an toàn",
+              "value": "~9,384,800"
+            }
+          },
+          "updated": {
+            "1": {
+              "change": "+$10.00",
+              "label": "Tổng cung",
+              "value": "$21.003943"
+            },
+            "2": {
+              "change": "cải thiện",
+              "label": "Health Factor",
+              "value": "34.14"
+            }
+          }
+        },
+        "success": {
+          "borrowCleaned": "✓ Đã dọn dẹp vị thế vay thành công",
+          "depositComplete": "✓ Gửi tiền thành công",
+          "ruleEnabled": "✓ Đã bật quy tắc giao dịch tự động",
+          "withdrawalComplete": "✓ Rút tiền hoàn tất"
+        },
+        "tx": {
+          "approve": {
+            "hash": "0xa66216ffb5de805e1d870bfa6dc8ce43af8c85935c0423e2cd779a1b4e3bae2a",
+            "label": "Phê duyệt"
+          },
+          "approveBorrow": {
+            "hash": "0x2539aebcf903c14dfc28c3757ccd358f1da7afe7c5334691a800e35523624049",
+            "label": "Phê duyệt"
+          },
+          "deposit": {
+            "hash": "0x7d485c4022644db464262a56b46ef5740909c890566d0f001895938fde3bc620",
+            "label": "Gửi"
+          },
+          "repay": {
+            "hash": "0xdbccf6a5e9dc1ea5727115e86c9081646bf2c00a908512e7d9705f6e245930db",
+            "label": "Hoàn trả"
+          },
+          "withdraw": {
+            "hash": "0x4d313a66b6c966b543bfc874e4c5fa78c55b1a4c284bac224ff22fc4066abe91",
+            "label": "Rút"
+          }
+        },
+        "user": {
+          "autoDepositRule": "Tự động gửi toàn bộ USDC trong ví của tôi khi APY vượt 3%",
+          "cleanupBorrow": "Dọn dẹp khoản vay của tôi",
+          "confirmDeposit": "Xác nhận gửi tiền",
+          "showTopMarkets": "Hiển thị cho tôi 5 thị trường có thanh khoản cao nhất",
+          "wantToEarn": "Tôi muốn kiếm lợi nhuận",
+          "withdrawRequest": "Rút giúp tôi 10 USDT"
+        }
+      },
+      "title": "Venus-agent.md"
+    }
+  },
+  "spendingLimit": {
+    "label": "Hạn mức chi tiêu",
+    "labelTooltip": "Đây là hạn mức chi tiêu hiện tại của bạn cho tài sản này. Để chi tiêu nhiều hơn, hãy hủy hạn mức và đặt lại."
+  },
+  "statsPage": {
+    "illustrationAlt": "Hình minh họa thống kê",
+    "poweredBy": "Được cung cấp bởi <Link>{{provider}}</Link>",
+    "subtitle": "Thông số rủi ro thời gian thực cho thị trường Venus Protocol",
+    "title": "Thống kê Venus"
+  },
+  "swap": {
+    "errors": {
+      "amountAboveWalletSpendingLimit": "Bạn đã nhập số lượng vượt quá hạn mức chi tiêu cho tài sản này. Vui lòng hủy hạn mức và đặt lại để tiếp tục giao dịch.",
+      "incorrectSwapInput": "Đầu vào hoán đổi không chính xác"
+    },
+    "swapDetails": {
+      "label": {
+        "exchangeRate": "Tỷ giá",
+        "maximumSold": "Bán tối đa",
+        "minimumReceived": "Nhận tối thiểu",
+        "priceImpact": "Tác động giá",
+        "slippageTolerance": "Độ trượt giá"
+      },
+      "tooltip": {
+        "priceImpact": "Chênh lệch giữa giá thị trường và giá ước tính do quy mô giao dịch."
+      },
+      "value": {
+        "exactAmount": "{{ value }}",
+        "exchangeRate": "1 {{fromTokenSymbol}} ≈ {{rate}} {{toTokenSymbol}}",
+        "priceImpact": "{{ priceImpact }}"
+      }
+    },
+    "warning": {
+      "swappingWithHighPriceImpactWarning": "Tác động giá của giao dịch này cao, có thể cho thấy hoán đổi bất lợi. Hãy đảm bảo tỷ giá và số lượng token trao đổi phù hợp kỳ vọng."
+    }
+  },
+  "swapDetails": {
+    "priceImpact": {
+      "label": "Tác động giá"
+    },
+    "slippageTolerance": {
+      "label": "Độ trượt giá"
+    },
+    "slippageToleranceModal": {
+      "description": "Thiết lập độ trượt giá cao có thể giúp giao dịch thành công, nhưng bạn có thể không nhận được giá tốt. Hãy thận trọng.",
+      "title": "Độ trượt giá"
+    }
+  },
+  "swapPage": {
+    "connectWalletToSwap": "Vui lòng kết nối ví để hoán đổi token",
+    "fromTokenAmountField": {
+      "label": "Từ",
+      "max": "Tối đa"
+    },
+    "submitButton": {
+      "disabledLabels": {
+        "insufficientLiquidity": "Không đủ thanh khoản cho hoán đổi này",
+        "insufficientUserBalance": "Không đủ số dư {{tokenSymbol}}",
+        "invalidFromTokenAmount": "Nhập số lượng hợp lệ để hoán đổi",
+        "priceImpactHigherThanMaximumTolerated": "Tác động giá quá cao",
+        "processing": "Đang xử lý",
+        "spendingLimitTooLow": "Hạn mức chi tiêu quá thấp",
+        "unwrappingUnsupported": "Không hỗ trợ unwrapping",
+        "wrappingUnsupported": "Không hỗ trợ wrapping"
+      },
+      "enabledLabels": {
+        "swap": "Hoán đổi",
+        "swapWithHighPriceImpact": "Hoán đổi với tác động giá cao"
+      }
+    },
+    "toTokenAmountField": {
+      "label": "Đến"
+    },
+    "walletBalance": "Số dư ví"
+  },
+  "switchChain": {
+    "switchButton": "Chuyển sang {{chainName}}"
+  },
+  "switchChainNotice": {
+    "buttonLabel": "Chuyển sang {{chainName}}",
+    "description": "Bạn cần chuyển ví sang {{chainName}} để bật hoặc tắt tài sản thế chấp"
+  },
+  "table": {
+    "cardsSelect": {
+      "label": "Sắp xếp theo"
+    }
+  },
+  "tokenTextField": {
+    "valueDollars": "≈ {{ value }}"
+  },
+  "trade": {
+    "banner": {
+      "illustrationAltText": "Hình minh họa Trade",
+      "learnMore": "Tìm hiểu thêm",
+      "title": "Trade là gì?"
+    },
+    "closePositionModal": {
+      "title": "Đóng"
+    },
+    "longLiquidity": "Thanh khoản Long",
+    "longSupplyApy": "{{ longTokenSymbol }} APY cung cấp",
+    "longTokenSelect": {
+      "label": "Long"
+    },
+    "operationForm": {
+      "increaseForm": {
+        "submitButtonLabel": "Tăng"
+      },
+      "invalidLiquidationPrice": "Không áp dụng",
+      "openForm": {
+        "collateral": "Tài sản thế chấp",
+        "dsaFieldLabel": "Tài sản thế chấp",
+        "dsaFieldPlaceholder": "Nhập để tiếp tục",
+        "entryPrice": "Giá vào lệnh",
+        "liquidationPrice": "Giá thanh lý",
+        "long": "Long",
+        "longFieldLabel": "Long",
+        "netApy": "APY ròng",
+        "pnl": "Lãi/lỗ đã thực hiện",
+        "short": "Short",
+        "shortFieldLabel": "Short",
+        "submitButtonLabel": "Mở"
+      },
+      "reduceForm": {
+        "submitButtonLabel": {
+          "close": "Đóng",
+          "reduce": "Giảm"
+        }
+      },
+      "supplyDsaForm": {
+        "submitButtonLabel": "Cung cấp"
+      },
+      "walletBalance": "Số dư ví",
+      "warning": {
+        "cannotBorrowShort": "Việc vay token Short của vị thế này đã bị vô hiệu hóa",
+        "cannotRepayShort": "Việc hoàn trả token Short của vị thế này đã bị vô hiệu hóa",
+        "cannotSupplyDsa": "Việc cung cấp token thế chấp của vị thế này đã bị vô hiệu hóa",
+        "cannotSupplyLong": "Việc cung cấp token Long của vị thế này đã bị vô hiệu hóa",
+        "cannotWithdrawDsa": "Việc rút token thế chấp của vị thế này đã bị vô hiệu hóa",
+        "cannotWithdrawLong": "Việc rút token Long của vị thế này đã bị vô hiệu hóa",
+        "notEnoughLeverage": "Cặp token này không cho phép hệ số đòn bẩy ít nhất là {{ minimumLeverageFactor }}, đây là mức tối thiểu cần thiết để mở một vị thế Trade",
+        "txLikelyToFail": "Giao dịch này liên quan đến các lệnh hoán đổi giá trị thấp có khả năng thất bại"
+      },
+      "withdrawDsaForm": {
+        "submitButtonLabel": "Rút"
+      }
+    },
+    "positions": {
+      "closeButtonLabel": "Đóng",
+      "placeholder": {
+        "title": "Chưa có vị thế"
+      },
+      "status": {
+        "collateralColumn": {
+          "label": "Tài sản thế chấp"
+        },
+        "collateralUtilizationColumn": {
+          "label": "Tỷ lệ sử dụng tài sản thế chấp"
+        },
+        "healthFactor": {
+          "label": "Hệ số an toàn",
+          "tooltip": "Thanh lý tại < 1.0"
+        },
+        "netApy": {
+          "label": "APY ròng"
+        },
+        "netValue": {
+          "label": "Giá trị ròng"
+        },
+        "title": "Trạng thái"
+      },
+      "table": {
+        "entryPrice": {
+          "title": "EP",
+          "tooltip": "Tỷ lệ giá vào lệnh của vị thế này (số lượng tài sản Short ÷ số lượng tài sản Long hoặc số lượng tài sản Long ÷ số lượng tài sản Short, tùy theo token cơ sở được chọn), phản ánh giá trị tương đối giữa hai token tại thời điểm vào lệnh."
+        },
+        "liquidationPrice": {
+          "title": "Liq.",
+          "tooltip": "Giá thanh lý được tính dựa trên giá token cơ sở hiện tại và có thể thay đổi khi giá token cơ sở biến động. Hãy luôn theo dõi Health Factor (HF)."
+        },
+        "longColumn": {
+          "title": "Long"
+        },
+        "pnlColumn": {
+          "title": "PnL"
+        },
+        "positionColumn": {
+          "title": "Vị thế"
+        },
+        "shortColumn": {
+          "title": "Short"
+        }
+      },
+      "transactions": {
+        "title": "Giao dịch"
+      }
+    },
+    "shortBorrowApy": "{{ shortTokenSymbol }} APY vay",
+    "shortLiquidity": "Thanh khoản Short",
+    "shortTokenSelect": {
+      "label": "Short"
+    }
+  },
+  "tradeBanner": {
+    "description": "Giao dịch hiệu suất tương đối trên chuỗi",
+    "illustrationAltText": "Hình minh họa Trade",
+    "title": "Venus Trade hiện đã hoạt động"
+  },
+  "tradeOperationForm": {
+    "managePositionsTabs": {
+      "collateral": "Tài sản thế chấp",
+      "position": "Vị thế",
+      "positionsTabs": {
+        "increase": "Tăng",
+        "reduce": "Giảm",
+        "supply": "Cung cấp",
+        "withdraw": "Rút"
+      }
+    }
+  },
+  "transactionErrors": {
+    "acceptAdminPendingAdminCheck": "Chấp nhận Admin Đang chờ Kiểm tra",
+    "acceptPendingImplementationAddressCheck": "Chấp nhận địa chỉ triển khai đang chờ Kiểm tra",
+    "accrueInterestAccumulatedInterestCalculationFailed": "Tính lãi lũy kế thất bại",
+    "accrueInterestBorrowRateCalculationFailed": "Tính lãi suất vay thất bại",
+    "accrueInterestNewBorrowIndexCalculationFailed": "Tính chỉ số vay mới thất bại",
+    "accrueInterestNewTotalBorrowsCalculationFailed": "Tính tổng khoản vay mới thất bại",
+    "accrueInterestNewTotalReservesCalculationFailed": "Tính tổng dự trữ mới thất bại",
+    "accrueInterestSimpleInterestFactorCalculationFailed": "Tính hệ số lãi đơn giản thất bại",
+    "addReservesAccrueInterestFailed": "Thêm dự trữ và tính lãi thất bại",
+    "addReservesFreshCheck": "Kiểm tra mới của thêm dự trữ",
+    "addReservesTransferInNotPossible": "Không thể chuyển vào khi thêm dự trữ",
+    "badInput": "Đầu vào không hợp lệ",
+    "borrowAccrueInterestFailed": "Tính lãi vay thất bại",
+    "borrowAccumulatedBalanceCalculationFailed": "Tính số dư vay tích lũy thất bại",
+    "borrowCashNotAvailable": "Không đủ tiền mặt để vay",
+    "borrowComptrollerRejection": "Comptroller từ chối vay",
+    "borrowFreshnessCheck": "Kiểm tra độ mới khoản vay",
+    "borrowMarketNotListed": "Thị trường vay chưa được niêm yết",
+    "borrowNewAccountBorrowBalanceCalculationFailed": "Tính số dư vay mới của tài khoản thất bại",
+    "borrowNewTotalBalanceCalculationFailed": "Tính tổng số dư vay mới thất bại",
+    "comptrollerCalculationError": "Lỗi tính toán Comptroller",
+    "comptrollerMismatch": "Comptroller không khớp",
+    "comptrollerRejection": "Comptroller từ chối",
+    "exitMarketBalanceOwed": "Rời thị trường còn nợ số dư",
+    "exitMarketRejection": "Rời thị trường bị từ chối",
+    "gasEstimationFailed": "Ước tính gas thất bại",
+    "gaslessTransactionNotAvailable": "Giao dịch không gas không khả dụng",
+    "insufficientBalanceForVai": "Không đủ số dư cho VAI",
+    "insufficientLiquidity": "Không đủ thanh khoản",
+    "insufficientShortfall": "Thiếu hụt không đủ",
+    "interestRateModelError": "Lỗi mô hình lãi suất",
+    "invalidAccountPair": "Cặp tài khoản không hợp lệ",
+    "invalidCloseAmountRequested": "Yêu cầu số lượng đóng không hợp lệ",
+    "invalidCloseFactor": "Hệ số đóng không hợp lệ",
+    "invalidCollateralFactor": "Hệ số tài sản thế chấp không hợp lệ",
+    "invalidLiquidationIncentive": "Khuyến khích thanh lý không hợp lệ",
+    "liquidateAccrueBorrowInterestFailed": "Thanh lý: Tính lãi vay thất bại",
+    "liquidateAccrueCollateralInterestFailed": "Thanh lý: Tính lãi thế chấp thất bại",
+    "liquidateCloseAmountIsUintMax": "Thanh lý: Số lượng đóng là UINT tối đa",
+    "liquidateCloseAmountIsZero": "Thanh lý: Số lượng đóng bằng 0",
+    "liquidateCollateralFreshnessCheck": "Thanh lý: Kiểm tra độ mới của tài sản thế chấp",
+    "liquidateComptrollerCalculateAmountSeizeFailed": "Thanh lý: Comptroller tính số lượng tịch thu thất bại",
+    "liquidateComptrollerRejection": "Thanh lý: Comptroller từ chối",
+    "liquidateFreshnessCheck": "Thanh lý: Kiểm tra độ mới",
+    "liquidateSeizeBalanceDecrementFailed": "Thanh lý: Giảm số dư tịch thu thất bại",
+    "liquidateSeizeBalanceIncrementFailed": "Thanh lý: Tăng số dư tịch thu thất bại",
+    "liquidateSeizeBorrowFreshFailed": "Thanh lý: Kiểm tra độ mới của khoản vay thất bại",
+    "liquidateSeizeComptrollerRejection": "Thanh lý: Comptroller từ chối tịch thu",
+    "liquidateSeizeIsBorrower": "Thanh lý: Người tịch thu là người vay",
+    "liquidateSeizeLiquidatorIsBorrower": "Thanh lý: Người thanh lý là người vay",
+    "liquidateSeizeTooMuch": "Thanh lý: Tịch thu quá nhiều",
+    "marketAlreadyListed": "Thị trường đã được niêm yết",
+    "marketNotEntered": "Chưa tham gia thị trường",
+    "marketNotFresh": "Thị trường không mới",
+    "marketNotListed": "Thị trường chưa được niêm yết",
+    "mathError": "Lỗi toán học",
+    "mintAccrueInterestFailed": "Đúc: Tính lãi thất bại",
+    "mintComptrollerRejection": "Đúc: Comptroller từ chối",
+    "mintExchangeRateReadFailed": "Đúc: Đọc tỷ giá thất bại",
+    "mintFeeCalculationFailed": "Đúc: Tính phí thất bại",
+    "mintFreshnessCheck": "Đúc: Kiểm tra độ mới",
+    "mintNewAccountBalanceCalculationFailed": "Đúc: Tính số dư mới của tài khoản thất bại",
+    "mintNewTotalSupplyCalculationFailed": "Đúc: Tính tổng cung cấp mới thất bại",
+    "mintTransferInFailed": "Đúc: Chuyển vào thất bại",
+    "mintTransferNotPossible": "Đúc: Không thể chuyển vào",
+    "noError": "Không có lỗi",
+    "nonzeroBorrowBalance": "Số dư vay không bằng 0",
+    "priceError": "Lỗi giá",
+    "redeemAccrueInterestFailed": "Rút: Tính lãi thất bại",
+    "redeemComptrollerRejection": "Rút: Comptroller từ chối",
+    "redeemExchangeAmountCalculatioFailed": "Rút: Tính số lượng quy đổi thất bại",
+    "redeemExchangeRateReadFailed": "Rút: Đọc tỷ giá thất bại",
+    "redeemExchangeTokensCalculationFailed": "Rút: Tính token quy đổi thất bại",
+    "redeemFeeCalculationFailed": "Rút: Tính phí thất bại",
+    "redeemFreshnessCheck": "Rút: Kiểm tra độ mới",
+    "redeemNewAccountBalanceCalculationFailed": "Rút: Tính số dư mới của tài khoản thất bại",
+    "redeemNewTotalSupplyCalculationFailed": "Rút: Tính tổng cung cấp mới thất bại",
+    "redeemTransferOutNotPossible": "Rút: Không thể chuyển ra",
+    "reduceReservesAccrueInterestFailed": "Giảm dự trữ: Tính lãi thất bại",
+    "reduceReservesAdminCheck": "Giảm dự trữ: Kiểm tra admin",
+    "reduceReservesCashNotAvailable": "Giảm dự trữ: Không đủ tiền mặt",
+    "reduceReservesFreshCheck": "Giảm dự trữ: Kiểm tra độ mới",
+    "reduceReservesValidation": "Giảm dự trữ: Xác thực",
+    "rejection": "Bị từ chối",
+    "repayBehalfAccrueInterestFailed": "Trả thay: Tính lãi thất bại",
+    "repayBorrowAccrueInterestFailed": "Hoàn trả: Tính lãi vay thất bại",
+    "repayBorrowAccumulatedBalanceCalculationFailed": "Hoàn trả: Tính số dư vay tích lũy thất bại",
+    "repayBorrowComptrollerRejection": "Hoàn trả: Comptroller từ chối",
+    "repayBorrowFreshnessCheck": "Hoàn trả: Kiểm tra độ mới",
+    "repayBorrowNewAccountBorrowBalanceCalculationFailed": "Hoàn trả: Tính số dư vay mới của tài khoản thất bại",
+    "repayBorrowTransferInNotPossible": "Hoàn trả: Không thể chuyển vào",
+    "repayBorrowTransferNotPossible": "Hoàn trả: Không thể chuyển",
+    "repayVaiComptrollerRejection": "Hoàn trả VAI: Comptroller từ chối",
+    "repayVaiFreshnessCheck": "Hoàn trả VAI: Kiểm tra độ mới",
+    "setCloseFactorOwnerCheck": "Thiết lập hệ số đóng: Kiểm tra chủ sở hữu",
+    "setCloseFactorValidation": "Thiết lập hệ số đóng: Xác thực",
+    "setCollateralFactorNoExists": "Thiết lập hệ số thế chấp: Không tồn tại",
+    "setCollateralFactorOwnerCheck": "Thiết lập hệ số thế chấp: Kiểm tra chủ sở hữu",
+    "setCollateralFactorValidation": "Thiết lập hệ số thế chấp: Xác thực",
+    "setCollateralFactorWithoutPrice": "Thiết lập hệ số thế chấp: Không có giá",
+    "setComptrollerOwnerCheck": "Thiết lập Comptroller: Kiểm tra chủ sở hữu",
+    "setImplementationOwnerCheck": "Thiết lập Implementation: Kiểm tra chủ sở hữu",
+    "setInterestRateModelAccrueInterestFailed": "Thiết lập mô hình lãi suất: Tính lãi thất bại",
+    "setInterestRateModelFreshCheck": "Thiết lập mô hình lãi suất: Kiểm tra độ mới",
+    "setInterestRateModelOwnerCheck": "Thiết lập mô hình lãi suất: Kiểm tra chủ sở hữu",
+    "setLiquidationIncentiveOwnerCheck": "Thiết lập khuyến khích thanh lý: Kiểm tra chủ sở hữu",
+    "setLiquidationIncentiveValidation": "Thiết lập khuyến khích thanh lý: Xác thực",
+    "setMaxAssetsOwnerCheck": "Thiết lập số tài sản tối đa: Kiểm tra chủ sở hữu",
+    "setMintedVaiRejection": "Thiết lập VAI đã đúc: Bị từ chối",
+    "setOracleMarketNotListed": "Thiết lập oracle: Thị trường chưa niêm yết",
+    "setPauseGuardianOwnerCheck": "Thiết lập Pause Guardian: Kiểm tra chủ sở hữu",
+    "setPendingAdminOwnerCheck": "Thiết lập Pending Admin: Kiểm tra chủ sở hữu",
+    "setPendingImplementationOwnerCheck": "Thiết lập Pending Implementation: Kiểm tra chủ sở hữu",
+    "setPriceOracleOwnerCheck": "Thiết lập Price Oracle: Kiểm tra chủ sở hữu",
+    "setReserveFactorAccrueInterestFailed": "Thiết lập hệ số dự trữ: Tính lãi thất bại",
+    "setReserveFactorAdminCheck": "Thiết lập hệ số dự trữ: Kiểm tra admin",
+    "setReserveFactorBoundsCheck": "Thiết lập hệ số dự trữ: Kiểm tra giới hạn",
+    "setReserveFactorFreshCheck": "Thiết lập hệ số dự trữ: Kiểm tra độ mới",
+    "setTreasuryOwnerCheck": "Thiết lập kho bạc: Kiểm tra chủ sở hữu",
+    "setVaiControllerOwnerCheck": "Thiết lập VAI Controller: Kiểm tra chủ sở hữu",
+    "setVaiMintRateCheck": "Thiết lập tỷ lệ đúc VAI: Kiểm tra",
+    "sftMintNewAccountBalanceCalculationFailed": "SFT Đúc: Tính số dư mới của tài khoản thất bại",
+    "snapshotError": "Lỗi snapshot",
+    "supportMarketExists": "Hỗ trợ thị trường đã tồn tại",
+    "supportMarketOwnerCheck": "Hỗ trợ thị trường: Kiểm tra chủ sở hữu",
+    "tokenGetUnderlyingPriceError": "Lỗi lấy giá tài sản cơ sở",
+    "tokenInsufficentCash": "Token không đủ tiền mặt",
+    "tokenInsufficientAllowance": "Token không đủ allowance",
+    "tokenInsufficientBalance": "Token không đủ số dư",
+    "tokenPriceError": "Lỗi giá token",
+    "tokenTransferInFailed": "Chuyển vào token thất bại",
+    "tokenTransferOutFailed": "Chuyển ra token thất bại",
+    "tooManyAssets": "Quá nhiều tài sản",
+    "tooMuchRepay": "Hoàn trả quá nhiều",
+    "transferComptrollerRejection": "Chuyển: Comptroller từ chối",
+    "transferNotAllowed": "Chuyển không được phép",
+    "transferNotEnough": "Chuyển không đủ",
+    "transferTooMuch": "Chuyển quá nhiều",
+    "unauthorized": "Không được phép",
+    "vaiBurnRejection": "Đốt VAI bị từ chối",
+    "vaiLiquidateAccrueBorrowInterestFailed": "Thanh lý VAI: Tính lãi vay thất bại",
+    "vaiLiquidateAccrueCollateralInterestFailed": "Thanh lý VAI: Tính lãi thế chấp thất bại",
+    "vaiLiquidateCloseAmountIsUintMax": "Thanh lý VAI: Số lượng đóng là UINT tối đa",
+    "vaiLiquidateCloseAmountIsZero": "Thanh lý VAI: Số lượng đóng bằng 0",
+    "vaiLiquidateCollateralFreshnessCheck": "Thanh lý VAI: Kiểm tra độ mới của tài sản thế chấp",
+    "vaiLiquidateComptrollerCalculateAmountSeizeFailed": "Thanh lý VAI: Comptroller tính số lượng tịch thu thất bại",
+    "vaiLiquidateComptrollerRejection": "Thanh lý VAI: Comptroller từ chối",
+    "vaiLiquidateFreshnessCheck": "Thanh lý VAI: Kiểm tra độ mới",
+    "vaiLiquidateLiquidatorIsBorrower": "Thanh lý VAI: Người thanh lý là người vay",
+    "vaiLiquidateRepayBorrowFreshFailed": "Thanh lý VAI: Kiểm tra độ mới hoàn trả vay thất bại",
+    "vaiLiquidateSeizeBalanceDecrementFailed": "Thanh lý VAI: Giảm số dư tịch thu thất bại",
+    "vaiLiquidateSeizeBalanceIncrementFailed": "Thanh lý VAI: Tăng số dư tịch thu thất bại",
+    "vaiLiquidateSeizeComptrollerRejection": "Thanh lý VAI: Comptroller từ chối tịch thu",
+    "vaiLiquidateSeizeLiquidatorIsBorrower": "Thanh lý VAI: Người tịch thu là người vay",
+    "vaiLiquidateSeizeTooMuch": "Thanh lý VAI: Tịch thu quá nhiều",
+    "vaiMintExchangeCalculationFailed": "Đúc VAI: Tính toán quy đổi thất bại",
+    "vaiMintRejection": "Đúc VAI bị từ chối"
+  },
+  "transactionNotification": {
+    "couldNotFetchReceipt": {
+      "title": "Không thể lấy trạng thái giao dịch"
+    },
+    "failed": {
+      "title": "Giao dịch thất bại"
+    },
+    "pending": {
+      "title": "Đang xác nhận giao dịch"
+    },
+    "success": {
+      "title": "Giao dịch đã được xác nhận"
+    }
+  },
+  "transactions": {
+    "liquidityHub": {
+      "label": "Trung tâm thanh khoản"
+    },
+    "venusCore": {
+      "label": "Venus Core"
+    }
+  },
+  "txFormSubmitButton": {
+    "acknowledgements": {
+      "highPriceImpact": {
+        "label": "Tôi xác nhận tác động giá cao",
+        "tooltip": "Giao dịch này dự kiến có tác động giá trên {{priceImpactPercentage}}%"
+      },
+      "riskyOperation": {
+        "label": "Tôi xác nhận rủi ro liên quan",
+        "tooltip": "Hệ số an toàn của bạn sẽ thấp sau giao dịch này, làm tăng rủi ro thanh lý"
+      }
+    }
+  },
+  "vai": {
+    "borrow": {
+      "amountTokensInput": {
+        "limitButtonLabel": "TỐI ĐA AN TOÀN"
+      },
+      "availableAmount": {
+        "label": "Có thể dùng",
+        "tooltip": "Số VAI tối đa bạn có thể vay dựa trên giới hạn toàn cầu và tài sản thế chấp bạn cung cấp"
+      },
+      "borrowApr": {
+        "label": "APR vay",
+        "tooltip": "Lãi suất hằng năm sẽ trả trong tương lai, ngoài VAI đã đúc"
+      },
+      "fee": {
+        "label": "Phí"
+      },
+      "notice": {
+        "amountHigherThanAccountMintableAmount": "Số lượng nhập vượt quá số lượng có thể dùng",
+        "amountHigherThanLiquidity": "Số lượng nhập vượt quá thanh khoản VAI khả dụng"
+      },
+      "primeOnlyWarning": "Chỉ người dùng nắm giữ token Prime mới có thể vay VAI. Tìm hiểu thêm về Prime <Link>tại đây</Link>.",
+      "submitButton": {
+        "borrowLabel": "Vay",
+        "enterValidAmountLabel": "Nhập số lượng hợp lệ để vay"
+      },
+      "tabTitle": "Vay"
+    },
+    "headerMessage": "VAI là stablecoin chính của Venus Protocol. Vay VAI bằng tài sản thế chấp bạn đã cung cấp. <Link>Tìm hiểu thêm</Link>",
+    "repay": {
+      "amountTokensInput": {
+        "limitButtonLabel": "TỐI ĐA"
+      },
+      "borrowApr": {
+        "label": "APR vay",
+        "tooltip": "Lãi suất hằng năm sẽ trả trong tương lai, ngoài VAI đã đúc"
+      },
+      "notice": {
+        "amountHigherThanBorrowBalance": "Số lượng nhập vượt quá số dư hoàn trả",
+        "amountHigherThanWalletBalance": "Không đủ số dư {{tokenSymbol}}",
+        "amountHigherThanWalletSpendingLimit": "Bạn đã nhập số lượng vượt quá hạn mức chi tiêu cho tài sản này. Vui lòng hủy hạn mức và đặt lại để tiếp tục giao dịch.",
+        "fullRepaymentWarning": "Giá trị giao dịch có thể cao hơn một chút so với số tiền vay hiện tại để bao gồm lãi phát sinh"
+      },
+      "submitButton": {
+        "enterValidAmountLabel": "Nhập số lượng hợp lệ để hoàn trả",
+        "repayLabel": "Hoàn trả"
+      },
+      "tabTitle": "Hoàn trả",
+      "walletBalance": {
+        "label": "Số dư ví"
+      }
+    }
+  },
+  "vault": {
+    "card": {
+      "apr": "APR",
+      "blockingPendingWithdrawalsWarning": "Bạn phải hoàn thành các lệnh rút tiền đang chờ xử lý để tương tác với kho này.",
+      "collateral": "Tài sản thế chấp",
+      "dailyEmission": "Phần thưởng hàng ngày",
+      "header": {
+        "fixedTermTitle": "{{ tokenSymbol }} Kỳ Hạn Cố Định",
+        "maturityDate_other": "{{ date, textual }} ({{ count }} ngày)"
+      },
+      "liquidity": "Thanh khoản",
+      "liquidityTooltip": "Tổng giá trị tài sản hiện đang được cung cấp trong pool tích hợp Pendle (hoặc chiến lược) của kho này.",
+      "maturityDate": "Ngày đáo hạn",
+      "maturityDatePendle": "Ngày đáo hạn",
+      "maturityDatePendleTooltip": "Ngày kết thúc của vị thế lãi suất cố định này (từ Pendle). Sau ngày này, bạn sẽ nhận lại toàn bộ tài sản gốc (vốn). Lợi nhuận cố định đã khóa dừng tại đây - tốt nhất nên giữ đến lúc đó để đạt được lợi nhuận đã lên kế hoạch.",
+      "minRequested": "Tối thiểu yêu cầu",
+      "pausedWarning": "Kho này hiện đang tạm dừng. Lãi suất vẫn đang tích lũy nhưng việc nhận thưởng, cung cấp và rút tiền bị vô hiệu hóa cho đến khi kho được mở lại.",
+      "primeEligibility": "Điều kiện nhận Prime",
+      "realizedAprTooltip": "Lợi nhuận hàng năm thực tế được phân phối cho người cung cấp khi thanh toán, dựa trên số tiền hoàn trả cho kho, sau khi trừ phí giao thức. Bằng APR mục tiêu khi khoản vay được hoàn trả đầy đủ; thấp hơn nếu kho được thanh toán qua thanh lý.",
+      "realizedTargetApr": "APR thực nhận / mục tiêu",
+      "remainingDays_other": "({{ count }} ngày)",
+      "targetApr": "APR mục tiêu",
+      "targetAprTooltip": "Phần thưởng mục tiêu theo năm mà chiến lược vault này hướng tới, được thể hiện dưới dạng Tỷ lệ phần trăm hàng năm mục tiêu có bao gồm lãi kép. Lợi nhuận thực tế có thể biến động và phụ thuộc vào hiệu suất của đối tác; vốn có rủi ro. Bạn có thể nhận lại ít hơn số đã cung cấp.",
+      "textualWithTime": "{{date, textualWithTime}}",
+      "totalDeposited": "Tổng đã cung cấp",
+      "vaultVenueIcon": "Logo Venus",
+      "venue": "Nền tảng",
+      "youDeposited": "Bạn đã cung cấp"
+    },
+    "category": {
+      "governance": "Quản trị",
+      "stablecoins": "Stablecoin",
+      "yieldTokens": "Token lợi suất"
+    },
+    "description": "Lợi suất đơn giản, lợi nhuận thực chất",
+    "filter": {
+      "allCategories": "Tất cả danh mục",
+      "allStates": "Tất cả trạng thái",
+      "allVenues": "Tất cả nền tảng",
+      "claim": "Nhận thưởng",
+      "deposit": "Cung cấp",
+      "inactive": "Không hoạt động",
+      "inputPlaceholder": "Tìm kiếm tài sản",
+      "institution": "Tổ chức",
+      "liquidated": "Đã thanh lý",
+      "locked": "Đang kiếm lợi nhuận",
+      "nCategories_other": "{{count}} danh mục",
+      "noResults": "Không có kho nào khớp với bộ lọc của bạn",
+      "nStates_other": "{{count}} trạng thái",
+      "nVenues_other": "{{count}} nền tảng",
+      "paused": "Tạm dừng",
+      "pending": "Đang chờ",
+      "refund": "Hoàn tiền",
+      "repaying": "Đang trả nợ",
+      "reset": "Đặt lại",
+      "resetFilters": "Đặt lại bộ lọc",
+      "selectCategories": "Chọn danh mục",
+      "selectStates": "Chọn trạng thái",
+      "selectVenues": "Chọn nền tảng"
+    },
+    "header": "Kho",
+    "modals": {
+      "afterMaturityPendleDisclaimer": "Vui lòng rút PT token về ví của bạn trước thông qua nút Rút, sau đó truy cập trang web <Link>Pendle chính thức</Link> để đổi lấy token cơ sở của bạn.",
+      "claim": "Nhận thưởng",
+      "connectWalletMessage": "Vui lòng kết nối ví của bạn để tương tác với kho này",
+      "convert": "Chuyển đổi",
+      "currentDeposited": "Hiện đang cung cấp",
+      "currentDepositedTooltip": "Số lượng tài sản của bạn hiện đang được khóa và sinh lời trong kho tiền này.",
+      "deposit": "Cung cấp",
+      "depositPeriodEnds": "Giai đoạn cung cấp kết thúc",
+      "depositsPausedNotice": "Tài sản sẽ bị khóa trong giai đoạn Cung cấp và giai đoạn Khóa, và chỉ có thể được nhận trong giai đoạn Nhận hoặc Hoàn tiền. Kết quả thực tế phụ thuộc vào hiệu suất của đối tác; vốn có rủi ro và bạn có thể nhận lại ít hơn số đã cung cấp.",
+      "depositTab": "Cung cấp",
+      "error": {
+        "amountTooLow": "Số tiền nhập vào quá thấp.",
+        "invalidAmountFromQuote": "Số tiền vượt quá thanh khoản có sẵn trên thị trường Pendle. Giảm số tiền và thử lại.",
+        "lowerThanMinimumAmount": "Số tiền nhập vào quá thấp. Số tiền tối thiểu được phép tương đương {{amount}} USD.",
+        "noSwapQuoteFound": "Không tìm thấy lệnh swap. Vui lòng cập nhật biểu mẫu.",
+        "pendleApiError": "Pendle đang tạm thời quá tải. Vui lòng thử lại sau giây lát."
+      },
+      "estPenalty": "Phạt ước tính",
+      "estReceived": "Ước tính nhận được",
+      "estYield": "Phần thưởng ước tính",
+      "institutionalDisclaimer": "Tài sản sẽ bị khóa trong giai đoạn Cung cấp và giai đoạn Khóa, và chỉ có thể được nhận trong giai đoạn Nhận hoặc Hoàn tiền. Kết quả thực tế phụ thuộc vào hiệu suất của đối tác; vốn có rủi ro và bạn có thể nhận lại ít hơn số đã cung cấp.",
+      "institutionalTcsAgreement": "Bằng việc tiếp tục, tôi đồng ý với <Link>Điều khoản sử dụng của Venus Fixed-Term Vault</Link> và xác nhận rằng tôi không phải là người bị hạn chế. Người bị hạn chế bao gồm Công dân Hoa Kỳ (theo định nghĩa trong Regulation S của Đạo luật Chứng khoán Hoa Kỳ năm 1933), những người đang ở, thường trú tại hoặc là công dân của Vương quốc Anh, Canada hoặc Trung Quốc đại lục, và bất kỳ ai đang ở hoặc chịu sự điều chỉnh của luật trừng phạt của một khu vực tài phán bị OFAC trừng phạt. Xem Điều khoản sử dụng để biết danh sách đầy đủ.",
+      "institutionalTimeline": {
+        "claimPeriod": "Giai đoạn nhận ước tính",
+        "depositPeriod": "Giai đoạn cung cấp",
+        "estimatedLockedPeriod": "Giai đoạn khóa ước tính",
+        "estimatedRepayingPeriod": "Giai đoạn hoàn trả ước tính",
+        "refundPeriod": "Giai đoạn hoàn tiền"
+      },
+      "maturityDate": "Ngày đáo hạn",
+      "maturityDatePendle": "Ngày đáo hạn",
+      "maturityDatePendleTooltip": "Ngày kết thúc của vị thế lãi suất cố định này (từ Pendle). Sau ngày này, bạn sẽ nhận lại toàn bộ tài sản gốc (vốn). Lợi nhuận cố định đã khóa dừng tại đây - tốt nhất nên giữ đến lúc đó để đạt được lợi nhuận đã lên kế hoạch.",
+      "maturityPendleDisclaimer": "Trước khi đáo hạn, số tiền nhận được khi rút phụ thuộc vào giá thị trường Pendle. Sau khi đáo hạn, các khoản rút được quy đổi theo tỷ lệ 1:1 dựa trên số PT token bạn nắm giữ.",
+      "minReceived": "Tối thiểu nhận được",
+      "overview": {
+        "campaignTimeline": "Dòng thời gian chiến dịch",
+        "collateral": "Tài sản thế chấp",
+        "contractAddress": "Địa chỉ hợp đồng",
+        "loan": "Khoản vay",
+        "marketInfo": "Thông tin thị trường",
+        "marketRiskDisclosures": "Công bố rủi ro thị trường",
+        "riskDisclosureText": {
+          "institution": "<Bold>Vốn có rủi ro</Bold>. Mức lãi suất mục tiêu là biến động và gắn với hiệu suất của kho. Đây không phải là mức lợi nhuận được đảm bảo. <Bold>Bạn có thể nhận lại ít hơn số đã nạp vào</Bold>. Khi tất toán, bạn sẽ nhận phần tài sản mà kho thực sự nắm giữ tại thời điểm đó theo tỷ lệ sở hữu của mình. <Bold>Tiền của bạn sẽ bị khóa</Bold>. Khi giai đoạn khóa bắt đầu, bạn sẽ không thể cung cấp hoặc rút tài sản. Chỉ đến khi tất toán thì tiền mới có thể được nhận. <Bold>Những yếu tố ảnh hưởng đến kết quả:</Bold> hiệu suất của đối tác, điều kiện tài sản thế chấp, việc thực thi hợp đồng thông minh, độ tin cậy của oracle và kết quả tất toán. <Bold>Có áp dụng hạn chế theo khu vực pháp lý</Bold>. Kho này không dành cho các khu vực pháp lý bị hạn chế hoặc các đối tượng bị hạn chế. Vui lòng xem Điều khoản sử dụng để biết danh sách đầy đủ. Vui lòng xem <TermsOfUseLink>Điều khoản sử dụng</TermsOfUseLink> và các thông số của kho trên trang này trước khi cung cấp.",
+          "pendle": "Pendle là một giao thức giao dịch lợi nhuận phi tập trung cho phép tạo ra lợi nhuận lãi suất cố định thông qua Principal Tokens (PT). Venus Fixed Rate Vault định tuyến tài sản được cung cấp thông qua hạ tầng của Pendle để mua PT, sau đó các PT này được cung cấp vào Venus Core làm tài sản thế chấp. <br />Mặc dù Pendle không thể truy cập hoặc di chuyển số tài sản bạn đã cung cấp, việc sử dụng vault này khiến bạn chịu rủi ro từ cả hai giao thức. Các rủi ro này bao gồm lỗ hổng hợp đồng thông minh, sự cố oracle và khả năng một trong hai giao thức bị khai thác hoặc bị tạm dừng. Việc rút tiền sớm được thực hiện theo giá thị trường và có thể nhận lại ít hơn lượng đã cung cấp. APY cố định được khóa khi bạn cung cấp nhưng không bảo vệ khỏi các sự cố ở cấp độ giao thức."
+        },
+        "strategy": {
+          "pendleRouter": "Pendle Router",
+          "users": "Người dùng",
+          "venue": "Nền tảng",
+          "venusCore": "Venus Core",
+          "venusVault": "Kho Venus"
+        },
+        "strategyAllocation": "Phân bổ chiến lược",
+        "supply": "Cung cấp",
+        "totalDeposited": "Tổng đã cung cấp",
+        "vaultDeploymentDate": "Ngày triển khai Kho",
+        "vaultVenueIcon": "Logo nền tảng",
+        "venue": "Nền tảng",
+        "venueTooltip": "Đây là đối tác nắm giữ và luân chuyển các tài sản cơ sở của kho trong thời gian khóa. Tài sản được cung cấp sẽ được triển khai theo các điều khoản đã thỏa thuận trước; lịch mua lại và tất toán tuân theo lịch đã công bố của kho và chỉ có thể thay đổi trong các trường hợp ngoại lệ được nêu trong các quy tắc đó."
+      },
+      "overviewTab": "Tổng quan",
+      "pendleFee": "Phí Pendle",
+      "positionTab": "Vị thế",
+      "realizedApr": "APR thực nhận",
+      "realizedAprTooltip": "Lợi nhuận hàng năm thực tế được phân phối cho người cung cấp khi thanh toán, dựa trên số tiền hoàn trả cho kho, sau khi trừ phí giao thức. Bằng APR mục tiêu khi khoản vay được hoàn trả đầy đủ; thấp hơn nếu kho được thanh toán qua thanh lý.",
+      "stakeTab": "Cung cấp",
+      "targetApr": "APR mục tiêu",
+      "targetAprTooltip": "Phần thưởng mục tiêu theo năm mà chiến lược vault này hướng tới, được thể hiện dưới dạng Tỷ lệ phần trăm hàng năm mục tiêu có bao gồm lãi kép. Lợi nhuận thực tế có thể biến động và phụ thuộc vào hiệu suất của đối tác; vốn có rủi ro. Bạn có thể nhận lại ít hơn số đã cung cấp.",
+      "textualDate": "{{date, textual}}",
+      "textualWithTime": "{{date, textualWithTime}}",
+      "totalRealizedRewards": "Tổng phần thưởng thực nhận",
+      "totalTargetRewards": "Tổng phần thưởng mục tiêu",
+      "withdraw": "Rút",
+      "withdrawTab": "Rút"
+    },
+    "overview": {
+      "bannerVaultIllustration": "Hình minh họa kho"
+    },
+    "timeline": {
+      "description": {
+        "claim": "Toàn bộ tiền gốc và lãi đã kiếm được đều có thể rút.",
+        "deposit": "Người dùng có thể tự do cung cấp {{ tokenSymbol }} trong giai đoạn này.",
+        "locked": "Việc cung cấp và nhận đều bị tạm dừng. Giai đoạn Khóa bắt đầu sau khi Giai đoạn Chờ kết thúc và tiền đã được chuyển hoàn tất.",
+        "refund": "Có thể rút tiền gốc.",
+        "repaying": "Kho đã đáo hạn. Tiền gốc và lãi đang được tất toán. Quá trình này thường mất 2-3 ngày."
+      },
+      "tbd": "TBD",
+      "textualWithTime": "{{date, textualWithTime}}"
+    }
+  },
+  "vaultCard": {
+    "vaultModal": {
+      "footer": {
+        "currentlyStaked": "Hiện đang cung cấp",
+        "estimatedDailyEarnings": "Thu nhập hằng ngày ước tính",
+        "lockingPeriod": {
+          "duration": "{{date, distanceToNow}}",
+          "label": "Thời gian khóa",
+          "tooltip": "Thời gian khóa là khoảng trễ giữa lúc gửi yêu cầu rút và lúc số tiền đã yêu cầu thực sự có thể được rút khỏi kho."
+        }
+      },
+      "requestWithdrawalFromVestingVaultForm": {
+        "displayWithdrawalRequestListButton": {
+          "label": "Danh sách yêu cầu rút",
+          "tooltip": "Bạn có XVS đã được mở khóa và sẵn sàng để nhận."
+        },
+        "primeLossWarning": {
+          "message": "Bạn sẽ mất token Prime nếu rút số tiền này, vì lượng cung cấp của bạn trong kho XVS sẽ giảm xuống dưới mức tối thiểu {{minimumXvsStake}} cần có để đủ điều kiện nhận Prime."
+        },
+        "requestWithdrawalField": {
+          "label": "Yêu cầu rút"
+        },
+        "submitButton": {
+          "label": "Yêu cầu rút"
+        }
+      },
+      "stakeForm": {
+        "depositField": {
+          "label": "Cung cấp"
+        },
+        "footer": {
+          "apr": "APR"
+        },
+        "submitButton": {
+          "label": "Cung cấp"
+        }
+      },
+      "withdrawFromVaiVault": {
+        "submitButton": {
+          "label": "Rút"
+        },
+        "withdrawField": {
+          "label": "Rút"
+        }
+      }
+    }
+  },
+  "vaultForm": {
+    "error": {
+      "priceImpactTooHigh": "Tác động giá quá cao"
+    }
+  },
+  "vipModal": {
+    "backgroundAlt": "Hình minh họa nền",
+    "cancelButton": {
+      "label": "Không, cảm ơn"
+    },
+    "description": "Bạn là một phần của nhóm người dùng VIP Venus được chọn lọc. Đây là lời mời cá nhân của bạn vào kênh Venus. Chỉ dành cho các whale của Venus Protocol.",
+    "illustration": {
+      "header": "Bạn là <Linebreak/><Highlight>VIP</Highlight> của Venus Protocol"
+    }
+  },
+  "vipTelegramGroupButton": {
+    "label": "Tham gia nhóm Telegram riêng"
+  },
+  "vote": {
+    "abstain": "Bỏ phiếu trắng",
+    "addComment": "Thêm bình luận",
+    "against": "Chống",
+    "comment": "Bình luận",
+    "createProposalForm": {
+      "abstainOption": "Tùy chọn bỏ phiếu trắng",
+      "action": "Hành động",
+      "actions": "Hành động",
+      "addDescription": "Thêm mô tả (hỗ trợ định dạng Markdown cơ bản)",
+      "addOneMoreAction": "+ Thêm một hành động",
+      "address": "Địa chỉ",
+      "againstOption": "Tùy chọn chống",
+      "confirm": "Xác nhận",
+      "create": "Tạo",
+      "description": "Mô tả",
+      "forOption": "Tùy chọn ủng hộ",
+      "name": "Tên",
+      "nextStep": "Bước tiếp theo",
+      "proposalName": "Tên đề xuất",
+      "proposalType": "Loại đề xuất",
+      "signature": "Chữ ký",
+      "submitError": "Đã xảy ra lỗi khi tạo đề xuất của bạn",
+      "votingOptions": "Tùy chọn bỏ phiếu"
+    },
+    "createProposalModal": {
+      "createManually": "Tạo thủ công",
+      "createProposal": "Tạo đề xuất",
+      "uploadFile": "Tải lên tệp",
+      "youCanEitherCreateManuallyOrUpload": "Bạn có thể tạo đề xuất thủ công hoặc tải lên một tệp chứa chi tiết. Nếu chọn tải lên tệp, bạn có thể dùng mẫu này làm ví dụ: <Link>Github</Link>"
+    },
+    "createProposalPlus": "+ Tạo đề xuất",
+    "delegate": "Ủy quyền",
+    "delegateAddress": "Địa chỉ ủy quyền",
+    "delegateLeaderboard": "Bảng xếp hạng ủy quyền",
+    "delegateVotes": "Phiếu ủy quyền",
+    "delegateVoting": "Bỏ phiếu ủy quyền",
+    "delegateYourVoting": "2. <Anchor>Ủy quyền quyền bỏ phiếu</Anchor> cho chính bạn hoặc người khác",
+    "depositXvs": "Cung cấp XVS",
+    "depositYourTokens": "1. <Link>Cung cấp token của bạn</Link> vào XVS Vault ",
+    "enterContactAddress": "Nhập địa chỉ liên hệ",
+    "errorState": {
+      "buttonLabel": "Thử lại",
+      "message": "Không thể lấy đề xuất"
+    },
+    "for": "Ủng hộ",
+    "omnichain": {
+      "switchToBnb": "Chuyển sang BNB Chain",
+      "votingOnlyEnabledOnBnb": "Bỏ phiếu chỉ khả dụng trên BNB Chain"
+    },
+    "pages": {
+      "actions": "3 / 3 Hành động",
+      "confirmation": "Xác nhận",
+      "proposalInformation": "1 / 3 Thông tin đề xuất",
+      "votingOptions": "2 / 3 Tùy chọn bỏ phiếu"
+    },
+    "pasteYourAddress": "Dán địa chỉ của bạn",
+    "pleasePayAttention": "Vui lòng chú ý",
+    "proposals": "Đề xuất",
+    "proposalStateFilter": {
+      "label": "Trạng thái"
+    },
+    "proposalType": {
+      "critical": "Nghiêm trọng",
+      "fastTrack": "Nhanh",
+      "normal": "Bình thường"
+    },
+    "redelegate": "Ủy quyền lại",
+    "redelegateVoting": "Bỏ phiếu ủy quyền lại",
+    "requiredVotingPower": "Bạn cần có 300k sức mạnh bỏ phiếu để tạo đề xuất",
+    "searchInput": {
+      "placeholder": "Tìm đề xuất"
+    },
+    "totalLocked": "Tổng khóa",
+    "toVoteYouShould": "Để bỏ phiếu bạn nên:",
+    "voteAbstain": "Bỏ phiếu trắng",
+    "voteAgainst": "Bỏ phiếu chống",
+    "voteFor": "Bỏ phiếu ủng hộ",
+    "votingPower": "Sức mạnh bỏ phiếu",
+    "votingWallet": "Ví bỏ phiếu",
+    "votingWeight": "Trọng số bỏ phiếu",
+    "youCanDelegateVotes": "Bạn có thể ủy quyền phiếu bầu cho chính mình hoặc người khác. Nếu biết địa chỉ muốn ủy quyền, hãy nhập bên dưới. Nếu không, bạn có thể xem Bảng xếp hạng ủy quyền để tìm một đảng chính trị bạn muốn ủng hộ",
+    "youDelegatedTo": "Bạn đã ủy quyền token đã khóa cho {{delegate}}"
+  },
+  "voteProposalUi": {
+    "activeUntilDate": "Hiệu lực đến: <Date>{{ date, textualWithTime }}</Date>",
+    "canceledDate": "Đã hủy: <Date>{{ date, textualWithTime }}</Date>",
+    "command": {
+      "actionButton": {
+        "cancel": "Hủy",
+        "execute": "Thực thi",
+        "queue": "Xếp hàng"
+      },
+      "dates": {
+        "activeAt": "Đang chờ đến {{date, }}",
+        "executableAt": "Thực thi vào {{date, }}",
+        "previousStep": "{{date, }}",
+        "queueableAt": "Xếp hàng vào {{date, }}"
+      },
+      "description": {
+        "bridged": "Đang chờ bridge truyền giao dịch",
+        "canceled": "Thực thi payload bị hủy bởi governance guardian",
+        "failed": "Không thể gửi payload đến mạng đích",
+        "pending": "Đang chờ thực thi payload trên {{chainName}}",
+        "pendingBsc": "Đang chờ bắt đầu bỏ phiếu",
+        "waitingToBeExecutable": "Đang chờ kết thúc thời gian xếp hàng",
+        "wrongChain": "Payload này cần được thực thi trên chuỗi {{chainName}}"
+      },
+      "operations": {
+        "title": "Hoạt động"
+      },
+      "status": {
+        "pending": "Đang chờ"
+      }
+    },
+    "commands": {
+      "allPayloadsExecuted": "Tất cả payload đã được thực thi",
+      "somePayloadsExecuted": "Payload đã thực thi",
+      "title": "Lệnh"
+    },
+    "countdownFormat": {
+      "daysIncluded": "{{days}}n : {{hours}}g : {{minutes}}p : {{seconds}}s",
+      "hoursIncluded": "{{hours}}g : {{minutes}}p : {{seconds}}s",
+      "minutesIncluded": "{{minutes}}p : {{seconds}}s",
+      "secondsIncluded": "{{seconds}}s"
+    },
+    "defeatedDate": "Defeated - Bị bác bỏ: <Date>{{ date, textualWithTime }}</Date>",
+    "description": "Mô tả",
+    "executedDate": "Đã thực thi: <Date>{{ date, textualWithTime }}</Date>",
+    "expiredDate": "Hết hạn: <Date>{{ date, textualWithTime }}</Date>",
+    "greenPulseAnimation": {
+      "altText": "Hoạt ảnh nhịp xanh"
+    },
+    "proposalState": {
+      "activeTimestamp": "Hiệu lực từ: <Span>{{date, textualWithTime}}</Span>",
+      "canceledTimestamp": "Đã hủy: <Span>{{date, textualWithTime}}</Span>",
+      "defeatedTimestamp": "Defeated - Bị bác bỏ: <Span>{{date, textualWithTime}}</Span>",
+      "executedTimestamp": "Đã thực thi: <Span>{{date, textualWithTime}}</Span>",
+      "expiredTimestamp": "Hết hạn: <Span>{{date, textualWithTime}}</Span>",
+      "queuedTimestamp": "Xếp hàng: <Span>{{date, textualWithTime}}</Span>",
+      "succeededTimestamp": "Thành công: <Span>{{date, textualWithTime}}</Span>"
+    },
+    "queuedUntilDate": "Xếp hàng đến: <Date>{{ date, textualWithTime }}</Date>",
+    "status": {
+      "executedPayloads": "Payload đã thực thi",
+      "readyForExecution": "Sẵn sàng thực thi",
+      "readyForQueuing": "Sẵn sàng xếp hàng"
+    },
+    "timeUntilExecutable": "Thực thi vào: <Date>{{ date, textualWithTime }}</Date>",
+    "timeUntilVotable": "Bỏ phiếu bắt đầu: <Date>{{ date, textualWithTime }}</Date>",
+    "voteStatus": {
+      "abstained": "Bỏ phiếu trắng",
+      "notVoted": "Chưa bỏ phiếu",
+      "votedAgainst": "Bỏ phiếu chống",
+      "votedFor": "Bỏ phiếu ủng hộ"
+    },
+    "votingOptions": "Tùy chọn bỏ phiếu"
+  },
+  "voterDetail": {
+    "actions": "Hành động",
+    "amount": "Số lượng",
+    "delegated": "Đã ủy quyền",
+    "delegatingTo": "Ủy quyền cho",
+    "holding": "Nắm giữ",
+    "proposalNumber": "Đề xuất #",
+    "transactions": "Giao dịch",
+    "undelegated": "Chưa ủy quyền",
+    "venusBalance": "Số dư Venus",
+    "viewAll": "Xem tất cả",
+    "votedAbstain": "Đã bỏ phiếu trắng",
+    "votedAgainst": "Đã bỏ phiếu chống",
+    "votedFor": "Đã bỏ phiếu ủng hộ",
+    "votes": "Phiếu",
+    "votingHistory": "Lịch sử bỏ phiếu"
+  },
+  "voterLeaderboard": {
+    "addressesByVotingWeight": "Địa chỉ theo trọng số bỏ phiếu",
+    "columns": {
+      "proposalsVoted": "Đề xuất đã bỏ phiếu",
+      "rank": "Xếp hạng",
+      "votes": "Phiếu",
+      "voteWeight": "Trọng số bỏ phiếu"
+    }
+  },
+  "voteSummary": {
+    "addresses_zero": "{{count}} địa chỉ",
+    "addresses_one": "{{count}} địa chỉ",
+    "addresses_other": "{{count}} địa chỉ",
+    "votes": "Phiếu"
+  },
+  "wallets": {
+    "errors": {
+      "noProvider": "Không thể kết nối. Hãy đảm bảo ví bạn chọn đã được cài trong trình duyệt."
+    }
+  },
+  "web3DomainNames": {
+    "providers": {
+      "ens": "Tên ENS",
+      "spaceId": "Tên Space ID"
+    },
+    "tooltip": {
+      "address": "({{address}})"
+    }
+  },
+  "yieldsGroups": {
+    "protocol": "Giao thức"
+  }
+}

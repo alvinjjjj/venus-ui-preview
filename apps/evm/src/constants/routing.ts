@@ -1,0 +1,89 @@
+export enum Subdirectory {
+  LANDING = '',
+  SKILLS = 'skills',
+  TERMS_OF_USE = 'terms-of-use',
+  FIXED_TERM_VAULT_TERMS_OF_USE = 'fixed-term-vault-terms-of-use',
+  PRIVACY_POLICY = 'privacy-policy',
+  DISCORD = 'discord',
+  MARKETS = 'markets/:poolComptrollerAddress',
+  MARKET = ':vTokenAddress',
+  PRIME_CALCULATOR = 'prime-calculator',
+  PRIME_LEADERBOARD = 'prime-leaderboard',
+  DASHBOARD = 'dashboard',
+  PORT = 'port',
+  VAULTS = 'vaults',
+  GOVERNANCE = 'governance',
+  PROPOSAL = 'proposal/:proposalId',
+  PROPOSAL_CREATE = 'proposal-create',
+  PROPOSAL_INFO = 'proposal-info',
+  PROPOSAL_DESCRIPTIONS = 'proposal-descriptions',
+  PROPOSAL_ACTIONS = 'proposal-actions',
+  PROPOSAL_PREVIEW = 'proposal-preview',
+  LEADER_BOARD = 'leaderboard',
+  VOTER = 'voter/:address',
+  SWAP = 'swap',
+  VAI = 'vai',
+  BRIDGE = 'bridge',
+  STATS = 'stats',
+  TRADE = 'trade',
+  LIQUIDITY_HUBS = 'liquidity-hubs',
+  LIQUIDITY_HUB = ':vhTokenAddress',
+}
+
+const routeSubdirectories = {
+  landing: [Subdirectory.LANDING],
+  skills: [Subdirectory.SKILLS],
+  termsOfUse: [Subdirectory.TERMS_OF_USE],
+  fixedTermVaultTermsOfUse: [Subdirectory.FIXED_TERM_VAULT_TERMS_OF_USE],
+  privacyPolicy: [Subdirectory.PRIVACY_POLICY],
+  discord: [Subdirectory.DISCORD],
+  markets: [Subdirectory.MARKETS],
+  market: [Subdirectory.MARKETS, Subdirectory.MARKET],
+  primeCalculator: [Subdirectory.PRIME_CALCULATOR],
+  primeLeaderboard: [Subdirectory.PRIME_LEADERBOARD],
+  dashboard: [Subdirectory.DASHBOARD],
+  port: [Subdirectory.PORT],
+  governance: [Subdirectory.GOVERNANCE],
+  governanceProposal: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL],
+  governanceProposalCreate: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL_CREATE],
+  governanceProposalInfo: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL_INFO],
+  governanceProposalDescriptions: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL_DESCRIPTIONS],
+  governanceProposalActions: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL_ACTIONS],
+  governanceProposalPreview: [Subdirectory.GOVERNANCE, Subdirectory.PROPOSAL_PREVIEW],
+  governanceLeaderBoard: [Subdirectory.GOVERNANCE, Subdirectory.LEADER_BOARD],
+  governanceVoter: [Subdirectory.GOVERNANCE, Subdirectory.LEADER_BOARD, Subdirectory.VOTER],
+  swap: [Subdirectory.SWAP],
+  vaults: [Subdirectory.VAULTS],
+  vai: [Subdirectory.VAI],
+  bridge: [Subdirectory.BRIDGE],
+  stats: [Subdirectory.STATS],
+  trade: [Subdirectory.TRADE],
+  liquidityHubs: [Subdirectory.LIQUIDITY_HUBS],
+  liquidityHub: [Subdirectory.LIQUIDITY_HUBS, Subdirectory.LIQUIDITY_HUB],
+};
+
+export type RouteName = keyof typeof routeSubdirectories;
+
+type Routes = {
+  [key in RouteName]: {
+    path: string;
+    subdirectories: Subdirectory[];
+  };
+};
+
+export const routes = Object.keys(routeSubdirectories).reduce<Routes>(
+  (obj, key) =>
+    Object.prototype.hasOwnProperty.call(routeSubdirectories, key)
+      ? {
+          ...obj,
+          [key]: {
+            path: `/${routeSubdirectories[key as RouteName].filter(sub => !!sub).join('/')}`,
+            subdirectories: routeSubdirectories[key as RouteName],
+          },
+        }
+      : obj,
+  {} as Routes,
+);
+
+// Preselects a market on the Prime calculator page
+export const PRIME_CALCULATOR_TOKEN_ADDRESS_PARAM = 'tokenAddress';

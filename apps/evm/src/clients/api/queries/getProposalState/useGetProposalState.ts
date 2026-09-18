@@ -1,0 +1,52 @@
+import { type QueryObserverOptions, useQuery } from '@tanstack/react-query';
+
+import FunctionKey from 'constants/functionKey';
+import { getContractAddress } from 'libs/contracts';
+import { usePublicClient } from 'libs/wallet';
+import { governanceChainId } from 'libs/wallet';
+import callOrThrow from 'utilities/callOrThrow';
+import { generatePseudoRandomRefetchInterval } from 'utilities/generatePseudoRandomRefetchInterval';
+import { type GetProposalStateInput, type GetProposalStateOutput, getProposalState } from '.';
+
+type TrimmedGetProposalStateInput = Omit<
+  GetProposalStateInput,
+  'publicClient' | 'governorBravoDelegateAddress'
+>;
+
+type Options = QueryObserverOptions<
+  GetProposalStateOutput,
+  Error,
+  GetProposalStateOutput,
+  GetProposalStateOutput,
+  [FunctionKey.GET_PROPOSAL_STATE, TrimmedGetProposalStateInput]
+>;
+
+const refetchInterval = generatePseudoRandomRefetchInterval('fast');
+
+const governorBravoDelegateAddress = getContractAddress({
+  name: 'GovernorBravoDelegate',
+  chainId: governanceChainId,
+});
+
+export const useGetProposalState = (
+  input: TrimmedGetProposalStateInput,
+  options?: Partial<Options>,
+) => {
+  const { publicClient } = usePublicClient({
+    chainId: governanceChainId,
+  });
+
+  return useQuery({
+    queryKey: [FunctionKey.GET_PROPOSAL_STATE, input],
+    queryFn: () =>
+      callOrThrow({ governorBravoDelegateAddress }, params =>
+        getProposalState({
+          ...input,
+          ...params,
+          publicClient,
+        }),
+      ),
+    refetchInterval,
+    ...options,
+  });
+};

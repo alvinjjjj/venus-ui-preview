@@ -1,0 +1,321 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getPendingRewards > returns pool rewards of the user in the correct format on success 1`] = `
+{
+  "pendingRewardGroups": [
+    {
+      "comptrollerAddress": "0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+      "rewardAmountCents": "11600404.82953453393617538990972",
+      "rewardAmountMantissa": "1.9534041188941932704302e+22",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "type": "legacyPool",
+      "vTokenAddressesWithPendingReward": [
+        "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+        "0xb7526572FFE56AB9D7489838Bf2E18e3323b441A",
+      ],
+    },
+    {
+      "comptrollerAddress": "0x1291820b2D1c7c7452A163983Dc888CEC546b78k",
+      "pendingRewards": [
+        {
+          "rewardAmountCents": "1.1e-11",
+          "rewardAmountMantissa": "110000",
+          "rewardToken": {
+            "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-lisusd-asset",
+            "symbol": "lisUSD",
+          },
+          "rewardsDistributorAddress": "0x2aBEf3602B688493fe698EF11D27DCa43a0CE4BE",
+          "vTokenAddressesWithPendingReward": [
+            "0x170d3b2da05cc2124334240fB34ad1359e34C562",
+            "0x3338988d0beb4419Acb8fE624218754053362D06",
+          ],
+        },
+      ],
+      "type": "isolatedPool",
+    },
+    {
+      "isDisabled": false,
+      "rewardAmountCents": "593.85586",
+      "rewardAmountMantissa": "1000000000000000000",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "vault",
+    },
+    {
+      "isDisabled": false,
+      "poolIndex": 0,
+      "rewardAmountCents": "383.15650923811616649322496",
+      "rewardAmountMantissa": "645201192824999936",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "xvsVestingVault",
+    },
+  ],
+}
+`;
+
+exports[`getPendingRewards > returns pool rewards of the user, including Merkl rewards, in the correct format on success 1`] = `
+{
+  "pendingRewardGroups": [
+    {
+      "comptrollerAddress": "0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+      "rewardAmountCents": "11600404.82953453393617538990972",
+      "rewardAmountMantissa": "1.9534041188941932704302e+22",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "type": "legacyPool",
+      "vTokenAddressesWithPendingReward": [
+        "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+        "0xb7526572FFE56AB9D7489838Bf2E18e3323b441A",
+      ],
+    },
+    {
+      "comptrollerAddress": "0x1291820b2D1c7c7452A163983Dc888CEC546b78k",
+      "pendingRewards": [
+        {
+          "rewardAmountCents": "1.1e-11",
+          "rewardAmountMantissa": "110000",
+          "rewardToken": {
+            "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-lisusd-asset",
+            "symbol": "lisUSD",
+          },
+          "rewardsDistributorAddress": "0x2aBEf3602B688493fe698EF11D27DCa43a0CE4BE",
+          "vTokenAddressesWithPendingReward": [
+            "0x170d3b2da05cc2124334240fB34ad1359e34C562",
+            "0x3338988d0beb4419Acb8fE624218754053362D06",
+          ],
+        },
+      ],
+      "type": "isolatedPool",
+    },
+    {
+      "isDisabled": false,
+      "rewardAmountCents": "593.85586",
+      "rewardAmountMantissa": "1000000000000000000",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "vault",
+    },
+    {
+      "isDisabled": false,
+      "poolIndex": 0,
+      "rewardAmountCents": "383.15650923811616649322496",
+      "rewardAmountMantissa": "645201192824999936",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "xvsVestingVault",
+    },
+    {
+      "appName": "Ignite",
+      "campaignName": "Ignite campaign",
+      "claimUrl": "https://app.zksyncignite.xyz/",
+      "pendingRewards": [
+        {
+          "appName": "Ignite",
+          "campaignName": "Ignite campaign",
+          "claimUrl": "https://app.zksyncignite.xyz/",
+          "rewardAmountCents": "45.5238626337003471753856",
+          "rewardAmountMantissa": "76658101233016960",
+          "rewardToken": {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-xvs-asset",
+            "symbol": "XVS",
+          },
+          "rewardsDistributorAddress": undefined,
+          "vTokenAddressesWithPendingReward": [
+            "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+          ],
+        },
+      ],
+      "type": "external",
+    },
+  ],
+}
+`;
+
+exports[`getPendingRewards > returns pool rewards of the user, including Prime rewards, in the correct format on success 1`] = `
+{
+  "pendingRewardGroups": [
+    {
+      "comptrollerAddress": "0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+      "rewardAmountCents": "11600404.82953453393617538990972",
+      "rewardAmountMantissa": "1.9534041188941932704302e+22",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "type": "legacyPool",
+      "vTokenAddressesWithPendingReward": [
+        "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+        "0xb7526572FFE56AB9D7489838Bf2E18e3323b441A",
+      ],
+    },
+    {
+      "comptrollerAddress": "0x1291820b2D1c7c7452A163983Dc888CEC546b78k",
+      "pendingRewards": [
+        {
+          "rewardAmountCents": "1.1e-11",
+          "rewardAmountMantissa": "110000",
+          "rewardToken": {
+            "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-lisusd-asset",
+            "symbol": "lisUSD",
+          },
+          "rewardsDistributorAddress": "0x2aBEf3602B688493fe698EF11D27DCa43a0CE4BE",
+          "vTokenAddressesWithPendingReward": [
+            "0x170d3b2da05cc2124334240fB34ad1359e34C562",
+            "0x3338988d0beb4419Acb8fE624218754053362D06",
+          ],
+        },
+      ],
+      "type": "isolatedPool",
+    },
+    {
+      "isDisabled": false,
+      "rewardAmountCents": "593.85586",
+      "rewardAmountMantissa": "1000000000000000000",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "vault",
+    },
+    {
+      "isDisabled": false,
+      "poolIndex": 0,
+      "rewardAmountCents": "383.15650923811616649322496",
+      "rewardAmountMantissa": "645201192824999936",
+      "rewardToken": {
+        "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-xvs-asset",
+        "symbol": "XVS",
+      },
+      "stakedToken": {
+        "address": "0x5fFbE5302BadED40941A403228E6AD03f93752d9",
+        "chainId": 97,
+        "decimals": 18,
+        "iconSrc": "fake-vai-asset",
+        "symbol": "VAI",
+      },
+      "type": "xvsVestingVault",
+    },
+    {
+      "isDisabled": false,
+      "pendingRewards": [
+        {
+          "rewardAmountCents": "0.0000013463630382",
+          "rewardAmountMantissa": "13463630382",
+          "rewardToken": {
+            "address": "0xe73774DfCD551BF75650772dC2cC56a2B6323453",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-lisusd-asset",
+            "symbol": "lisUSD",
+          },
+        },
+        {
+          "rewardAmountCents": "10248911.02500685531133243293696",
+          "rewardAmountMantissa": "1.7258246849676376539136e+22",
+          "rewardToken": {
+            "address": "0xB9e0E753630434d7863528cc73CB7AC638a7c8ff",
+            "chainId": 97,
+            "decimals": 18,
+            "iconSrc": "fake-xvs-asset",
+            "symbol": "XVS",
+          },
+        },
+      ],
+      "primeVersion": 2,
+      "type": "prime",
+      "vTokenAddressesWithPendingReward": [
+        "0x162D005F0Fff510E54958Cfc5CF32A3180A84aab",
+        "0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+      ],
+    },
+  ],
+}
+`;

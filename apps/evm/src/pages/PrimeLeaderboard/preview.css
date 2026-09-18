@@ -1,0 +1,3 @@
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light'] .venus-prime-hero-glow {
+  display: none;
+}

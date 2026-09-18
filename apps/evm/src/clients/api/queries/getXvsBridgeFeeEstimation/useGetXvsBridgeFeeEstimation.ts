@@ -1,0 +1,90 @@
+import { type QueryObserverOptions, useQuery } from '@tanstack/react-query';
+import type { Address } from 'viem';
+
+import {
+  type GetXvsBridgeEstimationInput,
+  type GetXvsBridgeEstimationOutput,
+  getXvsBridgeFeeEstimation,
+} from 'clients/api/queries/getXvsBridgeFeeEstimation';
+import FunctionKey from 'constants/functionKey';
+import { useGetContractAddress } from 'hooks/useGetContractAddress';
+import { useChainId, usePublicClient } from 'libs/wallet';
+import { ChainId, type Token } from 'types';
+import callOrThrow from 'utilities/callOrThrow';
+import { generatePseudoRandomRefetchInterval } from 'utilities/generatePseudoRandomRefetchInterval';
+
+type TrimmedGetXvsBridgeEstimationInput = Omit<
+  GetXvsBridgeEstimationInput,
+  'publicClient' | 'tokenBridgeContractAddress'
+>;
+
+export type UseGetXvsBridgeFeeEstimationKey = [
+  FunctionKey.GET_XVS_BRIDGE_FEE_ESTIMATION,
+  {
+    accountAddress: Address;
+    amountMantissa: number;
+    chainId: ChainId;
+    destinationChain: ChainId;
+  },
+];
+
+type Options = QueryObserverOptions<
+  GetXvsBridgeEstimationOutput,
+  Error,
+  GetXvsBridgeEstimationOutput,
+  GetXvsBridgeEstimationOutput,
+  UseGetXvsBridgeFeeEstimationKey
+>;
+
+interface UseGetXvsBridgeFeeEstimationInput extends TrimmedGetXvsBridgeEstimationInput {
+  token?: Token;
+}
+
+const refetchInterval = generatePseudoRandomRefetchInterval();
+
+export const useGetXvsBridgeFeeEstimation = (
+  { accountAddress, amountMantissa, destinationChain }: UseGetXvsBridgeFeeEstimationInput,
+  options?: Partial<Options>,
+) => {
+  const { chainId } = useChainId();
+  const { publicClient } = usePublicClient();
+
+  // Get the contract addresses
+  const { address: srcContractAddress } = useGetContractAddress({
+    name: 'XVSProxyOFTSrc',
+  });
+
+  const { address: destContractAddress } = useGetContractAddress({
+    name: 'XVSProxyOFTDest',
+  });
+
+  const tokenBridgeContractAddress =
+    chainId === ChainId.BSC_MAINNET || chainId === ChainId.BSC_TESTNET
+      ? srcContractAddress
+      : destContractAddress;
+
+  return useQuery({
+    queryKey: [
+      FunctionKey.GET_XVS_BRIDGE_FEE_ESTIMATION,
+      {
+        accountAddress,
+        amountMantissa: Number(amountMantissa),
+        chainId,
+        destinationChain,
+      },
+    ],
+
+    queryFn: () =>
+      callOrThrow(
+        { tokenBridgeContractAddress, accountAddress, amountMantissa, destinationChain },
+        params =>
+          getXvsBridgeFeeEstimation({
+            ...params,
+            publicClient,
+          }),
+      ),
+
+    refetchInterval,
+    ...options,
+  });
+};

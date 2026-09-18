@@ -1,0 +1,149 @@
+/* V5-only interaction study, using the existing icon and palette. */
+/* Preserve full-size artwork despite the compact monochrome menu icon rule. */
+:root[data-glass-preview] .venus-navigation-menu .venus-submenu-icon > .venus-earn-icon {
+  width: calc(var(--spacing) * 12);
+  height: calc(var(--spacing) * 12);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion] .venus-earn-icon path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes earn-hub-distribute {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.12); }
+}
+
+@keyframes earn-vault-unlock {
+  0%, 100% { transform: rotate(0deg); }
+  45% { transform: rotate(20deg); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path {
+    animation: earn-hub-distribute 320ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(2) { animation-delay: 100ms; }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(3) { animation-delay: 160ms; }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(4) { animation-delay: 220ms; }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(5) { animation-delay: 280ms; }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-earn-motion='vault']:is(:hover, :focus-visible) .venus-vault-lock {
+    animation: earn-vault-unlock 600ms ease-in-out 1;
+  }
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon {
+  transition: background-color 180ms ease-out;
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview]:is(:hover, :focus-visible) .venus-submenu-icon {
+  background: color-mix(in srgb, var(--color-blue) 12%, transparent);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview]:is(:hover, :focus-visible) .venus-submenu-icon svg {
+  color: var(--color-blue);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon rect {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+@keyframes governance-bar-rise {
+  0%, 100% { transform: scaleY(1); }
+  30% { transform: scaleY(.78); }
+  65% { transform: scaleY(1.04); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview]:is(:hover, :focus-visible) .venus-submenu-icon rect {
+    animation: governance-bar-rise 480ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon rect:nth-child(2) {
+    animation-delay: 80ms;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon rect:nth-child(3) {
+    animation-delay: 160ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon,
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-governance-preview] .venus-submenu-icon svg {
+    transition: none;
+  }
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion] .venus-submenu-icon {
+  transition: background-color 180ms ease-out;
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion]:is(:hover, :focus-visible) .venus-submenu-icon {
+  background: color-mix(in srgb, var(--color-blue) 12%, transparent);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion]:is(:hover, :focus-visible) .venus-submenu-icon svg {
+  color: var(--color-blue);
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion] .venus-submenu-icon :is(svg, path, rect) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes menu-vai-mint {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(.9); }
+  70% { transform: scale(1.04); }
+}
+
+@keyframes menu-bridge-transfer {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  40% { opacity: .5; transform: scale(.9); }
+  70% { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes menu-stats-slide {
+  0%, 100% { transform: translateX(0); }
+  45% { transform: translateX(calc(var(--spacing) * .25)); }
+}
+
+@keyframes menu-stats-lift {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.05); }
+}
+
+@keyframes menu-trade-settle {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(calc(var(--spacing) * -.5)); }
+  75% { transform: translateY(calc(var(--spacing) * .125)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='vai']:is(:hover, :focus-visible) .venus-submenu-icon svg {
+    animation: menu-vai-mint 560ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='bridge']:is(:hover, :focus-visible) .venus-submenu-icon rect {
+    animation: menu-bridge-transfer 460ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='bridge'] .venus-submenu-icon rect:nth-child(2) {
+    animation-delay: 140ms;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='stats']:is(:hover, :focus-visible) .venus-submenu-icon path:nth-child(2) {
+    animation: menu-stats-slide 560ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='stats']:is(:hover, :focus-visible) .venus-submenu-icon svg {
+    animation: menu-stats-lift 560ms ease-in-out 1;
+  }
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion='trade']:is(:hover, :focus-visible) .venus-submenu-icon svg {
+    animation: menu-trade-settle 600ms ease-in-out 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion] .venus-submenu-icon,
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-menu-motion] .venus-submenu-icon svg {
+    transition: none;
+  }
+}

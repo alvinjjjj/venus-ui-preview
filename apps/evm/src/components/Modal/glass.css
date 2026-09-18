@@ -1,0 +1,84 @@
+/* Approved popup materials: V4 frosted glass and V3 clean glass.
+   Surface opacity and highlights are local material values, not global token changes. */
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-panel {
+  background: rgb(25 30 40 / 75%);
+  border-radius: var(--radius-xl);
+  border-color: rgb(255 255 255 / 10%);
+  backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%), 0 24px 64px rgb(0 0 0 / 28%);
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-backdrop {
+  background: rgb(0 0 0 / 18%);
+  backdrop-filter: blur(4px);
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-header {
+  background: transparent;
+  border-radius: inherit;
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-header:not(.venus-popup-header-back) {
+  justify-content: flex-start;
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-header:not(.venus-popup-header-back) h2 {
+  padding-left: 0;
+  padding-right: calc(var(--spacing) * 8);
+  text-align: left;
+  justify-content: flex-start;
+}
+
+:root[data-glass-version='v3'] .venus-popup-panel {
+  background: linear-gradient(125deg, rgb(255 255 255 / 8%), transparent 65%), rgb(20 27 39 / 75%);
+  border-radius: var(--radius-lg);
+  border-color: rgb(255 255 255 / 14%);
+  backdrop-filter: blur(24px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), 0 16px 48px rgb(0 0 0 / 22%);
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6'])[data-liquidity-theme='light'] .venus-popup-panel {
+  background: rgb(250 250 248 / 85%);
+  border-color: rgb(30 40 55 / 9%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), 0 24px 64px rgb(30 40 55 / 14%);
+}
+
+:root[data-glass-version='v3'][data-liquidity-theme='light'] .venus-popup-panel {
+  background: linear-gradient(125deg, rgb(255 255 255 / 24%), transparent 65%), rgb(250 250 250 / 85%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 60%), 0 16px 48px rgb(30 40 55 / 12%);
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6'])[data-liquidity-theme='light'] .venus-popup-backdrop {
+  background: rgb(35 45 60 / 10%);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  :root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-panel {
+    background: rgb(25 30 40);
+  }
+
+  :root:is([data-glass-version='v3'], [data-glass-version='v6'])[data-liquidity-theme='light'] .venus-popup-panel {
+    background: rgb(250 250 248);
+  }
+}
+
+/* The performance summary is a data row, not a raised action button. */
+:root[data-glass-preview='v6'] .venus-popup-panel {
+ border-radius: var(--radius-3xl);
+}
+
+:root[data-glass-preview='v6'] .venus-popup-panel :is(.venus-glass-card, [data-select-option]) {
+ border-radius: var(--radius-2xl);
+}
+
+:root[data-glass-preview='v6'] .venus-popup-panel .venus-select-options {
+ padding: calc(var(--spacing) * 2);
+}
+
+:root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-popup-panel :is(.venus-account-performance-row, .venus-account-performance-cells) {
+ background: transparent !important;
+ border: 0 !important;
+ border-radius: 0 !important;
+ box-shadow: none !important;
+ backdrop-filter: none !important;
+}
