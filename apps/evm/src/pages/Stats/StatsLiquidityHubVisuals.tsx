@@ -3,7 +3,7 @@ import { ChartTooltipContent } from 'components/ChartTooltipContent';
 import { useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
-import { StatsMetricCard, StatsPagination, StatsPanel } from './StatsVisuals';
+import { StatsDataTable, StatsMetricCard, StatsPagination, StatsPanel } from './StatsVisuals';
 import {
   type LiquidityHubAllocation,
   type LiquidityHubAsset,
@@ -155,65 +155,45 @@ const AllocationBars = ({ group }: { group: LiquidityHubAllocation }) => {
   );
 };
 
-const OperationHistory = ({ data }: { data: LiquidityHubAssetData }) => {
-  const columns = ['Event Date', 'Action', 'From', 'Value', 'To', 'Value', 'Transaction'];
-  return (
-    <StatsPanel title="Operation history" className="stats-hub-history">
-      <div className="stats-table-scroll">
-        <table className="stats-table">
-          <thead>
-            <tr>
-              {columns.map((column, index) => (
-                <th key={`${column}-${index}`} scope="col">
-                  {column}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.operations.flatMap(operation => {
-              const values = [
-                operation.eventDate,
-                operation.action,
-                operation.from,
-                operation.fromValue,
-                operation.to,
-                operation.toValue,
-                operation.transaction,
-              ];
-              const lines = values.map(value => value.split('\n'));
-              const rowCount = Math.max(...lines.map(value => value.length));
-              return Array.from({ length: rowCount }, (_, row) => (
-                <tr key={`${operation.id}-${row}`}>
-                  {lines.map((value, column) => (
-                    <td key={columns[column] + column}>
-                      {value[row] || ''}
-                      {column === 6 && value[row] && (
-                        <Icon
-                          name="open"
-                          className="stats-hub-transaction-icon"
-                          aria-label="Transaction external link (design placeholder)"
-                        />
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ));
-            })}
-          </tbody>
-        </table>
-      </div>
-      <StatsPagination
-        label="Operation history"
-        currentPage={0}
-        pageCount={1}
-        pageSize={20}
-        total={data.operations.length}
-        onPageChange={() => {}}
-      />
-    </StatsPanel>
-  );
-};
+const OperationHistory = ({ data }: { data: LiquidityHubAssetData }) => (
+  <StatsDataTable
+    table={{
+      title: 'Operation history',
+      columns: ['Event Date', 'Action', 'From', 'Value', 'To', 'Value', 'Transaction'],
+      rows: data.operations.map(operation => ({
+        id: operation.id,
+        cells: [
+          operation.eventDate,
+          operation.action,
+          operation.from,
+          operation.fromValue,
+          operation.to,
+          operation.toValue,
+          operation.transaction,
+        ],
+      })),
+    }}
+    pageSize={20}
+    dense
+    className="stats-hub-history"
+    renderCell={(cell, column, row) => {
+      const lineCount = Math.max(...row.cells.map(value => value.split('\n').length));
+      const lines = cell.split('\n');
+      return Array.from({ length: lineCount }, (_, index) => (
+        <span className="stats-hub-history-line" key={`${row.id}-${column}-${index}`}>
+          {lines[index] || '\u00a0'}
+          {column === 6 && lines[index] && (
+            <Icon
+              name="open"
+              className="stats-hub-transaction-icon"
+              aria-label="Transaction external link (design placeholder)"
+            />
+          )}
+        </span>
+      ));
+    }}
+  />
+);
 
 export const StatsLiquidityHubPage = ({
   data = liquidityHubPreviewData,
@@ -223,31 +203,44 @@ export const StatsLiquidityHubPage = ({
   const [asset, setAsset] = useState<LiquidityHubAsset>('USDT');
   const selected = data[asset];
   const summary = [
-    ['Total supply', selected.totalSupplyUsd, 'green', 'green', 'supply'],
-    ['Total allocation', selected.totalAllocationUsd, 'blue', 'red', 'allocation'],
-    ['Total liquidity', selected.totalLiquidityUsd, 'yellow', 'blue', 'liquidity'],
+    ['Total supply', selected.totalSupplyUsd, 'green', 'supply'],
+    ['Total allocation', selected.totalAllocationUsd, 'red', 'allocation'],
+    ['Total liquidity', selected.totalLiquidityUsd, 'blue', 'liquidity'],
   ] as const;
 
   return (
     <div className="stats-content stats-hub-page">
       <div className="stats-hub-summary">
-        {summary.map(([label, value, accent, tone, series]) => (
-          <StatsMetricCard
-            key={label}
-            metric={{
-              label,
-              value: usd(value),
-              tone,
-              pointUnit: 'usd-billions',
-              points: selected.history.map(point => ({
-                date: point.date,
-                value: point[series] / 1_000_000_000,
-              })),
-            }}
-            variant="summary"
-            accent={accent}
-          />
-        ))}
+        {summary.map(([label, value, tone, series]) => {
+          const latestDate = selected.history.at(-1)?.date;
+          const comparisonDate = latestDate ? new Date(`${latestDate}T00:00:00Z`) : undefined;
+          comparisonDate?.setUTCDate(comparisonDate.getUTCDate() - 30);
+          const previous = selected.history.find(
+            point => point.date === comparisonDate?.toISOString().slice(0, 10),
+          )?.[series];
+          const change = previous ? ((value - previous) / previous) * 100 : undefined;
+          return (
+            <StatsMetricCard
+              key={label}
+              metric={{
+                label,
+                value: usd(value),
+                tone,
+                change:
+                  change === undefined
+                    ? undefined
+                    : `${change >= 0 ? '+' : '−'}${Math.abs(change).toFixed(2)}%`,
+                comparisonLabel: 'vs 30 days ago',
+                pointUnit: 'usd-billions',
+                points: selected.history.map(point => ({
+                  date: point.date,
+                  value: point[series] / 1_000_000_000,
+                })),
+              }}
+              prominent
+            />
+          );
+        })}
       </div>
 
       <div className="stats-hub-asset-control">

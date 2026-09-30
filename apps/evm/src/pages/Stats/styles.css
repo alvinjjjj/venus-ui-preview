@@ -831,15 +831,10 @@
 .stats-hub-bar-track { position: relative; height: calc(var(--spacing) * 6); background: var(--color-background-active); }
 .stats-hub-bar-track strong { position: absolute; top: 50%; transform: translateY(-50%); padding-left: calc(var(--spacing) * 2); color: var(--stats-muted); font-weight: 400; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .stats-hub-bar-fill { height: 100%; border-radius: var(--spacing); transition: width 450ms ease-out; }
-.stats-hub-history .stats-table { min-width: calc(var(--spacing) * 300); }
-.stats-hub-history .stats-table thead { background: var(--color-dark-blue-hover); }
-.stats-hub-history .stats-table tbody tr:nth-child(odd) { background: var(--stats-surface); }
-.stats-hub-history .stats-table tbody tr:nth-child(even) { background: var(--color-background); }
-.stats-hub-history .stats-table th,
-.stats-hub-history .stats-table td { border: 1px solid var(--stats-line); }
-.stats-hub-history .stats-table th,
-.stats-hub-history .stats-table td { padding-block: calc(var(--spacing) * 2); font-size: var(--text-xs); font-weight: 400; text-align: left; vertical-align: top; }
-.stats-hub-history .stats-table td:last-child { color: var(--color-blue); white-space: nowrap; }
+.stats-hub-history .stats-table tbody th { color: var(--color-light-grey-active); }
+.stats-hub-history .stats-table td { vertical-align: top; }
+.stats-hub-history .stats-table td:last-child { color: var(--color-blue); }
+.stats-hub-history-line { display: block; min-height: calc(var(--spacing) * 5); line-height: calc(var(--spacing) * 5); }
 .stats-hub-transaction-icon { display: inline-block; width: calc(var(--spacing) * 3); height: calc(var(--spacing) * 3); margin-left: var(--spacing); vertical-align: middle; }
 @media (max-width: 767px) {
   .stats-hub-allocation-grid { grid-template-columns: minmax(0, 1fr); }

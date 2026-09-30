@@ -48,7 +48,11 @@ const formatUsdBillions = (billions: number) =>
     : `$${Math.round(billions * 1000)}M`;
 
 const parseSortableValue = (value: string): number | undefined => {
-  const match = value.replaceAll(',', '').match(/^[-−]?(?:\$)?(\d+(?:\.\d+)?)([KMB])?%?$/i);
+  const amount = value
+    .split('\n')[0]
+    .trim()
+    .replace(/\s+(?:USDT|USDC|U)$/i, '');
+  const match = amount.replaceAll(',', '').match(/^[-−]?(?:\$)?(\d+(?:\.\d+)?)([KMB])?%?$/i);
   if (!match) return undefined;
   const sign = value.startsWith('-') || value.startsWith('−') ? -1 : 1;
   const scale = { K: 1e3, M: 1e6, B: 1e9 }[match[2]?.toUpperCase() as 'K' | 'M' | 'B'] ?? 1;
@@ -365,12 +369,18 @@ export const StatsDataTable = ({
   dense = false,
   pageSize,
   className = '',
+  renderCell,
 }: {
   table: StatsTableData;
   query?: string;
   dense?: boolean;
   pageSize?: number;
   className?: string;
+  renderCell?: (
+    cell: string,
+    column: number,
+    row: StatsTableData['rows'][number],
+  ) => React.ReactNode;
 }) => {
   const [sort, setSort] = useState<{ column: number; descending: boolean } | null>(null);
   const [page, setPage] = useState(0);
@@ -456,10 +466,12 @@ export const StatsDataTable = ({
                 {row.cells.map((cell, index) =>
                   index === 0 ? (
                     <th key={`${row.id}-${index}`} scope="row">
-                      {cell}
+                      {renderCell ? renderCell(cell, index, row) : cell}
                     </th>
                   ) : (
-                    <td key={`${row.id}-${index}`}>{cell}</td>
+                    <td key={`${row.id}-${index}`}>
+                      {renderCell ? renderCell(cell, index, row) : cell}
+                    </td>
                   ),
                 )}
               </tr>
