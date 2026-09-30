@@ -88,7 +88,7 @@ export function TableCards<R>({
           const content = (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div>{titleColumn.renderCell(row, rowIndex)}</div>
+                <div data-table-card-title="true">{titleColumn.renderCell(row, rowIndex)}</div>
 
                 {renderRowControl ? renderRowControl(row, rowIndex) : undefined}
               </div>
@@ -108,6 +108,7 @@ export function TableCards<R>({
           return (
             <Card
               key={rowKey}
+              data-table-card-row="true"
               className={cn(
                 !!(rowOnClick || getRowHref) && 'cursor-pointer hover:bg-cards',
                 cardClassName,

@@ -260,7 +260,7 @@ export default function ComponentGallery() {
             <p className="text-b1r text-light-grey">A NOTE FROM VENUS</p>
             <h3 className="text-p1s">Clarity at every step.</h3>
             <p className="text-light-grey">
-              Compare transparency, edges and spacing. All actions here are demonstrations; no
+              Compare transparency, edges and spacing. All actions here are examples; no
               transactions are submitted.
             </p>
             <Button variant="text">Got it</Button>

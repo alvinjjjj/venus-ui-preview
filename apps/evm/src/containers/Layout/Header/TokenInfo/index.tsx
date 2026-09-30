@@ -75,7 +75,7 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({
                 <Link
                   noStyle
                   href={oracleContractHref}
-                  className="inline-flex items-center gap-x-2 self-start shrink-0 rounded-full bg-background/40 px-5 h-8 text-light-grey text-sm transition-colors duration-250 hover:bg-background"
+                  className="venus-resilient-oracle-link inline-flex items-center gap-x-2 self-start shrink-0 rounded-full bg-background/40 px-5 h-8 text-light-grey text-sm transition-colors duration-250 hover:bg-background"
                 >
                   <span>{t('layout.header.resilientOracle')}</span>
 

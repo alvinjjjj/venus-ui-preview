@@ -62,7 +62,7 @@ export const CapProgressCircle: React.FC<CapProgressCircleProps> = ({
         value={thresholdPercentage}
         sizePx={80}
         strokeWidthPx={5}
-        className="absolute inset"
+        className="venus-cap-progress-circle absolute inset"
         fillColor={`url(#${gradientId})`}
         defs={
           <linearGradient

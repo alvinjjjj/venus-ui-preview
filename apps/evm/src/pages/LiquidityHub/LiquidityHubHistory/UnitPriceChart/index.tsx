@@ -40,6 +40,7 @@ export const UnitPriceChart: React.FC<UnitPriceChartProps> = ({
       formatXAxisValue={formatDate}
       formatYAxisValue={formatUnitPriceToReadableValue}
       chartColor={theme.colors.blue}
+      displayHorizontalGrid
       interval={chartInterval}
       formatTooltipItems={payload => [
         {

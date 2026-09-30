@@ -3,6 +3,7 @@ import { ChartTooltipContent, type ChartTooltipContentItem, ChartYAxisTick } fro
 import { useUID } from 'react-uid';
 import {
   Area,
+  CartesianGrid,
   AreaChart as RCAreaChart,
   ResponsiveContainer,
   Tooltip,
@@ -27,7 +28,11 @@ export interface AreaChartProps<T extends Record<string, any>> {
   areaChartMargin?: Margin;
   /** Maximum number of labels to display on the X axis. */
   interval?: number;
+  xAxisTickInterval?: 'preserveStartEnd';
+  yAxisDomain?: [number, number];
+  yAxisTicks?: number[];
   displayAxes?: boolean;
+  displayHorizontalGrid?: boolean;
   displayToolTip?: boolean;
   className?: string;
 }
@@ -37,8 +42,11 @@ export const AreaChart = <T extends Record<string, any>>({
   data,
   chartColor,
   interval,
+  xAxisTickInterval,
   xAxisDataKey,
   yAxisDataKey,
+  yAxisDomain,
+  yAxisTicks,
   yAxisTickCount = 6,
   formatXAxisValue,
   formatYAxisValue,
@@ -46,6 +54,7 @@ export const AreaChart = <T extends Record<string, any>>({
   onDataPointHover,
   onMouseLeave,
   displayAxes = true,
+  displayHorizontalGrid = false,
   displayToolTip = true,
   areaChartMargin,
 }: AreaChartProps<T>) => {
@@ -92,7 +101,7 @@ export const AreaChart = <T extends Record<string, any>>({
               tickMargin={8}
               tickCount={xAxisTicks?.length ?? data.length}
               ticks={xAxisTicks}
-              interval={xAxisTicks ? 0 : undefined}
+              interval={xAxisTicks ? xAxisTickInterval ?? 0 : undefined}
               padding={{ left: 0, right: 24 }}
               className="text-xs"
             />
@@ -110,7 +119,16 @@ export const AreaChart = <T extends Record<string, any>>({
               tickCount={yAxisTickCount}
               stroke={theme.colors.grey}
               className="text-xs text-left"
-              domain={['auto', 'auto']}
+              domain={yAxisDomain ?? ['auto', 'auto']}
+              ticks={yAxisTicks}
+            />
+          )}
+
+          {displayHorizontalGrid && (
+            <CartesianGrid
+              className="venus-liquidity-hub-chart-grid"
+              vertical={false}
+              stroke={theme.colors.lightGrey}
             />
           )}
 

@@ -16,3 +16,72 @@
   font-size: var(--text-sm);
   font-weight: var(--font-weight-semibold);
 }
+
+/* ── Prime badge ring ────────────────────────────────────────────────────────
+   框改用與 logo、文字同一套銅色 gradient（110°，1px mask ring）。
+   hover 不轉藍，只把兩端的 opacity 提高。V5 / V6 only。            */
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6']) [data-apy-badge='prime'] {
+  position: relative;
+  border-color: transparent !important;
+  --prime-ring: linear-gradient(
+    110deg,
+    rgb(155 104 80 / 55%),
+    rgb(242 216 196 / 95%) 45%,
+    rgb(167 115 89 / 55%)
+  );
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])
+  [data-apy-badge='prime']:is(:hover, :focus-visible) {
+  --prime-ring: linear-gradient(
+    110deg,
+    rgb(155 104 80 / 80%),
+    rgb(242 216 196 / 95%) 45%,
+    rgb(167 115 89 / 80%)
+  );
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light']
+  [data-apy-badge='prime'] {
+  --prime-ring: linear-gradient(
+    110deg,
+    rgb(126 82 60 / 75%),
+    rgb(216 180 155 / 95%) 45%,
+    rgb(130 87 63 / 75%)
+  );
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])[data-liquidity-theme='light']
+  [data-apy-badge='prime']:is(:hover, :focus-visible) {
+  --prime-ring: linear-gradient(
+    110deg,
+    rgb(126 82 60 / 90%),
+    rgb(216 180 155 / 95%) 45%,
+    rgb(130 87 63 / 90%)
+  );
+}
+
+:root:is([data-glass-preview='v5'], [data-glass-preview='v6'])
+  [data-apy-badge='prime']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--prime-ring);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: background 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-preview='v5'], [data-glass-preview='v6'])
+    [data-apy-badge='prime']::before {
+    transition: none;
+  }
+}

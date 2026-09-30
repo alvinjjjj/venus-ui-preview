@@ -104,7 +104,7 @@ export function LibraryExamples({ category }: { category: string }) {
           ))}
         </Card>
         <Card className="space-y-6 p-6">
-          <h3 className="text-p2s">Supply APY · Demo data</h3>
+          <h3 className="text-p2s">Supply APY · Sample data</h3>
           <AreaChart
             data={series}
             xAxisDataKey="day"
@@ -199,7 +199,7 @@ export function LibraryExamples({ category }: { category: string }) {
         <div className="divide-y divide-dark-blue-hover">
           {Array.from({ length: Math.min(10, 125 - page * 10) }, (_, i) => (
             <div key={i} className="flex justify-between py-4">
-              <span>Demo asset {page * 10 + i + 1}</span>
+              <span>Sample asset {page * 10 + i + 1}</span>
               <span className="text-light-grey">USDT</span>
             </div>
           ))}
@@ -216,7 +216,7 @@ export function LibraryExamples({ category }: { category: string }) {
     return (
       <div className="space-y-6">
         <p className="text-light-grey">
-          The site footer includes links, social channels and the O / V3 / V4 style switcher.
+          The site footer includes links and social channels. The design preview offers Original, New and Explorer.
         </p>
         <div className="overflow-hidden rounded-lg border border-dark-blue-hover">
           <Footer />
@@ -259,14 +259,16 @@ export function LibraryExamples({ category }: { category: string }) {
               isVip={false}
               onClick={() => setAccount('Disconnected')}
             />
-          ) : <Button
-            variant="secondary"
-            onClick={() =>
-              setAccount(account === 'Disconnected' ? 'Normal account' : 'Disconnected')
-            }
-          >
-            {account === 'Disconnected' ? 'Demo login' : account}
-          </Button>}
+          ) : (
+            <Button
+              variant="secondary"
+              onClick={() =>
+                setAccount(account === 'Disconnected' ? 'Normal account' : 'Disconnected')
+              }
+            >
+              {account === 'Disconnected' ? 'Connect Wallet' : account}
+            </Button>
+          )}
         </div>
         <Notice
           title={
@@ -278,7 +280,7 @@ export function LibraryExamples({ category }: { category: string }) {
           }
           description={
             account === 'Prime account'
-              ? 'Prime rewards are available · Demo state'
+              ? 'Prime rewards are available · Preview state'
               : 'Select an account state above to compare the header.'
           }
         />

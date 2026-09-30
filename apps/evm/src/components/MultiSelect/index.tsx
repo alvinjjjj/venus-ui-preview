@@ -48,17 +48,17 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       matchTriggerWidth
       // Clip the options to the menu's rounded corners, so the hover highlight of the last
       // option does not bleed past the border
-      menuClassName="bg-background border-blue overflow-hidden"
+      menuClassName="venus-multiselect-panel bg-background border-blue overflow-hidden"
       optionsDom={() => (
         <div className="min-w-full">
-          <div className="flex min-h-12 items-center justify-between gap-3 px-4 py-3">
+          <div className="venus-multiselect-title flex min-h-12 items-center justify-between gap-3 px-4 py-3">
             <span className="text-b1r text-white">{title}</span>
 
             <button
               type="button"
               onClick={() => onChange([])}
               disabled={value.length === 0}
-              className="text-blue text-b1r shrink-0 cursor-pointer disabled:cursor-default disabled:opacity-50"
+              className="venus-multiselect-reset text-blue text-b1r shrink-0 cursor-pointer disabled:cursor-default disabled:opacity-50"
             >
               {resetLabel}
             </button>
@@ -69,7 +69,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
               key={option.value}
               type="button"
               onClick={() => toggle(option.value)}
-              className="hover:bg-background-hover active:bg-background-hover flex h-12 w-full cursor-pointer items-center justify-between px-4 py-3 text-left"
+              className="venus-multiselect-option hover:bg-background-hover active:bg-background-hover flex h-12 w-full cursor-pointer items-center justify-between px-4 py-3 text-left"
             >
               <span className="text-b1r whitespace-nowrap text-white">{option.label}</span>
 
@@ -85,10 +85,11 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       {({ isDropdownOpen, handleToggleDropdown }) => (
         <Button
           aria-expanded={isDropdownOpen}
+          data-multiselect-has-value={value.length > 0}
           onClick={handleToggleDropdown}
           contentClassName="text-b1s w-full justify-center"
           className={cn(
-            'border-dark-blue-hover hover:border-light-grey active:bg-dark-blue relative h-12 w-full rounded-lg bg-transparent px-4 hover:bg-transparent',
+            'venus-multiselect-trigger border-dark-blue-hover hover:border-light-grey active:bg-dark-blue relative h-12 w-full rounded-lg bg-transparent px-4 hover:bg-transparent',
             isDropdownOpen && 'bg-dark-blue-active border-blue',
             value.length > 0 && 'border-blue',
           )}

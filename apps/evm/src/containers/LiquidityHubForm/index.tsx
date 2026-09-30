@@ -46,7 +46,11 @@ export const LiquidityHubForm = ({
                     }
                     if (!valid) return;
                     setSupplied(value => value + Number(amount) * (action === 'supply' ? 1 : -1));
-                    setMessage(`Demo ${action} completed. No transaction was sent.`);
+                    setMessage(
+                      `${
+                        action === 'supply' ? 'Supply' : 'Withdraw'
+                      } preview updated. No transaction was sent.`,
+                    );
                     setAmount('');
                   }}
                 >
@@ -62,13 +66,15 @@ export const LiquidityHubForm = ({
                     rightMaxButton={{ label: 'MAX', onClick: () => setAmount(String(balance)) }}
                     hasError={!!amount && !valid}
                     description={
-                      !!amount && !valid ? 'Enter an amount within your demo balance.' : undefined
+                      !!amount && !valid
+                        ? 'Enter an amount within your available balance.'
+                        : undefined
                     }
                   />
                   {loggedIn && (
                     <>
                       <p className="text-light-grey text-b1r">
-                        {action === 'supply' ? 'Demo wallet balance' : 'Demo supplied balance'}:{' '}
+                        {action === 'supply' ? 'Wallet balance' : 'Supplied balance'}:{' '}
                         {balance.toLocaleString()} {vhToken.underlyingToken.symbol}
                       </p>
                       <Delimiter />
@@ -85,14 +91,20 @@ export const LiquidityHubForm = ({
                     ]}
                     renderType="block"
                   />
-                  <Button type="submit" className="w-full" disabled={loggedIn && !valid}>
-                    {loggedIn
-                      ? `${action === 'supply' ? 'Supply' : 'Withdraw'} · Demo`
-                      : 'Demo login'}
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    data-liquidity-hub-submit="true"
+                    data-liquidity-hub-amount-valid={loggedIn && valid}
+                    disabled={loggedIn && !valid}
+                  >
+                    {loggedIn ? (action === 'supply' ? 'Supply' : 'Withdraw') : 'Connect Wallet'}
                   </Button>
-                  <p className="text-light-grey text-b1r" role="status">
-                    {message || 'Local preview · Simulated balances'}
-                  </p>
+                  {message && (
+                    <p className="text-light-grey text-b1r" role="status">
+                      {message}
+                    </p>
+                  )}
                 </form>
               ),
             };

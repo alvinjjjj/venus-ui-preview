@@ -88,14 +88,20 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
           </Link>
 
           {/* LG and up menu */}
-          <div className="venus-header-links hidden items-center lg:flex xl:gap-x-3" data-testid={TEST_IDS.navBarMenu}>
+          <div
+            className="venus-header-links hidden items-center lg:flex xl:gap-x-3"
+            data-testid={TEST_IDS.navBarMenu}
+          >
             {menuItems.map(item => (
               <MenuItem key={item.label} item={item} onClick={closeMobileMenu} />
             ))}
           </div>
         </div>
 
-        <div className="venus-header-actions flex items-center gap-x-3 h-9 sm:h-12" data-testid={TEST_IDS.navBarActions}>
+        <div
+          className="venus-header-actions flex items-center gap-x-3 h-9 sm:h-12"
+          data-testid={TEST_IDS.navBarActions}
+        >
           {/* Sits to the left of the reward claim button, and only from the breakpoint the desktop
               menu appears at: below that, the dashboard is reachable from the mobile menu */}
           <div className="hidden items-center lg:flex">
@@ -111,6 +117,8 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
           <NavButtonWrapper
             className="size-10 px-0 sm:size-12 lg:hidden"
             onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
           >
             <Icon
               name={isMobileMenuOpen ? 'closeRounded' : 'burger'}

@@ -1,0 +1,68 @@
+{
+  "guide": {
+    "scope": "Explorer (E) only; New is not affected.",
+    "editing": "Use the Motion tab in the preview controller for live, temporary tuning. Change the settings below and rebuild to change the defaults.",
+    "ranges": "Size values are pixels. Brightness, shares, and color channels are from 0 to 1."
+  },
+  "settings": {
+    "referenceViewport": { "width": 1440, "height": 836 },
+    "counts": { "dust": 500, "bright": 48, "glints": 5 },
+    "areaScale": { "min": 0.16, "max": 1.35 },
+    "distribution": {
+      "upperRightShare": 0.45,
+      "upperRightStartX": 0.48,
+      "upperRightTopY": 0.04,
+      "upperRightHeight": 0.66,
+      "contentDim": 0.18
+    },
+    "size": {
+      "dust": [2.1, 4.2],
+      "bright": [4.2, 6],
+      "glints": [7, 10]
+    },
+    "brightness": {
+      "dust": [0.38, 0.62],
+      "bright": [0.72, 0.94],
+      "glints": [0.9, 1]
+    },
+    "colors": {
+      "dust": [0.7, 0.82, 0.95],
+      "blueDust": [0.42, 0.71, 1],
+      "bright": [0.84, 0.92, 1],
+      "warmDust": [1, 0.58, 0.34],
+      "warmBright": [1, 0.76, 0.52],
+      "blueDustShare": 0.18,
+      "warmShare": 0.03
+    },
+    "crossStars": {
+      "count": 3,
+      "sizePixels": [25, 34],
+      "brightness": [0.7, 0.95],
+      "color": [0.9, 0.96, 1],
+      "minimumBrightness": 0.28,
+      "cyclesPerSecond": [0.1, 0.2],
+      "positions": [
+        [0.84, 0.29],
+        [0.63, 0.39],
+        [0.78, 0.61],
+        [0.93, 0.42],
+        [0.48, 0.64],
+        [0.32, 0.35],
+        [0.68, 0.13],
+        [0.9, 0.69]
+      ]
+    },
+    "twinkle": {
+      "share": 0.24,
+      "cyclesPerSecond": [0.07, 0.18],
+      "minimumBrightness": 0.5
+    },
+    "drift": {
+      "speed": 1,
+      "pixelsPerSecond": [2.8, 6],
+      "wrapMarginPixels": 16,
+      "verticalAmplitudePixels": [1.5, 3],
+      "verticalWavelengthPixels": [60, 140]
+    }
+  }
+}

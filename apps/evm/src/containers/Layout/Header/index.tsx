@@ -55,6 +55,7 @@ export const Header: React.FC = () => {
 
   return (
     <header
+      data-liquidity-hub-header={isOnLiquidityHubPage || undefined}
       className={cn(
         // The gradient will only be visible when a background color is applied. It is built this
         // way to support gradient background using a solid background color

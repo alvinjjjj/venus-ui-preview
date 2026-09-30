@@ -14,10 +14,6 @@ vi.mock('../Header', () => ({
   Header: () => <header>Header</header>,
 }));
 
-vi.mock('../TestEnvWarning', () => ({
-  TestEnvWarning: () => <div>Test warning</div>,
-}));
-
 vi.mock('../Footer', async () => {
   const React = await vi.importActual<typeof import('react')>('react');
 
@@ -51,7 +47,7 @@ describe('Layout', () => {
     );
 
     expect(screen.getByText('Navigation')).toBeInTheDocument();
-    expect(screen.getByText('Test warning')).toBeInTheDocument();
+    expect(screen.queryByText('Test warning')).not.toBeInTheDocument();
     expect(screen.getByText('Header')).toBeInTheDocument();
     expect(screen.getByText('Dashboard outlet')).toBeInTheDocument();
     expect(screen.getByText('Scroll top')).toBeInTheDocument();

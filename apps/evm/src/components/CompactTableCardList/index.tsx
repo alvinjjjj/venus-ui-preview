@@ -39,7 +39,7 @@ export const CompactTableCardList = <R,>({
         const rowKey = rowKeyExtractor(row);
 
         return (
-          <div className="space-y-4" key={rowKey}>
+          <div data-table-card-row="true" className="space-y-4" key={rowKey}>
             <div>
               <div
                 className={cn(
@@ -48,7 +48,7 @@ export const CompactTableCardList = <R,>({
                 )}
                 onClick={onRowClick ? () => onRowClick(row) : undefined}
               >
-                <div>{titleColumn.renderCell(row, rowIndex)}</div>
+                <div data-table-card-title="true">{titleColumn.renderCell(row, rowIndex)}</div>
 
                 <div className="grid grid-cols-2 gap-3">
                   {otherColumns.map((column, index) => (

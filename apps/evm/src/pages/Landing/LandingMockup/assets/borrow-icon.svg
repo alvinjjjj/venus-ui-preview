@@ -1,0 +1,55 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="31.9999" height="31.1577" viewBox="0 0 31.9999 31.1577" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 3">
+<rect id="Rectangle 2" x="22.425" y="4.48884" width="6.30145" height="13.7998" transform="rotate(45 22.425 4.48884)" fill="url(#paint0_linear_0_471)"/>
+<rect id="Rectangle 3" x="9.24851" y="26.5695" width="6.28643" height="15.1916" transform="rotate(-135 9.24851 26.5695)" fill="url(#paint1_linear_0_471)"/>
+<circle id="Ellipse 2" cx="15.9997" cy="3.15787" r="3.15787" fill="#D9D9D9"/>
+<circle id="Ellipse 3" cx="16.1577" cy="15.7367" r="3.15787" fill="#D9D9D9"/>
+<circle id="Ellipse 5" cx="3.15787" cy="15.5787" r="3.15787" fill="#D9D9D9"/>
+<circle id="Ellipse 6" cx="28.8421" cy="15.5787" r="3.15787" fill="#D9D9D9"/>
+<circle id="Ellipse 7" cx="24.6313" cy="6.73672" r="3.15787" fill="#D9D9D9"/>
+<circle id="Ellipse 9" cx="6.83968" cy="24.5335" r="3.15787" fill="#D9D9D9"/>
+<rect id="Rectangle 4" x="26.8817" y="22.3246" width="6.30145" height="13.7998" transform="rotate(135 26.8817 22.3246)" fill="url(#paint2_linear_0_471)"/>
+<rect id="Rectangle 5" x="4.80107" y="9.14812" width="6.28643" height="15.1916" transform="rotate(-45 4.80107 9.14812)" fill="url(#paint3_linear_0_471)"/>
+<rect id="Rectangle 6" x="22.425" y="4.48884" width="6.30145" height="13.7998" transform="rotate(45 22.425 4.48884)" fill="url(#paint4_linear_0_471)"/>
+<rect id="Rectangle 7" x="9.24851" y="26.5695" width="6.28643" height="15.1916" transform="rotate(-135 9.24851 26.5695)" fill="url(#paint5_linear_0_471)"/>
+<rect id="Rectangle 8" x="26.8817" y="22.3246" width="6.30145" height="13.7998" transform="rotate(135 26.8817 22.3246)" fill="url(#paint6_linear_0_471)"/>
+<rect id="Rectangle 9" x="4.80107" y="9.14812" width="6.28643" height="15.1916" transform="rotate(-45 4.80107 9.14812)" fill="url(#paint7_linear_0_471)"/>
+<circle id="Ellipse 10" cx="24.6338" cy="24.5309" r="3.15787" transform="rotate(90 24.6338 24.5309)" fill="#D9D9D9"/>
+<circle id="Ellipse 11" cx="6.83709" cy="6.73928" r="3.15787" transform="rotate(90 6.83709 6.73928)" fill="#D9D9D9"/>
+<circle id="Ellipse 4" cx="15.9997" cy="27.9998" r="3.15787" fill="#D9D9D9"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_471" x1="25.7098" y1="5.29622" x2="25.5862" y2="12.8667" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_471" x1="12.5254" y1="27.4583" x2="12.3754" y2="35.7919" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint2_linear_0_471" x1="30.1665" y1="23.132" x2="30.0429" y2="30.7025" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint3_linear_0_471" x1="8.078" y1="10.0369" x2="7.92792" y2="18.3705" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint4_linear_0_471" x1="25.7098" y1="5.29622" x2="25.5862" y2="12.8667" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint5_linear_0_471" x1="12.5254" y1="27.4583" x2="12.3754" y2="35.7919" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint6_linear_0_471" x1="30.1665" y1="23.132" x2="30.0429" y2="30.7025" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint7_linear_0_471" x1="8.078" y1="10.0369" x2="7.92792" y2="18.3705" gradientUnits="userSpaceOnUse">
+<stop stop-color="#D9D9D9" stop-opacity="0.5"/>
+<stop offset="1" stop-color="#737373" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>

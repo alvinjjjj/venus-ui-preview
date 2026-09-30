@@ -16,9 +16,16 @@ export interface ApyChartProps {
   type: 'supply' | 'borrow';
   selectedPeriod: ChartHistoryPeriod;
   className?: string;
+  displayHorizontalGrid?: boolean;
 }
 
-export const ApyChart: React.FC<ApyChartProps> = ({ className, data, type, selectedPeriod }) => {
+export const ApyChart: React.FC<ApyChartProps> = ({
+  className,
+  data,
+  type,
+  selectedPeriod,
+  displayHorizontalGrid,
+}) => {
   const { t } = useTranslation();
   const isSmOrUp = useBreakpointUp('sm');
 
@@ -50,6 +57,7 @@ export const ApyChart: React.FC<ApyChartProps> = ({ className, data, type, selec
       formatXAxisValue={formatDate}
       formatYAxisValue={formatPercentageToReadableValue}
       chartColor={chartColor}
+      displayHorizontalGrid={displayHorizontalGrid}
       interval={chartInterval}
       formatTooltipItems={payload => [
         {

@@ -26,7 +26,11 @@ export const LabeledInlineContent = ({
   description,
   ...otherContainerProps
 }: LabeledInlineContentProps) => (
-  <div className={cn('flex w-full justify-between space-x-4', className)} {...otherContainerProps}>
+  <div
+    data-labeled-inline-content="true"
+    className={cn('flex w-full justify-between space-x-4', className)}
+    {...otherContainerProps}
+  >
     <div className="flex items-center mb-auto text-sm">
       <div className={cn('flex', !description && 'items-center')}>
         {typeof iconSrc === 'string' && (
@@ -41,7 +45,10 @@ export const LabeledInlineContent = ({
         )}
 
         <div className={cn(description && '-mt-[2px]')}>
-          <div className={cn('text-b1r', invertTextColors ? 'text-white' : 'text-grey')}>
+          <div
+            data-labeled-inline-label="true"
+            className={cn('text-b1r', invertTextColors ? 'text-white' : 'text-grey')}
+          >
             {label}
           </div>
 
@@ -56,7 +63,10 @@ export const LabeledInlineContent = ({
       {!!tooltip && <InfoIcon className="ml-2 inline-flex items-center" tooltip={tooltip} />}
     </div>
 
-    <div className={cn('flex text-sm', invertTextColors ? 'text-grey' : 'text-white')}>
+    <div
+      data-labeled-inline-value="true"
+      className={cn('flex text-sm', invertTextColors ? 'text-grey' : 'text-white')}
+    >
       {children}
     </div>
   </div>

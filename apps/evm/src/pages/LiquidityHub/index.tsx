@@ -17,18 +17,20 @@ const LiquidityHub: React.FC = () => {
     <Page>
       <LiquidityHubLoader vhTokenAddress={vhTokenAddress}>
         {({ liquidityHub }) => (
-          <MarketPageGrid
-            form={<LiquidityHubForm navType="searchParam" vhToken={liquidityHub.vhToken} />}
-            content={
-              <div className="space-y-6">
-                <LiquidityHubHistory liquidityHub={liquidityHub} />
+          <div className="venus-liquidity-hub-page">
+            <MarketPageGrid
+              form={<LiquidityHubForm navType="searchParam" vhToken={liquidityHub.vhToken} />}
+              content={
+                <div className="space-y-6">
+                  <LiquidityHubHistory liquidityHub={liquidityHub} />
 
-                <AllocationDetails liquidityHub={liquidityHub} />
+                  <AllocationDetails liquidityHub={liquidityHub} />
 
-                <LiquidityHubInfo liquidityHub={liquidityHub} />
-              </div>
-            }
-          />
+                  <LiquidityHubInfo liquidityHub={liquidityHub} />
+                </div>
+              }
+            />
+          </div>
         )}
       </LiquidityHubLoader>
     </Page>

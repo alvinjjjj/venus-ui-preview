@@ -10,8 +10,21 @@ const additions: Record<number, string> = {
   1: 'Chevron rotation: 220ms ease-out. Opening translates -4px to 0; closing 0 to -2px. Opacity animates on the glass surface, not its ancestor, preventing the backdrop jump.',
   2: '2026-09-18 production hotfix: mask composition is now embedded in the mask shorthand, preventing production CSS processing from filling the panel with light. Panel perimeter light still travels once every 18 seconds, linearly. Reduced-motion stops the traveling edge. V4 retains 24px panel corners, V5 8px.',
   4: 'Dark search: white 4% fill / 13% edge, hover 6% / 22%. Light: black 2% fill / 10% edge, hover 3% / 16%. Focus: blue edge and 2px ring at 18%. Transition 140ms ease-out. No input backdrop blur.',
-  10: 'Prime tooltip explains the supply-based APY boost and links to the calculator. Campaign tooltip separates borrow interest and maximum campaign rewards, including collateral eligibility. These are demo values, not guaranteed yields.',
+  10: 'Prime tooltip explains the supply-based APY boost and links to the calculator. Campaign tooltip separates borrow interest and maximum campaign rewards, including collateral eligibility. These are illustrative values, not guaranteed yields.',
   11: 'Copper stops at 0/25/50/75/100%: #9B6850 / #CEA58B / #F2D8C4 / #D4AB90 / #A77359, top-left to bottom-right. Standalone logo silhouette unchanged.',
+};
+
+const september22: Record<number, string> = {
+  10: 'V5: Prime APY is a 24px pill with shared five-stop copper text, themed coin and persistent 1px copper ring. Ring endpoints 72% default / 95% hover, center unchanged; 180ms transition.',
+  11: 'V5: Prime account now has a permanent copper ring and a darker Light palette: #7E523C / #A87A5F / #D8B49B / #A97A5E / #82573F. Dark palette retained. V4/O/V3 styling unchanged.',
+  25: 'V5: Button groups follow the Figma switch container: shared fill without an outer border, 0px padding, 4px gap and 8px corners across charts, Wallet/Collateral, Markets and modal controls. Groups remain on one line. Selected controls stay blue with white text and border after release; selection no longer holds the pressed scale. Press 100ms, release 420ms; light glass hover retains 55% fill and shadows, adding pointer highlight. Portal reduced-motion support included.',
+};
+
+const september23: Record<number, string> = {
+  1: 'Removed the red test-environment banner and its official-site link from the shared preview layout. Navigation, page headers and environment configuration are unchanged.',
+  11: 'V5 account popup removes the redundant Prime/Normal account status line. Prime identity remains visible in the account control and copper treatment.',
+  25: 'V5 light mode: the ButtonGroup track is transparent so the existing 4px gap reads as a true separation. Individual 55% white-glass buttons, the blue selected state, 8px corners and the dark-mode shared fill are unchanged. The account Theme switch also uses 8px corners on its group and buttons in both themes.',
+  26: 'V5 Liquidity Hub detail: the disabled Supply CTA keeps its blue-glass identity and white label in both themes. Preview-only labels are removed, chart grid lines are quieter, and section cards use a softer offset shadow in light and dark modes. Light mode also uses one neutral grey page gradient, a visible light-grey supply-cap rail, and chart hover content with the approved 12px blur / 64% popup material. Chart data and transaction behavior are unchanged.',
 };
 
 // Append new IDs; never renumber existing entries when targets are hidden.
@@ -36,18 +49,19 @@ const notesFor = (version: string): Note[] => {
     { id: 22, selector: "[data-menu-motion='bridge']", title: 'Bridge animation', detail: 'Endpoints scale 1/.9/1.06/1 and opacity 1/.5/1/1. 460ms each, delays 0/140ms, total 600ms ease-in-out. Hover/focus once; reduced-motion disables animation.' },
     { id: 23, selector: "[data-menu-motion='stats']", title: 'Stats animation', detail: 'Short line moves +1px while whole icon scales to 1.05 at 45%, then both return. 560ms ease-in-out, no delay. Hover/focus once; reduced-motion disables animation.' },
     { id: 24, selector: "[data-menu-motion='trade']", title: 'Trade animation', detail: 'Icon moves vertically 0/-2px/+0.5px/0 at 0/40/75/100%. 600ms ease-in-out, no delay. Hover/focus once; reduced-motion disables animation.' },
-    { id: 25, selector: '[data-venus-button-variant]', title: 'Button material and states', detail: 'Shared glass actions retain hover, pressed, disabled and loading states. Blue-glass identifies selected Supply/Borrow; grey identifies unselected. V4 retains rounded controls, V5 8px. Loading demonstrations live in Components; individual asynchronous workflows require separate functional QA.' },
+    { id: 25, selector: '[data-venus-button-variant]', title: 'Button material and states', detail: 'Shared glass actions retain hover, pressed, disabled and loading states. Blue-glass identifies selected Supply/Borrow; grey identifies unselected. V4 retains rounded controls, V5 8px. Loading examples live in Components; individual asynchronous workflows require separate functional QA.' },
+    { id: 26, selector: '.venus-liquidity-hub-page', title: 'Liquidity Hub light page', detail: 'V5 light mode aligns the page background, charts, disabled form CTA and chart tooltip with the approved Liquidity Hub Figma direction.' },
     { id: 1, selector: '.venus-header-row', title: 'Header and motion', detail: 'Shared V4/V5 navigation. Opens in 220ms, closes in 140ms; no delayed backdrop jump. Icon motion plays on hover/focus, not continuously. Reduced-motion support retained.' },
     { id: 2, selector: '.venus-v5-market-panel, .venus-mode-panel', title: 'Markets / E-mode / Isolation mode', detail: `Shared neutral panel and light-mode shadow. ${apple ? 'V4 keeps 24px panel corners and rounded controls.' : 'V5 keeps 8px corners.'} Risk notices and inactive E-mode states are preserved.` },
     { id: 3, selector: '.venus-markets-tabs', title: 'Tab spacing', detail: 'Markets, E-mode and Isolation mode use a 16px gap between the tab controls and their content.' },
     { id: 4, selector: '.venus-table-controls', title: 'Search and categories', detail: 'Matching controls: 39px desktop / 48px mobile, 14px text. Neutral inset search material, 140ms hover/focus transition. Categories menu aligns with its trigger.' },
-    { id: 5, selector: '.venus-markets-page thead', title: 'Table typography', detail: '14px column headings; 15px main amounts and APY; 12px secondary USD values. E-mode risk percentages use 15px. Numeric meaning and inactive-state styling are unchanged.' },
+    { id: 5, selector: '.venus-markets-page thead, .liquidity-hubs-table thead', title: 'Table typography', detail: 'V5 uses one row hierarchy across Core Markets, E-mode, Isolation mode and Liquidity Hubs: 14px column headings, 15px asset names/main amounts/APY/risk values, and 12px secondary USD values. Numeric meaning, icons, badges and inactive-state styling are unchanged.' },
     { id: 6, selector: '.venus-markets-page tbody', title: 'Row feedback', detail: 'Neutral grey hover/focus: 5% white in dark mode, 4% black in light mode. Markets transition 140ms; no additional arrow. APY and rewards remain inline when space permits.' },
     { id: 7, selector: '.venus-markets-stats', title: 'Summary labels', detail: '14px labels; summary amounts retain their existing larger size. No clipping panel around Total supply / borrow / liquidity / assets.' },
     { id: 8, selector: '.venus-dropdown-surface', title: 'Dropdown glass', detail: '12px blur, 120% saturation, dark tint 58% / light tint 64% opacity, 2.5% monochrome grain. Open 220ms / close 140ms. Text remains opaque.' },
     { id: 9, selector: '.venus-apy-boost', title: 'APY reward stars', detail: 'Stars and APY share the theme colour. Hover/focus plays one 800ms sequence, with 0/180/360ms stagger; no continuous flashing.' },
     { id: 10, selector: '.venus-market-reward-preview, .venus-reward-preview', title: 'Prime and campaign rewards', detail: 'Matched badge proportions and glass treatment; copper/gold gradient text, readable light-mode colours, black symbols, explanatory reward tooltips. No Preview label.' },
-    { id: 11, selector: '.venus-user-button', title: 'Prime identity', detail: 'Standalone Prime logo now uses the same five-stop copper palette as the APY badge. Header & VIP library uses the actual account button.' },
+    { id: 11, selector: '.venus-user-button', title: 'Prime identity', detail: 'Standalone Prime logo now uses the same five-stop copper palette as the APY badge. Header & VIP library uses the actual account button. The open account popup keeps the same solid Prime identity while remaining non-interactive.' },
     { id: 12, selector: '.venus-hero-independent-actions', title: 'Supply / Borrow', detail: 'Two independent buttons: selected blue glass, unselected grey. Removed the enclosing panel and track.' },
     { id: 13, selector: '.venus-hero-earnings-chart', title: 'Earnings chart', detail: 'Muted bars use the neutral light-grey token at 40% opacity. Blue highlight and month/earnings tooltip remain available after hover.' },
     { id: 14, selector: '.icon-library-modes', title: 'Icon library', detail: 'All / Static / Animated grouping. APY is included with animated icons; stages follow the theme instead of using black tiles in light mode. Search and category controls match in height.' },
@@ -64,7 +78,7 @@ const notesFor = (version: string): Note[] => {
   ].filter(note => note.selector !== '.venus-markets-stats' || version === 'v3');
 };
 
-export function ChangeNotes({ version, enabled }: { version: string; enabled: boolean }) {
+export function ChangeNotes({ version, modeLabel, enabled }: { version: string; modeLabel: string; enabled: boolean }) {
   const [pins, setPins] = useState<Pin[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [showIndex, setShowIndex] = useState(false);
@@ -133,8 +147,10 @@ export function ChangeNotes({ version, enabled }: { version: string; enabled: bo
           {(history[active.id] ?? []).map(entry => <li key={entry.date}><time dateTime={entry.date}>{entry.date}</time><p>{entry.detail}</p></li>)}
           <li><time dateTime="2026-09-17">2026-09-17</time><p>{active.detail}</p></li>
           <li><time dateTime="2026-09-18">2026-09-18 · Documentation review</time><p>{additions[active.id] ?? 'Specification documented / reviewed. This date records the annotation update, not a new visual change.'}</p></li>
+          {version === 'v5' && september22[active.id] && <li><time dateTime="2026-09-22">2026-09-22 · V5 button refresh</time><p>{september22[active.id]}</p></li>}
+          {version === 'v5' && september23[active.id] && <li><time dateTime="2026-09-23">2026-09-23 · V5 light-mode update</time><p>{september23[active.id]}</p></li>}
         </ol> : <p>{active.detail}</p>}
-        <small>Local preview · {version === 'v6' ? 'V4' : version.toUpperCase()}</small>
+        <small>Local preview · {modeLabel}</small>
       </section>}
     </div>, document.body)}
   </>;

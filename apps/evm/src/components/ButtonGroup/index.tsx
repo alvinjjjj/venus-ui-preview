@@ -9,6 +9,7 @@ export interface ButtonGroupProps {
   className?: string;
   buttonClassName?: string;
   buttonSize?: ButtonProps['size'];
+  ariaLabel?: string;
 }
 
 export const ButtonGroup: React.FC<ButtonGroupProps> = ({
@@ -20,6 +21,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   className,
   buttonClassName,
   buttonSize,
+  ariaLabel,
 }) => {
   const handleButtonClick = (e: React.MouseEvent, index: number) => {
     e.preventDefault();
@@ -30,6 +32,9 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
 
   return (
     <div
+      data-venus-button-group="true"
+      role={ariaLabel ? 'group' : undefined}
+      aria-label={ariaLabel}
       className={cn(
         'flex items-center whitespace-nowrap',
         fullWidth ? 'w-full' : 'max-sm:w-full',
@@ -49,6 +54,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
             buttonClassName,
           )}
           active={index === activeButtonIndex}
+          aria-pressed={index === activeButtonIndex}
           size={buttonSize}
         >
           {label}

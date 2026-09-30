@@ -28,6 +28,7 @@ export interface MarketHistoryCardHistory<TPeriod extends ChartHistoryPeriod = C
   selectedPeriod: TPeriod;
   setSelectedPeriod: (period: TPeriod) => void;
   periodOptions: MarketHistoryCardPeriodOption<TPeriod>[];
+  displayHorizontalGrid?: boolean;
 }
 
 export interface MarketHistoryCardProps<TPeriod extends ChartHistoryPeriod = ChartHistoryPeriod>
@@ -110,7 +111,12 @@ export const MarketHistoryCard = <TPeriod extends ChartHistoryPeriod = ChartHist
       {history?.isLoading && history.data.length === 0 && <Spinner />}
 
       {shouldDisplayHistory && (
-        <ApyChart data={history.data} type={history.type} selectedPeriod={history.selectedPeriod} />
+        <ApyChart
+          data={history.data}
+          type={history.type}
+          selectedPeriod={history.selectedPeriod}
+          displayHorizontalGrid={history.displayHorizontalGrid}
+        />
       )}
     </MarketCard>
   );

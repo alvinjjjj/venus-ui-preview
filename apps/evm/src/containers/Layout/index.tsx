@@ -9,7 +9,6 @@ import { Footer } from './Footer';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import ScrollToTop from './ScrollToTop';
-import { TestEnvWarning } from './TestEnvWarning';
 import { useStore } from './store';
 
 const NO_WRAPPER_PATHNAMES = [Subdirectory.LANDING, routes.markets.path] as string[];
@@ -72,8 +71,6 @@ export const Layout: React.FC = () => {
     <>
       <div className="h-dvh flex flex-col">
         <NavBar className="shrink-0" />
-
-        <TestEnvWarning className="shrink-0" />
 
         <div
           className="flex flex-col grow overflow-x-hidden"

@@ -1,0 +1,478 @@
+/* September 22 handoff: V5 only. Keep older preview versions unchanged. */
+.venus-prime-token-icon,
+.venus-prime-account-token { display: none; }
+
+:root[data-glass-preview='v5'] {
+  --vip-01: #9b6850;
+  --vip-02: #cea58b;
+  --vip-03: #f2d8c4;
+  --vip-04: #d4ab90;
+  --vip-05: #a77359;
+  --vip-fill: linear-gradient(110deg, var(--vip-01), var(--vip-02) 25%, var(--vip-03) 50%, var(--vip-04) 75%, var(--vip-05));
+}
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] {
+  --vip-01: #7e523c;
+  --vip-02: #a87a5f;
+  --vip-03: #d8b49b;
+  --vip-04: #a97a5e;
+  --vip-05: #82573f;
+}
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) { display: block; flex-shrink: 0; }
+:root[data-glass-preview='v5'] .venus-prime-token-icon { width: 16px; height: 16px; }
+:root[data-glass-preview='v5'] :is(#root, body) :is(.venus-prime-icon-dark, .venus-prime-icon-light, .venus-prime-account-original) { display: none; }
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) stop:nth-child(1) { stop-color: var(--vip-01); }
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) stop:nth-child(2) { stop-color: var(--vip-02); }
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) stop:nth-child(3) { stop-color: var(--vip-03); }
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) stop:nth-child(4) { stop-color: var(--vip-04); }
+:root[data-glass-preview='v5'] :is(.venus-prime-token-icon, .venus-prime-account-token) stop:nth-child(5) { stop-color: var(--vip-05); }
+:root[data-glass-preview='v5'] #root [data-apy-badge-text='prime'] {
+  background-image: var(--vip-fill);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-apy-badge='prime'] {
+  height: 24px;
+  padding: 4px;
+  border-radius: 999px !important;
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-apy-badge='prime'], [data-prime-account='true']) {
+  position: relative;
+  border-color: transparent !important;
+  --prime-ring: linear-gradient(110deg, color-mix(in srgb, var(--vip-01) 72%, transparent), var(--vip-03) 45%, color-mix(in srgb, var(--vip-05) 72%, transparent));
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-apy-badge='prime'], [data-prime-account='true']):is(:hover, :focus-visible) {
+  --prime-ring: linear-gradient(110deg, color-mix(in srgb, var(--vip-01) 95%, transparent), var(--vip-03) 45%, color-mix(in srgb, var(--vip-05) 95%, transparent));
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-apy-badge='prime'], [data-prime-account='true'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--prime-ring);
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box xor, linear-gradient(#000 0 0);
+  opacity: 1;
+  pointer-events: none;
+  transition: background 180ms ease-out;
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-apy-badge='prime']::before { content: none; }
+
+/* The account control is informational inside the open modal, not visually disabled. */
+:root[data-glass-preview='v5']
+  :is(#root, body)
+  .venus-account-address-study[data-prime-account='true']:disabled {
+  opacity: 1 !important;
+  box-shadow: var(--material-shadow) !important;
+  cursor: default;
+}
+
+/* White glass uses the same pointer highlight as dark glass, without a fill swap. */
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-variant] {
+  transition: background 300ms ease-out, border-color 300ms ease-out, box-shadow 300ms ease-out, color 300ms ease-out, transform 300ms ease-out !important;
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-venus-button-variant='primary'], [data-venus-button-variant='secondary']) {
+  transition: transform 420ms cubic-bezier(.22, 1.35, .36, 1), box-shadow 240ms ease-out !important;
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-venus-button-variant='primary'], [data-venus-button-variant='secondary']):active {
+  transition-duration: 100ms !important;
+}
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] :is(#root, body) [data-venus-button-material='glass'] {
+  --material-hover: var(--material-fill);
+  --material-hover-shadow: var(--material-shadow);
+}
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] :is(#root, body) [data-venus-button-material='glass']:is([data-venus-button-variant='primary'], [data-venus-button-variant='secondary'])::before {
+  content: '';
+  background: radial-gradient(circle at var(--glass-x, 50%) var(--glass-y, 50%), rgb(255 255 255 / 22%), transparent 70%);
+  transform: none;
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+:root[data-glass-preview='v5'] :is(#root, body) :is([data-venus-button-variant='primary'], [data-venus-button-variant='secondary']):not(:disabled):is(:hover, :focus-visible)::before { opacity: .65; }
+
+/* Persistent selection is not a held-down press. */
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-active='true']:not(:active) {
+  transform: none !important;
+  box-shadow: var(--material-shadow) !important;
+  transition-duration: 420ms !important;
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-active='true']:not(:active):not(:hover):not(:focus-visible)::before { opacity: 0; }
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-active='true'] {
+  --material-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
+  --material-hover: var(--material-fill);
+  --material-ink: #fff;
+  --material-hover-ink: #fff;
+  --material-edge: #fff;
+  --material-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%);
+  --material-hover-shadow: var(--material-shadow);
+}
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is([data-venus-button-active='true'], [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true'])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: .09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h128v128H0z'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-variant],
+  :root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-variant]::before,
+  :root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-variant]::after {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-group='true'] {
+  gap: var(--spacing);
+  flex-wrap: nowrap;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  :is(#root, body)
+  [data-venus-button-group='true'] {
+  background: transparent !important;
+}
+
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-button-group='true'] > button {
+  border-radius: calc(var(--spacing) * 2) !important;
+}
+
+:root[data-glass-preview='v5']
+  .venus-settings
+  [role='group'][aria-label='Theme'],
+:root[data-glass-preview='v5']
+  .venus-settings
+  [role='group'][aria-label='Theme']
+  > button {
+  border-radius: calc(var(--spacing) * 2) !important;
+}
+
+/* Keep every V5 market row on the approved Core Market type hierarchy. */
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table) {
+  --market-row-primary-font-size: 0.9375rem;
+  --market-row-heading-font-size: var(--text-sm);
+  --market-row-secondary-font-size: var(--text-xs);
+}
+
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  :is(thead th, thead button) {
+  font-size: var(--market-row-heading-font-size);
+}
+
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  tbody td,
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  :is([data-layered-value='primary'], [data-table-card-title='true'], [data-labeled-inline-value='true']) {
+  font-size: var(--market-row-primary-font-size);
+}
+
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  :is([data-layered-value], [data-labeled-inline-value='true']) {
+  white-space: nowrap;
+}
+
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  [data-labeled-inline-label='true'] {
+  font-size: var(--market-row-heading-font-size);
+}
+
+:root[data-glass-preview='v5'] :is(#root, body)
+  :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table)
+  [data-layered-value='secondary'] {
+  font-size: var(--market-row-secondary-font-size);
+}
+
+/* V5 Liquidity Hub keeps one neutral page gradient while its panels remain distinct. */
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  body:has(.venus-liquidity-hub-page) {
+  background: linear-gradient(
+    180deg,
+    var(--color-background-hover),
+    var(--color-background) 50%,
+    var(--color-background-hover)
+  ) fixed !important;
+}
+
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  #page-container:has(.venus-liquidity-hub-page) {
+  background: transparent !important;
+}
+
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  [data-liquidity-hub-header='true'] {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* V5 charts retain their data series and axis labels without background grid lines. */
+.venus-liquidity-hub-chart-grid {
+  opacity: 0;
+}
+
+:root[data-glass-preview='v5']
+  .venus-liquidity-hub-page
+  .venus-liquidity-hub-chart-grid {
+  display: none;
+}
+
+/* The Oracle link uses the existing V5 glass-button material in both themes. */
+:root[data-glass-preview='v5'] .venus-resilient-oracle-link {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  border-radius: calc(var(--spacing) * 2);
+  background: rgb(255 255 255 / 7%);
+  color: var(--color-white);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%),
+    inset 0 -1px 1px rgb(255 255 255 / 9%),
+    0 4px 10px rgb(0 0 0 / 12%);
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  transition: background 300ms ease-out, box-shadow 300ms ease-out;
+}
+
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] .venus-resilient-oracle-link {
+  background: rgb(255 255 255 / 55%);
+  color: var(--color-white);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%),
+    inset 0 -1px 0 rgb(45 78 110 / 12%),
+    0 2px 6px rgb(30 55 85 / 7%);
+}
+
+:root[data-glass-preview='v5'] .venus-resilient-oracle-link:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: var(--spacing);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-preview='v5'] .venus-resilient-oracle-link {
+    transition: none;
+  }
+}
+
+/* Reuse the approved neutral Liquidity Hub elevation on V5's outer cards. */
+:root[data-glass-preview='v5'] {
+  --v5-card-shadow: 0 12px 32px color-mix(in srgb, black 32%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] {
+  --v5-card-shadow: 0 12px 32px color-mix(in srgb, var(--color-light-grey) 18%, transparent);
+}
+
+:root[data-glass-preview='v5'] #root
+  :is([data-venus-panel], .venus-v5-market-panel, .venus-mode-panel,
+    .venus-market-form-panel, .glass-dashboard-overview, .glass-dashboard-tabs):not(
+    .venus-popup-panel *, .venus-dropdown-surface *, .account-preview *
+  ) {
+  box-shadow: var(--v5-card-shadow) !important;
+}
+
+@media (max-width: 767px) {
+  :root[data-glass-preview='v5'] #root
+    :is(.venus-v5-market-panel, .venus-mode-panel, .liquidity-hubs-table):not(
+      .venus-popup-panel *, .venus-dropdown-surface *, .account-preview *
+    ) {
+    box-shadow: none !important;
+  }
+}
+
+/* Keep the low cap percentage legible instead of leaving only its blue endpoint visible. */
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  .venus-liquidity-hub-page
+  .venus-cap-progress-circle
+  circle:first-of-type {
+  stroke: var(--color-lightGrey);
+}
+
+/* The empty action uses fixed dark glass in either theme; valid input uses the shared blue glass. */
+:root[data-glass-preview='v5'][data-glass-version='v6']
+  #root
+  [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='false'] {
+  --material-fill: linear-gradient(rgb(255 255 255 / 7%), rgb(255 255 255 / 7%)), rgb(24 26 32 / 94%);
+  --material-hover: var(--material-fill);
+  --material-ink: #fff;
+  --material-hover-ink: #fff;
+  --material-edge: rgb(255 255 255 / 14%);
+  --material-shadow: inset 0 1px 1px rgb(255 255 255 / 20%), 0 3px 8px rgb(0 0 0 / 12%);
+  --material-hover-shadow: var(--material-shadow);
+  opacity: 1 !important;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6']
+  #root
+  [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true'] {
+  --material-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
+  --material-hover: radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6);
+  --material-ink: #fff;
+  --material-hover-ink: #fff;
+  --material-edge: #fff;
+  --material-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%);
+  --material-hover-shadow: var(--material-shadow);
+  opacity: 1 !important;
+  overflow: hidden;
+}
+
+/* Chart hover content reuses the approved V5 light popup material. */
+:root[data-glass-preview='v5'][data-liquidity-theme='light']
+  .venus-liquidity-hub-page
+  [data-venus-chart-tooltip='true'] {
+  background-color: rgb(255 255 255 / 64%) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.025'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23grain)' d='M0 0h128v128H0z'/%3E%3C/svg%3E");
+  border: 1px solid rgb(30 40 55 / 10%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 80%),
+    0 12px 32px rgb(30 40 55 / 12%);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-preview='v5'][data-liquidity-theme='light']
+    .venus-liquidity-hub-page
+    [data-venus-chart-tooltip='true'] {
+    background-color: rgb(255 255 255 / 96%) !important;
+  }
+}
+
+/* V5 category filter: keep the shared dropdown glass and reuse the Select option rhythm. */
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-panel {
+  /* Title 48px + six 40px options + 4px inset and 1px border on each side, so the list never ends mid-row. */
+  max-height: 298px !important;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-panel::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-panel::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--color-grey) 45%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-title {
+  min-height: 48px;
+  padding: 12px;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-option {
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  transition: background-color 140ms ease-out;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-option:is(:hover, :active) {
+  background: rgb(255 255 255 / 6%);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-multiselect-option:is(:hover, :active) {
+  background: rgb(30 55 85 / 5%);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-option:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: -2px;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-reset:disabled {
+  color: var(--color-grey);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-option {
+    transition: none;
+  }
+}
+
+/* The category trigger follows the shared Select states: open = blue ring, filtered = blue edge. */
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-multiselect-trigger[aria-expanded='true'] {
+  --material-fill: rgb(255 255 255 / 12%);
+  outline: 2px solid var(--color-blue) !important;
+  outline-offset: 2px;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body)
+  .venus-multiselect-trigger[data-multiselect-has-value='true'] {
+  border-color: var(--color-blue) !important;
+}
+
+/* V5 input trial: fields are recessed wells (inner shadow), buttons stay raised glass.
+   Stronger recess than the Markets search surface (trial 2); O / V3 / V4 are untouched. */
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field {
+  border-radius: var(--radius-lg);
+  border-color: rgb(255 255 255 / 8%);
+  background: rgb(0 0 0 / 22%);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), inset 0 -1px 0 rgb(255 255 255 / 6%);
+  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field:hover {
+  border-color: rgb(255 255 255 / 16%);
+  background: rgb(0 0 0 / 26%);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field:focus-within {
+  border-color: var(--color-blue);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), 0 0 0 2px color-mix(in srgb, var(--color-blue) 18%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-has-error] {
+  border-color: var(--color-red);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-has-error]:focus-within {
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), 0 0 0 2px color-mix(in srgb, var(--color-red) 18%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-disabled] {
+  border-color: rgb(255 255 255 / 8%);
+  background: rgb(255 255 255 / 2%);
+  box-shadow: none;
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field {
+  border-color: rgb(30 55 85 / 12%);
+  background: rgb(30 55 85 / 5%);
+  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), inset 0 -1px 0 rgb(255 255 255 / 90%);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:hover {
+  border-color: rgb(30 55 85 / 20%);
+  background: rgb(30 55 85 / 7%);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:focus-within {
+  border-color: var(--color-blue);
+  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), 0 0 0 2px color-mix(in srgb, var(--color-blue) 18%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error] {
+  border-color: var(--color-red);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error]:focus-within {
+  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), 0 0 0 2px color-mix(in srgb, var(--color-red) 18%, transparent);
+}
+
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-disabled] {
+  border-color: rgb(0 0 0 / 6%);
+  background: rgb(0 0 0 / 1%);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field { transition: none; }
+}

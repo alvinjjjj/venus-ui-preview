@@ -84,8 +84,10 @@ export const TextField: React.FC<TextFieldProps> = forwardRef<HTMLInputElement, 
         )}
 
         <div
+          data-has-error={hasError || undefined}
+          data-disabled={disabled || undefined}
           className={cn(
-            'flex items-center justify-between gap-x-2 h-14 p-4 border border-dark-blue-hover rounded-xl bg-transparent transition-[border-color] hover:border-light-grey focus-within:border-blue focus-within:bg-dark-blue-active focus-within:hover:border-blue',
+            'venus-text-field flex items-center justify-between gap-x-2 h-14 p-4 border border-dark-blue-hover rounded-xl bg-transparent transition-[border-color] hover:border-light-grey focus-within:border-blue focus-within:bg-dark-blue-active focus-within:hover:border-blue',
             rightAdornment && 'pr-2',
             leftAdornment && !leftIconSrc && 'pl-2',
             size === 'xs' && 'h-10 py-1 rounded-lg',

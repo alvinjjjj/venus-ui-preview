@@ -8,7 +8,7 @@ export const DemoActionNotice = () => {
     return () => window.removeEventListener('venus-demo-action', listener);
   }, []);
   return (
-    <Modal isOpen={!!message} handleClose={() => setMessage('')} title="Demo preview">
+    <Modal isOpen={!!message} handleClose={() => setMessage('')} title="Preview">
       <div className="space-y-5">
         <p>{message}</p>
         <Button onClick={() => setMessage('')}>Done</Button>

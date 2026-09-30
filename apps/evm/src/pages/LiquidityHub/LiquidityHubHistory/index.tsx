@@ -119,6 +119,7 @@ export const LiquidityHubHistory: React.FC<LiquidityHubHistoryProps> = ({ liquid
           selectedPeriod,
           setSelectedPeriod,
           periodOptions,
+          displayHorizontalGrid: true,
         }}
       />
 

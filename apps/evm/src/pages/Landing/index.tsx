@@ -1,7 +1,10 @@
 import { Page, Wrapper } from 'components';
+import { landingDesignByMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { useLocation } from 'react-router';
 import { Benefits } from './Benefits';
 import { Governance } from './Governance';
 import { Hero } from './Hero';
+import { LandingMockup } from './LandingMockup';
 import { Markets } from './Markets';
 import { Protection } from './Protection';
 import { Safety } from './Safety';
@@ -9,6 +12,18 @@ import { VenusPrime } from './VenusPrime';
 import { Wallets } from './Wallets';
 
 export const Landing: React.FC = () => {
+  const { search } = useLocation();
+  const showNewLanding = useGlassPreview(state => landingDesignByMode[state.mode] !== 'v1');
+
+  // The preview design mapping controls when the new landing replaces Original.
+  if (showNewLanding) {
+    return (
+      <Page indexWithSearchEngines={false}>
+        <LandingMockup key={search} />
+      </Page>
+    );
+  }
+
   return (
     <Page>
       <Hero />

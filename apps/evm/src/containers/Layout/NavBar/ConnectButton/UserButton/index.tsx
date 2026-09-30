@@ -1,6 +1,7 @@
 import { type ButtonProps, ButtonWrapper, cn } from '@venusprotocol/ui';
 
 import primeLogoSrc from 'assets/img/primeLogo.svg';
+import PrimeLogo from 'assets/img/primeLogo.svg?react';
 import { Icon, Username } from 'components';
 import { useTranslation } from 'libs/translations';
 import type { Address } from 'viem';
@@ -26,6 +27,8 @@ export const UserButton: React.FC<UserButtonProps> = ({
     <ButtonWrapper
       variant="secondary"
       material="glass"
+      data-prime-account={isPrime || undefined}
+      disabled={disabled}
       type="button"
       className={cn(
         'venus-user-button group h-10 text-b1s rounded-lg p-px sm:h-12',
@@ -42,7 +45,7 @@ export const UserButton: React.FC<UserButtonProps> = ({
         )}
       >
         {isPrime ? (
-          <img className="h-4" src={primeLogoSrc} alt={t('primeButton.primeLogoAlt')} />
+          <><img className="venus-prime-account-original h-4" src={primeLogoSrc} alt={t('primeButton.primeLogoAlt')} /><PrimeLogo className="venus-prime-account-token h-4 w-auto" role="img" aria-label={t('primeButton.primeLogoAlt')} /></>
         ) : (
           <Icon name="user" className="h-4 text-light-grey mb-1" />
         )}

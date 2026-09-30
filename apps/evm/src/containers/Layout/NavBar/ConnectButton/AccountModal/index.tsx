@@ -21,7 +21,7 @@ export interface AccountModalProps {
 }
 
 export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPrime, onClose }) => {
-  const { logout, setLoginOpen, profile } = useDemo();
+  const { logout, setLoginOpen } = useDemo();
   const handleDisconnect = () => {
     logout();
 
@@ -64,9 +64,6 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
 
             <AccountOverview accountAddress={address} showGraph={false} />
 
-            <p className="text-light-grey">
-              Demo · {profile === 'prime' ? 'Prime' : 'Normal'} account
-            </p>
             <Settings />
             <div className="flex flex-col gap-y-3">
               <Button
@@ -76,7 +73,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
                   setLoginOpen(true);
                 }}
               >
-                Switch demo account
+                Switch account
               </Button>
 
               {isVip && <VipTelegramGroupButton />}

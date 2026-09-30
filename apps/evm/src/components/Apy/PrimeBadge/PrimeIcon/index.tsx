@@ -3,6 +3,7 @@ import { useTranslation } from 'libs/translations';
 import primeLogoSrc from './primeLogo.svg';
 import primeLogoDarkSrc from './primeLogoDark.svg';
 import primeLogoLightSrc from './primeLogoLight.svg';
+import PrimeTokenIcon from './primeLogoDark.svg?react';
 import './prime-icon.css';
 
 export type PrimeIconProps = Omit<React.HTMLAttributes<HTMLImageElement>, 'alt' | 'src'>;
@@ -12,6 +13,7 @@ export const PrimeIcon: React.FC<PrimeIconProps> = ({ className, ...otherProps }
 
   return (
     <>
+    <PrimeTokenIcon className={cn('venus-prime-token-icon', className)} role="img" aria-label={t('apy.primeBadge.logoAlt')} />
     <img
       {...otherProps}
       src={primeLogoSrc}

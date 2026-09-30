@@ -15,12 +15,14 @@ export interface TableColumn<R> {
   // order changes through the table's onOrderChange callback
   sortable?: boolean;
   align?: 'left' | 'center' | 'right';
+  colSpan?: number;
 }
 
 export interface TableProps<R> extends Omit<CardProps, 'title'> {
   data: R[];
   rowKeyExtractor: (row: R) => string;
   columns: TableColumn<R>[];
+  columnWidths?: string[];
   tableLayout?: CSSProperties['tableLayout'];
   breakpoint?: keyof typeof theme.screens;
   cardColumns?: TableColumn<R>[];
