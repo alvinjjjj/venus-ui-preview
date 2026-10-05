@@ -10,11 +10,11 @@ export const previewDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   explorer: 'v1',
 };
 
-// The current Original landing composition is the baseline in every mode.
+// New and Explorer use their landing compositions while Original keeps the existing page.
 export const landingDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v1: 'v1',
-  v5: 'v1',
-  explorer: 'v1',
+  v5: 'v5',
+  explorer: 'v5',
 };
 
 const getInitialMode = (): GlassPreviewMode => {
