@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "corepack enable --install-directory /tmp/corepack-bin && export PATH=/tmp/corepack-bin:$PATH COREPACK_ENABLE_DOWNLOAD_PROMPT=0 && yarn --version && yarn install",
-  "buildCommand": "cd apps/evm && NODE_OPTIONS=--max-old-space-size=7168 node ../../node_modules/vite/bin/vite.js build",
+  "installCommand": "COREPACK_ENABLE_DOWNLOAD_PROMPT=0 VENUS_SKIP_GENERATE_AFTER_INSTALL=1 corepack yarn install",
+  "buildCommand": "COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack yarn workspace @venusprotocol/evm run generate && cd apps/evm && NODE_OPTIONS=--max-old-space-size=7168 node ../../node_modules/vite/bin/vite.js build",
   "outputDirectory": "apps/evm/build",
   "rewrites": [
     {
