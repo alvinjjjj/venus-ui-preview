@@ -1,0 +1,109 @@
+/* Local preview composition. Existing palette, type and spacing tokens stay intact. */
+.horizontal-flow-track { position: relative; height: calc(100svh - 64px + var(--flow-travel) + var(--flow-hold)); }
+/* Scoped aliases match the existing Hero headline's 25% vertical offset.
+   1280px is the requested desktop content width, not a global token. */
+.horizontal-flow { --flow-heading-padding: clamp(64px, 16svh, 134px); --flow-heading-font: clamp(44px, 4.17vw, 60px); --flow-heading-top: calc(var(--flow-heading-padding) * 0.75 - (var(--flow-heading-font) + var(--spacing) * 20.5) * 0.25); --flow-content-width: 1280px; --flow-core-diameter: clamp(96px, 15svh, 144px); position: sticky; top: 0; height: calc(100svh - 64px); min-height: 0; overflow: hidden; isolation: isolate; background: var(--color-background-active); }
+.horizontal-flow .landing-mockup { height: 100%; min-height: 0; display: block; }
+.horizontal-flow :is(.landing-mockup__headline, .landing-mockup__details, .landing-mockup__trusted) { opacity: var(--flow-hero-opacity); translate: calc(-100vw * var(--flow-pan)) 0; }
+.horizontal-flow .landing-mockup__headline { padding-top: var(--flow-heading-padding); }
+.horizontal-flow .landing-mockup__details { bottom: calc(var(--spacing) * 38); }
+.horizontal-flow .landing-mockup__trusted { bottom: 0; }
+.horizontal-flow .asset-orbit { position: absolute; inset: 0; z-index: 2; background: transparent; padding: var(--flow-heading-top) calc(var(--spacing) * 6) calc(var(--spacing) * 18); pointer-events: none; transform: none; }
+.horizontal-flow .asset-orbit__inner { width: 100%; max-width: var(--flow-content-width); height: 100%; display: flex; flex-direction: column; }
+.horizontal-flow .asset-orbit__header { opacity: var(--flow-header-opacity, var(--flow-title-opacity)); translate: 0 calc((1 - var(--flow-header-opacity, 1)) * 12px); }
+.horizontal-flow .asset-orbit__header h2 { font-size: var(--text-h5); }
+.horizontal-flow .asset-orbit__header p { font-size: var(--text-lg); margin-top: calc(var(--spacing) * 2); }
+.horizontal-flow .asset-orbit__scene { flex: 1; min-height: 0; height: auto; margin-top: calc(var(--spacing) * 3); }
+.horizontal-flow .asset-orbit__core { top: 48%; opacity: var(--flow-core-opacity); }
+.horizontal-flow .asset-orbit__core-disc { transform: scale(var(--flow-core-scale)); width: var(--flow-core-diameter); }
+.horizontal-flow .asset-orbit__core-disc img { width: 48%; }
+.horizontal-flow .asset-orbit__core > span { opacity: var(--flow-title-opacity); }
+.horizontal-flow .asset-orbit__proof { border-top: 0; opacity: var(--flow-proof-opacity); padding-top: calc(var(--spacing) * 3); }
+.horizontal-flow .asset-orbit__proof dd { font-size: calc(var(--text-h5) * 1.5); font-weight: 500; font-family: Roboto, var(--font-proxima-nova), sans-serif; }
+.horizontal-flow .asset-orbit__proof dt { font-size: var(--text-sm); }
+/* Gather the four proof points as one compact trust group below the scene. */
+.horizontal-flow .asset-orbit__proof dl { max-width: calc(var(--spacing) * 264); margin-inline: auto; gap: calc(var(--spacing) * 10); }
+.horizontal-flow .asset-orbit__proof dl > div { flex-direction: column; align-items: center; gap: calc(var(--spacing) * 3); text-align: center; }
+.horizontal-flow .asset-orbit__asset { --flow-asset-reveal: var(--flow-usdc); opacity: var(--flow-asset-reveal); transform: translate(-50%, -50%) scale(calc(0.7 + var(--flow-asset-reveal) * 0.3)); }
+.horizontal-flow .asset-orbit__asset[data-asset='USDC'] { left: 25%; top: 24%; }
+.horizontal-flow .asset-orbit__asset[data-asset='USDT'] { --flow-asset-reveal: var(--flow-usdt); left: 75%; top: 24%; }
+.horizontal-flow .asset-orbit__asset[data-asset='U'] { --flow-asset-reveal: var(--flow-u); left: 28%; top: 79%; }
+.horizontal-flow .asset-orbit__asset[data-asset='ETH'] { --flow-asset-reveal: var(--flow-eth); left: 72%; top: 79%; }
+.horizontal-flow .asset-orbit__asset-disc { width: clamp(56px, 11svh, 92px); }
+.horizontal-flow .asset-orbit__asset-disc img { width: 60%; height: 60%; }
+.horizontal-flow .asset-orbit__details { opacity: var(--flow-title-opacity); top: 32%; left: 12%; }
+.horizontal-flow .asset-orbit__scene[data-selected=''] .asset-orbit__details { display: none; }
+.horizontal-flow .asset-orbit:not([inert]) :is(.asset-orbit__asset, .asset-orbit__details) { pointer-events: auto; }
+/* The overlay passes through pointer input except at actual interactive content. */
+.horizontal-flow .asset-orbit:not([inert]) .asset-orbit__proof dd[tabindex] { pointer-events: auto; }
+@media (max-width: 767px) {
+  .horizontal-flow .landing-mockup__headline { padding-top: calc(var(--spacing) * 20); }
+  .horizontal-flow .landing-mockup__headline h1 { font-size: var(--text-h5); }
+  .horizontal-flow .landing-mockup__details { position: absolute; left: calc(var(--spacing) * 6); right: calc(var(--spacing) * 6); bottom: calc(var(--spacing) * 56); margin: 0; gap: calc(var(--spacing) * 4); }
+  .horizontal-flow .landing-mockup__tvl strong { font-size: var(--text-2xl); }
+  .horizontal-flow .landing-mockup__trusted { position: absolute; left: 0; right: 0; bottom: calc(var(--spacing) * 21); margin: 0; }
+  .horizontal-flow .asset-orbit { padding: calc(var(--spacing) * 4) calc(var(--spacing) * 5) calc(var(--spacing) * 22); }
+  .horizontal-flow .asset-orbit__header h2 { font-size: var(--text-2xl); }
+  .horizontal-flow .asset-orbit__header p { font-size: var(--text-sm); }
+  .horizontal-flow .asset-orbit__core > span { font-size: var(--text-xs); }
+  .horizontal-flow .asset-orbit__proof dl { gap: calc(var(--spacing) * 3); }
+  .horizontal-flow .asset-orbit__proof dl > div { gap: var(--spacing); }
+  .horizontal-flow .asset-orbit__proof dd { font-size: var(--text-2xl); }
+  .horizontal-flow .asset-orbit__proof dt { font-size: var(--text-xs); }
+  .horizontal-flow .asset-orbit__details { top: 40%; left: 50%; width: 180px; padding: calc(var(--spacing) * 3); }
+  .horizontal-flow .asset-orbit__rate { font-size: var(--text-xl); margin-block: var(--spacing); }
+}
+@media (max-height: 620px) and (min-width: 768px) {
+  .horizontal-flow .landing-mockup__headline { padding-top: calc(var(--spacing) * 15); }
+  .horizontal-flow .landing-mockup__details { bottom: calc(var(--spacing) * 27); }
+  .horizontal-flow .landing-mockup__trusted { bottom: 0; }
+  .horizontal-flow .asset-orbit__header h2 { font-size: var(--text-2xl); }
+  .horizontal-flow .asset-orbit__proof dd { font-size: var(--text-2xl); }
+}
+
+/* Motion study hides content without changing the measured scene center. */
+.horizontal-flow[data-study='true'] .asset-orbit__inner { visibility: hidden; }
+
+/* Abstract sphere draft: local tints derive from the established palette. */
+.horizontal-flow .asset-orbit[data-abstract='true'] .asset-orbit__core-disc {
+  background: radial-gradient(circle at 30% 22%, color-mix(in srgb, var(--color-blue) 35%, var(--orbit-bg)), color-mix(in srgb, var(--color-blue) 18%, var(--orbit-bg)) 48%, var(--orbit-bg) 86%);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--color-white) 65%, transparent), inset -12px -18px 32px color-mix(in srgb, var(--color-background-active) 70%, transparent), 0 0 48px color-mix(in srgb, var(--color-blue) 12%, transparent);
+}
+.horizontal-flow .asset-orbit__spheres { position: absolute; inset: 0; pointer-events: none; }
+.horizontal-flow .asset-orbit__sphere {
+  --sphere-color: var(--color-blue-active);
+  --sphere-reveal: var(--flow-usdc);
+  position: absolute;
+  width: calc(var(--flow-core-diameter) / 2);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: var(--sphere-reveal);
+  transform: translate(-50%, -50%) scale(calc(0.5 + var(--sphere-reveal) * 0.5));
+  background: radial-gradient(circle at 28% 23%, color-mix(in srgb, var(--sphere-color) 30%, var(--color-white)), var(--sphere-color) 42%, color-mix(in srgb, var(--sphere-color) 38%, var(--orbit-bg)) 74%, var(--orbit-bg));
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--color-white) 65%, transparent), inset -8px -12px 20px color-mix(in srgb, var(--orbit-bg) 60%, transparent), 0 0 24px color-mix(in srgb, var(--sphere-color) 12%, transparent);
+}
+.horizontal-flow .asset-orbit__sphere[data-tone='smoke'] { --sphere-color: color-mix(in srgb, var(--color-light-grey) 40%, var(--orbit-bg)); left: 24%; top: 25%; }
+.horizontal-flow .asset-orbit__sphere[data-tone='green'] { --sphere-color: var(--color-green); --sphere-reveal: var(--flow-usdt); left: 76%; top: 20%; }
+.horizontal-flow .asset-orbit__sphere[data-tone='charcoal'] { --sphere-color: var(--orbit-panel); --sphere-reveal: var(--flow-u); left: 73%; top: 75%; }
+.horizontal-flow .asset-orbit__sphere[data-tone='blue'] { --sphere-reveal: var(--flow-eth); left: 27%; top: 79%; }
+
+.horizontal-flow .asset-orbit__sphere img { position: absolute; inset: 12.5%; width: 75%; height: 75%; object-fit: contain; }
+
+/* WebGL models share the rings' scene. DOM anchors retain layout and fallback. */
+.horizontal-flow:has(.landing-mockup__flow-field[data-ready='true']) .asset-orbit[data-abstract='true'] .asset-orbit__core-disc,
+.horizontal-flow:has(.landing-mockup__flow-field[data-ready='true']) .asset-orbit__spheres { visibility: hidden; }
+.horizontal-flow .asset-orbit[data-abstract='true'] .asset-orbit__core-disc img { filter: brightness(0) invert(1); }
+
+/* Native hit targets follow the same projected sphere coordinates as WebGL. */
+.asset-orbit__targets { position: absolute; inset: 0; pointer-events: none; }
+.asset-orbit__target { position: absolute; width: calc(var(--flow-core-diameter) / 2); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; cursor: pointer; visibility: hidden; color: var(--orbit-text); }
+.horizontal-flow .asset-orbit:not([inert]) .asset-orbit__target { pointer-events: auto; }
+.asset-orbit__target:focus-visible { outline: 2px solid var(--color-blue-hover); outline-offset: calc(var(--spacing) * 2); }
+.asset-orbit__yield { position: absolute; bottom: calc(100% + var(--spacing) * 3); left: 50%; translate: -50% 0; width: max-content; padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3); background: var(--orbit-bg); border: 1px solid color-mix(in srgb, var(--orbit-muted) 25%, transparent); border-radius: calc(var(--spacing) * 2); opacity: 0; transform: translateY(var(--spacing)); transition: opacity 180ms ease, transform 240ms cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+.asset-orbit__yield strong { display: flex; align-items: baseline; justify-content: center; gap: calc(var(--spacing) * 3); font-size: var(--text-lg); }
+.asset-orbit__yield strong span { font-variant-numeric: tabular-nums; }
+.asset-orbit__yield small { display: block; margin-top: var(--spacing); font-size: var(--text-xs); color: var(--orbit-muted); }
+.asset-orbit__target[data-active='true'] .asset-orbit__yield { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .asset-orbit__yield { transition: none; transform: none; }
+}

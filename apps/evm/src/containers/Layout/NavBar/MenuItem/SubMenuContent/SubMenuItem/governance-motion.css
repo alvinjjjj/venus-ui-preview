@@ -147,3 +147,57 @@
     transition: none;
   }
 }
+
+/* Earn icons keep their blue tile in every mode. The tile is also painted behind the SVG so it
+   survives a gradient id collision (two inline copies of the same icon on the page). */
+.venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault']) .venus-submenu-icon {
+  border-radius: 8px;
+  background: linear-gradient(140deg, #85ccff, #0085e3);
+}
+
+/* Product menus (Earn, Borrow): 40px icons, a step down from 48px so the icon no longer
+   towers over the two-line description. */
+:root .venus-navigation-menu [data-submenu-variant='secondary'] .venus-submenu-icon,
+:root .venus-navigation-menu [data-submenu-variant='secondary'] .venus-submenu-icon > img,
+:root[data-glass-preview] .venus-navigation-menu [data-submenu-variant='secondary'] .venus-submenu-icon > .venus-earn-icon {
+  width: calc(var(--spacing) * 10);
+  height: calc(var(--spacing) * 10);
+}
+:root .venus-navigation-menu [data-submenu-variant='secondary'] .venus-submenu-icon { border-radius: 8px; }
+:root .venus-navigation-menu [data-submenu-variant='secondary'] .venus-submenu-icon > img { border-radius: 8px; }
+
+/* Product menu icons: one short hover animation each, New and E only (Original keeps the
+   icons still). Ease-in-out, ~600ms, plays once per hover; off for reduced motion.
+   Hub: nodes pulse outward in turn. Vault: the dial turns. Core: the Venus dot hops and the
+   strokes slide along their diagonal. Spoke: dots ripple out from the centre. */
+.venus-navigation-menu [data-earn-motion] .venus-earn-icon :is(path, circle) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes menu-core-dot { 45% { transform: translate(-6%, -22%); } }
+@keyframes menu-core-stroke { 45% { transform: translate(5%, -5%); } }
+@keyframes menu-spoke-ripple { 45% { transform: scale(1.4); opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path {
+    animation: earn-hub-distribute 600ms ease-in-out 1;
+  }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(2) { animation-delay: 80ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(3) { animation-delay: 140ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(4) { animation-delay: 200ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(5) { animation-delay: 260ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='vault']:is(:hover, :focus-visible) .venus-vault-lock {
+    animation: earn-vault-unlock 600ms ease-in-out 1;
+  }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-core-dot {
+    animation: menu-core-dot 600ms ease-in-out 1;
+  }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) :is(.venus-core-short, .venus-core-long) {
+    animation: menu-core-stroke 600ms ease-in-out 1;
+  }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='core'] .venus-core-long { animation-delay: 80ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot {
+    animation: menu-spoke-ripple 600ms ease-in-out 1;
+  }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='1'] { animation-delay: 90ms; }
+  :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='2'] { animation-delay: 180ms; }
+}

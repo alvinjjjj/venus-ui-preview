@@ -1,0 +1,574 @@
+/* Shared story controls: New's acrylic stack and Explorer's particle narrative. */
+.venus-stack {
+  /* New (v5) glass-button material, copied as the Oracle link does
+     (demo/GlassVersions/v5-button-refresh.css). Explorer shares New's materials. */
+  --vs-blue: var(--color-blue);
+  --vs-text: #fff;
+  --vs-muted: var(--color-light-grey);
+  --vs-chip: rgb(255 255 255 / 7%);
+  --vs-chip-hover: rgb(255 255 255 / 12%);
+  --vs-chip-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%),
+    0 4px 10px rgb(0 0 0 / 12%);
+  --vs-glass-blur: blur(12px) saturate(130%);
+  /* chips can sit over the white plates, so they take New's fixed dark glass
+     (the empty-action material); the clear glass is for the nav over the dark ground */
+  --vs-card: linear-gradient(rgb(255 255 255 / 7%), rgb(255 255 255 / 7%)), rgb(24 26 32 / 94%);
+  --vs-card-hover: linear-gradient(rgb(255 255 255 / 12%), rgb(255 255 255 / 12%)), rgb(24 26 32 / 94%);
+  --vs-badge: rgb(255 255 255 / 14%);
+  --vs-radius: 8px;
+  --vs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  width: 100%;
+  color: var(--vs-text);
+  /* carries on the hero's sky colour (LandingMockup) instead of fading to black */
+  background: color-mix(in srgb, var(--color-background-active) 88%, var(--color-dark-blue));
+  /* lets the chip width animate between fit-content and 100% */
+  interpolate-size: allow-keywords;
+  /* no overflow here: it would break position: sticky on the stage */
+}
+
+.venus-stack__pin {
+  position: sticky;
+  top: 0;
+  isolation: isolate;
+  height: calc(100svh - 64px);
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.venus-stack__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.venus-particles__labels {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.venus-particles__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: 100%;
+  color: var(--vs-text);
+  opacity: 0;
+}
+
+/* ---- chip rail ---- */
+.venus-stack__rail {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: min(44%, 440px);
+  min-width: 250px;
+  padding: clamp(18px, 2.4vw, 38px);
+  container-type: inline-size;
+}
+
+.venus-stack__chip {
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--vs-radius);
+  background: var(--vs-card);
+  box-shadow: var(--vs-chip-shadow);
+  backdrop-filter: var(--vs-glass-blur);
+  -webkit-backdrop-filter: var(--vs-glass-blur);
+  transition:
+    width 0.42s var(--vs-ease),
+    background 0.3s ease-out;
+}
+
+.venus-stack__chip:not(.is-open):hover {
+  background: var(--vs-card-hover);
+}
+
+.venus-stack__chip.is-open {
+  width: 100%;
+}
+
+.venus-stack__chip-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px 9px 17px;
+  border: 0;
+  transition: padding 0.42s var(--vs-ease);
+  background: none;
+  color: var(--vs-text);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.venus-stack__chip-btn:focus-visible {
+  outline: 2px solid var(--vs-text);
+  outline-offset: -4px;
+}
+
+.venus-stack__chip-name {
+  overflow: hidden;
+  font-size: 14.5px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition:
+    color 0.3s ease,
+    font-size 0.32s var(--vs-ease);
+}
+
+/* Open: the title stays and becomes the small grey label top-left;
+   the close mark moves to the right edge. */
+.venus-stack__chip.is-open .venus-stack__chip-btn {
+  padding: 13px 12px 7px 22px;
+}
+
+.venus-stack__chip.is-open .venus-stack__chip-name {
+  color: var(--vs-muted);
+  font-size: 13.5px;
+}
+
+.venus-stack__chip-plus {
+  display: grid;
+  flex: none;
+  place-items: center;
+  /* no effect while collapsed (the chip hugs its content); pins x to the right when open */
+  margin-left: auto;
+  width: 19px;
+  height: 19px;
+  border-radius: 4px;
+  background: var(--vs-badge);
+}
+
+/* the close icon turned 45deg reads as a plus; it turns back to x when open.
+   Only the glyph turns, so the square badge stays square. */
+.venus-stack__chip-plus svg {
+  transform: rotate(45deg);
+  transition: transform 0.42s var(--vs-ease);
+}
+
+.venus-stack__chip.is-open .venus-stack__chip-plus svg {
+  transform: none;
+}
+
+.venus-stack__chip-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  /* takes the chip's width without adding to it, so a closed chip hugs its title */
+  width: 0;
+  min-width: 100%;
+  transition: grid-template-rows 0.42s var(--vs-ease);
+}
+
+.venus-stack__chip.is-open .venus-stack__chip-body {
+  grid-template-rows: 1fr;
+}
+
+.venus-stack__chip-body > div {
+  overflow: hidden;
+}
+
+.venus-stack__chip-inner {
+  /* laid out at the open width the whole time, so the text never reflows
+     while the card grows or shrinks; the card just reveals or clips it */
+  width: 100cqi;
+  padding: 0 22px 17px;
+}
+
+.venus-stack__chip-body p {
+  max-width: 40ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.34s ease 0.13s,
+    transform 0.4s var(--vs-ease) 0.13s;
+}
+
+.venus-stack__chip.is-open .venus-stack__chip-body p {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- footer controls ---- */
+.venus-stack__under {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: clamp(18px, 2.4vw, 38px);
+}
+
+.venus-stack__nav {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: var(--vs-radius);
+  background: var(--vs-chip);
+  box-shadow: var(--vs-chip-shadow);
+  backdrop-filter: var(--vs-glass-blur);
+  -webkit-backdrop-filter: var(--vs-glass-blur);
+  color: var(--vs-text);
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  transition: background 0.3s ease-out;
+}
+
+.venus-stack__nav:hover {
+  background: var(--vs-chip-hover);
+}
+
+.venus-stack__nav:focus-visible {
+  outline: 2px solid var(--vs-text);
+  outline-offset: 2px;
+}
+
+.venus-stack__track {
+  width: 148px;
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.venus-stack__bar {
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--vs-blue);
+}
+
+@media (max-width: 760px) {
+  .venus-stack__rail {
+    width: calc(100% - 6px);
+    min-width: 0;
+  }
+
+  .venus-stack__track {
+    width: 92px;
+  }
+
+  /* E needs room for the particle story below its copy; New keeps its rail. */
+  .venus-particles .venus-stack__rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .venus-particles .venus-stack__chip {
+    width: 100%;
+  }
+
+  .venus-particles .venus-stack__chip.is-open {
+    grid-column: 1 / -1;
+  }
+
+  /* Keep the full glass model below its copy on mobile, with the same controls. */
+  .venus-glass-stack .venus-stack__rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .venus-glass-stack .venus-stack__chip {
+    width: 100%;
+  }
+
+  .venus-glass-stack .venus-stack__chip.is-open {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .venus-stack__chip,
+  .venus-stack__chip-name,
+  .venus-stack__chip-btn,
+  .venus-stack__chip-plus svg,
+  .venus-stack__chip-body,
+  .venus-stack__chip-body p {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+}
+
+/* Local material/view controls reuse the incumbent glass and spacing tokens. */
+.venus-stack__controls {
+  position: absolute;
+  z-index: 2;
+  right: calc(clamp(18px, 2.4vw, 38px) + var(--spacing) * 16);
+  bottom: clamp(18px, 2.4vw, 38px);
+  display: grid;
+  gap: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 2);
+  border-radius: var(--vs-radius);
+  background: var(--vs-card);
+  box-shadow: var(--vs-chip-shadow);
+  color: var(--vs-text);
+}
+
+.venus-stack__control-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+}
+
+.venus-stack__control-row button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+  min-height: calc(var(--spacing) * 9);
+  padding: calc(var(--spacing) * 2);
+  border: 1px solid transparent;
+  border-radius: var(--vs-radius);
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.venus-stack__control-row button:hover {
+  background: var(--vs-chip-hover);
+}
+
+.venus-stack__control-row button[aria-pressed='true'] {
+  background: var(--vs-chip-hover);
+  border-color: var(--vs-blue);
+}
+
+.venus-stack__control-row button:focus-visible {
+  outline: 2px solid var(--vs-blue);
+  outline-offset: 2px;
+}
+
+.venus-stack__control-row button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.venus-stack__control-row output {
+  min-width: 4ch;
+  text-align: center;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.venus-stack__swatch {
+  width: calc(var(--spacing) * 3);
+  height: calc(var(--spacing) * 3);
+  border-radius: 50%;
+  border: 1px solid var(--vs-muted);
+}
+
+.venus-stack__swatch--smoke {
+  background: var(--color-light-grey);
+}
+
+.venus-stack__swatch--pearl {
+  background: var(--vs-text);
+}
+
+.venus-stack__swatch--navy {
+  background: color-mix(in srgb, var(--color-dark-blue) 60%, var(--color-blue));
+}
+
+@media (max-width: 760px) {
+  .venus-stack__controls {
+    left: 18px;
+    right: 18px;
+    bottom: calc(30px + 18px * 2 + var(--spacing) * 2);
+  }
+
+  .venus-stack__control-row {
+    justify-content: center;
+  }
+}
+
+/* These panels retain the approved dark glass in either site theme. */
+.venus-glass-stack {
+  --vs-muted: color-mix(in srgb, var(--vs-text) 72%, transparent);
+}
+
+.venus-glass-stack .venus-stack__controls svg,
+.venus-glass-stack .venus-stack__chip-plus svg {
+  color: var(--vs-text);
+}
+
+.venus-glass-stack .venus-stack__canvas {
+  cursor: grab;
+  touch-action: none;
+}
+
+.venus-glass-stack .venus-stack__canvas.is-dragging {
+  cursor: grabbing;
+}
+
+.venus-stack__rotation {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 2);
+  font-size: 13px;
+}
+
+.venus-stack__rotation input {
+  width: 0;
+  flex: 1;
+  min-height: calc(var(--spacing) * 9);
+  accent-color: var(--vs-blue);
+  cursor: ew-resize;
+}
+
+.venus-stack__rotation input:focus-visible {
+  outline: 2px solid var(--vs-blue);
+  outline-offset: 2px;
+}
+
+.venus-stack__rotation output {
+  min-width: 4ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.venus-stack__drag-hint {
+  color: var(--vs-muted);
+  padding-inline: calc(var(--spacing) * 2);
+  font-size: 13px;
+}
+
+/* The preview toolbar stays small; extra controls overlay rather than shrink the model. */
+.venus-glass-stack .venus-stack__controls {
+  right: calc(clamp(18px, 2.4vw, 38px) + var(--spacing) * 52);
+  gap: 0;
+  padding: 0;
+  max-width: calc(100% - var(--spacing) * 9);
+}
+
+.venus-stack__toolbar {
+  display: grid;
+  gap: var(--spacing);
+  padding: calc(var(--spacing) * 2);
+}
+
+.venus-stack__toolbar .venus-stack__control-row {
+  flex-wrap: wrap;
+}
+
+.venus-stack__adjustments {
+  position: absolute;
+  bottom: calc(100% + var(--spacing) * 2);
+  right: 0;
+  width: 100%;
+  max-height: min(52svh, calc(var(--spacing) * 108));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: grid;
+  gap: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 3);
+  border-radius: var(--vs-radius);
+  background: var(--vs-card);
+  box-shadow: var(--vs-chip-shadow);
+  scrollbar-color: var(--vs-muted) transparent;
+  scrollbar-width: thin;
+}
+
+.venus-stack__adjustments .venus-stack__control-row {
+  flex-wrap: wrap;
+}
+
+.venus-stack__rotation > span {
+  min-width: 10ch;
+}
+
+.venus-stack__position {
+  display: flex;
+  gap: calc(var(--spacing) * 2);
+}
+
+.venus-stack__position label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing);
+  font-size: 13px;
+  min-width: 0;
+}
+
+.venus-stack__position input {
+  width: 6ch;
+  padding: var(--spacing);
+  border-radius: var(--vs-radius);
+  border: 1px solid var(--vs-muted);
+  background: transparent;
+  color: var(--vs-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.venus-stack__position input:focus-visible {
+  outline: 2px solid var(--vs-blue);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .venus-glass-stack .venus-stack__controls {
+    right: 18px;
+  }
+
+  .venus-stack__toolbar .venus-stack__drag-hint {
+    display: none;
+  }
+
+  .venus-stack__adjustments {
+    max-height: 45svh;
+  }
+
+  .venus-stack__position {
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 761px) {
+  .venus-stack__adjustments {
+    right: calc(100% + var(--spacing) * 6);
+    bottom: 0;
+    width: calc(var(--spacing) * 88);
+    max-height: min(75svh, calc(var(--spacing) * 148));
+  }
+
+  /* Keep the object unobscured while experimenting; closing More restores the story rail. */
+  .venus-glass-stack:has(.venus-stack__adjustments) .venus-stack__rail {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Put the experiment panel over the copy, leaving a separate object preview below it. */
+  .venus-stack__adjustments {
+    bottom: calc(100% + var(--spacing) * 46);
+    max-height: 40svh;
+  }
+
+  .venus-glass-stack:has(.venus-stack__adjustments) .venus-stack__rail {
+    visibility: hidden;
+  }
+}

@@ -1,9 +1,10 @@
 import BigNumber from 'bignumber.js';
-import './original.css';
 import './materials.css';
+import './original.css';
 
 import { useGetLiquidityHubs } from 'clients/api';
-import { type CellProps, Page, PageStatHeader } from 'components';
+import { type CellProps, Page, PageStatHeader, Wrapper } from 'components';
+import { HubApyBanner } from 'containers/HubApyBanner';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
@@ -58,20 +59,24 @@ const LiquidityHubs: React.FC = () => {
 
   return (
     <Page>
-      <div className="liquidity-hubs-page space-y-5 sm:space-y-12">
-        <PageStatHeader
-          className="liquidity-hubs-stat-header"
-          title={t('liquidityHubs.header')}
-          description={t('liquidityHubs.description')}
-          cells={cells}
-        />
+      <HubApyBanner />
 
-        <LiquidityHubTable
-          className="liquidity-hubs-table"
-          data={liquidityHubs}
-          isFetching={isLoading}
-        />
-      </div>
+      <Wrapper className="pt-5 sm:pt-10">
+        <div className="liquidity-hubs-page space-y-5 sm:space-y-12">
+          <PageStatHeader
+            className="liquidity-hubs-stat-header"
+            title={t('liquidityHubs.header')}
+            description={t('liquidityHubs.description')}
+            cells={cells}
+          />
+
+          <LiquidityHubTable
+            className="liquidity-hubs-table"
+            data={liquidityHubs}
+            isFetching={isLoading}
+          />
+        </div>
+      </Wrapper>
     </Page>
   );
 };

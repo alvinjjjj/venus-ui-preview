@@ -8,6 +8,7 @@ import { Subdirectory, routes } from 'constants/routing';
 import { useTranslation } from 'libs/translations';
 import LiquidityHubName from './LiquidityHubName';
 import PoolName from './PoolName';
+import SpokeMarketName from './SpokeMarketName';
 import VTokenSymbol from './VTokenSymbol';
 
 export interface PathNode {
@@ -27,6 +28,8 @@ export const usePathNodes = () => {
       vhTokenAddress?: Address;
       proposalId?: string;
       address?: Address;
+      spokePoolAddress?: string;
+      spokeMarketAddress?: string;
     } = {};
 
     const activeRouteKey = Object.keys(routes).find(key => {
@@ -80,6 +83,17 @@ export const usePathNodes = () => {
           );
 
           dom = <LiquidityHubName vhTokenAddress={params.vhTokenAddress} />;
+          break;
+        case Subdirectory.SPOKE:
+          dom = t('breadcrumbs.spoke');
+          break;
+        case Subdirectory.SPOKE_MARKET:
+          hrefFragment = Subdirectory.SPOKE_MARKET.replace(
+            ':spokePoolAddress',
+            params.spokePoolAddress || '',
+          ).replace(':spokeMarketAddress', params.spokeMarketAddress || '');
+
+          dom = <SpokeMarketName />;
           break;
         case Subdirectory.GOVERNANCE:
           dom = t('breadcrumbs.governance');

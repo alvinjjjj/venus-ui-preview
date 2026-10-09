@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router';
-import { Button, Card, TextField, Toggle, InfoIcon } from 'components';
+import { Button, Card, TextField, Toggle, InfoIcon, Slider, ProgressBar } from 'components';
 import '../LiquidityHubs/materials.css';
 import './gallery.css';
 import './button-texture.css';
@@ -14,6 +14,7 @@ import { IconExamples } from './IconExamples';
 
 export default function ComponentGallery() {
   const [enabled, setEnabled] = useState(true);
+  const [sliderValue, setSliderValue] = useState(40);
   const [query, setQuery] = useState('');
   const location = useLocation();
   const tab = location.pathname.split('/')[2] || 'buttons';
@@ -228,6 +229,29 @@ export default function ComponentGallery() {
             />
             <Toggle label="Disabled / Off" value={false} disabled />
             <Toggle label="Disabled / On" value disabled />
+          </Card>
+          <h2 className="text-p1s">Slider</h2>
+          <Card className="space-y-8 p-6">
+            <Slider value={sliderValue} onChange={setSliderValue} step={1} max={100} />
+            <Slider value={60} onChange={() => {}} step={1} max={100} disabled />
+          </Card>
+          <h2 className="text-p1s">Health bar</h2>
+          <Card className="space-y-6 p-6">
+            {[
+              { value: 30, className: 'bg-green' },
+              { value: 62, className: 'bg-yellow' },
+              { value: 90, className: 'bg-red' },
+            ].map(bar => (
+              <div key={bar.value} className="space-y-3">
+                <p className="text-light-grey">{bar.value}% of liquidation threshold</p>
+                <ProgressBar
+                  min={0}
+                  max={100}
+                  progressBars={[bar]}
+                  marks={[{ value: 80 }, { value: 70, className: 'bg-white' }]}
+                />
+              </div>
+            ))}
           </Card>
         </section>
       )}

@@ -17,6 +17,8 @@ export const TickMark: React.FC<TickMarkProps> = ({
 
   return (
     <Comp
+      data-slot="slider-tick"
+      data-active={isActive || undefined}
       className={cn(
         'size-3 shrink-0 outline-hidden rounded-full border border-light-grey-disabled absolute',
         isActive ? 'bg-light-grey-active' : 'bg-dark-blue-hover',

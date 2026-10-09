@@ -5,10 +5,12 @@ import { useAccountAddress } from 'libs/wallet';
 import liquidityHubIconSrc from 'assets/img/liquidityHubIcon.svg';
 import vaultsIconSrc from 'assets/img/vaultsIcon.svg';
 import venusCoreIconSrc from 'assets/img/venusCoreIcon.png';
-import venusFluxIconSrc from 'assets/img/venusFluxIcon.png';
+import venusSpokeIconSrc from 'assets/img/venusSpokeIcon.png';
 import { VENUS_FLUX_URL } from 'constants/production';
 import { useGetMarketsPagePath } from 'hooks/useGetMarketsPagePath';
 import { useTranslation } from 'libs/translations';
+import { useHubAssets } from 'pages/Landing/VenusSteps/useTopHub';
+import { formatPercentageToReadableValue } from 'utilities';
 import type { MenuItem, SubMenu } from '../types';
 
 export const useDashboardMenuItem = (): MenuItem => {
@@ -30,6 +32,14 @@ export const useMenuItems = () => {
   const primeLeaderboardEnabled = useIsFeatureEnabled({ name: 'primeLeaderboard' });
   const liquidityHubEnabled = useIsFeatureEnabled({ name: 'liquidityHub' });
   const { marketsPagePath } = useGetMarketsPagePath();
+  // PM trial: the best live Liquidity Hub APY, as a bare figure ("3.54%"), replaces "New" on Earn
+  // and on the Liquidity Hub item inside the dropdown, in every preview mode. Borrow carries
+  // no header tag in any mode (Venus Spoke keeps its own "New" inside the dropdown).
+  const topHubApy = useHubAssets().assets[0]?.apy;
+  const apyTagLabel =
+    topHubApy === undefined ? undefined : formatPercentageToReadableValue(topHubApy);
+  const earnTagLabel = apyTagLabel ?? t('layout.menu.new');
+  const liquidityHubTagLabel = apyTagLabel ?? t('layout.menu.new');
 
   const menu: Array<MenuItem | SubMenu> = [];
 
@@ -44,10 +54,11 @@ export const useMenuItems = () => {
         description: t('layouts.menu.markets.venusCore.description'),
       },
       {
-        href: VENUS_FLUX_URL,
-        imgSrc: venusFluxIconSrc,
-        label: t('layouts.menu.markets.venusFlux.label'),
-        description: t('layouts.menu.markets.venusFlux.description'),
+        to: routes.spoke.path,
+        imgSrc: venusSpokeIconSrc,
+        label: t('layouts.menu.markets.venusSpoke.label'),
+        tagLabel: t('layout.menu.new'),
+        description: t('layouts.menu.markets.venusSpoke.description'),
       },
     ],
   };
@@ -57,13 +68,13 @@ export const useMenuItems = () => {
       {
         label: t('layout.menu.earn.label'),
         variant: 'secondary',
-        tagLabel: t('layout.menu.new'),
+        tagLabel: earnTagLabel,
         items: [
           {
             to: routes.liquidityHubs.path,
             imgSrc: liquidityHubIconSrc,
             label: t('layouts.menu.markets.liquidityHub.label'),
-            tagLabel: t('layout.menu.new'),
+            tagLabel: liquidityHubTagLabel,
             description: t('layouts.menu.markets.liquidityHub.description'),
           },
           {
@@ -125,6 +136,12 @@ export const useMenuItems = () => {
       label: t('layout.menu.prime.label'),
     });
   }
+
+  // Flux sits in the top bar (external site) instead of inside the Borrow menu.
+  menu.push({
+    href: VENUS_FLUX_URL,
+    label: 'Flux',
+  });
 
   if (statsRouteEnabled) {
     othersSubMenuItems.push({

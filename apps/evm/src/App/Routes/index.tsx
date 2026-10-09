@@ -35,6 +35,8 @@ const TermsOfUse = safeLazyLoad(() => import('pages/TermsOfUse'));
 const FixedTermVaultTermsOfUse = safeLazyLoad(() => import('pages/FixedTermVaultTermsOfUse'));
 const Trade = safeLazyLoad(() => import('pages/Trade'));
 const LiquidityHubs = safeLazyLoad(() => import('pages/LiquidityHubs'));
+const Spoke = safeLazyLoad(() => import('pages/Spoke'));
+const SpokeMarket = safeLazyLoad(() => import('pages/SpokeMarket'));
 const LiquidityHub = safeLazyLoad(() => import('pages/LiquidityHub'));
 
 const ComponentGallery = safeLazyLoad(() => import('pages/ComponentGallery'));
@@ -285,6 +287,26 @@ const AppRoutes = () => {
             />
           </Route>
         )}
+
+        <Route path={Subdirectory.SPOKE}>
+          <Route
+            index
+            element={
+              <PageSuspense>
+                <Spoke />
+              </PageSuspense>
+            }
+          />
+
+          <Route
+            path={Subdirectory.SPOKE_MARKET}
+            element={
+              <PageSuspense>
+                <SpokeMarket />
+              </PageSuspense>
+            }
+          />
+        </Route>
 
         <Route
           path={Subdirectory.SKILLS}

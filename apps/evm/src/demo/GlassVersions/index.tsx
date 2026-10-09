@@ -11,6 +11,7 @@ import './button-materials.css';
 import './controller.css';
 import {
   type GlassPreviewMode,
+  isExplorerMode,
   landingDesignByMode,
   previewDesignByMode,
   useGlassPreview,
@@ -48,7 +49,8 @@ export const GlassVersions = () => {
     // V5 shares V4 materials, with a separate button shape override.
     document.documentElement.dataset.glassVersion = styleVersion === 'v5' ? 'v6' : styleVersion;
     document.documentElement.dataset.glassPreview = styleVersion;
-    document.documentElement.dataset.glassMode = version;
+    // New mirrors Explorer, so it carries Explorer's mode attribute for the shared CSS.
+    document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : version;
     document.documentElement.toggleAttribute('data-glass-landing', isLandingRoute);
     localStorage.setItem('venus-glass-version', version);
     return () => {
@@ -136,7 +138,7 @@ export const GlassVersions = () => {
                 >
                   Motion <span aria-hidden="true">{motionOpen ? '−' : '+'}</span>
                 </button>
-                {motionOpen && <MotionControls explorer={version === 'explorer'} />}
+                {motionOpen && <MotionControls />}
               </div>
             )}
             <div className="preview-tools">

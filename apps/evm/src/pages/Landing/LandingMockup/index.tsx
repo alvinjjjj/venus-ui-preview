@@ -1,5 +1,4 @@
 import { Link } from 'containers/Link';
-import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useGetMarketsPagePath } from 'hooks/useGetMarketsPagePath';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Suspense, lazy, useEffect, useState } from 'react';
@@ -58,13 +57,15 @@ const LandingIntro = () => (
   </div>
 );
 
-export const LandingMockup: React.FC = () => {
+export const LandingMockup: React.FC<{ connectedFlow?: boolean; transitionProgress?: number }> = ({
+  connectedFlow = false,
+  transitionProgress,
+}) => {
   const { search } = useLocation();
   const pinnedOffer = new URLSearchParams(search).get('offer');
   const [activeIndex, setActiveIndex] = useState(pinnedOffer === 'borrow' ? 1 : 0);
   const flowSettings = useLandingMotion(state => state.flow);
   const starTuning = useLandingMotion(state => state.stars);
-  const isNew = useGlassPreview(state => state.mode === 'v5');
   const reduceMotion = useReducedMotion();
   const { marketsPagePath } = useGetMarketsPagePath();
   const active = states[activeIndex];
@@ -89,11 +90,17 @@ export const LandingMockup: React.FC = () => {
           settings={flowSettings}
           starTuning={starTuning}
           variant="depth-pulse"
-          interactive={!isNew}
+          interactive={true}
+          connectedFlow={connectedFlow}
+          transitionProgress={transitionProgress}
         />
       </Suspense>
 
-      <div className="landing-mockup__headline">
+      <div
+        className="landing-mockup__headline"
+        inert={transitionProgress !== undefined && transitionProgress > 0.2}
+        aria-hidden={transitionProgress !== undefined && transitionProgress > 0.2}
+      >
         <h1>Universal Money Markets</h1>
         <div className="landing-mockup__offer-row">
           <button
@@ -134,56 +141,37 @@ export const LandingMockup: React.FC = () => {
         </div>
       </div>
 
-      {isNew ? (
-        <div className="landing-mockup__new-layout">
-          <div className="landing-mockup__new-summary">
-            <LandingTvl />
-            <LandingIntro />
-          </div>
-          <a
-            className="landing-mockup__news-card"
-            href="https://community.venus.io/latest"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Read Venus company news"
-          >
-            <div className="landing-mockup__news-meta">
-              <span>Company news</span>
-              <span>Latest</span>
-            </div>
-            <div className="landing-mockup__news-bottom">
-              <p>Discover the latest news and updates from Venus.</p>
-              <img src={arrowSrc} alt="" />
-            </div>
-          </a>
+      <>
+        <div
+          className="landing-mockup__details"
+          aria-hidden={transitionProgress !== undefined && transitionProgress > 0.2}
+        >
+          <LandingIntro />
+          <LandingTvl />
         </div>
-      ) : (
-        <>
-          <div className="landing-mockup__details">
-            <LandingIntro />
-            <LandingTvl />
-          </div>
-          <div className="landing-mockup__trusted">
-            <p>
-              <em>Trusted</em> by many
-            </p>
-            <div
-              className="landing-mockup__logo-viewport"
-              aria-label="Supported wallets and partners"
-            >
-              <div className="landing-mockup__logo-track">
-                {[0, 1].map(copy => (
-                  <div className="landing-mockup__logo-group" key={copy} aria-hidden={copy === 1}>
-                    {walletLogos.map(wallet => (
-                      <img key={wallet.name} src={wallet.src} alt={copy === 0 ? wallet.name : ''} />
-                    ))}
-                  </div>
-                ))}
-              </div>
+        <div
+          className="landing-mockup__trusted"
+          aria-hidden={transitionProgress !== undefined && transitionProgress > 0.2}
+        >
+          <p>
+            <em>Trusted</em> by many
+          </p>
+          <div
+            className="landing-mockup__logo-viewport"
+            aria-label="Supported wallets and partners"
+          >
+            <div className="landing-mockup__logo-track">
+              {[0, 1].map(copy => (
+                <div className="landing-mockup__logo-group" key={copy} aria-hidden={copy === 1}>
+                  {walletLogos.map(wallet => (
+                    <img key={wallet.name} src={wallet.src} alt={copy === 0 ? wallet.name : ''} />
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </>
     </main>
   );
 };

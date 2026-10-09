@@ -9,7 +9,8 @@
 .preview-controller:has(.preview-motion-panel) { width: 260px; }
 .preview-motion-tab { width: 100%; min-height: 36px; justify-content: space-between !important; padding: 0 8px !important; font-size: 13px; }
 .preview-motion-tab span { font-size: 18px; line-height: 1; }
-.preview-motion-panel { max-height: min(54svh, 480px); overflow-y: auto; padding: 4px 8px 8px; }
+.preview-motion-panel { padding: 4px 8px 8px; }
+.preview-motion-fields { max-height: min(40svh, 360px); overflow-y: auto; padding-right: var(--spacing); }
 .preview-motion-caption { margin: 4px 0 10px; color: #b9c6d8; font-size: 11px; }
 .preview-motion-caption--stars { margin-top: 18px; padding-top: 12px; border-top: 1px solid rgb(140 150 170 / 24%); }
 .preview-motion-slider { display: block; margin-top: 12px; font-size: 12px; }
@@ -31,3 +32,9 @@
 :root[data-liquidity-theme='light'] .preview-motion-slider > span { color: #465366; }
 :root[data-liquidity-theme='light'] .preview-motion-slider output { color: #17191e; }
 :root[data-liquidity-theme='light'] .preview-controller .preview-motion-reset { color: #0879d1; }
+
+/* Frame controls reuse the preview panel's existing palette and spacing. */
+.preview-frame-tabs, .preview-frame-actions { display: flex; gap: calc(var(--spacing) * 2); margin-block: calc(var(--spacing) * 2); }
+.preview-frame-tabs button, .preview-frame-actions button { flex: 1; min-height: 36px; font-size: var(--text-xs); border: 1px solid var(--color-light-grey); }
+.preview-content-toggle { display: flex; align-items: center; gap: calc(var(--spacing) * 2); margin-top: calc(var(--spacing) * 4); font-size: var(--text-xs); }
+.preview-content-toggle input { accent-color: var(--color-blue); }

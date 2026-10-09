@@ -25,6 +25,7 @@ export const Notice = ({
   ...otherProps
 }: NoticeProps) => (
   <div
+    data-venus-notice={variant}
     className={cn(
       'relative bg-background rounded-lg border transition-colors overflow-hidden',
       (variant === 'info' || variant === 'loading') && 'border-lightGrey',

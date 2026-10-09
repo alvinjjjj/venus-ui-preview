@@ -353,7 +353,8 @@
     "proposal": "提案 #{{proposalId}}",
     "swap": "兑换",
     "vai": "VAI",
-    "vaults": "金库"
+    "vaults": "金库",
+    "spoke": "Spoke"
   },
   "bridgePage": {
     "amountInput": {
@@ -803,6 +804,41 @@
       "text": "Venus Protocol 的高阶用户可铸造 Venus Prime 代币，在 Venus core 池的部分市场享受更优费率。",
       "title": "<hl>Venus Prime</hl> <br />提升您的回报"
     },
+    "venusStack": {
+      "a11y": {
+        "next": "下一层",
+        "previous": "上一层",
+        "section": "Venus 如何组成"
+      },
+      "appSkills": {
+        "body": "在 App 里用 Venus，或交给 AI 代理。Venus Agent Skills（beta）会读取实时市场数据、替你操作，私钥始终留在你的电脑上。",
+        "name": "App 与代理技能"
+      },
+      "borrowTrade": {
+        "body": "每个 Spoke 的另一端。借款人提供抵押品、支付利息，这些利息就是你的收益。Trade 在同一批市场上开杠杆多空仓位，界面内也有 Swap。",
+        "name": "借款与交易"
+      },
+      "chains": {
+        "body": "Venus 部署在 BNB Chain、Ethereum 等多条 EVM 链上。来到链上的每一笔稳定币、BTC、ETH，都是在等去处的资金。",
+        "name": "链与资产"
+      },
+      "governance": {
+        "body": "包住一切的外壳。每一个上限、Spoke 和优先顺序，都只能通过 XVS 持有者投票通过的提案修改，再经时间锁执行。价格来自 Resilient Oracle，背后还有风险基金、24 小时监控和多次审计。",
+        "name": "治理与安全"
+      },
+      "liquidityHub": {
+        "body": "一次存入，多个市场。资产只要存一次，你拿到的 vhToken 会自己增值。流动性中心会按治理设定的上限和优先顺序，把资金分配到各个 Spoke 市场，你不用管仓位，也没有东西要领。持有 Prime 的话，存在这里的资金同样会累积 Prime 奖励。",
+        "name": "流动性中心"
+      },
+      "spokes": {
+        "body": "流动性中心的资金在这里运作。每个 Spoke 都是独立的市场，有自己的利率和风险：Venus Core 是经典借贷，Venus Flux 主打资金效率，Fixed Rate 通过 Pendle 锁定收益。治理可以接入新的 Spoke，不会影响原有的市场。",
+        "name": "Spoke 市场"
+      },
+      "vaultsPrime": {
+        "body": "质押 XVS 可以投票，也能争取 Prime 资格：质押越多、越久，分数越高。每月排名靠前的人在指定市场享有加成收益，通过流动性中心存入的资金也计算在内。另有锁定期和领取日都固定的定期金库。",
+        "name": "金库与 Prime"
+      }
+    },
     "wallets": {
       "title": "深受众多用户信赖"
     }
@@ -920,6 +956,10 @@
         "venusFlux": {
           "description": "高资本效率的借贷，以获得最佳收益。",
           "label": "Venus Flux"
+        },
+        "venusSpoke": {
+          "description": "以你存入的抵押品，从专属市场借出资产。",
+          "label": "Venus Spoke"
         }
       }
     }
@@ -2760,5 +2800,9 @@
   },
   "yieldsGroups": {
     "protocol": "协议"
+  },
+  "hubApyBanner": {
+    "buttonLabel": "开始赚取",
+    "title": "在流动性中心存入 <Strong>{{symbol}}</Strong>，年化收益最高 <Apy>{{apy}}</Apy>。存一次，自动分配。"
   }
 }

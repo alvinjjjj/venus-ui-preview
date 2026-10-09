@@ -8,8 +8,8 @@ export interface StatsOverviewDetails {
   borrowsHistory: StatsSeriesRow[];
   supplyDominance: StatsPoint[];
   debtDominance: StatsPoint[];
-  topSuppliers: StatsSeriesRow[];
-  topBorrowers: StatsSeriesRow[];
+  topSuppliers: StatsCategoryRow[];
+  topBorrowers: StatsCategoryRow[];
   marketTable: StatsTableData;
   riskTable: StatsTableData;
   emodeTable: StatsTableData;
@@ -207,41 +207,20 @@ const areaHistory = Array.from({ length: 112 }, (_, index) => {
   return row;
 });
 
-const barDates = [
-  'Jun 1, 2025',
-  'Jun 12, 2025',
-  'Jun 22, 2025',
-  'Jul 3, 2025',
-  'Jul 13, 2025',
-  'Jul 24, 2025',
-  'Aug 3, 2025',
-  'Aug 14, 2025',
-  'Aug 24, 2025',
-];
-const barProfiles: Record<string, number>[] = [
-  { ETH: 2450 },
-  { ETH: 1540 },
-  { SolvBTC: 1160, asBNB: 190 },
-  { USDC: 1220, BTCB: 80 },
-  { asBNB: 900, SolvBTC: 280 },
-  { ETH: 590, USDC: 760, BTCB: 390, U: 80 },
-  { BTCB: 1080 },
-  { BNB: 920, USDC: 560 },
-  { ETH: 520, USDC: 210, asBNB: 510, BTCB: 180 },
-];
-const supplierBars: StatsSeriesRow[] = barDates.map((date, index) => ({
-  date,
-  ...barProfiles[index],
-}));
-const borrowerBars: StatsSeriesRow[] = barDates.map((date, index) => ({
-  date,
-  ...Object.fromEntries(
-    Object.entries(barProfiles[index]).map(([asset, value]) => [
-      asset,
-      Math.round(value * (0.91 + (index % 3) * 0.025)),
-    ]),
-  ),
-}));
+// Preview market totals, shown by asset rather than as a dated transaction history.
+const marketVolumeByAsset: StatsCategoryRow[] = marketAssets
+  .slice(0, marketSupply.length)
+  .map((name, index) => ({
+    name,
+    Supply: marketSupply[index],
+    Borrow: marketBorrow[index],
+  }));
+const supplierBars = [...marketVolumeByAsset]
+  .sort((a, b) => Number(b.Supply) - Number(a.Supply))
+  .slice(0, 8);
+const borrowerBars = [...marketVolumeByAsset]
+  .sort((a, b) => Number(b.Borrow) - Number(a.Borrow))
+  .slice(0, 8);
 
 export const overviewPreviewDetails: StatsOverviewDetails = {
   depositsHistory: areaHistory,

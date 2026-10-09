@@ -13,7 +13,7 @@ import {
 
 import { ChartTooltipContent } from 'components/ChartTooltipContent';
 import { StatsPanel } from './StatsVisuals';
-import { type StatsSeriesRow, chartAssets } from './statsOverviewData';
+import { type StatsCategoryRow, type StatsSeriesRow, chartAssets } from './statsOverviewData';
 
 // Each series uses existing Venus palette tokens or a scoped mix of those tokens.
 const assetColors: Record<string, string> = {
@@ -30,9 +30,15 @@ const assetColors: Record<string, string> = {
 };
 
 const volumeColors = [theme.colors.green, theme.colors.blue, theme.colors.orange, theme.colors.red];
+const marketVolumeColors = [theme.colors.yellow, theme.colors.orange];
 
-const formatMillions = (value: number) =>
-  value === 0 ? '$0' : value >= 1000 ? `$${(value / 1000).toFixed(1)}B` : `$${Math.round(value)}M`;
+const formatMillions = (value: number) => {
+  if (value === 0) return '$0';
+  if (value < 1) return `$${Math.round(value * 1000)}K`;
+  if (value < 10) return `$${Number(value.toFixed(2))}M`;
+  if (value >= 1000) return `$${(value / 1000).toFixed(1)}B`;
+  return `$${Math.round(value)}M`;
+};
 
 // The reference uses a unit label for billions and currency only for the lower ticks.
 const formatVolumeAxis = (value: number) =>
@@ -58,25 +64,48 @@ const getDateTicks = (data: StatsSeriesRow[], count = 5) => {
   );
 };
 
-const chartTooltip = ({
-  active,
-  payload,
-  label,
-}: {
-  active?: boolean;
-  payload?: readonly { name?: string; value?: number | string }[];
-  label?: string | number;
-}) =>
+const chartTooltip = (
+  {
+    active,
+    payload,
+    label,
+  }: {
+    active?: boolean;
+    payload?: readonly { name?: string; value?: number | string; color?: string; fill?: string }[];
+    label?: string | number;
+  },
+  labelHeading = 'Date',
+  showZero = false,
+) =>
   active && payload?.length ? (
     <ChartTooltipContent
       items={[
-        { label: 'Date', value: String(label ?? '') },
+        { label: labelHeading, value: String(label ?? '') },
         ...payload
-          .filter(item => Number(item.value) > 0)
-          .map(item => ({ label: item.name ?? '', value: formatMillions(Number(item.value)) })),
+          .filter(item => showZero || Number(item.value) > 0)
+          .map(item => ({
+            label: item.name ?? '',
+            value: formatMillions(Number(item.value)),
+            color: assetColors[item.name ?? ''] ?? item.color ?? item.fill,
+          })),
       ]}
     />
   ) : null;
+
+const marketVolumeTooltip = (props: Parameters<typeof chartTooltip>[0]) =>
+  chartTooltip(props, 'Asset', true);
+
+const getMarketVolumeTicks = (data: StatsCategoryRow[], keys: string[]) => {
+  const maxTotal = Math.max(
+    0,
+    ...data.map(row => keys.reduce((total, key) => total + Number(row[key] ?? 0), 0)),
+  );
+  const targetStep = Math.max(maxTotal / 4, 1);
+  const magnitude = 10 ** Math.floor(Math.log10(targetStep));
+  const step =
+    ([1, 1.5, 2, 2.5, 5, 10].find(value => value * magnitude >= targetStep) ?? 10) * magnitude;
+  return Array.from({ length: 5 }, (_, index) => index * step);
+};
 
 const SeriesLegend = ({
   labels,
@@ -167,13 +196,16 @@ export const StatsStackedBarPanel = ({
   yAxisTicks,
 }: {
   title: string;
-  data: StatsSeriesRow[];
+  data: StatsSeriesRow[] | StatsCategoryRow[];
   keys: string[];
   transaction?: boolean;
   yAxisDomain?: [number, number];
   yAxisTicks?: number[];
 }) => {
-  const colors = transaction ? volumeColors : keys.map(key => assetColors[key]);
+  const colors = transaction ? volumeColors : marketVolumeColors;
+  const marketTicks = transaction
+    ? undefined
+    : getMarketVolumeTicks(data as StatsCategoryRow[], keys);
 
   return (
     <StatsPanel title={title} className="stats-overview-chart-panel">
@@ -187,11 +219,11 @@ export const StatsStackedBarPanel = ({
           <BarChart data={data} margin={{ top: 12, right: 24, bottom: 0, left: 0 }}>
             <CartesianGrid vertical={false} stroke={theme.colors['dark-blue-hover']} />
             <XAxis
-              dataKey="date"
+              dataKey={transaction ? 'date' : 'name'}
               stroke={theme.colors['light-grey']}
               tickLine={false}
               axisLine={false}
-              ticks={getDateTicks(data)}
+              ticks={transaction ? getDateTicks(data as StatsSeriesRow[]) : undefined}
               interval={0}
             />
             <YAxis
@@ -202,12 +234,12 @@ export const StatsStackedBarPanel = ({
               tickFormatter={formatVolumeAxis}
               {...(!transaction
                 ? {
-                    domain: yAxisDomain ?? [0, 3500],
-                    ticks: yAxisTicks ?? [0, 500, 1000, 1500, 2000, 2500, 3000, 3500],
+                    domain: yAxisDomain ?? [0, marketTicks?.at(-1) ?? 0],
+                    ticks: yAxisTicks ?? marketTicks,
                   }
                 : {})}
             />
-            <Tooltip content={chartTooltip} cursor={false} />
+            <Tooltip content={transaction ? chartTooltip : marketVolumeTooltip} cursor={false} />
             {keys.map((key, index) => (
               <Bar
                 key={key}
@@ -220,7 +252,7 @@ export const StatsStackedBarPanel = ({
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <SeriesLegend labels={keys} colors={colors} heading={transaction ? undefined : 'Token'} />
+      <SeriesLegend labels={keys} colors={colors} />
     </StatsPanel>
   );
 };

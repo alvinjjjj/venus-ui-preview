@@ -131,6 +131,7 @@ export const StatsMetricCard = ({
             chartColor={chartColors[metric.tone ?? 'blue']}
             formatXAxisValue={String}
             formatYAxisValue={formatCompact}
+            areaChartMargin={{ left: 0, right: 0 }}
             formatTooltipItems={point => [
               { label: 'Date', value: point.date },
               {

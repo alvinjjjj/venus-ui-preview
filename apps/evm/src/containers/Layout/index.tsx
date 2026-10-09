@@ -11,7 +11,13 @@ import { NavBar } from './NavBar';
 import ScrollToTop from './ScrollToTop';
 import { useStore } from './store';
 
-const NO_WRAPPER_PATHNAMES = [Subdirectory.LANDING, routes.markets.path] as string[];
+// Pages here render their own Wrapper so a full-bleed promo banner can sit above it.
+const NO_WRAPPER_PATHNAMES = [
+  Subdirectory.LANDING,
+  routes.markets.path,
+  routes.liquidityHubs.path,
+  routes.spoke.path,
+] as string[];
 
 export const Layout: React.FC = () => {
   const scrollToTopRef = useRef<HTMLButtonElement>(null);

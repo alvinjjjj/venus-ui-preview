@@ -5,6 +5,7 @@
   --stats-line: color-mix(in srgb, var(--color-light-grey) 12%, transparent);
   --stats-muted: var(--color-light-grey);
   --stats-radius: calc(var(--spacing) * 3);
+  --stats-metric-padding: calc(var(--spacing) * 3);
   /* Figma's asset series needs more hues than the UI kit provides. Mix only
      existing Venus colors here; these are chart-local, not global tokens. */
   --stats-asset-btcb: var(--color-orange-hover);
@@ -134,31 +135,32 @@
 .stats-tabs {
   display: flex;
   min-width: max-content;
-  gap: calc(var(--spacing) * 1);
+  gap: calc(var(--spacing) * 6);
 }
 
 .stats-tabs button {
   position: relative;
   min-height: calc(var(--spacing) * 11);
-  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+  padding: calc(var(--spacing) * 2) 0;
   border: 0;
   background: transparent;
   color: var(--stats-muted);
   white-space: nowrap;
   font-size: var(--text-sm);
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
   transition: color 180ms ease-out, background 180ms ease-out;
 }
 
+.stats-tabs #stats-tab-overview { font-weight: 600; }
 .stats-tabs button:hover { color: var(--color-white); }
-.stats-tabs button[aria-selected='true'] { color: var(--color-blue); }
+.stats-tabs button[aria-selected='true'] { color: var(--color-white); }
 .stats-tabs button[aria-selected='true']::after {
   content: '';
   position: absolute;
-  right: calc(var(--spacing) * 4);
+  right: 0;
   bottom: 0;
-  left: calc(var(--spacing) * 4);
+  left: 0;
   height: calc(var(--spacing) / 2);
   border-radius: var(--spacing);
   background: var(--color-blue);
@@ -184,6 +186,7 @@
 }
 
 .stats-content { display: grid; gap: calc(var(--spacing) * 5); }
+.stats-overview-metrics { display: grid; gap: calc(var(--spacing) * 3); }
 .stats-section-heading { display: block; margin-top: calc(var(--spacing) * 4); }
 .stats-section-heading span { color: var(--stats-muted); font-size: var(--text-sm); }
 .stats-section-heading p { margin: calc(var(--spacing) * 1) 0 0; color: var(--stats-muted); font-size: var(--text-sm); }
@@ -209,7 +212,7 @@
   flex-direction: column;
   justify-content: center;
   min-height: calc(var(--spacing) * 28);
-  padding: calc(var(--spacing) * 4);
+  padding: var(--stats-metric-padding);
   gap: calc(var(--spacing) * 1);
 }
 
@@ -224,7 +227,7 @@
 .stats-metric-card--prominent {
   min-height: calc(var(--spacing) * 50);
   justify-content: flex-start;
-  padding: calc(var(--spacing) * 5);
+  padding: var(--stats-metric-padding);
 }
 
 .stats-metric-label {
@@ -273,7 +276,7 @@
 .stats-panel-heading h3 {
   margin: 0;
   color: var(--color-white);
-  font-size: var(--text-p2s);
+  font-size: var(--text-base);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -284,12 +287,11 @@
   font-variant-numeric: tabular-nums;
 }
 .stats-trend-chart .stats-trend-chart-inner { height: 100%; }
-.stats-trend-panel--overview .stats-trend-chart { height: calc(var(--spacing) * 110); }
-.stats-trend-panel--dominance .stats-trend-chart { height: calc(var(--spacing) * 100); }
+.stats-trend-panel--overview .stats-trend-chart { height: calc(var(--spacing) * 80); }
+.stats-trend-panel--dominance .stats-trend-chart { height: calc(var(--spacing) * 75); }
 .stats-two-column { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--spacing) * 5); }
 
-.stats-overview-chart { height: calc(var(--spacing) * 105); }
-.stats-overview-chart-panel .stats-panel-heading h3 { font-size: var(--text-base); }
+.stats-overview-chart { height: calc(var(--spacing) * 80); }
 .stats-chart-unit { margin: calc(var(--spacing) * -3) 0 calc(var(--spacing) * 1); color: var(--stats-muted); font-size: var(--text-xs); }
 .stats-series-key { margin-top: calc(var(--spacing) * 3); }
 .stats-series-key-heading { color: var(--stats-muted); font-size: var(--text-xs); }
@@ -358,7 +360,6 @@
 
 .stats-table-panel--dense { padding: 0; border: 0; background: transparent; }
 .stats-table-panel--dense .stats-panel-heading { margin-bottom: calc(var(--spacing) * 2); }
-.stats-table-panel--dense .stats-panel-heading h3 { font-size: var(--text-base); }
 .stats-table-panel--dense .stats-table { min-width: calc(var(--spacing) * 280); font-size: var(--text-xs); }
 .stats-table-panel--dense .stats-table th,
 .stats-table-panel--dense .stats-table td { padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3); line-height: 1.2; }
@@ -499,7 +500,7 @@
   justify-content: center;
   gap: var(--spacing);
   min-height: calc(var(--spacing) * 28);
-  padding: calc(var(--spacing) * 4);
+  padding: var(--stats-metric-padding);
   border: 1px solid var(--stats-line);
   border-top: calc(var(--spacing) / 2) solid var(--color-light-grey);
   border-radius: var(--stats-radius);
@@ -652,7 +653,7 @@
 .stats-market-metric--neutral { --stats-market-accent: var(--color-light-grey); }
 .stats-market-metric .stats-metric-card {
   min-height: calc(var(--spacing) * 37);
-  padding: calc(var(--spacing) * 4);
+  padding: var(--stats-metric-padding);
   border-top: calc(var(--spacing) / 2) solid var(--stats-market-accent);
 }
 .stats-market-metric .stats-metric-chart { height: calc(var(--spacing) * 15); }
@@ -744,7 +745,7 @@
   justify-content: center;
   text-align: left;
   min-height: calc(var(--spacing) * 36);
-  padding: calc(var(--spacing) * 6);
+  padding: var(--stats-metric-padding);
   overflow: hidden;
   border: 1px solid var(--stats-line);
   border-radius: var(--stats-radius);
@@ -793,7 +794,6 @@
   gap: calc(var(--spacing) * 6);
 }
 .stats-hub-allocation-grid > .stats-panel { min-height: calc(var(--spacing) * 112); }
-.stats-hub-allocation-grid .stats-panel-heading h3 { font-size: var(--text-base); }
 .stats-hub-donut-panel { display: flex; flex-direction: column; }
 .stats-hub-donut {
   position: relative;
@@ -904,8 +904,8 @@
   .stats-overview-chart .recharts-xAxis .recharts-cartesian-axis-tick:nth-child(even) { display: none; }
   .stats-page-header, .stats-view-header, .stats-section-heading, .stats-panel-heading { align-items: flex-start; flex-direction: column; }
   .stats-page-header h1 { font-size: var(--text-h7); }
-  .stats-metric-card { min-height: calc(var(--spacing) * 21); padding: calc(var(--spacing) * 3); }
-  .stats-metric-card--prominent { min-height: calc(var(--spacing) * 35); padding: calc(var(--spacing) * 4); }
+  .stats-metric-card { min-height: calc(var(--spacing) * 21); }
+  .stats-metric-card--prominent { min-height: calc(var(--spacing) * 35); }
   .stats-metric-value { font-size: var(--text-lg); }
   .stats-metric-card--prominent .stats-metric-value { font-size: var(--text-p1s); }
   .stats-panel { padding: calc(var(--spacing) * 4); }

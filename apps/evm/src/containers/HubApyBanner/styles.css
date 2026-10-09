@@ -1,0 +1,60 @@
+/* Hub APY banner motion, New / Explorer previews only (Original stays the static Figma banner).
+   Language borrowed from the Card edge light: a soft light band, an edge line, ease-in-out. */
+[data-hub-apy-banner='animated'] .hub-apy-banner__inner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  max-height: 160px;
+  transition: max-height 320ms ease-in-out, min-height 320ms ease-in-out, padding 320ms ease-in-out, opacity 320ms ease-in-out;
+}
+/* Light band sweeping left to right every 9s. */
+[data-hub-apy-banner='animated'] .hub-apy-banner__inner::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgb(133 204 255 / 22%) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  animation: hub-apy-sweep 9s ease-in-out 0.8s infinite;
+  pointer-events: none;
+}
+@keyframes hub-apy-sweep {
+  0% { background-position: 150% 0; }
+  30%, 100% { background-position: -50% 0; }
+}
+/* Edge light along the bottom, brightest in the middle. */
+[data-hub-apy-banner='animated'] .hub-apy-banner__inner::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(133 204 255 / 55%), transparent);
+  pointer-events: none;
+}
+/* The APY glows once its count-up lands, then settles. */
+[data-hub-apy-banner='animated'] .hub-apy-banner__apy {
+  font-variant-numeric: tabular-nums;
+  animation: hub-apy-glow 1.6s ease-in-out 1.3s both;
+}
+@keyframes hub-apy-glow {
+  0%, 100% { text-shadow: 0 0 0 transparent; }
+  40% { text-shadow: 0 0 12px rgb(133 204 255 / 70%); }
+}
+/* CTA arrow nudge on hover. */
+[data-hub-apy-banner='animated'] .hub-apy-banner__cta { transition: translate 200ms ease-in-out; }
+[data-hub-apy-banner='animated'] .hub-apy-banner__cta:hover { translate: 0 -1px; }
+
+/* Close: collapse height and fade. */
+[data-hub-apy-banner='animated'][data-closing] .hub-apy-banner__inner {
+  max-height: 0;
+  min-height: 0;
+  padding-block: 0;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-hub-apy-banner='animated'] .hub-apy-banner__inner,
+  [data-hub-apy-banner='animated'] .hub-apy-banner__inner::before,
+  [data-hub-apy-banner='animated'] .hub-apy-banner__apy { transition: none; animation: none; }
+}

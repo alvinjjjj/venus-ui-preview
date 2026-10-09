@@ -1,5 +1,5 @@
 import { ButtonGroup, Page, Select } from 'components';
-import { useGlassPreview } from 'demo/GlassVersions/store';
+import { previewDesignByMode, useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router';
@@ -16,7 +16,6 @@ import {
 import { StatsBadDebtPage, StatsRatesPage, StatsRiskPage } from './StatsRatesRiskVisuals';
 import { StatsDataTable, StatsMetricGrid, StatsTrendPanel } from './StatsVisuals';
 import { type StatsMarketAsset, statsMarketAssets } from './statsMarketData';
-import { chartAssets } from './statsOverviewData';
 import { type StatsDashboardData, statsPreviewData } from './statsPreviewData';
 import './styles.css';
 
@@ -76,24 +75,32 @@ const StatsContent = ({
   const points = <T,>(values: T[]) => visiblePoints(values, range);
 
   if (view === 'overview') {
+    const tvlPoints = points(data.overview.tvl);
+    const tvlAxisMax = Math.max(
+      1.5,
+      Math.ceil(Math.max(...tvlPoints.map(point => point.value)) * 2) / 2,
+    );
+
     return (
       <div className="stats-content">
-        <StatsMetricGrid
-          metrics={data.overview.hero.map(metric => ({
-            ...metric,
-            points: metric.points ? points(metric.points) : undefined,
-          }))}
-          prominent
-        />
-        <StatsMetricGrid metrics={data.overview.kpis} />
+        <div className="stats-overview-metrics">
+          <StatsMetricGrid
+            metrics={data.overview.hero.map(metric => ({
+              ...metric,
+              points: metric.points ? points(metric.points) : undefined,
+            }))}
+            prominent
+          />
+          <StatsMetricGrid metrics={data.overview.kpis} />
+        </div>
         <StatsTrendPanel
           title="Total value locked over time"
-          data={points(data.overview.tvl)}
+          data={tvlPoints}
           tone="blue"
           unit="$"
           unitSuffix="B"
-          yAxisDomain={[0, 2]}
-          yAxisTicks={[0, 0.5, 1, 1.5, 2]}
+          yAxisDomain={[0, tvlAxisMax]}
+          yAxisTicks={Array.from({ length: tvlAxisMax * 2 + 1 }, (_, index) => index * 0.5)}
           className="stats-trend-panel--overview"
         />
         <div className="stats-section-heading">
@@ -120,8 +127,8 @@ const StatsContent = ({
             data={points(data.overview.details.supplyDominance)}
             tone="red"
             unitSuffix="%"
-            yAxisDomain={[28, 48]}
-            yAxisTicks={[28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]}
+            yAxisDomain={[0, 50]}
+            yAxisTicks={[0, 10, 20, 30, 40, 50]}
             className="stats-trend-panel--dominance"
           />
           <StatsTrendPanel
@@ -129,25 +136,25 @@ const StatsContent = ({
             data={points(data.overview.details.debtDominance)}
             tone="red"
             unitSuffix="%"
-            yAxisDomain={[28, 48]}
-            yAxisTicks={[28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48]}
+            yAxisDomain={[0, 50]}
+            yAxisTicks={[0, 10, 20, 30, 40, 50]}
             className="stats-trend-panel--dominance"
           />
         </div>
         <div className="stats-section-heading">
-          <h2>Top Borrowers &amp; Suppliers</h2>
-          <p>Largest individual positions on Venus BNB Core Pool by supply and borrow value</p>
+          <h2>Top Supply and Borrow Markets</h2>
+          <p>Leading Venus BNB Core Pool assets by supplied and borrowed value</p>
         </div>
         <div className="stats-two-column">
           <StatsStackedBarPanel
-            title="Top Suppliers - Supply vs Borrows"
+            title="Top Supplied Assets - Supply vs Borrows"
             data={data.overview.details.topSuppliers}
-            keys={chartAssets}
+            keys={['Supply', 'Borrow']}
           />
           <StatsStackedBarPanel
-            title="Top Borrowers - Supply vs Borrows"
+            title="Top Borrowed Assets - Supply vs Borrows"
             data={data.overview.details.topBorrowers}
-            keys={chartAssets}
+            keys={['Supply', 'Borrow']}
           />
         </div>
         <StatsDataTable table={data.overview.details.marketTable} dense />
@@ -201,7 +208,8 @@ const StatsContent = ({
 /** All views share this contract; the Venus risk API can provide data here later. */
 export const StatsDashboard = ({ data = statsPreviewData }: { data?: StatsDashboardData }) => {
   const { t } = useTranslation();
-  const isNew = useGlassPreview(state => state.mode === 'v5');
+  // Explorer shares New's components, so it gets New's Stats layout too.
+  const isNew = useGlassPreview(state => previewDesignByMode[state.mode] === 'v5');
   const [searchParams, setSearchParams] = useSearchParams();
   const [timeRange, setTimeRange] = useState<StatsTimeRange>('1Y');
   const [marketAsset, setMarketAsset] = useState(statsMarketAssets[0]);

@@ -2,12 +2,17 @@ import { create } from 'zustand';
 
 export type GlassPreviewMode = 'v1' | 'v5' | 'explorer';
 
-// Keep preview materials and page compositions independent. New uses the
-// existing component material system while Explorer retains Original.
+// Keep preview materials and page compositions independent. Explorer shares
+// New's component material system (buttons, cards, dropdowns); it only differs
+// in page composition: New keeps the acrylic stack; Explorer tells the story with particle fields.
+// New now mirrors Explorer: both render the Explorer landing and Explorer component accents.
+// The two buttons stay so the switcher keeps its layout; Original remains the baseline.
+export const isExplorerMode = (mode: GlassPreviewMode) => mode === 'explorer' || mode === 'v5';
+
 export const previewDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v1: 'v1',
   v5: 'v5',
-  explorer: 'v1',
+  explorer: 'v5',
 };
 
 // New and Explorer use their landing compositions while Original keeps the existing page.

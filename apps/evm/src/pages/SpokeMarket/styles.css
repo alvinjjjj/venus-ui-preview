@@ -1,0 +1,8 @@
+/* Venus Spoke market detail. System components carry the O / New / Explorer materials. */
+.spoke-form__body { display: grid; gap: calc(var(--spacing) * 4); padding-top: calc(var(--spacing) * 4); }
+.spoke-form__rows { display: grid; gap: calc(var(--spacing) * 2); }
+.spoke-form__token { display: inline-flex; align-items: center; gap: calc(var(--spacing) * 2); }
+.spoke-form__token img { width: 20px; height: 20px; border-radius: 50%; }
+
+.spoke-capacity { display: inline-grid; justify-items: end; gap: 6px; min-width: 120px; }
+.spoke-capacity__bar { width: 120px; }

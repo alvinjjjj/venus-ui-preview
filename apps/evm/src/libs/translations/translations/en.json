@@ -353,7 +353,8 @@
     "proposal": "Proposal #{{proposalId}}",
     "swap": "Swap",
     "vai": "VAI",
-    "vaults": "Vaults"
+    "vaults": "Vaults",
+    "spoke": "Spoke"
   },
   "bridgePage": {
     "amountInput": {
@@ -804,6 +805,41 @@
       "text": "Power users of Venus Protocol may mint a Venus Prime Token to enjoy superior rates for select markets in the Venus core pool.",
       "title": "<hl>Venus Prime</hl> <br />amplifies your returns"
     },
+    "venusStack": {
+      "a11y": {
+        "next": "Next layer",
+        "previous": "Previous layer",
+        "section": "How Venus fits together"
+      },
+      "appSkills": {
+        "body": "Use Venus in the app, or hand it to an agent. Venus Agent Skills (beta) read live markets and act for you, and your private key stays on your machine.",
+        "name": "App & Agent Skills"
+      },
+      "borrowTrade": {
+        "body": "The other side of every Spoke. Borrowers bring collateral and pay the interest that becomes your yield. Trade opens leveraged longs and shorts on the same markets, with Swap built in.",
+        "name": "Borrow & Trade"
+      },
+      "chains": {
+        "body": "Venus runs on BNB Chain, Ethereum and other EVM networks. Every stablecoin, BTC or ETH that lands there is capital waiting for somewhere to go.",
+        "name": "Chains & Assets"
+      },
+      "governance": {
+        "body": "The case around everything. Every cap, Spoke and priority is changed only by a proposal voted on by XVS holders and executed through a timelock. Prices come from the Resilient Oracle, backed by a risk fund, 24/7 monitoring and repeated audits.",
+        "name": "Governance & Safety"
+      },
+      "liquidityHub": {
+        "body": "One deposit, many markets. Supply an asset once and hold a vhToken that grows in value on its own. The Hub moves your liquidity across the Spoke markets for you, within caps and a priority order set by governance. If you hold Prime, your Prime rewards keep accruing on what you supply here.",
+        "name": "Liquidity Hub"
+      },
+      "spokes": {
+        "body": "Where the Hub’s liquidity goes to work. Each Spoke is its own market with its own rate and its own risk: Venus Core for classic lending, Venus Flux for capital efficiency, Fixed Rate for locked yield through Pendle. Governance can plug in a new Spoke without touching the others.",
+        "name": "Spoke Markets"
+      },
+      "vaultsPrime": {
+        "body": "Stake XVS to vote and to compete for Prime: the larger and longer your stake, the higher your score. Each month the top stakers earn boosted rates on selected markets, including deposits made through the Liquidity Hub. Fixed-term vaults offer set lock and claim dates.",
+        "name": "Vaults & Prime"
+      }
+    },
     "wallets": {
       "title": "Trusted by many"
     }
@@ -912,7 +948,7 @@
         },
         "vaults": {
           "description": "Single-strategy supply vault for target rewards.",
-          "label": "Vaults"
+          "label": "Venus Vault"
         },
         "venusCore": {
           "description": "Classic lending and borrowing with easy, optimized leverage.",
@@ -921,6 +957,10 @@
         "venusFlux": {
           "description": "Capital-efficient lending and borrowing for optimal yield.",
           "label": "Venus Flux"
+        },
+        "venusSpoke": {
+          "description": "Borrow assets against your supplied collateral from dedicated market.",
+          "label": "Venus Spoke"
         }
       }
     }
@@ -2767,5 +2807,77 @@
   },
   "yieldsGroups": {
     "protocol": "Protocol"
+  },
+  "spoke": {
+    "header": "Venus Spoke",
+    "description": "Borrow assets against your supplied collateral from dedicated markets.",
+    "stats": {
+      "totalBorrow": "Total borrow",
+      "availableLiquidity": "Available liquidity",
+      "pools": "Pools"
+    },
+    "filters": {
+      "search": "Search asset",
+      "allLoanAssets": "All loan assets",
+      "allCollaterals": "All collaterals",
+      "allPools": "All pools",
+      "pausedAssets": "Paused assets"
+    },
+    "table": {
+      "loanAsset": "Loan asset",
+      "borrowed": "Borrowed",
+      "borrowApy": "Borrow APY",
+      "liquidity": "Liquidity",
+      "collateral": "Collateral",
+      "collateralTooltip": "Assets you can supply in this pool to borrow against.",
+      "totalBorrow": "Total borrow",
+      "empty": "No markets match these filters."
+    },
+    "market": {
+      "breadcrumb": "{{symbol}} in {{poolName}}",
+      "supply": "Supply",
+      "liquidity": "Liquidity",
+      "price": "Price",
+      "collateral": "Collateral",
+      "borrowInfo": "Borrow info",
+      "totalBorrowed": "Total borrowed",
+      "currentApy": "Current APY",
+      "borrowCap": "Borrow cap",
+      "supportedCollateral": "Supported collateral",
+      "supplied": "Supplied",
+      "maxLtv": "Max LTV",
+      "lt": "LT",
+      "ltTooltip": "Liquidation threshold: the LTV at which a position can be liquidated.",
+      "penalty": "Penalty",
+      "capacityFilled": "Capacity filled",
+      "loanInfo": "Loan info",
+      "borrowers": "# of borrowers",
+      "marketContract": "Market contract",
+      "reserveFactor": "Reserve factor",
+      "dailyInterests": "Daily borrowing interests",
+      "suppliable": "Suppliable",
+      "fundedByHub": "Funded by Liquidity Hub",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "form": {
+      "collateral": "Collateral",
+      "loan": "Loan",
+      "supply": "Supply",
+      "withdraw": "Withdraw",
+      "borrow": "Borrow",
+      "repay": "Repay",
+      "safeMax": "SAFE MAX",
+      "max": "MAX",
+      "borrowApy": "Borrow APY",
+      "totalBorrowApy": "Total borrow APY",
+      "maxLtv": "Max LTV",
+      "liquidationThreshold": "Liquidation threshold",
+      "walletBalance": "Wallet balance"
+    }
+  },
+  "hubApyBanner": {
+    "buttonLabel": "Start earning",
+    "title": "Earn up to <Apy>{{apy}} APY</Apy> on <Strong>{{symbol}}</Strong> with Liquidity Hub. Supply once, auto-allocated."
   }
 }

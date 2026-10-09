@@ -1,0 +1,137 @@
+/* Explorer landing footer. Same margins, type and hairlines as Sections 1–5. Link
+   columns sit on a hairline grid that runs down into an edge-to-edge Venus wordmark,
+   drawn as a dashed outline (the Telegram mark's style) and lit by the pointer. */
+.venus-footer {
+  --vf-edge: rgb(255 255 255 / 8%);
+  --vf-muted: var(--color-light-grey);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid var(--vf-edge);
+  background: var(--color-background-active);
+  color: var(--color-white);
+}
+.venus-footer__inner { --vf-pad-top: clamp(56px, 9svh, 96px); padding: var(--vf-pad-top) max(5.75vw, 24px) 0; }
+.venus-footer__top { display: grid; grid-template-columns: 1fr; gap: calc(var(--spacing) * 12); }
+@media (min-width: 1024px) {
+  .venus-footer__top { grid-template-columns: minmax(260px, 1fr) minmax(0, 2fr); }
+}
+.venus-footer__logo { height: 32px; width: auto; }
+.venus-footer__brand p { margin-top: calc(var(--spacing) * 4); font-size: clamp(24px, 2.2vw, 32px); font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; }
+.venus-footer__socials { display: flex; gap: calc(var(--spacing) * 2); margin-top: calc(var(--spacing) * 8); }
+.venus-footer__social {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--vf-edge);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 3%);
+  color: var(--vf-muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, translate 0.25s ease;
+}
+.venus-footer__social:hover { translate: 0 -2px; border-color: color-mix(in srgb, var(--color-blue) 60%, transparent); background: color-mix(in srgb, var(--color-blue) 14%, transparent); color: var(--color-white); }
+.venus-footer__social:focus-visible,
+.venus-footer__link:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; border-radius: 4px; }
+.venus-footer__social-icon { width: 16px; height: 16px; }
+
+.venus-footer__columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--spacing) * 8); }
+@media (min-width: 768px) {
+  .venus-footer__columns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.venus-footer__column { position: relative; }
+@media (min-width: 768px) {
+  .venus-footer__column { padding-left: calc(var(--spacing) * 5); }
+  /* Hairline from the footer's top edge down through the wordmark (clipped by the footer). */
+  .venus-footer__column::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: calc(-1 * var(--vf-pad-top));
+    left: 0;
+    width: 1px;
+    height: 200vh;
+    background: linear-gradient(to bottom, var(--vf-edge), var(--vf-edge) 60%, transparent);
+  }
+}
+.venus-footer__column h4 { font-size: var(--text-xs); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; color: var(--vf-muted); }
+.venus-footer__column ul { display: grid; gap: calc(var(--spacing) * 3); margin-top: calc(var(--spacing) * 5); }
+.venus-footer__link,
+.venus-footer__link:hover { display: inline-flex; align-items: baseline; gap: 4px; color: rgb(255 255 255 / 82%); font-size: var(--text-sm); text-decoration: none; transition: color 0.2s ease; }
+.venus-footer__link:hover { color: var(--color-white); }
+.venus-footer__link span { font-size: 10px; color: var(--vf-muted); transition: translate 0.2s ease; }
+.venus-footer__link:hover span { translate: 2px -2px; color: var(--color-blue); }
+
+.venus-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 4);
+  margin-top: clamp(48px, 8svh, 88px);
+  padding-block: calc(var(--spacing) * 6);
+  border-top: 1px solid var(--vf-edge);
+  font-size: var(--text-xs);
+  color: var(--vf-muted);
+}
+.venus-footer__legal { display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 6); }
+
+/* Live chain status: a pulsing dot and the latest block, which flashes as it ticks. */
+.venus-footer__status { display: inline-flex; align-items: center; gap: calc(var(--spacing) * 2); font-variant-numeric: tabular-nums; }
+.venus-footer__pulse { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--color-green); }
+.venus-footer__pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: venus-footer-pulse 2s ease-out infinite;
+}
+@keyframes venus-footer-pulse { to { scale: 3; opacity: 0; } }
+.venus-footer__block-number { display: inline-block; animation: venus-footer-tick 0.9s ease-in-out; }
+@keyframes venus-footer-tick { from { color: var(--color-white); } to { color: var(--vf-muted); } }
+
+/* Edge-to-edge wordmark, cropped by the footer's bottom edge. Base: dashed outline,
+   drifting. Lit: the same outline solid and blue, masked to a circle at the pointer. */
+.venus-footer__wordmark {
+  --vf-x: 50%;
+  --vf-y: 50%;
+  position: relative;
+  margin: calc(var(--spacing) * 6) max(5.75vw, 24px) 0;
+  aspect-ratio: 160 / 34;
+  margin-bottom: calc((100vw - 2 * max(5.75vw, 24px)) * 34 / 160 * -0.36);
+  pointer-events: none;
+}
+.venus-footer__wordmark svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.venus-footer__wordmark path {
+  fill: none;
+  stroke-width: 1px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.venus-footer__wordmark-base path {
+  stroke: rgb(255 255 255 / 16%);
+  stroke-dasharray: 6 8;
+  stroke-linecap: round;
+  animation: venus-footer-dash 60s linear infinite;
+}
+@keyframes venus-footer-dash { to { stroke-dashoffset: -420; } }
+.venus-footer__wordmark-lit {
+  opacity: 0;
+  mask-image: radial-gradient(circle 220px at var(--vf-x) var(--vf-y), #000 0%, rgb(0 0 0 / 50%) 45%, transparent 100%);
+  transition: opacity 0.6s ease-in-out;
+}
+.venus-footer__wordmark-lit path { stroke: var(--color-blue); stroke-width: 1.5px; }
+.venus-footer:hover .venus-footer__wordmark-lit { opacity: 1; }
+.venus-footer__bottom .venus-footer__link { font-size: var(--text-xs); color: var(--vf-muted); }
+.venus-footer__bottom .venus-footer__link:hover { color: var(--color-white); }
+
+/* On the Explorer landing this footer replaces the app footer's links and socials;
+   the app footer keeps only its preview controls row. */
+:root[data-glass-mode='explorer'][data-glass-landing] footer:not(.venus-footer) { margin-top: 0; }
+:root[data-glass-mode='explorer'][data-glass-landing] footer:not(.venus-footer) > :not(:last-child) { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .venus-footer__wordmark-base path,
+  .venus-footer__pulse::after,
+  .venus-footer__block-number { animation: none; }
+}

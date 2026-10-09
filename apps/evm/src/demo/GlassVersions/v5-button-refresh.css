@@ -109,6 +109,11 @@
   --material-hover-shadow: var(--material-shadow);
 }
 :root[data-glass-preview='v5'] :is(#root, body)
+  :is([data-venus-button-active='true'], [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true']) {
+  /* Keep the grain layer inside the button; text-variant buttons are otherwise static. */
+  position: relative;
+}
+:root[data-glass-preview='v5'] :is(#root, body)
   :is([data-venus-button-active='true'], [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true'])::after {
   content: '';
   position: absolute;
@@ -409,70 +414,182 @@
   border-color: var(--color-blue) !important;
 }
 
-/* V5 input trial: fields are recessed wells (inner shadow), buttons stay raised glass.
-   Stronger recess than the Markets search surface (trial 2); O / V3 / V4 are untouched. */
+/* V5 input: recessed well, aligned to the Figma Input tokens (Appearance New):
+   fill = surface/field/fill, border = surface/segment/track-border, inner shadow = surface/popup/drop,
+   hover = border only (surface/dropdown/border), focus = blue + surface/field/focus-glow ring,
+   error = red border with no glow, disabled = transparent + track-border, no bottom highlight. */
 :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field {
   border-radius: var(--radius-lg);
   border-color: rgb(255 255 255 / 8%);
   background: rgb(0 0 0 / 22%);
-  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), inset 0 -1px 0 rgb(255 255 255 / 6%);
-  transition: background-color 140ms ease-out, border-color 140ms ease-out, box-shadow 140ms ease-out;
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%);
+  transition: border-color 140ms ease-out, box-shadow 140ms ease-out;
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field:hover {
-  border-color: rgb(255 255 255 / 16%);
-  background: rgb(0 0 0 / 26%);
+  border-color: rgb(255 255 255 / 12%);
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field:focus-within {
   border-color: var(--color-blue);
-  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), 0 0 0 2px color-mix(in srgb, var(--color-blue) 18%, transparent);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%), 0 0 0 2px rgb(17 153 250 / 18%);
 }
-
-:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-has-error] {
-  border-color: var(--color-red);
-}
-
+:root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-has-error],
 :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-has-error]:focus-within {
-  box-shadow: inset 0 2px 4px rgb(0 0 0 / 35%), 0 0 0 2px color-mix(in srgb, var(--color-red) 18%, transparent);
+  border-color: var(--color-red);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%);
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field[data-disabled] {
   border-color: rgb(255 255 255 / 8%);
-  background: rgb(255 255 255 / 2%);
+  background: transparent;
   box-shadow: none;
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field {
-  border-color: rgb(30 55 85 / 12%);
+  border-color: rgb(30 40 55 / 7%);
   background: rgb(30 55 85 / 5%);
-  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), inset 0 -1px 0 rgb(255 255 255 / 90%);
+  box-shadow: inset 0 2px 4px rgb(30 40 55 / 14%);
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:hover {
-  border-color: rgb(30 55 85 / 20%);
-  background: rgb(30 55 85 / 7%);
+  border-color: rgb(30 40 55 / 10%);
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:focus-within {
   border-color: var(--color-blue);
-  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), 0 0 0 2px color-mix(in srgb, var(--color-blue) 18%, transparent);
+  box-shadow: inset 0 2px 4px rgb(30 40 55 / 14%), 0 0 0 2px rgb(42 147 232 / 18%);
 }
-
-:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error] {
-  border-color: var(--color-red);
-}
-
+:root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error],
 :root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error]:focus-within {
-  box-shadow: inset 0 2px 4px rgb(30 55 85 / 12%), 0 0 0 2px color-mix(in srgb, var(--color-red) 18%, transparent);
+  border-color: var(--color-red);
+  box-shadow: inset 0 2px 4px rgb(30 40 55 / 14%);
 }
-
 :root[data-glass-preview='v5'][data-glass-version='v6'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-disabled] {
-  border-color: rgb(0 0 0 / 6%);
-  background: rgb(0 0 0 / 1%);
+  border-color: rgb(30 40 55 / 7%);
+  background: transparent;
   box-shadow: none;
 }
-
 @media (prefers-reduced-motion: reduce) {
   :root[data-glass-preview='v5'][data-glass-version='v6'] :is(#root, body) .venus-text-field { transition: none; }
+}
+
+/* V5 (New + E): self-lit glass notices.
+   Same recipe as the blue-glass button (internal light, top highlight, grain) at a quieter strength,
+   so the material reads on a flat card. The status colour is the colour of that light. */
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice] {
+  --notice-accent: var(--color-blue);
+  isolation: isolate;
+  border-color: color-mix(in srgb, var(--notice-accent) 32%, rgb(255 255 255 / 10%));
+  background:
+    radial-gradient(ellipse 70% 120% at 10% 0%, color-mix(in srgb, var(--notice-accent) 22%, transparent) 0%, transparent 70%),
+    linear-gradient(115deg,
+      color-mix(in srgb, var(--notice-accent) 11%, transparent),
+      color-mix(in srgb, var(--notice-accent) 4%, transparent) 46%,
+      color-mix(in srgb, var(--notice-accent) 8%, transparent)),
+    rgb(255 255 255 / 3%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 18%),
+    inset 0 -1px 1px rgb(255 255 255 / 6%),
+    0 3px 8px rgb(0 0 0 / 10%);
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' d='M0 0h128v128H0z'/%3E%3C/svg%3E");
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice] > div {
+  background: transparent;
+}
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice='success'] { --notice-accent: var(--color-green); }
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice='error'] { --notice-accent: var(--color-red); }
+:root[data-glass-preview='v5'] :is(#root, body) [data-venus-notice='warning'] { --notice-accent: var(--color-orange); }
+:root[data-glass-preview='v5'][data-liquidity-theme='light'] :is(#root, body) [data-venus-notice] {
+  border-color: color-mix(in srgb, var(--notice-accent) 28%, rgb(30 40 55 / 8%));
+  background:
+    radial-gradient(ellipse 70% 120% at 10% 0%, color-mix(in srgb, var(--notice-accent) 14%, transparent) 0%, transparent 70%),
+    linear-gradient(115deg,
+      color-mix(in srgb, var(--notice-accent) 7%, transparent),
+      color-mix(in srgb, var(--notice-accent) 2%, transparent) 46%,
+      color-mix(in srgb, var(--notice-accent) 5%, transparent)),
+    rgb(255 255 255 / 55%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 90%),
+    inset 0 -1px 0 rgb(45 78 110 / 8%),
+    0 2px 6px rgb(30 55 85 / 7%);
+}
+
+/* E (Explorer) only: the same self-lit glass, with a little more frost (grain). */
+:root[data-glass-mode='explorer'] :is(#root, body) [data-venus-notice]::after {
+  opacity: .1;
+}
+
+/* E only (mock-up): toggle, slider and health bar.
+   Rule: tracks are recessed like inputs (surface/field/fill + track-border + inner shadow),
+   knobs are raised white glass, and filled parts reuse the blue-glass button gradient. */
+:root[data-glass-mode='explorer'] :is(#root, body) :is(.venus-toggle-track, [data-slot='slider-track'], .venus-progress-rail) {
+  background: rgb(0 0 0 / 22%) !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%), inset 0 2px 3px rgb(0 0 0 / 28%);
+}
+:root[data-glass-mode='explorer'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-toggle-track, [data-slot='slider-track'], .venus-progress-rail) {
+  background: rgb(30 55 85 / 5%) !important;
+  box-shadow: inset 0 0 0 1px rgb(30 40 55 / 7%), inset 0 2px 3px rgb(30 40 55 / 14%);
+}
+
+/* Toggle: knob sits inside the well (2px gap); on = blue glass track. */
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-toggle-track {
+  transition: background 200ms ease-out, box-shadow 200ms ease-out;
+}
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-toggle:has(input:checked) .venus-toggle-track {
+  background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 2px 6px rgb(0 0 0 / 10%);
+}
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-toggle-knob {
+  top: 2px !important;
+  left: 2px !important;
+  width: 18px !important;
+  height: 18px !important;
+  translate: 0 0 !important;
+  background: rgb(255 255 255 / 13%) !important; /* surface/segment/selected */
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), 0 1px 3px rgb(0 0 0 / 18%); /* glass/inset-top, dropdown/drop */
+  transition: translate 300ms cubic-bezier(.3, .7, .2, 1), background 200ms ease-out;
+}
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-toggle:has(input:checked) .venus-toggle-knob {
+  translate: 22px 0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 28%); /* popup/drop */
+}
+:root[data-glass-mode='explorer'][data-liquidity-theme='light'] :is(#root, body) .venus-toggle-knob {
+  background: #ffffff !important;
+  box-shadow: 0 1px 3px rgb(30 40 55 / 14%); /* popup/drop (light) */
+}
+
+/* Slider: blue-glass range, plain white glass thumb. */
+:root[data-glass-mode='explorer'] :is(#root, body) [data-slot='slider-range'] {
+  background: linear-gradient(180deg, rgb(255 255 255 / 25%), transparent 70%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+}
+:root[data-glass-mode='explorer'] :is(#root, body) [data-slot='slider-thumb'] {
+  border: 0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 28%); /* popup/drop */
+}
+:root[data-glass-mode='explorer'] :is(#root, body) [data-slot='slider-thumb']:focus-visible {
+  box-shadow: 0 1px 4px rgb(0 0 0 / 28%), 0 0 0 3px rgb(17 153 250 / 18%); /* popup/drop, field/focus-glow */
+}
+/* Ticks keep their original 12px size and original (existing) colours when not passed;
+   passed ticks become white (text/primary) with the existing surface/dropdown/drop edge. */
+:root[data-glass-mode='explorer'] :is(#root, body) [data-slot='slider-tick'][data-active] {
+  border-color: transparent !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 18%);
+}
+
+/* Health bar: the fill keeps its semantic colour (green / yellow / red), with a glass highlight on top. */
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-progress-fill {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 25%), transparent 65%); /* blue-glass inset-top */
+}
+:root[data-glass-mode='explorer'] :is(#root, body) .venus-progress-mark {
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 18%); /* dropdown/drop */
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-mode='explorer'] :is(#root, body) :is(.venus-toggle-track, .venus-toggle-knob) { transition: none; }
 }

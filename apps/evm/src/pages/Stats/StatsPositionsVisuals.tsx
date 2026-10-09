@@ -4,7 +4,7 @@ import { Dropdown, Select, TextField } from 'components';
 import { ChartTooltipContent } from 'components/ChartTooltipContent';
 import { TokenIconWithSymbol } from 'components/TokenIconWithSymbol';
 import { TokenListWrapper } from 'containers/TokenListWrapper';
-import { useGlassPreview } from 'demo/GlassVersions/store';
+import { previewDesignByMode, useGlassPreview } from 'demo/GlassVersions/store';
 import { useMemo, useState } from 'react';
 import {
   Bar,
@@ -134,7 +134,8 @@ const AssetDonut = ({
 
 export const StatsPositionExplorerPage = () => {
   const [query, setQuery] = useState('');
-  const isNew = useGlassPreview(state => state.mode === 'v5');
+  // Explorer shares New's components, so it gets New's Stats layout too.
+  const isNew = useGlassPreview(state => previewDesignByMode[state.mode] === 'v5');
   const normalized = query.trim().toLowerCase();
   const selected: PositionSample | undefined = normalized
     ? positionSamples.find(sample => sample.address.toLowerCase().includes(normalized))

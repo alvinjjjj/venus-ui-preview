@@ -1,5 +1,27 @@
 # V4 / V5 UI handoff
 
+## September 22 V5 button update
+
+This section supersedes older V5 button-state/Prime specifications below. V4/V3/O
+keep their existing styles. Source: the September 22 Button PDF and selected-state
+clarifications; the Figma node itself was not accessible during this implementation.
+
+- Selected date/percentage controls remain blue glass with white text/border after
+  release; they are not held at the pressed scale. `aria-pressed` identifies date selection.
+- Light glass default and hover retain white 55% and identical shadows; primary/secondary
+  use pointer-following radial highlight. Press 100ms; release transform 420ms, shadow 240ms.
+- Prime wallet identity is a permanent copper ring, not only a hover effect.
+- Five shared copper stops: dark #9B6850/#CEA58B/#F2D8C4/#D4AB90/#A77359;
+  light #7E523C/#A87A5F/#D8B49B/#A97A5E/#82573F. Coin and account SVG stops use these tokens.
+- Prime text is 110deg with five stops; APY pill is 24px high, 4px padding, 999px radius.
+- Ring uses 110deg and 1px mask. Interpret the PDF's detailed ring rule as endpoints
+  72% default / 95% hover, with an unchanged opaque central stop at 45%.
+- Mask composition is embedded in shorthand to survive production CSS optimization.
+- Reduced-motion rules cover body-portaled controls. Transaction loading and Safari
+  remain separate functional/cross-browser checks.
+- Source implementation: `src/demo/GlassVersions/v5-button-refresh.css`.
+
+
 Updated: 2026-09-18. Design-review prototype published at https://hkcardcoll.hk/venus/ (not the Venus financial application).
 
 ## 2026-09-18 perimeter-light production hotfix
@@ -124,3 +146,24 @@ Full desktop/mobile, dark/light, reduced-motion, keyboard, and rapid reopen moti
 - V5 shared desktop dropdown surfaces now use one monochrome grain background at 2.5% alpha, replacing the separate navigation/select grain overlays.
 - Existing 24px backdrop blur, dark/light tint opacity, sizing, and 220ms open / 140ms close timings remain unchanged. V3/V4 and mobile modals are unchanged.
 - Visual approval pending; remove the local grain rule to reverse this trial.
+# September 23 supplement: Figma-aligned button groups
+
+All shared ButtonGroup instances in V5 follow Figma node `3212:68614`: use 0px padding, a 4px token gap and 8px corners without an outer border. Light mode uses a transparent group track so the gap reads as a true separation; dark mode retains the common switch-container fill. Keep each button's glass material and blue selected state. Groups remain on one line. Applies to chart ranges, Wallet/Collateral, Markets, Dashboard and modal controls; V4/V3/O are unchanged. No new motion timing.
+
+## September 23 supplement: V5 market row typography
+
+The approved Core Market hierarchy now applies to all V5 market rows in Core Markets, E-mode, Isolation mode and Liquidity Hubs. Column headings remain 14px. Asset names, primary amounts, APY and risk values use 15px; secondary USD values use 12px. Existing icons, reward badges, numeric meaning and inactive-state styling are preserved. This is scoped to V5; V4, V3 and O are unchanged.
+
+## September 23 supplement: Liquidity Hub light detail
+
+The V5 light-mode Liquidity Hub detail page uses one page-level neutral grey gradient built from the existing background tokens. The low-percentage supply-cap circle keeps its blue-green progress while using a visible light-grey rail. Supply and unit-price charts retain their data and axes while using a restrained 8% horizontal grid in both themes. The disabled Supply CTA retains its blue-glass identity, fully white label and disabled semantics in light and dark modes. Visible prototype-only `Demo` labels are removed without changing the simulated-account or no-transaction safeguards. Primary Liquidity Hub cards use a downward, cool-grey two-stage shadow instead of an even halo. Chart hover content uses the approved V5 light popup material: 64% white surface, 12px blur, 120% saturation, 2.5% monochrome grain and the existing popup edge/shadow. V4, V3 and Original are unchanged.
+
+The V5 account popup uses 8px corners for the complete Theme switch, including its outer group and both mode buttons, in light and dark themes. The redundant Prime/Normal account status line is removed. Its non-interactive Prime address control deliberately keeps the same full-opacity copper identity and glass shadow as the header control instead of inheriting the generic disabled fade.
+
+## September 23 supplement: local Liquidity Hub refinement
+
+This source-only refinement supersedes the earlier Liquidity Hub CTA, chart-grid and card-shadow notes above; it has not been published. In V5 light and dark modes, the Supply/Withdraw CTA uses dark glass until the entered amount is valid and greater than zero, then switches to blue glass. Zero and out-of-balance amounts remain disabled with dark glass. Both history charts retain their data curves, fill, axes and tooltip while omitting the horizontal grid. The Resilient Oracle link has 8px corners. Liquidity Hub cards use a neutral 0px X / 12px Y / 32px blur shadow: soft grey in light mode and black in dark mode, without blue tint. V4, V3 and Original remain unchanged.
+
+## September 23 supplement: shared V5 cards and Oracle glass
+
+The approved neutral shadow now applies to V5's shared outer cards across Liquidity Hub, Liquidity Hubs, Markets, E-mode, Isolation and Dashboard in both themes. Mobile table rows keep the shadow on each visible card; their enclosing table panel has no shadow to avoid duplicate elevation. The Resilient Oracle external link uses the existing V5 glass-button material in both themes with 8px corners, retaining its BscScan destination. The dark-glass empty Supply/Withdraw state and blue-glass valid-amount state remain unchanged. This source-only refinement is not yet published; V4, V3 and Original remain unchanged.

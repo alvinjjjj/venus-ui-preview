@@ -1,12 +1,13 @@
-import { ButtonWrapper, cn } from '@venusprotocol/ui';
+import { cn } from '@venusprotocol/ui';
 
 import { Icon } from 'components';
 import LiquidityHubIcon from 'assets/img/liquidityHubIcon.svg?react';
 import VaultsIcon from 'assets/img/vaultsIcon.svg?react';
+import { CoreMenuIcon } from './CoreMenuIcon';
+import { SpokeMenuIcon } from './SpokeMenuIcon';
 import { routes } from 'constants/routing';
 import './governance-motion.css';
 import { Link } from 'containers/Link';
-import { useTranslation } from 'libs/translations';
 import { matchPath, useLocation } from 'react-router';
 import { Tag } from '../../../Tag';
 import type { MenuItem, SubMenu } from '../../../types';
@@ -27,8 +28,6 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   onClick,
   variant,
 }) => {
-  const { t } = useTranslation();
-
   const { pathname } = useLocation();
 
   const isActive = to && !!matchPath(to, pathname);
@@ -39,7 +38,17 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
     <Link
       data-submenu-variant={variant}
       data-governance-preview={to === routes.governance.path || undefined}
-      data-earn-motion={to === routes.liquidityHubs.path ? 'hub' : to === routes.vaults.path ? 'vault' : undefined}
+      data-earn-motion={
+        to === routes.liquidityHubs.path
+          ? 'hub'
+          : to === routes.vaults.path
+            ? 'vault'
+            : to === routes.spoke.path
+              ? 'spoke'
+              : to?.startsWith('/markets')
+                ? 'core'
+                : undefined
+      }
       data-menu-motion={
         to === routes.vai.path ? 'vai' :
         to === routes.bridge.path ? 'bridge' :
@@ -50,7 +59,10 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
       onClick={onClick}
       className={cn(
         'block py-3 space-y-6 rounded-lg group transition-colors hover:no-underline',
-        variant === 'secondary' ? 'px-6' : 'px-4 bg-background-active hover:bg-background-hover',
+        // Product menus: no "Get started" button; the whole row lights up on hover instead.
+        variant === 'secondary'
+          ? 'px-3 hover:bg-background-hover focus-visible:bg-background-hover'
+          : 'px-4 bg-background-active hover:bg-background-hover',
         isActive && variant === 'primary' && 'bg-background-hover',
       )}
     >
@@ -74,6 +86,10 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
               <LiquidityHubIcon role="img" aria-label={label} className="size-12 venus-earn-icon" />
             ) : to === routes.vaults.path ? (
               <VaultsIcon role="img" aria-label={label} className="size-12 venus-earn-icon" />
+            ) : to === routes.spoke.path ? (
+              <SpokeMenuIcon role="img" aria-label={label} className="size-12 venus-earn-icon" />
+            ) : to?.startsWith('/markets') ? (
+              <CoreMenuIcon role="img" aria-label={label} className="size-12 venus-earn-icon" />
             ) : (
               <img src={imgSrc} alt={label} className="size-12" />
             )}
@@ -81,10 +97,10 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
         )}
 
         <div className="flex flex-col">
-          <div className="flex items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <p
               className={cn(
-                'font-semibold',
+                'font-semibold whitespace-nowrap',
                 iconName
                   ? 'text-light-grey transition-colors group-hover:text-white'
                   : 'text-white',
@@ -94,25 +110,13 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
               {label}
             </p>
 
-            {!!tagLabel && <Tag>{tagLabel}</Tag>}
+            {!!tagLabel && <Tag className="whitespace-nowrap">{tagLabel}</Tag>}
           </div>
 
           {!!description && <p className="text-light-grey text-xs">{description}</p>}
         </div>
       </div>
 
-      {variant === 'secondary' && (
-        <ButtonWrapper
-          asChild
-          variant="secondary"
-          material="glass"
-          size="xs"
-          className="px-3 text-sm font-medium [&>span]:font-medium"
-          type={undefined}
-        >
-          <span>{t('layout.menu.subMenuItem.button.label')}</span>
-        </ButtonWrapper>
-      )}
     </Link>
   );
 };

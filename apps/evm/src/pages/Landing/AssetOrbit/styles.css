@@ -1,0 +1,209 @@
+.asset-orbit {
+  /* Section-local aliases reuse the existing palette; no global token changes. */
+  --orbit-bg: var(--color-background-active);
+  --orbit-text: var(--color-white);
+  --orbit-muted: var(--color-light-grey);
+  --orbit-ink: var(--color-light-grey-rgb);
+  --orbit-panel: var(--color-background);
+  color: var(--orbit-text);
+  background: var(--orbit-bg);
+  overflow: hidden;
+  padding: calc(var(--spacing) * 18) calc(var(--spacing) * 6) calc(var(--spacing) * 10);
+}
+
+.asset-orbit__inner { max-width: 1180px; margin-inline: auto; }
+.asset-orbit__header { text-align: center; position: relative; z-index: 1; }
+.asset-orbit__header h2 { font-size: var(--text-h5); font-weight: 600; line-height: 1.2; letter-spacing: -0.035em; text-wrap: balance; }
+.asset-orbit__header p { font-size: var(--text-base); color: var(--orbit-muted); margin-top: calc(var(--spacing) * 4); text-wrap: balance; }
+
+/* Fixed scene proportions make labels stay still while only the particle field moves. */
+.asset-orbit__scene { position: relative; height: 550px; margin-top: calc(var(--spacing) * 6); }
+.asset-orbit__field { position: absolute; inset: 0; width: 100%; height: 390px; pointer-events: none; }
+.asset-orbit__core { position: absolute; left: 50%; top: 28%; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: calc(var(--spacing) * 4); width: max-content; }
+.asset-orbit__core-disc { display: grid; place-items: center; width: 112px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--color-blue-hover) 20%, var(--orbit-bg)), var(--orbit-bg) 75%); border: 1px solid color-mix(in srgb, var(--color-blue) 35%, transparent); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 22%, transparent), 0 12px 40px color-mix(in srgb, var(--color-blue) 12%, transparent); }
+.asset-orbit__core-disc img { width: 54px; height: auto; }
+.asset-orbit__core > span { font-size: var(--text-xs); color: var(--orbit-muted); }
+.asset-orbit__assets { position: absolute; inset: 0; }
+.asset-orbit__asset { --asset-accent: var(--color-blue); position: absolute; display: grid; justify-items: center; gap: calc(var(--spacing) * 2); transform: translate(-50%, -50%); cursor: pointer; border-radius: calc(var(--spacing) * 3); color: var(--orbit-text); }
+.asset-orbit__asset[data-tone='green'] { --asset-accent: var(--color-green); }
+.asset-orbit__asset[data-tone='silver'] { --asset-accent: var(--color-light-grey); }
+.asset-orbit__asset[data-tone='indigo'] { --asset-accent: var(--color-blue-active); }
+.asset-orbit__asset[data-asset='USDC'] { left: 16%; top: 19%; }
+.asset-orbit__asset[data-asset='USDT'] { left: 84%; top: 26%; }
+.asset-orbit__asset[data-asset='U'] { left: 20%; top: 54%; }
+.asset-orbit__asset[data-asset='ETH'] { left: 80%; top: 59%; }
+.asset-orbit__asset-disc { display: grid; place-items: center; width: 64px; aspect-ratio: 1; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--asset-accent) 50%, transparent); background: radial-gradient(circle at 28% 20%, color-mix(in srgb, var(--asset-accent) 36%, var(--orbit-bg)), color-mix(in srgb, var(--asset-accent) 8%, var(--orbit-bg)) 75%); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 30%, transparent); transition: transform 200ms ease, box-shadow 200ms ease; }
+.asset-orbit__asset-disc img { width: 38px; height: 38px; object-fit: contain; }
+.asset-orbit__asset-disc > span { font-size: var(--text-xl); }
+.asset-orbit__asset-name { font-size: var(--text-sm); font-weight: 600; }
+.asset-orbit__asset[aria-pressed='true'] .asset-orbit__asset-disc { transform: scale(1.08); box-shadow: 0 0 0 5px color-mix(in srgb, var(--asset-accent) 10%, transparent), 0 0 0 6px color-mix(in srgb, var(--asset-accent) 35%, transparent); }
+.asset-orbit__asset:focus-visible, .asset-orbit__details button:focus-visible, .asset-orbit__link:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 6px; }
+
+.asset-orbit__details { position: absolute; top: 68%; left: 50%; transform: translateX(-50%); width: 240px; padding: calc(var(--spacing) * 4) calc(var(--spacing) * 5); border: 1px solid color-mix(in srgb, var(--orbit-muted) 25%, transparent); border-radius: calc(var(--spacing) * 3); background: var(--orbit-panel); box-shadow: 0 12px 32px color-mix(in srgb, var(--color-background-active) 12%, transparent); }
+.asset-orbit__details-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: calc(var(--spacing) * 2); }
+.asset-orbit__details-heading button { display: grid; place-items: center; width: 32px; height: 32px; margin: -4px; border-radius: 50%; color: var(--orbit-muted); cursor: pointer; }
+.asset-orbit__details-heading button:hover { background: color-mix(in srgb, var(--orbit-muted) 12%, transparent); }
+.asset-orbit__details-heading svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.asset-orbit__rate-label { font-size: var(--text-xs); color: var(--orbit-muted); }
+.asset-orbit__rate { font-size: var(--text-2xl); font-weight: 600; line-height: 1.2; margin-block: calc(var(--spacing) * 1) calc(var(--spacing) * 3); }
+.asset-orbit__link { display: inline-flex; align-items: center; gap: var(--spacing); font-size: var(--text-sm); }
+.asset-orbit__link-icon { width: 12px; height: 12px; }
+.asset-orbit__choose { color: var(--orbit-muted); font-size: var(--text-sm); }
+.asset-orbit__proof { border-top: 1px solid color-mix(in srgb, var(--orbit-muted) 18%, transparent); padding-top: calc(var(--spacing) * 6); }
+.asset-orbit__proof dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--spacing) * 5); }
+.asset-orbit__proof dl > div { display: flex; flex-direction: column-reverse; gap: calc(var(--spacing) * 3); }
+.asset-orbit__proof dt { font-size: var(--text-sm); color: var(--orbit-muted); }
+.asset-orbit__proof dd { font-size: var(--text-h4); line-height: 1; font-weight: 400; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; }
+
+@media (min-width: 768px) {
+  .asset-orbit { padding-block: calc(var(--spacing) * 24) calc(var(--spacing) * 12); }
+  .asset-orbit__header h2 { font-size: var(--text-h3); }
+  .asset-orbit__header p { font-size: var(--text-lg); }
+  .asset-orbit__scene { height: 550px; margin-top: calc(var(--spacing) * 10); }
+  .asset-orbit__field { height: 100%; }
+  .asset-orbit__core { top: 43%; }
+  .asset-orbit__core-disc { width: 176px; }
+  .asset-orbit__core-disc img { width: 82px; }
+  .asset-orbit__core > span { font-size: var(--text-sm); }
+  .asset-orbit__asset-disc { width: 92px; }
+  .asset-orbit__asset-disc img { width: 56px; height: 56px; }
+  .asset-orbit__asset-name { font-size: var(--text-base); }
+  .asset-orbit__asset[data-asset='USDC'] { left: 23%; top: 29%; }
+  .asset-orbit__asset[data-asset='USDT'] { left: 77%; top: 27%; }
+  .asset-orbit__asset[data-asset='U'] { left: 25%; top: 77%; }
+  .asset-orbit__asset[data-asset='ETH'] { left: 75%; top: 77%; }
+  .asset-orbit__details { top: 68%; }
+  .asset-orbit__proof dl { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: calc(var(--spacing) * 8); }
+  .asset-orbit__proof dd { font-size: var(--text-h2); }
+  .asset-orbit__proof dt { font-size: var(--text-base); }
+}
+
+@media (min-width: 1024px) {
+  .asset-orbit__details { top: 46%; left: 12%; width: 200px; }
+  .asset-orbit__scene[data-selected='USDT'] .asset-orbit__details { top: 46%; left: 88%; }
+  .asset-orbit__scene[data-selected='U'] .asset-orbit__details { top: 38%; left: 12%; }
+  .asset-orbit__scene[data-selected='ETH'] .asset-orbit__details { top: 38%; left: 88%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asset-orbit__asset-disc { transition: none; }
+}
+
+/* One entrance for the founding year; values keep a stable screen-reader label. */
+.asset-orbit__year { display: inline-block; }
+.asset-orbit__proof dd { position: relative; font-variant-numeric: tabular-nums; }
+/* Reserve the final numeral width so count-up never changes its hover area. */
+.asset-orbit__count-width { visibility: hidden; pointer-events: none; }
+.asset-orbit__count { position: absolute; inset: 0; text-align: center; pointer-events: none; }
+.asset-orbit__proof dd:is(:hover, :focus-visible) .asset-orbit__count { animation: orbit-count-feedback 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes orbit-count-feedback {
+  0%, 100% { transform: scale(1); }
+  35% { transform: scale(1.035); }
+}
+.asset-orbit__proof dd:focus-visible { outline: 2px solid var(--color-blue-hover); outline-offset: calc(var(--spacing) * 2); border-radius: var(--spacing); }
+.asset-orbit__proof[data-entered='true'] dl > div { animation: orbit-proof-arrival 650ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.asset-orbit__proof[data-entered='true'] dl > div:nth-child(2) { animation-delay: 80ms; }
+.asset-orbit__proof[data-entered='true'] dl > div:nth-child(3) { animation-delay: 160ms; }
+.asset-orbit__proof[data-entered='true'] dl > div:nth-child(4) { animation-delay: 240ms; }
+@keyframes orbit-proof-arrival {
+  from { opacity: 0; transform: translateY(calc(var(--spacing) * 4)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.asset-orbit__proof[data-entered='true'] .asset-orbit__year { animation: orbit-year-reveal 650ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes orbit-year-reveal {
+  from { clip-path: inset(100% 0 0); transform: translateY(0.16em); }
+  to { clip-path: inset(0); transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .asset-orbit__proof dd:is(:hover, :focus-visible) .asset-orbit__count { animation: none; }
+  .asset-orbit__proof[data-entered='true'] .asset-orbit__year, .asset-orbit__proof[data-entered='true'] dl > div { animation: none; }
+}
+
+/* ── New: split layout. Orbit on the left, title and figures on the right. ──────────────
+   Desktop flow only (.horizontal-flow). The 3D orbit follows .asset-orbit__core, so moving
+   the scene into the left column moves the orbit with it. */
+:root .horizontal-flow .asset-orbit[data-layout='split'] { padding-inline: max(5.75vw, 24px); }
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: 1fr auto auto 1fr;
+  column-gap: clamp(40px, 5.5vw, 80px);
+  margin-inline: auto;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__scene {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  margin-top: 0;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__core { top: 50%; left: 40%; }
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__header {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: left;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__header h2 {
+  font-size: clamp(44px, 4.4vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__header p {
+  margin-top: calc(var(--spacing) * 4);
+  font-size: clamp(18px, 1.5vw, 22px);
+  color: var(--orbit-muted);
+}
+
+/* Figures: eyebrow, then a 2 × 2 grid divided by hairlines, like a "by the numbers" block.
+   The block sits near the page centre; the orbit takes the left. */
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__proof {
+  grid-column: 2;
+  grid-row: 3;
+  margin-top: clamp(32px, 5svh, 56px);
+  padding-top: 0;
+}
+.asset-orbit__eyebrow {
+  margin-bottom: calc(var(--spacing) * 5);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orbit-muted);
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__proof dl {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: none;
+  margin: 0;
+  gap: clamp(24px, 4svh, 40px) clamp(20px, 2.5vw, 36px);
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__proof dl > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--spacing) * 3);
+  text-align: left;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__proof dt {
+  order: 2;
+  font-size: var(--text-sm);
+  color: var(--orbit-muted);
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__proof dd {
+  order: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  white-space: nowrap;
+  column-gap: calc(var(--spacing) * 2);
+  font-family: var(--font-proxima-nova), sans-serif;
+  font-size: clamp(40px, 3.6vw, 56px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__count-width { display: none; }
+:root .horizontal-flow .asset-orbit[data-layout='split'] .asset-orbit__count { position: static; text-align: left; }
+.asset-orbit__unit {
+  font-size: 0.42em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: #85ccff;
+}
