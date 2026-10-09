@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack yarn install",
+  "buildCommand": "cd apps/evm && NODE_OPTIONS=--max-old-space-size=7168 node ../../node_modules/vite/bin/vite.js build",
+  "outputDirectory": "apps/evm/build",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
