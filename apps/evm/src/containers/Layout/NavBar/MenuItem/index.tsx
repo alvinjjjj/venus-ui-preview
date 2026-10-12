@@ -132,6 +132,12 @@ export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
     >
       <span>{item.label}</span>
 
+      {!!item.href && (
+        <span aria-hidden="true" className="flex shrink-0">
+          <Icon name="transactionLink" className="venus-navigation-external-icon size-4 text-current" />
+        </span>
+      )}
+
       {item.tagLabel && (
         <Tag className="inline-block lg:hidden xl:inline-block">{item.tagLabel}</Tag>
       )}

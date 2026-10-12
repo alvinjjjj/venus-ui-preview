@@ -73,3 +73,14 @@
 @media (prefers-reduced-motion: reduce) {
   :root:is([data-glass-preview='v5'], [data-glass-preview='v6']) .venus-navigation-chevron { transition: none; }
 }
+
+/* A small directional cue on external navigation links, without continuous motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .venus-navigation .venus-navigation-external-icon {
+    transition: transform 220ms ease-out;
+  }
+
+  .venus-navigation [data-header-navigation]:is(:hover, :focus-visible) .venus-navigation-external-icon {
+    transform: translate(calc(var(--spacing) * .5), calc(var(--spacing) * -.5));
+  }
+}
