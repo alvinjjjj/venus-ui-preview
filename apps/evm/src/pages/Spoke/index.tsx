@@ -43,6 +43,31 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
   const tokenValue = (market: SpokeMarket, tokens: SpokeMarket['borrowTokens']) =>
     formatTokensToReadableValue({ value: tokens, token: market.token, addSymbol: false });
 
+  const collateralInfo = (
+    <table className="w-full text-b1r">
+      <thead className="text-grey">
+        <tr>
+          <th className="pb-3 pr-8 text-left font-normal">
+            {t('liquidityHubs.table.columns.asset')}
+          </th>
+          <th className="pb-3 text-right font-normal">{t('spoke.market.maxLtv')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pool.collateralMarkets.map(collateral => (
+          <tr key={collateral.address}>
+            <td className="py-2 pr-8">
+              <TokenIconWithSymbol token={collateral.token} size="lg" />
+            </td>
+            <td className="py-2 text-right">
+              {formatPercentageToReadableValue(collateral.collateralFactorPercentage)}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   const columns: TableColumn<SpokeMarket>[] = [
     {
       key: 'asset',
@@ -92,18 +117,20 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       selectOptionLabel: t('spoke.table.collateral'),
       align: 'right',
       renderCell: () => (
-        <div className="spoke-collateral-group inline-flex items-center">
-          {pool.collateralMarkets.map(({ token }, index) => (
-            <Tooltip
-              key={token.address}
-              content={token.symbol}
-              triggerTabIndex={0}
-              className={index > 0 ? '-ml-1' : undefined}
-            >
-              <TokenIcon token={token} size="lg" className="overflow-hidden rounded-full" />
-            </Tooltip>
-          ))}
-        </div>
+        <Tooltip content={collateralInfo} triggerTabIndex={0} className="inline-flex">
+          <div className="spoke-collateral-group inline-flex items-center">
+            {pool.collateralMarkets.map(({ token }, index) => (
+              <TokenIcon
+                key={token.address}
+                token={token}
+                size="lg"
+                className={
+                  index > 0 ? '-ml-1 overflow-hidden rounded-full' : 'overflow-hidden rounded-full'
+                }
+              />
+            ))}
+          </div>
+        </Tooltip>
       ),
     },
     {
