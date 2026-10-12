@@ -5,6 +5,7 @@ export interface ImgGroupProps {
   removeDuplicates?: boolean;
   className?: string;
   limit?: number;
+  size?: 'md' | 'lg';
 }
 
 export const ImgGroup: React.FC<ImgGroupProps> = ({
@@ -12,6 +13,7 @@ export const ImgGroup: React.FC<ImgGroupProps> = ({
   imgSrcs,
   removeDuplicates,
   limit = 0,
+  size = 'md',
 }) => {
   const sanitizedImgSrcs = removeDuplicates ? [...new Set(imgSrcs)] : imgSrcs;
   const filteredImgSrcs = limit > 0 ? sanitizedImgSrcs.slice(0, limit) : sanitizedImgSrcs;
@@ -21,7 +23,7 @@ export const ImgGroup: React.FC<ImgGroupProps> = ({
       {filteredImgSrcs.map((imgSrc, index) => (
         <img
           alt={imgSrc}
-          className={cn('size-5', index > 0 && '-ml-1')}
+          className={cn(size === 'lg' ? 'size-6' : 'size-5', index > 0 && '-ml-1')}
           src={imgSrc}
           key={`img-group-item-${imgSrc}-${index}`}
         />

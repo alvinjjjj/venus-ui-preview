@@ -4,7 +4,6 @@ import './original.css';
 
 import { useGetLiquidityHubs } from 'clients/api';
 import { type CellProps, Page, PageStatHeader, Wrapper } from 'components';
-import { HubApyBanner } from 'containers/HubApyBanner';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
@@ -59,8 +58,6 @@ const LiquidityHubs: React.FC = () => {
 
   return (
     <Page>
-      <HubApyBanner />
-
       <Wrapper className="pt-5 sm:pt-10">
         <div className="liquidity-hubs-page space-y-5 sm:space-y-12">
           <PageStatHeader

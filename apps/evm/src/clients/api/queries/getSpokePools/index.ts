@@ -1,5 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChainId, tokens } from '@venusprotocol/chains';
+import nvdabIcon from 'assets/img/spoke/nvdab.svg';
+import skhybIcon from 'assets/img/spoke/skhyb.svg';
+import spcxbIcon from 'assets/img/spoke/spcxb.svg';
+import tslabIcon from 'assets/img/spoke/tslab.svg';
 import BigNumber from 'bignumber.js';
 import type { Token } from 'types';
 import type { Address } from 'viem';
@@ -114,20 +118,27 @@ interface ApiSpokePoolsResponse {
 const fromMantissa = (value: string, decimals: number) => new BigNumber(value).shiftedBy(-decimals);
 const mantissaToPercentage = (value: string) => new BigNumber(value).shiftedBy(-16).toNumber();
 
+// Figma token library, 24 px variants. Scoped to Spoke to preserve other markets.
+const spokeTokenIcons: Record<string, string> = {
+  TSLAB: tslabIcon,
+  NVDAB: nvdabIcon,
+  SPCXB: spcxbIcon,
+  SKHYB: skhybIcon,
+};
+
 const resolveToken = (address: Address, metadata?: ApiTokenMetadata): Token => {
   const known = tokens[SPOKE_API_CHAIN_ID].find(
     token => token.address.toLowerCase() === address.toLowerCase(),
   );
 
-  return (
-    known ?? {
-      chainId: SPOKE_API_CHAIN_ID,
-      address,
-      decimals: metadata?.decimals ?? 18,
-      symbol: metadata?.symbol ?? '?',
-      iconSrc: '',
-    }
-  );
+  const token = known ?? {
+    chainId: SPOKE_API_CHAIN_ID,
+    address,
+    decimals: metadata?.decimals ?? 18,
+    symbol: metadata?.symbol ?? '?',
+    iconSrc: '',
+  };
+  return { ...token, iconSrc: spokeTokenIcons[token.symbol.toUpperCase()] ?? token.iconSrc };
 };
 
 const formatMarket = (

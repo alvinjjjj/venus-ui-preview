@@ -118,7 +118,7 @@ export const LiquidityHubTable: React.FC<LiquidityHubTableProps> = ({
       ),
       selectOptionLabel: t('liquidityHubs.table.columns.exposure.selectionOptionLabel'),
       align: 'right',
-      renderCell: ({ yieldGroups }) => <YieldGroups yieldGroups={yieldGroups} />,
+      renderCell: ({ yieldGroups }) => <YieldGroups yieldGroups={yieldGroups} iconSize="lg" />,
     },
     {
       key: 'supplyApy',

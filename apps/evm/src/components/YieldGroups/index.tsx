@@ -7,9 +7,14 @@ import type { LiquidityHubYieldGroup } from 'types';
 export interface YieldGroupsProps {
   yieldGroups: LiquidityHubYieldGroup[];
   className?: string;
+  iconSize?: 'md' | 'lg';
 }
 
-export const YieldGroups: React.FC<YieldGroupsProps> = ({ yieldGroups, className }) => {
+export const YieldGroups: React.FC<YieldGroupsProps> = ({
+  yieldGroups,
+  className,
+  iconSize = 'md',
+}) => {
   const { t } = useTranslation();
 
   const columns: TableColumn<LiquidityHubYieldGroup>[] = [
@@ -56,6 +61,7 @@ export const YieldGroups: React.FC<YieldGroupsProps> = ({ yieldGroups, className
         imgSrcs={yieldGroups.map(yieldGroup => yieldGroup.iconSrc)}
         removeDuplicates
         limit={5}
+        size={iconSize}
       />
     </Tooltip>
   );

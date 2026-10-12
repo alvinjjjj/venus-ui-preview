@@ -1,7 +1,6 @@
 import { type SpokeMarket, type SpokePool, useGetSpokePools } from 'clients/api';
 import {
   type CellProps,
-  ImgGroup,
   InfoIcon,
   LayeredValues,
   Page,
@@ -11,11 +10,12 @@ import {
   type TableColumn,
   TextField,
   Toggle,
+  TokenIcon,
   TokenIconWithSymbol,
+  Tooltip,
   Wrapper,
 } from 'components';
 import { routes } from 'constants/routing';
-import { HubApyBanner } from 'containers/HubApyBanner';
 import { useTranslation } from 'libs/translations';
 import { useMemo, useState } from 'react';
 import {
@@ -92,10 +92,18 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       selectOptionLabel: t('spoke.table.collateral'),
       align: 'right',
       renderCell: () => (
-        <ImgGroup
-          className="spoke-collateral-group"
-          imgSrcs={pool.collateralMarkets.map(collateral => collateral.token.iconSrc)}
-        />
+        <div className="spoke-collateral-group inline-flex items-center">
+          {pool.collateralMarkets.map(({ token }, index) => (
+            <Tooltip
+              key={token.address}
+              content={token.symbol}
+              triggerTabIndex={0}
+              className={index > 0 ? '-ml-1' : undefined}
+            >
+              <TokenIcon token={token} size="lg" className="overflow-hidden rounded-full" />
+            </Tooltip>
+          ))}
+        </div>
       ),
     },
     {
@@ -188,8 +196,6 @@ const Spoke: React.FC = () => {
 
   return (
     <Page>
-      <HubApyBanner />
-
       <Wrapper className="pt-5 sm:pt-10">
         <div className="spoke-page space-y-5 sm:space-y-10">
           <PageStatHeader
