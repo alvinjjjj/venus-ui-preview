@@ -1001,8 +1001,8 @@
 /* ===== O only — nav tag (3.74% / New), LIGHT mode =====
    On white the dark contact shade turns grey and pale type disappears, so light mode flips
    the recipe: a clear blue-tinted glass, deeper accent-blue type, a crisp blue ring, a white
-   top bevel and a soft blue drop instead of the dark shade. Hover fills with solid blue glass
-   (white type) and the same single light sweep. */
+   top bevel and a soft blue drop instead of the dark shade. Hover is kept simple: it fills
+   with solid blue glass and the type turns white (160ms), no glow and no sweep. */
 :root[data-glass-choice='v1'][data-liquidity-theme='light'] #root .venus-tag.venus-tag {
   --badge-line: #5fb3f6;
   background: linear-gradient(180deg, rgb(17 153 250 / 14%), rgb(17 153 250 / 7%));
@@ -1010,20 +1010,25 @@
   text-shadow: none;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 90%),
-    0 1px 2px rgb(17 153 250 / 18%),
-    0 0 8px 0 rgb(17 153 250 / calc(var(--badge-bloom) * .35));
+    0 1px 2px rgb(17 153 250 / 18%);
+  transition: color 160ms ease-out;
 }
 :root[data-glass-choice='v1'][data-liquidity-theme='light'] #root .venus-tag.venus-tag::before {
   background: linear-gradient(115deg, #ffffff, var(--badge-line) 35%, #1199fa);
 }
 :root[data-glass-choice='v1'][data-liquidity-theme='light'] #root .venus-tag.venus-tag::after {
   background:
-    linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 45%) 50%, transparent 62%),
     linear-gradient(180deg, #4fb0f8, #1199fa);
+  background-size: 100% 100%;
+  transition: opacity 160ms ease-out;
 }
 :root[data-glass-choice='v1'][data-liquidity-theme='light'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag {
   color: #ffffff;
 }
 :root[data-glass-choice='v1'][data-liquidity-theme='light'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::before {
   background: linear-gradient(115deg, #ffffff, #8ccaff 50%, #1199fa);
+}
+/* light mode is deliberately calm: no glow, no sweep - hover is a quick fill + white type */
+:root[data-glass-choice='v1'][data-liquidity-theme='light'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after {
+  animation: none;
 }
