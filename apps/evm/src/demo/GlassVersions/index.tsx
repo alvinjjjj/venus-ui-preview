@@ -51,12 +51,15 @@ export const GlassVersions = () => {
     document.documentElement.dataset.glassPreview = styleVersion;
     // New mirrors Explorer, so it carries Explorer's mode attribute for the shared CSS.
     document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : version;
+    // The exact switcher choice (O / New / E), for per-mode studies such as the nav badge motion.
+    document.documentElement.dataset.glassChoice = version;
     document.documentElement.toggleAttribute('data-glass-landing', isLandingRoute);
     localStorage.setItem('venus-glass-version', version);
     return () => {
       delete document.documentElement.dataset.glassVersion;
       delete document.documentElement.dataset.glassPreview;
       delete document.documentElement.dataset.glassMode;
+      delete document.documentElement.dataset.glassChoice;
       document.documentElement.removeAttribute('data-glass-landing');
     };
   }, [version, styleVersion, isLandingRoute]);

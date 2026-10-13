@@ -1,0 +1,124 @@
+/* Light theme for the New/E landing sections (VenusSteps, Safety, Community, Footer).
+   The first part is generated from each section's dark styles: white overlays become ink
+   overlays, black shadows soften, near-black glass panels turn white. The hand-tuned part
+   at the end covers what a straight inversion gets wrong. Dark theme is untouched. */
+
+/* ---- VenusSteps/styles.css ---- */
+:root[data-liquidity-theme='light'] .venus-steps { --vs3-edge: rgb(16 18 24 / 6.8%); --vs3-card: linear-gradient(rgb(16 18 24 / 6%), rgb(16 18 24 / 6%)), rgb(255 255 255 / 94%); --vs3-glass: rgb(16 18 24 / 6%); --vs3-glass-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(15 23 42 / 4.8%); }
+:root[data-liquidity-theme='light'] .venus-steps__dots { background-image: radial-gradient(circle, rgb(16 18 24 / 18.7%) 1px, transparent 1.4px); }
+:root[data-liquidity-theme='light'] .venus-steps__cta:hover { background: rgb(16 18 24 / 10.2%); }
+:root[data-liquidity-theme='light'] .venus-steps__visual { background-image: radial-gradient(circle, rgb(16 18 24 / 7.6%) 1px, transparent 1.4px); }
+:root[data-liquidity-theme='light'] .venus-steps__visual-bar { background: rgb(255 255 255 / 90%); }
+:root[data-liquidity-theme='light'] .venus-steps__input { background: rgb(15 23 42 / 8.8%); }
+:root[data-liquidity-theme='light'] .venus-steps__button { box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(15 23 42 / 4%); }
+:root[data-liquidity-theme='light'] #root .venus-steps .venus-steps__deck .venus-steps__deck-card[data-venus-panel],
+:root[data-liquidity-theme='light'] .venus-steps__deck .venus-steps__deck-card { box-shadow: inset 0 1px 1px rgb(255 255 255 / 10%), 0 24px 60px rgb(15 23 42 / 16%); }
+:root[data-liquidity-theme='light'] .venus-steps__hair { stroke: rgb(16 18 24 / 13.6%); }
+:root[data-liquidity-theme='light'] .venus-steps__hair[data-empty] { stroke: rgb(16 18 24 / 8.5%); }
+:root[data-liquidity-theme='light'] .venus-steps__node { stroke: rgb(16 18 24 / 15.3%); }
+:root[data-liquidity-theme='light'] .venus-steps__node.is-hub { fill: #dbeafe; }
+:root[data-liquidity-theme='light'] .venus-steps__alloc-bar { background: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-steps__chart-guide { stroke: rgb(16 18 24 / 4.2%); }
+:root[data-liquidity-theme='light'] .venus-steps__chart-base { stroke: rgb(16 18 24 / 10.2%); }
+:root[data-liquidity-theme='light'] .venus-steps__node-ring { stroke: rgb(16 18 24 / 13.6%); }
+:root[data-liquidity-theme='light'] .venus-steps__switch { background: rgb(16 18 24 / 10.2%); }
+:root[data-liquidity-theme='light'] .venus-steps__switch span { box-shadow: 0 1px 3px rgb(15 23 42 / 16%); }
+:root[data-liquidity-theme='light'] .venus-steps__health-marker { box-shadow: 0 0 0 3px var(--color-background), 0 0 12px rgb(16 18 24 / 38.2%); }
+:root[data-liquidity-theme='light'] .venus-steps__board { background: rgb(16 18 24 / 8.5%); }
+:root[data-liquidity-theme='light'] .venus-steps__board-dot { box-shadow: 0 0 0 3px var(--color-background), 0 0 12px rgb(16 18 24 / 34%); }
+:root[data-liquidity-theme='light'] .venus-steps__boost-bar { background: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-steps__trade-mark.is-entry { stroke: rgb(16 18 24 / 25.5%); }
+:root[data-liquidity-theme='light'] .venus-steps__node.is-tile { fill: rgb(16 18 24 / 3.4%); stroke: rgb(16 18 24 / 13.6%); }
+:root[data-liquidity-theme='light'] .venus-steps__board-fill { background: rgb(16 18 24 / 18.7%); }
+
+/* ---- SafetyExplorer/styles.css ---- */
+:root[data-liquidity-theme='light'] .venus-safety { --vsf-edge: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-safety__auditor,
+:root[data-liquidity-theme='light'] .venus-safety__auditor:hover { background: rgb(16 18 24 / 2.5%); }
+:root[data-liquidity-theme='light'] .venus-safety__auditor:hover { border-color: rgb(16 18 24 / 15.3%); background: rgb(16 18 24 / 5.1%); }
+:root[data-liquidity-theme='light'] .venus-safety__score,
+:root[data-liquidity-theme='light'] .venus-safety__score:hover { background: rgb(16 18 24 / 2.5%); }
+:root[data-liquidity-theme='light'] .venus-safety__ring-track { stroke: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-safety__ring-sweep { stroke: rgb(16 18 24 / 72.2%); filter: drop-shadow(0 0 6px rgb(16 18 24 / 59.5%)); }
+
+/* ---- CommunityExplorer/styles.css ---- */
+:root[data-liquidity-theme='light'] .venus-community { --vc-edge: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-community__proposal { background: rgb(16 18 24 / 2.5%); }
+:root[data-liquidity-theme='light'] .venus-community__bar { background: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-community__tile { background: rgb(16 18 24 / 5.1%); }
+:root[data-liquidity-theme='light'] .venus-community__tile[data-tone="closed"] { --tile: rgb(16 18 24 / 18.7%); }
+:root[data-liquidity-theme='light'] .venus-community__legend i[data-tone="closed"] { background: rgb(16 18 24 / 18.7%); }
+:root[data-liquidity-theme='light'] .venus-community__live { background: rgb(16 18 24 / 2.5%); }
+:root[data-liquidity-theme='light'] .venus-community__chat { border: 1px solid rgb(16 18 24 / 10.2%); background: rgb(255 255 255 / 90%); box-shadow: 0 18px 50px rgb(15 23 42 / 16%); }
+:root[data-liquidity-theme='light'] .venus-community__post-body { background: rgb(16 18 24 / 5.1%); color: rgb(16 18 24 / 84.6%); }
+:root[data-liquidity-theme='light'] .venus-community__plane path { stroke: rgb(16 18 24 / 18.7%); }
+
+/* ---- FooterExplorer/styles.css ---- */
+:root[data-liquidity-theme='light'] .venus-footer { --vf-edge: rgb(16 18 24 / 6.8%); }
+:root[data-liquidity-theme='light'] .venus-footer__social { background: rgb(16 18 24 / 2.5%); }
+:root[data-liquidity-theme='light'] .venus-footer__link,
+:root[data-liquidity-theme='light'] .venus-footer__link:hover { color: rgb(16 18 24 / 69.7%); }
+:root[data-liquidity-theme='light'] .venus-footer__wordmark-base path { stroke: rgb(16 18 24 / 13.6%); }
+
+/* ---- Hand-tuned light fixes (where a straight inversion is wrong) ---- */
+
+/* One paper for the whole landing: the Hero, every section and the footer share
+   #f7f9fc, so white cards lift off it and there is no seam between sections. */
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])[data-glass-landing]
+  :is(#page-container, .venus-steps-track, .venus-steps, .venus-safety, .venus-community, .venus-footer) {
+  background: #f7f9fc;
+}
+
+/* Section 3: white cards and window, light glass chips. */
+:root[data-liquidity-theme='light'] .venus-steps {
+  --vs3-card: #fff;
+  --vs3-panel: #fff;
+  --vs3-glass: rgb(16 18 24 / 4%);
+  --vs3-glass-shadow: inset 0 0 0 1px rgb(16 18 24 / 8%), 0 1px 2px rgb(15 23 42 / 6%);
+}
+:root[data-liquidity-theme='light'] .venus-steps__visual-bar { background: #fff; }
+:root[data-liquidity-theme='light'] .venus-steps__visual { background-color: #eef2f7; }
+
+/* Text and knobs that sit on a coloured fill stay white. */
+:root[data-liquidity-theme='light'] :is(
+    .venus-steps__tab[aria-selected='true'] .venus-steps__num,
+    .venus-steps__leg-side,
+    .venus-steps__levers span[data-on='true'],
+    .venus-community__state[data-stage='passed'],
+    .venus-community__state[data-stage='executed'],
+    .venus-community__state[data-stage='voting'],
+    .venus-community__join-cta
+  ) {
+  color: #fff;
+}
+:root[data-liquidity-theme='light'] :is(.venus-steps__switch span, .venus-steps__health-marker, .venus-steps__board-dot) {
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(16 18 24 / 12%), 0 1px 3px rgb(15 23 42 / 18%);
+}
+
+/* Safety score ring: brand blue sweep instead of a white one. */
+:root[data-liquidity-theme='light'] .venus-safety__ring-sweep {
+  stroke: var(--color-blue);
+  filter: drop-shadow(0 0 6px rgb(42 147 232 / 30%));
+}
+:root[data-liquidity-theme='light'] :is(.venus-safety__auditor, .venus-safety__score, .venus-community__card, .venus-community__proposal) {
+  background: #fff;
+}
+
+/* Community: the code editor and terminal stay dark (they read as code), so their own
+   hairlines keep the dark-theme edge. The Telegram window turns into a light chat. */
+:root[data-liquidity-theme='light'] :is(.venus-community__window, .venus-community__terminal) {
+  --vc-edge: rgb(255 255 255 / 8%);
+  --vc-muted: #aab3ca;
+}
+:root[data-liquidity-theme='light'] .venus-community__chat .venus-community__window-bar i { background: rgb(16 18 24 / 14%); }
+:root[data-liquidity-theme='light'] .venus-community__post-body b { color: #0b79d0; }
+
+/* Footer: darker link on hover, and a stronger dashed wordmark on paper. */
+:root[data-liquidity-theme='light'] .venus-footer__link:hover,
+:root[data-liquidity-theme='light'] .venus-footer__bottom .venus-footer__link:hover { color: rgb(16 18 24); }
+:root[data-liquidity-theme='light'] .venus-footer__wordmark-base path { stroke: rgb(16 18 24 / 18%); }
+
+/* Safety: pale monochrome auditor marks get ink at rest; hover still shows the colour mark. */
+:root[data-liquidity-theme='light'] .venus-safety__logo-off { filter: brightness(0.35); opacity: 0.55; }
+:root[data-liquidity-theme='light'] .venus-safety__auditor:hover .venus-safety__logo-off { opacity: 0; }

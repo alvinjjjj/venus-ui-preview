@@ -1,6 +1,6 @@
 /* Explorer landing footer. Same margins, type and hairlines as Sections 1–5. Link
    columns sit on a hairline grid that runs down into an edge-to-edge Venus wordmark,
-   drawn as a dashed outline (the Telegram mark's style) and lit by the pointer. */
+   filled softly and illuminated by a travelling light band. */
 .venus-footer {
   --vf-edge: rgb(255 255 255 / 8%);
   --vf-muted: var(--color-light-grey);
@@ -42,7 +42,7 @@
 .venus-footer__column { position: relative; }
 @media (min-width: 768px) {
   .venus-footer__column { padding-left: calc(var(--spacing) * 5); }
-  /* Hairline from the footer's top edge down through the wordmark (clipped by the footer). */
+  /* Keep the column dividers within navigation, away from the closing wordmark. */
   .venus-footer__column::before {
     content: '';
     position: absolute;
@@ -50,7 +50,7 @@
     top: calc(-1 * var(--vf-pad-top));
     left: 0;
     width: 1px;
-    height: 200vh;
+    bottom: 0;
     background: linear-gradient(to bottom, var(--vf-edge), var(--vf-edge) 60%, transparent);
   }
 }
@@ -59,79 +59,67 @@
 .venus-footer__link,
 .venus-footer__link:hover { display: inline-flex; align-items: baseline; gap: 4px; color: rgb(255 255 255 / 82%); font-size: var(--text-sm); text-decoration: none; transition: color 0.2s ease; }
 .venus-footer__link:hover { color: var(--color-white); }
-.venus-footer__link span { font-size: 10px; color: var(--vf-muted); transition: translate 0.2s ease; }
-.venus-footer__link:hover span { translate: 2px -2px; color: var(--color-blue); }
+.venus-footer__external { display: inline-flex; align-self: center; flex-shrink: 0; color: var(--vf-muted); }
+.venus-footer__link:hover .venus-footer__external { color: var(--color-blue); }
 
 .venus-footer__bottom {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: calc(var(--spacing) * 4);
   margin-top: clamp(48px, 8svh, 88px);
   padding-block: calc(var(--spacing) * 6);
-  border-top: 1px solid var(--vf-edge);
   font-size: var(--text-xs);
   color: var(--vf-muted);
 }
 .venus-footer__legal { display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 6); }
 
-/* Live chain status: a pulsing dot and the latest block, which flashes as it ticks. */
-.venus-footer__status { display: inline-flex; align-items: center; gap: calc(var(--spacing) * 2); font-variant-numeric: tabular-nums; }
-.venus-footer__pulse { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--color-green); }
-.venus-footer__pulse::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: inherit;
-  animation: venus-footer-pulse 2s ease-out infinite;
-}
-@keyframes venus-footer-pulse { to { scale: 3; opacity: 0; } }
-.venus-footer__block-number { display: inline-block; animation: venus-footer-tick 0.9s ease-in-out; }
-@keyframes venus-footer-tick { from { color: var(--color-white); } to { color: var(--vf-muted); } }
-
-/* Edge-to-edge wordmark, cropped by the footer's bottom edge. Base: dashed outline,
-   drifting. Lit: the same outline solid and blue, masked to a circle at the pointer. */
+/* Preserve the original silhouette. The mask confines the moving light to its fill.
+   Play once on first arrival and replay on mouse entry, never as an idle loop. */
 .venus-footer__wordmark {
-  --vf-x: 50%;
-  --vf-y: 50%;
   position: relative;
   margin: calc(var(--spacing) * 6) max(5.75vw, 24px) 0;
   aspect-ratio: 160 / 34;
-  margin-bottom: calc((100vw - 2 * max(5.75vw, 24px)) * 34 / 160 * -0.36);
-  pointer-events: none;
+  /* Crop the lower third to match the approved closing-frame reference. */
+  margin-bottom: calc((100vw - 2 * max(5.75vw, 24px)) * 34 / 160 * -0.32);
 }
 .venus-footer__wordmark svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .venus-footer__wordmark path {
-  fill: none;
-  stroke-width: 1px;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
+  fill: currentColor;
+  stroke: none !important; /* Override the legacy light-theme outline treatment. */
 }
-.venus-footer__wordmark-base path {
-  stroke: rgb(255 255 255 / 16%);
-  stroke-dasharray: 6 8;
-  stroke-linecap: round;
-  animation: venus-footer-dash 60s linear infinite;
+.venus-footer__wordmark-base { opacity: 0.08; }
+.venus-footer__wordmark-light {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
 }
-@keyframes venus-footer-dash { to { stroke-dashoffset: -420; } }
-.venus-footer__wordmark-lit {
+.venus-footer__wordmark-light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, color-mix(in srgb, var(--color-blue) 28%, transparent) 39%, color-mix(in srgb, var(--color-white) 60%, transparent) 50%, color-mix(in srgb, var(--color-blue) 20%, transparent) 61%, transparent 80%);
   opacity: 0;
-  mask-image: radial-gradient(circle 220px at var(--vf-x) var(--vf-y), #000 0%, rgb(0 0 0 / 50%) 45%, transparent 100%);
-  transition: opacity 0.6s ease-in-out;
 }
-.venus-footer__wordmark-lit path { stroke: var(--color-blue); stroke-width: 1.5px; }
-.venus-footer:hover .venus-footer__wordmark-lit { opacity: 1; }
+.venus-footer__wordmark-light[data-animate='true']::before { animation: venus-footer-light-sweep 3s cubic-bezier(0.4, 0, 0.2, 1) both; }
+@keyframes venus-footer-light-sweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
 .venus-footer__bottom .venus-footer__link { font-size: var(--text-xs); color: var(--vf-muted); }
 .venus-footer__bottom .venus-footer__link:hover { color: var(--color-white); }
 
 /* On the Explorer landing this footer replaces the app footer's links and socials;
    the app footer keeps only its preview controls row. */
-:root[data-glass-mode='explorer'][data-glass-landing] footer:not(.venus-footer) { margin-top: 0; }
-:root[data-glass-mode='explorer'][data-glass-landing] footer:not(.venus-footer) > :not(:last-child) { display: none; }
+:root:is([data-glass-mode='explorer'], [data-glass-mode='v5'])[data-glass-landing] footer:not(.venus-footer) { margin: 0; padding: 0; gap: 0; }
+:root:is([data-glass-mode='explorer'], [data-glass-mode='v5'])[data-glass-landing] footer:not(.venus-footer) > :not(:last-child) { display: none; }
+:root:is([data-glass-mode='explorer'], [data-glass-mode='v5'])[data-glass-landing] footer:not(.venus-footer) > :last-child { border: 0; margin: 0; padding: 0; }
 
 @media (prefers-reduced-motion: reduce) {
-  .venus-footer__wordmark-base path,
-  .venus-footer__pulse::after,
-  .venus-footer__block-number { animation: none; }
+  .venus-footer__wordmark-light[data-animate]::before { animation: none; transform: none; opacity: 0.15; }
 }

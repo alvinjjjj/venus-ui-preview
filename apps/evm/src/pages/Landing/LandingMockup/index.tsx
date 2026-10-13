@@ -126,7 +126,7 @@ export const LandingMockup: React.FC<{ connectedFlow?: boolean; transitionProgre
                 </span>
                 <span className="landing-mockup__offer-copy">
                   <span className="landing-mockup__offer-verb">{active.label}</span> up to{' '}
-                  {active.value}
+                  <span className="landing-mockup__offer-value">{active.value}</span>
                 </span>
               </motion.span>
             </AnimatePresence>

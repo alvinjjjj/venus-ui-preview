@@ -509,3 +509,87 @@
   .landing-mockup__logo-track { animation: none; }
   .landing-mockup__offer-link img { transition: none; }
 }
+
+/* Light theme for New and E ("paper and ink"): pale page with a faint dot grid instead of
+   stars, Venus-blue ink lines (drawn in FlowFieldThree), a soft blue haze where the flow
+   converges, and dark text. Dark theme is unchanged. */
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .landing-mockup {
+  --mockup-text: #0b1220;
+  --mockup-muted: #5b6474;
+  --mockup-blue: #0085e3;
+  background-color: #f7f9fc;
+  background-image: radial-gradient(circle, rgb(11 18 32 / 9%) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  color: var(--mockup-text);
+}
+
+/* Liquidity gathering into Venus: a light-blue haze at the convergence point. It fades
+   with the Hero copy as the flow hands over to Section 2. */
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .landing-mockup::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 30% 30% at 56% 51%, rgb(133 204 255 / 22%), transparent 70%);
+  opacity: var(--flow-hero-opacity, 1);
+  pointer-events: none;
+  content: '';
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .horizontal-flow {
+  background: #f7f9fc;
+}
+
+/* The header sits on the same paper as the Hero, so there is no seam under the nav. */
+:root[data-glass-landing][data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  #root .venus-navigation > .venus-header-row {
+  background: #f7f9fc;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup :is(.landing-mockup__offer-verb, .landing-mockup__offer-value) {
+  color: #0085e3;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__offer--borrow .landing-mockup__offer-verb {
+  color: #5b6474;
+}
+
+/* The arrow artwork is a pale stroke for dark backgrounds; ink it for paper. */
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__offer-link img {
+  filter: brightness(0);
+  opacity: 0.72;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__intro p {
+  color: #4b5563;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__tvl span {
+  color: #6b7280;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__tvl strong {
+  color: #0b1220;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__trusted p {
+  color: #5b6474;
+}
+
+/* Wallet logos are pale monochrome artwork: grey ink at half strength, darker on hover. */
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__logo-group img {
+  filter: grayscale(1) brightness(0.32);
+  opacity: 0.5;
+  transition: opacity 180ms ease;
+}
+
+:root[data-liquidity-theme='light']:is([data-glass-mode='v5'], [data-glass-mode='explorer'])
+  .landing-mockup__logo-group img:hover {
+  opacity: 0.85;
+}

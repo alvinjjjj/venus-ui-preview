@@ -593,3 +593,407 @@
 @media (prefers-reduced-motion: reduce) {
   :root[data-glass-mode='explorer'] :is(#root, body) :is(.venus-toggle-track, .venus-toggle-knob) { transition: none; }
 }
+
+/* Nav tags (header Earn badge + dropdown "Liquidity Hub" badge, any NavBar <Tag>), Default + Hover.
+   O = Fill (blue glass), New + E = Bloom. Hover = the row/link/button that contains the tag. */
+@property --venus-badge-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+:root[data-glass-choice] #root .venus-tag {
+  isolation: isolate;
+  transition: color 240ms ease-out, background-color 240ms ease-out, box-shadow 240ms ease-out;
+}
+:root[data-glass-choice][data-glass-version='v6'] #root :is([data-header-navigation], *) > .venus-tag.venus-navigation-badge {
+  position: relative;
+  inset: auto; /* the O-layout offsets (-top-2 / -right-3) must not shift the in-line badge */
+  align-self: center;
+}
+:root[data-glass-choice] #root .venus-tag::before, :root[data-glass-choice] #root .venus-tag::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+:root[data-glass-choice] #root .venus-tag:not(.venus-navigation-badge) { position: relative; }
+/* 1px ring helper (::before) */
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root .venus-tag::before {
+  z-index: -1;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* ---------- O · Fill: blue-glass material + the Aave-style staged light ----------
+   Glossy blue glass (button gradient), a crisp glass edge, a dark contact shade so it
+   lifts off the header, and layered bloom that rests dim and ignites on hover
+   (inner light first, outer later) while one light band sweeps across. */
+:root[data-glass-choice='v1'] #root .venus-tag {
+  --badge-glow: 17 153 250;
+  --badge-bloom: .3;
+  background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgb(0 40 110 / 35%);
+  box-shadow:
+    inset 0 -1px 1px rgb(0 30 90 / 25%),
+    0 0 2px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .9)),
+    0 0 8px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .6)),
+    0 0 18px 2px rgb(var(--badge-glow) / calc(var(--badge-bloom) * .35)),
+    0 0 8px 3px rgb(5 8 15 / 55%);
+  transition: --badge-bloom 700ms cubic-bezier(.3, .7, .2, 1) 120ms;
+}
+/* glass edge: bright at the top, fading out toward the bottom */
+:root[data-glass-choice='v1'] #root .venus-tag::before {
+  z-index: 1;
+  padding: 1px;
+  background: linear-gradient(180deg, rgb(255 255 255 / 55%), rgb(255 255 255 / 8%) 60%, rgb(255 255 255 / 18%));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+/* hover layer = brighter blue-glass hover gradient + one light sweep */
+:root[data-glass-choice='v1'] #root .venus-tag::after {
+  z-index: -1;
+  opacity: 0;
+  background:
+    linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 32%) 50%, transparent 62%),
+    radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%),
+    linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6);
+  background-size: 300% 100%, 100% 100%, 100% 100%;
+  background-position: 100% 0, 0 0, 0 0;
+  transition: opacity 240ms ease-out;
+}
+:root[data-glass-choice='v1'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag { --badge-bloom: 1; }
+:root[data-glass-choice='v1'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag::after {
+  opacity: 1;
+  animation: venus-badge-sweep 800ms cubic-bezier(.3, .7, .2, 1) 100ms 1 both;
+}
+@keyframes venus-badge-sweep {
+  from { background-position: 100% 0, 0 0, 0 0; }
+  to { background-position: 0% 0, 0 0, 0 0; }
+}
+
+/* ---------- New + E · "Bloom" (learned from Aave Pro, not copied) ----------
+   What makes Aave Pro feel premium: stroke + letters in one pale tint, a dark contact shade
+   behind so it reads on any background, and layered light (tight -> wide) that is dim at rest
+   and ignites in stages on hover. Venus keeps its blue, in a paler "light" tint for the line work.
+   New = bloom only. E = bloom + Venus particle sparks drifting off the badge on hover. */
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root .venus-tag {
+  --badge-line: #8ccaff;           /* pale Venus blue for ring + text */
+  --badge-glow: 17 153 250;        /* accent/blue */
+  --badge-bloom: .22;              /* resting light level */
+  background: transparent;
+  color: var(--badge-line);
+  font-weight: 600;
+  text-shadow: 0 0 4px rgb(var(--badge-glow) / calc(var(--badge-bloom) * 1));
+  box-shadow:
+    0 0 2px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .9)),
+    0 0 7px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .6)),
+    0 0 16px 2px rgb(var(--badge-glow) / calc(var(--badge-bloom) * .35)),
+    0 0 8px 3px rgb(5 8 15 / 55%);   /* contact shade */
+  transition:
+    color 300ms ease-out,
+    text-shadow 300ms ease-out,
+    box-shadow 700ms cubic-bezier(.3, .7, .2, 1) 120ms;
+}
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root .venus-tag::before {
+  padding: 1.5px;
+  background: var(--badge-line);
+  transition: background 300ms ease-out;
+}
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag {
+  --badge-bloom: 1;
+  color: #d6ecff;
+  text-shadow: 0 0 6px rgb(var(--badge-glow) / 90%);
+}
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag::before {
+  background: linear-gradient(115deg, #ffffff, var(--badge-line) 40%, var(--badge-line));
+}
+/* custom properties don't interpolate inside calc() without @property */
+@property --badge-bloom { syntax: '<number>'; inherits: true; initial-value: .22; }
+:root:is([data-glass-choice='v5'], [data-glass-choice='explorer']) #root .venus-tag { transition-property: color, text-shadow, box-shadow, --badge-bloom; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-choice] #root .venus-tag, :root[data-glass-choice] #root .venus-tag::before, :root[data-glass-choice] #root .venus-tag::after { transition: none; animation: none !important; }
+}
+
+/* Earn menu icons — colour study so Liquidity Hub and Vault read apart at a glance.
+   Liquidity Hub keeps the blue tile everywhere; Vault gets a different pairing per preview:
+   O = gold (accent/yellow), New = violet, E = steel. Same tile material for both (diagonal
+   gradient + soft top light), only the hue changes. The SVG's own tile is hidden so the
+   container's gradient shows. */
+:root[data-glass-choice] .venus-navigation-menu [data-earn-motion='vault'] .venus-earn-icon > rect:first-child {
+  fill: transparent;
+}
+:root[data-glass-choice] .venus-navigation-menu [data-earn-motion='vault'] .venus-submenu-icon {
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 30%);
+}
+:root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='vault'] .venus-submenu-icon {
+  background: linear-gradient(140deg, color-mix(in srgb, var(--color-yellow) 55%, #ffffff), var(--color-yellow) 55%, color-mix(in srgb, var(--color-yellow) 78%, #6b3d00));
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion='vault'] .venus-submenu-icon {
+  background: linear-gradient(140deg, #c3b4ff, #8b6cf6 55%, #6a48e0);
+}
+
+/* E only — a little motion on the Earn menu icons, once per hover (off for reduced motion).
+   Both tiles: a soft light glints across once.
+   Liquidity Hub: the four nodes step outward one after another (supply spreading to sources),
+                  the centre gives a small pulse.
+   Vault: the dial turns a quarter, like opening a lock, and settles back. */
+:root[data-glass-choice='explorer'] .venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault'], [data-earn-motion='spoke']) .venus-submenu-icon {
+  position: relative;
+  overflow: hidden;
+}
+:root[data-glass-choice='explorer'] .venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault'], [data-earn-motion='spoke']) .venus-submenu-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 35%) 50%, transparent 65%) 130% 0 / 250% 100% no-repeat;
+}
+:root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion] .venus-earn-icon :is(path, circle) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes o-icon-glint { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+@keyframes o-hub-center { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.12); } }
+@keyframes o-hub-up    { 0%, 100% { transform: none; } 45% { transform: translateY(-2px); } }
+@keyframes o-hub-left  { 0%, 100% { transform: none; } 45% { transform: translateX(-2px); } }
+@keyframes o-hub-down  { 0%, 100% { transform: none; } 45% { transform: translateY(2px); } }
+@keyframes o-hub-right { 0%, 100% { transform: none; } 45% { transform: translateX(2px); } }
+@keyframes o-vault-dial { 0% { transform: rotate(0); } 50% { transform: rotate(90deg); } 75% { transform: rotate(80deg); } 100% { transform: rotate(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-choice='explorer'] .venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault'], [data-earn-motion='spoke']):is(:hover, :focus-visible) .venus-submenu-icon::after {
+    animation: o-icon-glint 700ms cubic-bezier(.4, 0, .2, 1) 1 both;
+  }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(1) { animation: o-hub-center 520ms ease-in-out 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(2) { animation: o-hub-up 520ms ease-in-out 60ms 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(3) { animation: o-hub-left 520ms ease-in-out 120ms 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(4) { animation: o-hub-down 520ms ease-in-out 180ms 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(5) { animation: o-hub-right 520ms ease-in-out 240ms 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='vault']:is(:hover, :focus-visible) .venus-vault-lock { animation: o-vault-dial 800ms cubic-bezier(.4, 0, .2, 1) 1 !important; }
+}
+
+/* E only — Venus Spoke icon. A Spoke is one of the separate markets the Hub's liquidity
+   flows out to (Core, Flux, Fixed Rate...), each with its own rate. So, once per hover:
+   the four spoke markets light up one after another, clockwise from the top - liquidity
+   reaching each market in turn. The centre and the diagonal dots stay still. */
+@keyframes o-spoke-light { 0%, 100% { fill: #d9d9d9; transform: scale(1); } 40% { fill: #ffffff; transform: scale(1.25); } }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot[data-ring='1'] { animation: o-spoke-light 420ms ease-in-out 1 both; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot[data-ring='1']:nth-of-type(5) { animation-delay: 0ms; }   /* top */
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot[data-ring='1']:nth-of-type(2) { animation-delay: 110ms; } /* right */
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot[data-ring='1']:nth-of-type(4) { animation-delay: 220ms; } /* bottom */
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot[data-ring='1']:nth-of-type(3) { animation-delay: 330ms; } /* left */
+}
+
+/* E only — Venus Core icon: the mark's own gradient (violet -> cyan -> green) flows through
+   it once per hover. Shape and position never change; only the colour stops shift one step
+   and settle back, as a wave that starts at the green end. */
+@keyframes o-core-stop-1 { 0%, 100% { stop-color: #5433ff; } 50% { stop-color: #20bdff; } }
+@keyframes o-core-stop-2 { 0%, 100% { stop-color: #20bdff; } 50% { stop-color: #5cffa2; } }
+@keyframes o-core-stop-3 { 0%, 100% { stop-color: #5cffa2; } 50% { stop-color: #20bdff; } }
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-earn-icon linearGradient stop:nth-child(3) { animation: o-core-stop-3 700ms ease-in-out 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-earn-icon linearGradient stop:nth-child(2) { animation: o-core-stop-2 700ms ease-in-out 140ms 1; }
+  :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-earn-icon linearGradient stop:nth-child(1) { animation: o-core-stop-1 700ms ease-in-out 280ms 1; }
+}
+
+/* ===== New only — header dropdown menus (Earn / Borrow / Others), redesign v1 =====
+   Same self-lit glass language as the notice and pop-up: a clearer glass panel with its own
+   top light, rows that rise as small glass pills on hover, glass icon tiles, a soft colour
+   glow under the coloured product icons, and a short staged entrance. Radii stay 8px. */
+:root[data-glass-choice='v5'] :is(#root, body) .venus-navigation-menu.venus-dropdown-surface {
+  background:
+    radial-gradient(ellipse 80% 60% at 18% 0%, rgb(255 255 255 / 6%), transparent 70%),
+    rgb(20 24 31 / 64%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+  backdrop-filter: blur(24px) saturate(1.4) !important;
+  border: 1px solid rgb(255 255 255 / 12%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%), 0 16px 40px rgb(0 0 0 / 28%), 0 2px 8px rgb(0 0 0 / 18%) !important;
+  padding: 6px !important;
+}
+/* styles.css and Dropdown/glass.css turn menu animations off with !important; New opts back in. */
+:root[data-glass-choice='v5'][data-glass-version='v6'] :is(#root, body) .venus-navigation-menu.venus-dropdown-surface {
+  animation: new-menu-in 240ms cubic-bezier(.2, .7, .2, 1) both !important;
+}
+/* open: the glass is revealed top-down while it fades in - no sliding, no row stagger */
+@keyframes new-menu-in {
+  /* end with a generous inset so the panel's drop shadow is never clipped */
+  from { opacity: 0; clip-path: inset(-60px -60px calc(100% + 0px) -60px); }
+  to { opacity: 1; clip-path: inset(-60px -60px -80px -60px); }
+}
+
+/* rows: glass pill on hover / focus, slightly brighter when it is the current page */
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant] {
+  border-radius: 8px !important;
+  background: transparent !important;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant]:is(:hover, :focus-visible) {
+  background: rgb(255 255 255 / 6%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), inset 0 0 0 1px rgb(255 255 255 / 4%);
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant][aria-current='page'] {
+  background: rgb(255 255 255 / 9%) !important;
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant] p + p {
+  transition: color 160ms ease-out;
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant]:is(:hover, :focus-visible) p + p {
+  color: rgb(255 255 255 / 72%);
+}
+
+/* monochrome icons (Others): glass tile, turns blue-tinted with a blue glyph on hover */
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant]:not([data-earn-motion]) .venus-submenu-icon {
+  background: rgb(255 255 255 / 7%) !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 20%);
+  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant]:not([data-earn-motion]):is(:hover, :focus-visible) .venus-submenu-icon {
+  background: rgb(17 153 250 / 14%) !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 20%), 0 0 0 1px rgb(17 153 250 / 30%);
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-submenu-variant]:not([data-earn-motion]):is(:hover, :focus-visible) .venus-submenu-icon svg {
+  color: var(--color-blue) !important;
+}
+
+/* coloured product icons (Earn / Borrow): no float, no colour glow. The New mode's own
+   icon animations below replace the earlier ones (hub nodes / vault dial / core hop / spoke
+   ripple) with one quiet idea each, and the tile's top edge brightens a little. */
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion] .venus-submenu-icon {
+  transition: box-shadow 220ms ease-out;
+}
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion]:is(:hover, :focus-visible) .venus-submenu-icon {
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 45%);
+}
+/* switch off the previous New icon animations */
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion] .venus-earn-icon :is(path, circle) { animation: none !important; }
+:root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion] .venus-earn-icon :is(path, circle) { transform-box: fill-box; transform-origin: center; }
+@keyframes new-hub-turn { from { transform: rotate(0); } to { transform: rotate(90deg); } }
+@keyframes new-vault-click { 0%, 100% { transform: scale(1); } 35% { transform: scale(.82); } }
+@keyframes new-core-glow { 0%, 100% { filter: none; } 45% { filter: brightness(1.18) drop-shadow(0 0 2px rgb(32 189 255 / 70%)); } }
+@keyframes new-spoke-glow { 0%, 100% { fill: #d9d9d9; } 45% { fill: #ffffff; } }
+@media (prefers-reduced-motion: no-preference) {
+  /* Hub: the centre cross makes one quarter turn - liquidity being routed */
+  :root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path:nth-of-type(1) { animation: new-hub-turn 520ms cubic-bezier(.4, 0, .2, 1) 1 !important; }
+  /* Vault: the lock gives one firm click */
+  :root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion='vault']:is(:hover, :focus-visible) .venus-vault-lock { animation: new-vault-click 360ms cubic-bezier(.4, 0, .2, 1) 1 !important; }
+  /* Core: the mark lights up once, shape untouched */
+  :root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-earn-icon { animation: new-core-glow 600ms ease-in-out 1; }
+  /* Spoke: every market dot brightens together, once */
+  :root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot { animation: new-spoke-glow 520ms ease-in-out 1 !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-choice='v5'][data-glass-version='v6'] :is(#root, body) .venus-navigation-menu.venus-dropdown-surface { animation: none !important; }
+  :root[data-glass-choice='v5'] .venus-navigation-menu [data-earn-motion] .venus-submenu-icon { transition: none; }
+}
+
+/* ===== E only — nav tag (3.74%): light blue, a fusion of O and New =====
+   From New: the pale-blue 1.5px ring + pale type, the dark contact shade, and light that is
+   dim at rest and ignites in stages on hover.
+   From O: a real glass fill (here a light-blue tinted glass, not solid blue) with a top bevel,
+   and one light band sweeping across on hover while the fill brightens. */
+:root[data-glass-choice='explorer'] #root .venus-tag.venus-tag {
+  --badge-line: #8ccaff;
+  --badge-glow: 17 153 250;
+  --badge-bloom: .22;
+  background: linear-gradient(180deg, rgb(140 202 255 / 26%), rgb(140 202 255 / 12%));
+  color: #d6ecff;
+  font-weight: 600;
+  text-shadow: 0 0 4px rgb(var(--badge-glow) / calc(var(--badge-bloom) * 1));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 28%),
+    0 0 2px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .9)),
+    0 0 7px 0 rgb(var(--badge-glow) / calc(var(--badge-bloom) * .6)),
+    0 0 16px 2px rgb(var(--badge-glow) / calc(var(--badge-bloom) * .35)),
+    0 0 8px 3px rgb(5 8 15 / 55%);
+  transition: color 240ms ease-out, --badge-bloom 700ms cubic-bezier(.3, .7, .2, 1) 120ms;
+}
+/* pale-blue ring (New) */
+:root[data-glass-choice='explorer'] #root .venus-tag.venus-tag::before {
+  padding: 1.5px;
+  background: linear-gradient(115deg, #ffffff, var(--badge-line) 40%, var(--badge-line));
+}
+/* hover layer (O): brighter light-blue glass + one sweep */
+:root[data-glass-choice='explorer'] #root .venus-tag.venus-tag::after {
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  background:
+    linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 45%) 50%, transparent 62%),
+    linear-gradient(180deg, rgb(140 202 255 / 55%), rgb(90 170 245 / 35%));
+  background-size: 300% 100%, 100% 100%;
+  background-position: 100% 0, 0 0;
+  transition: opacity 240ms ease-out;
+}
+:root[data-glass-choice='explorer'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag {
+  --badge-bloom: 1;
+  color: #ffffff;
+}
+:root[data-glass-choice='explorer'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::before { background: linear-gradient(115deg, #ffffff, #b9e0ff 50%, var(--badge-line)); }
+:root[data-glass-choice='explorer'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after {
+  opacity: 1;
+  animation: e-tag-sweep 800ms cubic-bezier(.3, .7, .2, 1) 100ms 1 both;
+}
+@keyframes e-tag-sweep {
+  from { background-position: 100% 0, 0 0; }
+  to { background-position: 0% 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-choice='explorer'] #root .venus-tag.venus-tag, :root[data-glass-choice='explorer'] #root .venus-tag.venus-tag::after { transition: none; }
+  :root[data-glass-choice='explorer'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after { animation: none; }
+}
+
+/* ===== O only — Earn icon colours: deep-blue Liquidity Hub, champagne-gold Vault =====
+   (E uses the bright accent-yellow gold; O's is a softer, metallic champagne gold.) */
+:root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon > rect:first-child { fill: transparent; }
+:root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-submenu-icon {
+  background: linear-gradient(140deg, #3d74e6, #1a3f9e 55%, #0d2361);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 30%);
+}
+:root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='vault'] .venus-submenu-icon {
+  /* champagne: pale warm highlight -> soft gold -> muted bronze, a gentle diagonal sheen,
+     a fine top bevel and a faint bottom shade so the white glyph still reads */
+  background:
+    linear-gradient(125deg, transparent 32%, rgb(255 251 238 / 32%) 44%, transparent 56%),
+    linear-gradient(145deg, #f2dfae, #cfa962 52%, #8c6a2f);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 55%), inset 0 -2px 4px rgb(90 60 15 / 22%);
+}
+
+/* O only — Earn / Borrow icon motion, swapped in from E (the original New/E set):
+   Hub nodes pulse outward in turn, the Vault dial turns, the Core dot hops while the strokes
+   slide, the Spoke dots ripple out from the centre. Once per hover; off for reduced motion. */
+@keyframes o-swap-hub { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.12); } }
+@keyframes o-swap-vault { 0%, 100% { transform: rotate(0deg); } 45% { transform: rotate(20deg); } }
+@keyframes o-swap-core-dot { 45% { transform: translate(-6%, -22%); } }
+@keyframes o-swap-core-stroke { 45% { transform: translate(5%, -5%); } }
+@keyframes o-swap-spoke { 45% { transform: scale(1.4); opacity: 1; } }
+:root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion] .venus-earn-icon :is(path, circle) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub']:is(:hover, :focus-visible) .venus-earn-icon path { animation: o-swap-hub 600ms ease-in-out 1; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(2) { animation-delay: 80ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(3) { animation-delay: 140ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(4) { animation-delay: 200ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon path:nth-of-type(5) { animation-delay: 260ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='vault']:is(:hover, :focus-visible) .venus-vault-lock { animation: o-swap-vault 600ms ease-in-out 1; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) .venus-core-dot { animation: o-swap-core-dot 600ms ease-in-out 1; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) :is(.venus-core-short, .venus-core-long) { animation: o-swap-core-stroke 600ms ease-in-out 1; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='core'] .venus-core-long { animation-delay: 80ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot { animation: o-swap-spoke 600ms ease-in-out 1; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='1'] { animation-delay: 90ms; }
+  :root[data-glass-choice='v1'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='2'] { animation-delay: 180ms; }
+}
+
+/* E only — switch off the original New/E icon motion so E plays only the swapped-in set above. */
+:root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='spoke']:is(:hover, :focus-visible) .venus-spoke-dot:not([data-ring='1']),
+:root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='core']:is(:hover, :focus-visible) :is(.venus-core-dot, .venus-core-short, .venus-core-long) {
+  animation: none !important;
+}

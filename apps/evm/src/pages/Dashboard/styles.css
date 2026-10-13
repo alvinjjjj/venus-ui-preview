@@ -1,0 +1,7 @@
+/* New and Explorer share V5 materials. Keep dashboard summaries flat. */
+:root[data-glass-preview='v5'] #root .dashboard-page .glass-dashboard-overview.venus-glass-card,
+:root[data-glass-preview='v5'] #root .dashboard-page .glass-dashboard-tabs.venus-glass-card,
+:root[data-glass-preview='v5'] #root .dashboard-page .dashboard-health-summary,
+:root[data-glass-preview='v5'] #root .dashboard-page .dashboard-health-summary [data-venus-panel] {
+  box-shadow: none !important;
+}

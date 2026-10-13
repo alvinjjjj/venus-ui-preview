@@ -135,7 +135,7 @@ export const Summary: React.FC<SummaryProps> = ({
   }
 
   return (
-    <Section className={className} title={title}>
+    <Section className={cn('dashboard-health-summary', className)} title={title}>
       {/* Below XL view */}
       <div className="space-y-4 md:space-y-6 xl:hidden">
         <CellGroup

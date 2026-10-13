@@ -18,13 +18,13 @@ const exampleRates = {
 export const OrbitAssetTargets: React.FC<{
   selectLabel: string;
   rateLabel: string;
-  /** New: hint under a product name, e.g. "Double-click to open". */
+  /** New: accessible verb for a product target, e.g. "Open". */
   hintLabel: string;
   ready: boolean;
 }> = ({ selectLabel, rateLabel, hintLabel, ready }) => {
   const explorer = useGlassPreview(state => isExplorerMode(state.mode));
   // New: the spheres are Venus products (plus Venus Core in the centre). Hover shows the
-  // name; double-click opens the product.
+  // name; a click (or Enter) opens the product.
   const products = useGlassPreview(state => state.mode === 'v5');
   const { navigate } = useNavigate();
   const orbitSatellites = getOrbitSatellites(explorer);
@@ -76,7 +76,7 @@ export const OrbitAssetTargets: React.FC<{
           aria-pressed={pinned === symbol}
           aria-label={
             product
-              ? `${product.name}: ${hintLabel}`
+              ? `${hintLabel} ${product.name}`
               : `${selectLabel} ${symbol}: ${rateLabel} ${
                   exampleRates[symbol as keyof typeof exampleRates]
                 }`
@@ -84,8 +84,11 @@ export const OrbitAssetTargets: React.FC<{
           onPointerEnter={() => setHovered(symbol)}
           onPointerLeave={() => setHovered(null)}
           onPointerDown={() => setFocused(null)}
-          onClick={() => setPinned(previous => (previous === symbol ? null : symbol))}
-          onDoubleClick={product ? () => openProduct(product) : undefined}
+          onClick={() =>
+            product
+              ? openProduct(product)
+              : setPinned(previous => (previous === symbol ? null : symbol))
+          }
           onFocus={event => {
             if (event.currentTarget.matches(':focus-visible')) setFocused(symbol);
           }}
@@ -96,14 +99,12 @@ export const OrbitAssetTargets: React.FC<{
               setFocused(null);
               setPinned(null);
             }
-            if (product && event.key === 'Enter') openProduct(product);
           }}
         >
           <span className="asset-orbit__yield" aria-hidden="true">
             {product ? (
               <>
                 <strong>{product.name}</strong>
-                <small>{hintLabel}</small>
               </>
             ) : (
               <>

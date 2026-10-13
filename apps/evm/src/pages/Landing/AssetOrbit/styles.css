@@ -207,3 +207,5 @@
   letter-spacing: 0;
   color: #85ccff;
 }
+/* Light page: the pale brand blue loses contrast on paper, so units use brand blue. */
+:root[data-liquidity-theme='light'] .asset-orbit__unit { color: #0085e3; }

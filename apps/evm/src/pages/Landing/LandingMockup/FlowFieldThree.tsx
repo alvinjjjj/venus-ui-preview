@@ -1,5 +1,6 @@
 import { PAGE_CONTAINER_ID } from 'constants/layout';
 import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import particleFieldSrc from './assets/particle-field.png';
@@ -23,6 +24,15 @@ export type FlowVariant = 'prism' | 'depth-pulse' | 'milky-way';
 
 const MERGE_AT = 0.64;
 const HORIZON = 0.51;
+// Light theme ("paper and ink"): lines and particles are drawn as Venus-blue ink on the
+// pale page instead of additive light, which disappears on white.
+const LIGHT_PAPER = new THREE.Color('#f7f9fc');
+const LIGHT_INK = new THREE.Color('#0085e3');
+// Track lines stay neutral slate; colour is reserved for what moves (blue comets) and for
+// the destination (the blue spine and haze), as in animated-beam style references.
+const LIGHT_TRACK = new THREE.Color('#5b6b82');
+// Light comets: fewer than the dark theme's sparks, so the flow reads as direction, not dust.
+const LIGHT_PARTICLE_SHARE = 0.55;
 const SEGMENTS = 56;
 const HOVER_HIT_RADIUS = 48;
 const HOVER_SPEED_MULTIPLIER = 2.15;
@@ -111,6 +121,10 @@ export const FlowFieldThree: React.FC<{
   const calm = useGlassPreview(state => state.mode === 'v5');
   const calmRef = useRef(calm);
   calmRef.current = calm;
+  // The landing is keyed by theme, so the scene is rebuilt when light/dark changes.
+  const light = useLiquidityLightPreview();
+  const lightRef = useRef(light);
+  lightRef.current = light;
   const connectedRef = useRef(connectedFlow);
   const transitionRef = useRef(transitionProgress);
   connectedRef.current = connectedFlow;
@@ -207,6 +221,56 @@ export const FlowFieldThree: React.FC<{
       depthTest: true,
     });
 
+    // Light comets: a short streak per particle, rotated to its direction of travel, fading
+    // from a transparent tail to a solid head.
+    const cometMaterial = new THREE.ShaderMaterial({
+      uniforms: { uPixelRatio: { value: pixelRatio }, uColor: { value: LIGHT_INK.clone() } },
+      vertexShader: `
+        attribute float aSize;
+        attribute float aIntensity;
+        attribute float aAngle;
+        uniform float uPixelRatio;
+        varying float vIntensity;
+        varying float vAngle;
+
+        void main() {
+          vIntensity = aIntensity;
+          vAngle = aAngle;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = aSize * uPixelRatio;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying float vIntensity;
+        varying float vAngle;
+
+        void main() {
+          vec2 point = gl_PointCoord - vec2(0.5);
+          point.y = -point.y;
+          float c = cos(vAngle);
+          float s = sin(vAngle);
+          vec2 local = vec2(c * point.x + s * point.y, -s * point.x + c * point.y);
+          float along = smoothstep(-0.48, 0.42, local.x) * (1.0 - smoothstep(0.42, 0.5, local.x));
+          float across = 1.0 - smoothstep(0.018, 0.05, abs(local.y));
+          float head = 1.0 - smoothstep(0.0, 0.06, length(local - vec2(0.42, 0.0)));
+          float alpha = max(along * across, head) * vIntensity;
+          if (alpha < 0.01) discard;
+          gl_FragColor = vec4(uColor, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      depthTest: true,
+    });
+
+    if (lightRef.current) {
+      lineMaterial.opacity = 1;
+      foregroundMaterial.blending = THREE.NormalBlending;
+      foregroundMaterial.opacity = 0.1;
+      particleMaterial.blending = THREE.NormalBlending;
+    }
+
     let lineMesh: THREE.LineSegments | undefined;
     let foregroundMesh: THREE.Mesh | undefined;
     let spineMesh: THREE.LineSegments | undefined;
@@ -236,15 +300,13 @@ export const FlowFieldThree: React.FC<{
     let centerSpin = 0;
     // New: shared rotation (radians) applied to every sphere, so they move as one ring.
     let calmOrbit = 0;
-    // Screen angles (radians, y down) for New's composition: ETH top, then clockwise.
-    const CALM_PHASES: Record<string, number> = {
-      ETH: -1.45,
-      USDC: -0.3,
-      BTC: 0.8,
-      U: 1.62,
-      USDT: 2.5,
-      BNB: 3.7,
-    };
+    // New: hexagon order, clockwise from the top. Same-family products sit opposite each
+    // other (Hub/Vault, Prime/Trade, Spoke/Flux) so colours stay balanced.
+    const CALM_HEX_ORDER = ['USDC', 'BTC', 'USDT', 'BNB', 'U', 'ETH'];
+    const CALM_HEX_START = -Math.PI / 2;
+    const CALM_RING = 0.75;
+    // One size for every product sphere (about the old average).
+    const CALM_SATELLITE_SCALE = 0.38;
     // New: four spheres. Explorer: six (adds BTC and ETH), 30% smaller.
     const orbitSatellites = getOrbitSatellites(explorerRef.current);
     const satelliteOrbits = new Float64Array(orbitSatellites.length);
@@ -298,6 +360,19 @@ export const FlowFieldThree: React.FC<{
       orange: new THREE.Color('#ff8a1c'),
       violet: new THREE.Color('#7457ff'),
     };
+    // New: spheres are coloured by product family, matching the nav menu tiles.
+    // Earn (Liquidity Hub, Vaults) is Venus blue; Borrow (Spoke, Flux) is graphite;
+    // Prime is a premium gold and Trade is Venus green.
+    const CALM_PRODUCT_COLORS: Record<string, THREE.Color> = {
+      USDC: new THREE.Color('#2a9df4'),
+      BNB: new THREE.Color('#2a9df4'),
+      USDT: new THREE.Color('#3a424d'),
+      ETH: new THREE.Color('#3a424d'),
+      BTC: new THREE.Color('#e3b04b'),
+      U: new THREE.Color('#1fbf8f'),
+    };
+    const satelliteColor = (item: (typeof orbitSatellites)[number]) =>
+      (calmRef.current && CALM_PRODUCT_COLORS[item.symbol]) || sphereColors[item.color];
     const makeSphere = (color: THREE.Color, highlight = 0.48) => {
       const material = new THREE.ShaderMaterial({
         // The screen-space camera flips Y, reversing projected winding.
@@ -406,7 +481,7 @@ export const FlowFieldThree: React.FC<{
     );
     const satellites = orbitSatellites.map(item =>
       makeSphere(
-        sphereColors[item.color],
+        satelliteColor(item),
         item.color === 'charcoal' && !explorerRef.current ? 0.18 : 0.48,
       ),
     );
@@ -534,11 +609,13 @@ export const FlowFieldThree: React.FC<{
       return mesh;
     };
     const satelliteGlows = explorerRef.current
-      ? orbitSatellites.map(item => makeGlow(sphereColors[item.color]))
+      ? orbitSatellites.map(item => makeGlow(satelliteColor(item)))
       : [];
-    const centerGlow = explorerRef.current ? makeGlow(new THREE.Color('#2f80ff')) : null;
+    // New keeps the white Venus Core planet clean: no blue halo behind it.
+    const centerGlow =
+      explorerRef.current && !calmRef.current ? makeGlow(new THREE.Color('#2f80ff')) : null;
     const engraveTints = orbitSatellites.map(item =>
-      sphereColors[item.color].clone().multiplyScalar(0.55),
+      satelliteColor(item).clone().multiplyScalar(0.55),
     );
 
     const panAmount = () =>
@@ -653,12 +730,14 @@ export const FlowFieldThree: React.FC<{
         centerGlow.material.uniforms.uStrength.value = (calmRef.current ? 0.46 : 0.42) * coreReveal;
       }
       orbitSatellites.forEach((item, index) => {
-        const ring = Math.round(item.ring * (orbit.rings - 1));
+        // New: all six products share one ring as a hexagon (60 degrees apart, same size),
+        // still turning together.
+        const ring = Math.round((calmRef.current ? CALM_RING : item.ring) * (orbit.rings - 1));
         // Explorer keeps every satellite moving one way so none passes through another.
         const direction = explorerRef.current || ring % 2 === 0 ? 1 : -1;
         // New: evenly spread around the core, all turning together at one pace.
         const phase = calmRef.current
-          ? (CALM_PHASES[item.symbol] ?? item.phase) + calmOrbit
+          ? CALM_HEX_START + (CALM_HEX_ORDER.indexOf(item.symbol) * Math.PI) / 3 + calmOrbit
           : item.phase + satelliteOrbits[index] * 0.16 * direction;
         const point = projectOrbit(
           getOrbitRadius(ringUnit, ring, orbit.rings) * expansion,
@@ -672,7 +751,8 @@ export const FlowFieldThree: React.FC<{
         );
         satellites[index].visible = orbit.showContent && appear > 0;
         satellites[index].position.set(cx + point.x, cy + point.y, point.z);
-        const radius = unit * item.radius * appear;
+        const radius =
+          unit * (calmRef.current ? orbitCoreRadius * CALM_SATELLITE_SCALE : item.radius) * appear;
         satellites[index].scale.setScalar(radius);
         satellites[index].rotation.set(0.12, satelliteSpins[index], -0.16);
         satellites[index].material.uniforms.uFinish.value = finish;
@@ -687,7 +767,8 @@ export const FlowFieldThree: React.FC<{
           uniforms.uTintMix.value = markActive || calmRef.current ? 0 : 1;
           uniforms.uOpacity.value = markActive ? 1 : (calmRef.current ? 0.92 : 0.7) * appear;
           const glow = satelliteGlows[index];
-          glow.visible = satellites[index].visible;
+          // Light page: no coloured halo behind the spheres.
+          glow.visible = satellites[index].visible && !lightRef.current;
           glow.position.set(cx + point.x, cy + point.y, point.z - radius * 1.2);
           glow.scale.setScalar(radius * 3.2);
           glow.material.uniforms.uStrength.value = (markActive ? 0.55 : 0.32) * appear;
@@ -849,7 +930,10 @@ export const FlowFieldThree: React.FC<{
     const buildGeometry = () => {
       lastFrameDelta = 0;
       clearGeometry();
-      const { lines, particles } = settingsRef.current;
+      const { lines } = settingsRef.current;
+      const particles = lightRef.current
+        ? Math.round(settingsRef.current.particles * LIGHT_PARTICLE_SHARE)
+        : settingsRef.current.particles;
       const currentVariant = variantRef.current;
       const hasDepth = currentVariant !== 'prism';
       const isMilkyWay = currentVariant === 'milky-way';
@@ -1003,6 +1087,8 @@ export const FlowFieldThree: React.FC<{
         starGeometry.setAttribute('aColor', new THREE.BufferAttribute(starColors, 3));
         distantStarsMesh = new THREE.Points(starGeometry, particleMaterial);
         distantStarsMesh.renderOrder = -1;
+        // Stars do not read on paper; the light page shows a dot grid in CSS instead.
+        distantStarsMesh.visible = !lightRef.current;
         scene.add(distantStarsMesh);
       }
       const vertices = new Float32Array(lines * SEGMENTS * 6);
@@ -1037,11 +1123,16 @@ export const FlowFieldThree: React.FC<{
           );
           vertices.set([start.x, start.y, 0, end.x, end.y, 0], index);
           const fade = 1 - 0.53 * (segment / SEGMENTS);
-          lineColor.setRGB(
-            0.19 * intensity * fade,
-            0.31 * intensity * fade,
-            0.43 * intensity * fade,
-          );
+          if (lightRef.current)
+            lineColor
+              .copy(LIGHT_PAPER)
+              .lerp(LIGHT_TRACK, Math.min(0.34, 0.08 + intensity * 0.45 * fade));
+          else
+            lineColor.setRGB(
+              0.19 * intensity * fade,
+              0.31 * intensity * fade,
+              0.43 * intensity * fade,
+            );
           colors.set(
             [lineColor.r, lineColor.g, lineColor.b, lineColor.r, lineColor.g, lineColor.b],
             index,
@@ -1068,7 +1159,9 @@ export const FlowFieldThree: React.FC<{
               start.y + halfWidth,
               0.3,
             );
-            const glow = [0.1 * fade, 0.44 * fade, 0.78 * fade];
+            const glow = lightRef.current
+              ? [LIGHT_TRACK.r, LIGHT_TRACK.g, LIGHT_TRACK.b]
+              : [0.1 * fade, 0.44 * fade, 0.78 * fade];
             for (let vertex = 0; vertex < 6; vertex++) foregroundColors.push(...glow);
           }
         }
@@ -1127,8 +1220,9 @@ export const FlowFieldThree: React.FC<{
           velocity: (0.043 + hash(index, 3) * 0.052) * (hasDepth ? [0.76, 1, 1.28][depth] : 1),
           weight,
         });
-        particleSizes[index] =
-          (tier < 0.72 ? 4.5 : tier < 0.96 ? 6.8 : 10.5) * (hasDepth ? [0.82, 1, 1.2][depth] : 1);
+        particleSizes[index] = lightRef.current
+          ? (tier < 0.72 ? 18 : 24) * (hasDepth ? [0.8, 1, 1.15][depth] : 1)
+          : (tier < 0.72 ? 4.5 : tier < 0.96 ? 6.8 : 10.5) * (hasDepth ? [0.82, 1, 1.2][depth] : 1);
         particleColors.set(
           tier < 0.72 ? [0.25, 0.58, 0.9] : tier < 0.96 ? [0.13, 0.68, 1] : [0.45, 0.85, 1],
           index * 3,
@@ -1146,7 +1240,14 @@ export const FlowFieldThree: React.FC<{
         new THREE.BufferAttribute(new Float32Array(particles), 1),
       );
       particleGeometry.setAttribute('aColor', new THREE.BufferAttribute(particleColors, 3));
-      particleMesh = new THREE.Points(particleGeometry, particleMaterial);
+      particleGeometry.setAttribute(
+        'aAngle',
+        new THREE.BufferAttribute(new Float32Array(particles), 1),
+      );
+      particleMesh = new THREE.Points(
+        particleGeometry,
+        lightRef.current ? cometMaterial : particleMaterial,
+      );
       scene.add(particleMesh);
 
       if (transitionRef.current !== undefined) {
@@ -1271,6 +1372,7 @@ export const FlowFieldThree: React.FC<{
           spineMesh.geometry.attributes.position.needsUpdate = true;
         }
       }
+      const angles = particleMesh.geometry.attributes.aAngle.array as Float32Array;
       for (let index = 0; index < particleSeeds.length; index++) {
         const seed = particleSeeds[index];
         const phase = (seed.phase + elapsed * seed.velocity) % 1;
@@ -1309,10 +1411,19 @@ export const FlowFieldThree: React.FC<{
                 getFlowTiming(orbitRef.current).contracted,
                 transitionRef.current,
               ));
+        if (lightRef.current) {
+          // Comets gather strength on the way in: faint at the far left, clearest where the
+          // lanes meet. Each streak points along its lane's direction of travel.
+          particleIntensities[index] *= 0.2 + 0.8 * smoothstep(0.04, MERGE_AT, progress);
+          const ahead = connectedPoint(seed.lane, Math.min(progress + 0.004, 1), seed.depth);
+          angles[index] =
+            progress > MERGE_AT ? 0 : -Math.atan2(ahead.y - point.y, ahead.x - point.x);
+        }
         particlePositions[index * 3] = point.x;
         particlePositions[index * 3 + 1] = point.y;
         particlePositions[index * 3 + 2] = 1;
       }
+      if (lightRef.current) particleMesh.geometry.attributes.aAngle.needsUpdate = true;
       particleMesh.geometry.attributes.position.needsUpdate = true;
       particleMesh.geometry.attributes.aIntensity.needsUpdate = true;
     };
@@ -1531,6 +1642,7 @@ export const FlowFieldThree: React.FC<{
       galaxyLineMaterial.dispose();
       foregroundMaterial.dispose();
       particleMaterial.dispose();
+      cometMaterial.dispose();
       sphereGeometry.dispose();
       centerSphere.material.dispose();
       for (const satellite of satellites) satellite.material.dispose();

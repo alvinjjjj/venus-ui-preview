@@ -10,11 +10,12 @@ import {
 } from 'constants/production';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
+import venusLogoLight from 'demo/LiquidityLightPreview/venusLogoLight.svg';
+import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useTranslation } from 'libs/translations';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { footerCopyByLanguage } from './copy';
 import './styles.css';
-import { useLiveBlock } from './useLiveBlock';
 
 const CORE_POOL = '0xfD36E2c2a6789Db23113685031d7F16329158384';
 // The app footer's X icon points at flux.venus.io; this uses the X account itself.
@@ -28,25 +29,31 @@ interface FooterLink {
 
 /**
  * Explorer landing footer: brand and tagline, four link columns on a hairline grid,
- * a live chain status and legal line, then the Venus wordmark edge to edge, cropped
- * by the page bottom. The wordmark is a dashed outline (the Telegram mark's style);
- * the pointer lights it up, joining the dashes into a solid blue line around it.
+ * a legal line, then a filled Venus wordmark with a soft light sweep.
  */
 export const FooterExplorer: React.FC = () => {
+  const light = useLiquidityLightPreview();
   const { i18n } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
   const copy = footerCopyByLanguage[language] ?? footerCopyByLanguage.en;
   const l = copy.links;
-  const { blockNumber, chainName } = useLiveBlock();
   const wordmarkRef = useRef<HTMLDivElement>(null);
-
-  const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
+  const [sweep, setSweep] = useState(0);
+  useEffect(() => {
     const node = wordmarkRef.current;
     if (!node) return;
-    const rect = node.getBoundingClientRect();
-    node.style.setProperty('--vf-x', `${event.clientX - rect.left}px`);
-    node.style.setProperty('--vf-y', `${event.clientY - rect.top}px`);
-  };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSweep(value => value + 1);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   const columns: { title: string; links: FooterLink[] }[] = [
     {
@@ -95,11 +102,15 @@ export const FooterExplorer: React.FC = () => {
   ];
 
   return (
-    <footer className="venus-footer" onPointerMove={handlePointerMove}>
+    <footer className="venus-footer">
       <div className="venus-footer__inner">
         <div className="venus-footer__top">
           <div className="venus-footer__brand">
-            <img src={venusLogoWithText} alt="Venus" className="venus-footer__logo" />
+            <img
+              src={light ? venusLogoLight : venusLogoWithText}
+              alt="Venus"
+              className="venus-footer__logo"
+            />
             <p>{copy.tagline}</p>
             <div className="venus-footer__socials">
               {socials.map(social => (
@@ -135,7 +146,9 @@ export const FooterExplorer: React.FC = () => {
                           className="venus-footer__link"
                         >
                           {link.label}
-                          <span aria-hidden="true">↗</span>
+                          <span aria-hidden="true" className="venus-footer__external">
+                            <Icon name="transactionLink" className="size-4 text-current" />
+                          </span>
                         </a>
                       )}
                     </li>
@@ -146,18 +159,6 @@ export const FooterExplorer: React.FC = () => {
           </nav>
         </div>
         <div className="venus-footer__bottom">
-          <span className="venus-footer__status">
-            <span className="venus-footer__pulse" aria-hidden="true" />
-            {copy.live.replace('{chain}', chainName)}
-            {blockNumber ? (
-              <span className="venus-footer__block">
-                · {copy.block} #
-                <span key={blockNumber} className="venus-footer__block-number">
-                  {blockNumber.toLocaleString('en-US')}
-                </span>
-              </span>
-            ) : null}
-          </span>
           <span className="venus-footer__legal">
             <span>{copy.rights.replace('{year}', String(new Date().getFullYear()))}</span>
             <Link to={routes.privacyPolicy.path} noStyle className="venus-footer__link">
@@ -169,9 +170,21 @@ export const FooterExplorer: React.FC = () => {
           </span>
         </div>
       </div>
-      <div ref={wordmarkRef} className="venus-footer__wordmark" aria-hidden="true">
+      <div
+        ref={wordmarkRef}
+        className="venus-footer__wordmark"
+        onPointerEnter={event => {
+          if (event.pointerType === 'mouse') setSweep(value => value + 1);
+        }}
+        aria-hidden="true"
+      >
         <VenusWordmark className="venus-footer__wordmark-base" />
-        <VenusWordmark className="venus-footer__wordmark-lit" />
+        <div
+          key={sweep}
+          className="venus-footer__wordmark-light"
+          data-animate={sweep > 0}
+          style={{ maskImage: `url("${venusLogoWithText}")` }}
+        />
       </div>
     </footer>
   );

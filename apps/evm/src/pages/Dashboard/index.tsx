@@ -16,6 +16,7 @@ import { Markets } from './Markets';
 import { Settings } from './Settings';
 import { Transactions } from './Transactions';
 import { Vaults } from './Vaults';
+import './styles.css';
 
 export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -116,21 +117,23 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Page>
-      <div className="mt-2 mb-12">
-        <AdBanner />
-      </div>
+      <div className="dashboard-page contents">
+        <div className="mt-2 mb-12">
+          <AdBanner />
+        </div>
 
-      <div className="space-y-12 mb-12">
-        <AccountOverview
-          className="venus-glass-card glass-dashboard-overview w-full"
-          accountAddress={accountAddress}
-        />
+        <div className="space-y-12 mb-12">
+          <AccountOverview
+            className="venus-glass-card glass-dashboard-overview w-full"
+            accountAddress={accountAddress}
+          />
 
-        <Guide />
-      </div>
+          <Guide />
+        </div>
 
-      <div className="venus-glass-card glass-dashboard-tabs">
-        <Tabs tabs={tabs} navType="searchParam" variant="tertiary" />
+        <div className="venus-glass-card glass-dashboard-tabs">
+          <Tabs tabs={tabs} navType="searchParam" variant="tertiary" />
+        </div>
       </div>
     </Page>
   );

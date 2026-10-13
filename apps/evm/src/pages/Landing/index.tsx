@@ -1,5 +1,6 @@
 import { Page, Wrapper } from 'components';
 import { isExplorerMode, landingDesignByMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useLocation } from 'react-router';
 import { Benefits } from './Benefits';
 import { CommunityExplorer } from './CommunityExplorer';
@@ -15,11 +16,14 @@ import { SafetyExplorer } from './SafetyExplorer';
 import { VenusPrime } from './VenusPrime';
 import { VenusSteps } from './VenusSteps';
 import { Wallets } from './Wallets';
+import './landing-light.css';
 
 export const Landing: React.FC = () => {
   const { search } = useLocation();
   const showNewLanding = useGlassPreview(state => landingDesignByMode[state.mode] !== 'v1');
   const mode = useGlassPreview(state => state.mode);
+  // Light and dark build different WebGL scenes, so the hero remounts on a theme change.
+  const theme = useLiquidityLightPreview() ? 'light' : 'dark';
 
   if (new URLSearchParams(search).get('glassStudy') === '1') return <GlassStudy />;
 
@@ -27,7 +31,7 @@ export const Landing: React.FC = () => {
   if (showNewLanding) {
     return (
       <Page indexWithSearchEngines={false}>
-        <HorizontalFlow key={`${search}-${mode}`} heroKey={`${search}-${mode}`} />
+        <HorizontalFlow key={`${search}-${mode}-${theme}`} heroKey={`${search}-${mode}-${theme}`} />
         {/* New and Explorer share this landing. New's earlier Section 3 (VenusStack) and the
             ProductOrbit draft stay in the repo but are no longer rendered. */}
         {isExplorerMode(mode) ? (
