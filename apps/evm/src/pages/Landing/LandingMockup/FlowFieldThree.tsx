@@ -304,7 +304,8 @@ export const FlowFieldThree: React.FC<{
     // other (Hub/Vault, Prime/Trade, Spoke/Flux) so colours stay balanced.
     const CALM_HEX_ORDER = ['USDC', 'BTC', 'USDT', 'BNB', 'U', 'ETH'];
     const CALM_HEX_START = -Math.PI / 2;
-    const CALM_RING = 0.75;
+    // New: the hexagon sits one ring further in (ring 2 of 0-4), a little closer to the core.
+    const CALM_RING = 0.5;
     // One size for every product sphere (about the old average).
     const CALM_SATELLITE_SCALE = 0.38;
     // New: four spheres. Explorer: six (adds BTC and ETH), 30% smaller.
