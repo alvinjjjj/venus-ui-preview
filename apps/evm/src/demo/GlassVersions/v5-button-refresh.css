@@ -905,6 +905,48 @@
   :root[data-glass-choice][data-liquidity-theme='light'] #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after { animation: none; }
 }
 
+/* New and O2: use the Selected_Pop-up badge fill and pale ring from the Figma component in both themes.
+   A softened sweep and restrained layered bloom echo O on hover without changing the blue fill. */
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root .venus-tag.venus-tag {
+  background: linear-gradient(115deg, #2469d8 0%, #307fee 50%, #2168d6 100%);
+  color: #fff;
+  text-shadow: none;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 25%), 0 2px 8px rgb(20 64 136 / 18%);
+  transition: box-shadow 360ms ease-out, text-shadow 360ms ease-out;
+}
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root .venus-tag.venus-tag::before {
+  padding: 1.5px;
+  background: linear-gradient(115deg, #fff, #8ccaff 40%, #8ccaff);
+}
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root .venus-tag.venus-tag::after {
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 35%) 50%, transparent 62%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  filter: blur(1px);
+  transition: opacity 240ms ease-out;
+}
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 28%),
+    0 2px 8px rgb(20 64 136 / 18%),
+    0 0 3px rgb(17 153 250 / 26%),
+    0 0 9px rgb(17 153 250 / 20%),
+    0 0 18px 2px rgb(17 153 250 / 12%);
+  text-shadow: 0 0 3px rgb(255 255 255 / 24%);
+}
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::before {
+  background: linear-gradient(115deg, #fff, #b9e0ff 50%, #8ccaff);
+}
+:root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after {
+  opacity: 1;
+  animation: e-tag-sweep 800ms cubic-bezier(.3, .7, .2, 1) 100ms 1 both;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root .venus-tag.venus-tag,
+  :root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root .venus-tag.venus-tag::after { transition: none; }
+  :root:is([data-glass-choice='v5'][data-glass-version='v6'], [data-glass-choice='o2'][data-glass-version='v1']) #root :is([data-header-navigation], a, button):is(:hover, :focus-visible, [aria-expanded='true']) .venus-tag.venus-tag::after { animation: none; }
+}
+
 
 /* E only — tile colours: deep-blue Liquidity Hub + champagne-gold Vault (motion = final set). */
 :root[data-glass-choice='explorer'] .venus-navigation-menu [data-earn-motion='hub'] .venus-earn-icon > rect:first-child { fill: transparent; }
