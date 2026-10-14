@@ -3,7 +3,7 @@
 .preview-controller button:focus-visible, .preview-controller a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 .preview-controller-heading { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .preview-controller-heading button { width: 32px; height: 32px; }
-.preview-dpad { display: grid; grid-template-columns: repeat(4,44px); grid-template-rows: 44px; gap: 4px; justify-content: center; margin: 4px 0 12px; }
+.preview-dpad { display: grid; grid-template-columns: repeat(3,44px); grid-template-rows: 44px; gap: 4px; justify-content: center; margin: 4px 0 12px; }
 .preview-current { grid-column: 1 / -1; text-align: center; font-size: 11px; opacity: .6; }
 .preview-motion { border-top: 1px solid rgb(140 150 170 / 24%); padding: 8px 0; }
 .preview-controller:has(.preview-motion-panel) { width: 260px; }

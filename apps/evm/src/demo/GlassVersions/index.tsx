@@ -22,7 +22,6 @@ import './v5-buttons.css';
 
 const versions: { id: GlassPreviewMode; label: string; description: string }[] = [
   { id: 'v1', label: 'O', description: 'Original' },
-  { id: 'o2', label: 'O2', description: 'Original layout with New badge' },
   { id: 'v5', label: 'New', description: 'New' },
   { id: 'explorer', label: 'E', description: 'Explorer' },
 ];
@@ -51,12 +50,8 @@ export const GlassVersions = () => {
     document.documentElement.dataset.glassVersion = styleVersion === 'v5' ? 'v6' : styleVersion;
     document.documentElement.dataset.glassPreview = styleVersion;
     // New mirrors Explorer, so it carries Explorer's mode attribute for the shared CSS.
-    document.documentElement.dataset.glassMode = isExplorerMode(version)
-      ? 'explorer'
-      : version === 'o2'
-        ? 'v1'
-        : version;
-    // The exact switcher choice (O / O2 / New / E), for per-mode studies such as the nav badge motion.
+    document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : version;
+    // The exact switcher choice (O / New / E), for per-mode studies such as the nav badge motion.
     document.documentElement.dataset.glassChoice = version;
     document.documentElement.toggleAttribute('data-glass-landing', isLandingRoute);
     localStorage.setItem('venus-glass-version', version);
