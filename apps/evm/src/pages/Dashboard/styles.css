@@ -5,3 +5,149 @@
 :root[data-glass-preview='v5'] #root .dashboard-page .dashboard-health-summary [data-venus-panel] {
   box-shadow: none !important;
 }
+
+/* New Dashboard keeps the account metrics on the page surface. */
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-health-summary [data-venus-panel] {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-health-summary [data-venus-panel]::after {
+  content: none;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-main-tabs button {
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  :root[data-glass-choice='v5'] #root .dashboard-main-tabs button {
+    font-size: var(--text-lg);
+  }
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-main-tabs button > div:first-child {
+  font-weight: 400;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-main-tabs button.text-white > div:first-child {
+  font-weight: 600;
+}
+
+/* Preserve the existing travelling light edge; expose the card's blue hover border. */
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-position-card[data-venus-panel].cursor-pointer:is(:hover, :focus-within) {
+  border-color: var(--color-blue);
+}
+
+/* Give Vaults and Hubs cards one extra 12px spacing step in New mode. */
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-position-cards {
+  gap: calc(var(--spacing) * 7);
+}
+
+/* Trial the existing 12px spacing step inside the shared Vaults and Hubs cards. */
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-position-card {
+  padding: calc(var(--spacing) * 3);
+}
+
+/* The floating panel owns scrolling; source labels must fit within its width. */
+:root[data-glass-choice='v5'] .venus-select-panel:has(.dashboard-source-options) {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-grey) var(--color-cards);
+}
+
+:root[data-glass-choice='v5'] .dashboard-source-options [data-select-option] {
+  width: 100%;
+  min-width: 0;
+}
+
+:root[data-glass-choice='v5'] .dashboard-source-options [data-select-option] > span {
+  min-width: 0;
+  white-space: normal;
+}
+
+:root[data-glass-choice='v5'] .dashboard-source-options [data-select-option] p {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-page .dashboard-transactions .dashboard-preview-label {
+  margin-bottom: calc(var(--spacing) * -2);
+}
+
+/* On narrow lists, each transaction is already a card; keep the outer glow for the desktop table. */
+@container transactionList (width < 42rem) {
+  :root[data-glass-choice='v5'] #root .dashboard-page .dashboard-transactions-list[data-venus-panel] {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  :root[data-glass-choice='v5'] #root .dashboard-page .dashboard-transactions-list[data-venus-panel]::after {
+    content: none;
+  }
+}
+
+/* Banner backgrounds stay dark in Light mode, so their text uses on-dark colours. */
+:root[data-glass-choice='v5'][data-liquidity-theme='light'] #root .dashboard-ad-banner p,
+:root[data-glass-choice='v5'][data-liquidity-theme='light'] #root .dashboard-ad-banner p span {
+  color: #fff;
+}
+
+:root[data-glass-choice='v5'][data-liquidity-theme='light'] #root .dashboard-ad-banner p + p,
+:root[data-glass-choice='v5'][data-liquidity-theme='light'] #root .dashboard-ad-banner p + p span {
+  color: rgb(255 255 255 / 78%);
+}
+
+/* Match the Core Pool amount hierarchy within Dashboard position tables. */
+:root[data-glass-choice='v5'] #root .dashboard-position-table {
+  --market-row-primary-font-size: 0.9375rem;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-position-table [data-layered-value='primary'] {
+  font-size: var(--market-row-primary-font-size);
+  font-weight: 400;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-position-table [data-layered-value='secondary'] {
+  font-size: var(--text-xs);
+  font-weight: 400;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-position-table .venus-progress-rail {
+  width: calc(var(--spacing) * 20);
+  min-width: calc(var(--spacing) * 20);
+  flex-shrink: 0;
+  height: calc(var(--spacing) * 2.5);
+}
+
+/* Keep the hidden checkbox focus outline off the table, while retaining a visible keyboard focus ring. */
+:root[data-glass-choice='v5'] #root .dashboard-position-table .venus-toggle input {
+  outline: none;
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-position-table .venus-toggle input:focus-visible + .venus-toggle-track {
+  outline: 2px solid var(--color-blue);
+  outline-offset: calc(var(--spacing) / 2);
+}
+
+:root[data-glass-choice='v5'] #root .dashboard-position-table .venus-toggle-knob {
+  transform: none !important;
+  transition: translate 300ms cubic-bezier(.22, 1, .36, 1), background-color 200ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-choice='v5'] #root .dashboard-position-table .venus-toggle-knob {
+    transition: none;
+  }
+}
+
+/* The preview controls render in a body portal; their empty footer mount should not take space. */
+:root[data-glass-choice='v5'] #page-container:has(.dashboard-page) .venus-footer-preview {
+  display: none;
+}

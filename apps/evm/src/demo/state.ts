@@ -4,6 +4,12 @@ export const demoAddresses = {
   normal: '0x000000000000000000000000000000000000dEaD',
   prime: '0x0000000000000000000000000000000000000001',
 } as const;
+export const isDemoAddress = (accountAddress?: string) =>
+  !!accountAddress &&
+  Object.values(demoAddresses).some(
+    demoAddress => demoAddress.toLowerCase() === accountAddress.toLowerCase(),
+  );
+
 export const useDemo = create<{
   loggedIn: boolean;
   profile: DemoProfile;

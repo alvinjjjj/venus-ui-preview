@@ -41,7 +41,7 @@ export const PositionCardsTab = <Item,>({
         />
 
         {visiblePreviewItems.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3 mt-6">
+          <div className="dashboard-position-cards grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3 mt-6">
             {visiblePreviewItems.map(item => (
               <Fragment key={getKey(item)}>{renderCard(item, true)}</Fragment>
             ))}
@@ -55,7 +55,7 @@ export const PositionCardsTab = <Item,>({
     <>
       <CellGroup cells={summaryCells} className="mb-6" />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
+      <div className="dashboard-position-cards grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
         {activeItems.map(item => (
           <Fragment key={getKey(item)}>{renderCard(item, false)}</Fragment>
         ))}

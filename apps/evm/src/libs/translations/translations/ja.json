@@ -88,6 +88,7 @@
         "full": "{{ date, textual }}",
         "time": "{{ date, time }}"
       },
+      "previewData": "プレビュー用データ",
       "placeholder": {
         "description": "あなたの取引はここに表示されます",
         "title": "まだ取引はありません"

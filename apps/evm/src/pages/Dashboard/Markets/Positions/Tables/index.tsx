@@ -14,9 +14,10 @@ import { useStyles } from './styles';
 
 export interface TablesProps {
   pool: Pool;
+  previewInteractions?: boolean;
 }
 
-export const Tables: React.FC<TablesProps> = ({ pool }) => {
+export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => {
   const styles = useStyles();
   const { t } = useTranslation();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
@@ -35,6 +36,10 @@ export const Tables: React.FC<TablesProps> = ({ pool }) => {
       poolComptrollerContractAddress: pool.comptrollerAddress,
       userEModeGroup: pool.userEModeGroup,
       marketType: 'supply',
+      previewInteractions,
+      className: previewInteractions
+        ? 'dashboard-position-table dashboard-position-preview-table'
+        : 'dashboard-position-table',
       controls: false,
       rowControl: false,
       breakpoint: 'sm',
@@ -51,10 +56,15 @@ export const Tables: React.FC<TablesProps> = ({ pool }) => {
       poolComptrollerContractAddress: pool.comptrollerAddress,
       userEModeGroup: pool.userEModeGroup,
       marketType: 'borrow',
+      previewInteractions,
+      className: previewInteractions
+        ? 'dashboard-position-table dashboard-position-preview-table'
+        : 'dashboard-position-table',
       controls: false,
       rowControl: false,
       breakpoint: 'sm',
       columns: ['asset', 'borrowApy', 'userBorrowBalance', 'userBorrowLimitSharePercentage'],
+      columnWidths: previewInteractions ? ['20%', '27%', '20%', '33%'] : undefined,
       initialOrder: {
         orderBy: 'userBorrowBalance',
         orderDirection: 'desc',
@@ -67,7 +77,13 @@ export const Tables: React.FC<TablesProps> = ({ pool }) => {
     <>
       {/* Desktop view */}
       {!isMobile ? (
-        <div className="flex flex-col gap-6 xl:grid xl:grid-cols-2">
+        <div
+          className={
+            previewInteractions
+              ? 'flex flex-col gap-6 2xl:grid 2xl:grid-cols-2'
+              : 'flex flex-col gap-6 xl:grid xl:grid-cols-2'
+          }
+        >
           <MarketTable
             {...marketTableProps.supply}
             title={t('account.marketBreakdown.tables.supplyTableTitle')}

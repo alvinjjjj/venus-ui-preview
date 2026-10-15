@@ -69,6 +69,7 @@ export const Hubs: React.FC<HubsProps> = ({ liquidityHubs }) => {
       renderCard={(liquidityHub, isPreview) => (
         <LiquidityHubCard
           liquidityHub={liquidityHub}
+          className="dashboard-position-card"
           to={
             isPreview
               ? routes.liquidityHub.path.replace(':vhTokenAddress', liquidityHub.vhToken.address)

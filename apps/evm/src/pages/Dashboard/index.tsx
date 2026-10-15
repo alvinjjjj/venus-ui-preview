@@ -1,22 +1,27 @@
 import { useGetLiquidityHubs, useGetPool, useGetVaults } from 'clients/api';
 import { Page, Spinner, Tabs } from 'components';
 import { AdBanner } from 'containers/AdBanner';
+import { isNewDesignMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isDemoAddress, useDemo } from 'demo/state';
 import { useChain } from 'hooks/useChain';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 import type { Tab } from 'hooks/useTabs';
 import { PAGE_PARAM_DEFAULT_KEY } from 'hooks/useUrlPagination';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress, useChainId } from 'libs/wallet';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router';
+import { ChainId } from 'types';
 import { AccountOverview } from '../../containers/AccountOverview';
 import { Guide } from './Guide';
 import { Hubs } from './Hubs';
 import { Markets } from './Markets';
+import { getNewPreviewPool } from './Markets/getNewPreviewPool';
 import { Settings } from './Settings';
 import { Transactions } from './Transactions';
 import { Vaults } from './Vaults';
 import './styles.css';
+import './typography-study.css';
 
 export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
@@ -51,6 +56,19 @@ export const Dashboard: React.FC = () => {
     accountAddress,
   });
   const pool = getPoolData?.pool;
+  const isNewMode = useGlassPreview(state => isNewDesignMode(state.mode));
+  const isDemoLoggedIn = useDemo(state => state.loggedIn);
+  const previewPool = useMemo(
+    () =>
+      pool &&
+      chainId === ChainId.BSC_MAINNET &&
+      isNewMode &&
+      isDemoLoggedIn &&
+      isDemoAddress(accountAddress)
+        ? getNewPreviewPool(pool)
+        : undefined,
+    [pool, chainId, isNewMode, isDemoLoggedIn, accountAddress],
+  );
 
   const { data: getVaultsData, isLoading: isGetVaultsLoading } = useGetVaults({
     accountAddress,
@@ -118,7 +136,7 @@ export const Dashboard: React.FC = () => {
   return (
     <Page>
       <div className="dashboard-page contents">
-        <div className="mt-2 mb-12">
+        <div className="dashboard-ad-banner mt-2 mb-12">
           <AdBanner />
         </div>
 
@@ -126,13 +144,19 @@ export const Dashboard: React.FC = () => {
           <AccountOverview
             className="venus-glass-card glass-dashboard-overview w-full"
             accountAddress={accountAddress}
+            previewPool={previewPool}
           />
 
           <Guide />
         </div>
 
         <div className="venus-glass-card glass-dashboard-tabs">
-          <Tabs tabs={tabs} navType="searchParam" variant="tertiary" />
+          <Tabs
+            tabs={tabs}
+            navType="searchParam"
+            variant="tertiary"
+            headerClassName="dashboard-main-tabs"
+          />
         </div>
       </div>
     </Page>

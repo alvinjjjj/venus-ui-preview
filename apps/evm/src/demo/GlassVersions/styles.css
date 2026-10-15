@@ -152,6 +152,10 @@
 :root:is([data-glass-version='v3'], [data-glass-version='v6'])[data-liquidity-theme='light'] .venus-navigation > div:first-child {
  border-bottom: 1px solid rgb(128 128 128 / 22%);
 }
+/* New uses a seamless header without the separator line. */
+:root[data-glass-choice='v5'][data-glass-version='v6'] .venus-navigation > div:first-child {
+ border-bottom: 0;
+}
 :root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-navigation-menu {
  animation: none !important;
  backdrop-filter: blur(24px) saturate(120%) !important;

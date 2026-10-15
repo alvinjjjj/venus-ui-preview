@@ -88,6 +88,7 @@
         "full": "{{ date, textual }}",
         "time": "{{ date, time }}"
       },
+      "previewData": "Örnek veriler",
       "placeholder": {
         "description": "İşlemleriniz burada görünecek",
         "title": "Henüz işlem yok"

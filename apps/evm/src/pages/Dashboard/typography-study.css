@@ -1,0 +1,39 @@
+/* E typography trial. Reuse the existing 12 / 16 / 20 / 40px tokens without changing New. */
+:root[data-glass-study='explorer'] #root .dashboard-page {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+/* Body copy and controls share one readable size; weight and colour carry emphasis. */
+:root[data-glass-study='explorer'] #root .dashboard-page :is(.text-sm, .text-b1r, .text-b1s),
+:root[data-glass-study='explorer'] #root .dashboard-page .dashboard-main-tabs button {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+/* Financial table headings, APYs and primary amounts share the same body role. */
+:root[data-glass-study='explorer'] #root .dashboard-page :is(.dashboard-position-table, .venus-v5-market-panel) {
+  --market-row-primary-font-size: var(--text-base);
+  --market-row-heading-font-size: var(--text-base);
+
+  font-size: var(--text-base);
+}
+
+:root[data-glass-study='explorer'] #root .dashboard-page :is(.dashboard-position-table, .venus-v5-market-panel) [data-layered-value='primary'],
+:root[data-glass-study='explorer'] #root .dashboard-page .venus-reward-preview button,
+:root[data-glass-study='explorer'] #root .dashboard-page .venus-reward-preview button span {
+  font-size: var(--text-base);
+}
+
+/* Keep supporting descriptions and the demo-data notice at the metadata size. */
+:root[data-glass-study='explorer'] #root .dashboard-page .dashboard-ad-banner p + p,
+:root[data-glass-study='explorer'] #root .dashboard-page .dashboard-transactions .dashboard-preview-label {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+}
+
+/* The source options render in a portal, outside the Dashboard page subtree. */
+:root[data-glass-study='explorer'] .dashboard-source-options [data-select-option] {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}

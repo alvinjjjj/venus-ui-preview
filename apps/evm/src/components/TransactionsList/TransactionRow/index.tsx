@@ -11,9 +11,14 @@ import { getTransactionIcon } from './getTransactionIcon';
 export interface TransactionRowProps {
   transaction: Tx;
   className?: string;
+  isPreview?: boolean;
 }
 
-export const TransactionRow: React.FC<TransactionRowProps> = ({ transaction, className }) => {
+export const TransactionRow: React.FC<TransactionRowProps> = ({
+  transaction,
+  className,
+  isPreview = false,
+}) => {
   const { chainId, txType, hash, blockTimestamp } = transaction;
   const { t } = useTranslation();
 
@@ -22,21 +27,8 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({ transaction, cla
     t,
   });
 
-  return (
-    <a
-      className={cn(
-        'flex flex-col px-4 py-3 border border-dark-blue-hover rounded-xl w-full items-center justify-evenly group hover:bg-background-hover @2xl:border-0 @2xl:flex-row @2xl:px-6 @2xl:py-0 @2xl:h-16 @2xl:rounded-none',
-        className,
-      )}
-      href={generateExplorerUrl({
-        hash,
-        urlType: 'tx',
-        chainId,
-      })}
-      onClick={e => e.stopPropagation()}
-      target="_blank"
-      rel="noreferrer"
-    >
+  const content = (
+    <>
       <div className="flex flex-col w-full @2xl:flex-row @2xl:gap-x-4">
         <div className="flex w-full @2xl:w-70 items-center">
           <div className="p-1.5 @2xl:p-2 mr-2 @2xl:mr-3 flex items-center justify-center bg-lightGrey rounded-full">
@@ -58,6 +50,28 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({ transaction, cla
 
         <Events transaction={transaction} />
       </div>
+    </>
+  );
+
+  const rowClassName = cn(
+    'flex flex-col px-4 py-3 border border-dark-blue-hover rounded-xl w-full items-center justify-evenly group hover:bg-background-hover @2xl:border-0 @2xl:flex-row @2xl:px-6 @2xl:py-0 @2xl:h-16 @2xl:rounded-none',
+    isPreview && 'transition-colors duration-200',
+    className,
+  );
+
+  if (isPreview) {
+    return <div className={rowClassName}>{content}</div>;
+  }
+
+  return (
+    <a
+      className={rowClassName}
+      href={generateExplorerUrl({ hash, urlType: 'tx', chainId })}
+      onClick={e => e.stopPropagation()}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {content}
     </a>
   );
 };

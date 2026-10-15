@@ -88,6 +88,7 @@
         "full": "{{ date, textual }}",
         "time": "{{ date, time }}"
       },
+      "previewData": "Preview data",
       "placeholder": {
         "description": "Your transactions will appear here",
         "title": "No transactions yet"

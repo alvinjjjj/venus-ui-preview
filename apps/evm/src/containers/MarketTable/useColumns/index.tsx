@@ -1,5 +1,6 @@
 import { cn } from '@venusprotocol/ui';
 import { RewardBadgePreview } from 'demo/RewardBadgePreview';
+import { useDemo } from 'demo/state';
 
 import {
   AssetApy,
@@ -67,17 +68,20 @@ import type { ColumnKey } from '../types';
 export const useColumns = ({
   columnKeys,
   collateralOnChange,
+  previewInteractions,
   userEModeGroup,
   eModeGroups,
   marketType,
 }: {
   columnKeys: ColumnKey[];
   collateralOnChange: (asset: Asset) => void;
+  previewInteractions?: boolean;
   userEModeGroup?: EModeGroup;
   eModeGroups?: EModeGroup[];
   marketType?: 'supply' | 'borrow';
 }) => {
   const { t, Trans } = useTranslation();
+  const isPrimePreview = useDemo(state => state.loggedIn && state.profile === 'prime');
   const { chainId: accountChainId } = useAccountChainId();
   const { chainId } = useChainId();
   const isAccountOnWrongChain = accountChainId !== chainId;
@@ -229,7 +233,12 @@ export const useColumns = ({
             />
             {asset.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255' && (
               <span className="venus-market-reward-preview">
-                <RewardBadgePreview token={asset.vToken.underlyingToken} type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'} />
+                <RewardBadgePreview
+                  token={asset.vToken.underlyingToken}
+                  type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'}
+                  showEarnedPrime={previewInteractions && isPrimePreview}
+                  dashboardPreview={previewInteractions}
+                />
               </span>
             )}
             </div>
@@ -243,18 +252,23 @@ export const useColumns = ({
           });
 
           return (
-            <Toggle
-              className="py-1"
-              onChange={() => collateralOnChange(asset)}
-              value={
-                asset.isCollateralOfUser && (!userEModeGroup || asset.userCollateralFactor > 0)
-              }
-              disabled={
-                isAccountOnWrongChain ||
-                collateralActionDisabled ||
-                (userEModeGroup && asset.userCollateralFactor === 0)
-              }
-            />
+            <div data-stop-row-click>
+              <Toggle
+                aria-label={`${asset.vToken.underlyingToken.symbol} ${t(
+                  'marketTable.columnKeys.collateral',
+                )}`}
+                className="py-1"
+                onChange={() => collateralOnChange(asset)}
+                value={
+                  asset.isCollateralOfUser && (!userEModeGroup || asset.userCollateralFactor > 0)
+                }
+                disabled={
+                  isAccountOnWrongChain ||
+                  collateralActionDisabled ||
+                  (userEModeGroup && asset.userCollateralFactor === 0)
+                }
+              />
+            </div>
           );
         }
 

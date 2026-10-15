@@ -113,7 +113,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
           </a>
         ))}
       </div>
-      <div className="w-full border-t border-dark-blue-hover pt-4">
+      <div className="venus-footer-preview w-full border-t border-dark-blue-hover pt-4">
         <GlassVersions />
       </div>
     </footer>

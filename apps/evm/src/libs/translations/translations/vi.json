@@ -88,6 +88,7 @@
         "full": "{{ date, textual }}",
         "time": "{{ date, time }}"
       },
+      "previewData": "Dữ liệu xem trước",
       "placeholder": {
         "description": "Giao dịch của bạn sẽ hiển thị ở đây",
         "title": "Chưa có giao dịch"

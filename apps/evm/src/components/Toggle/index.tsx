@@ -43,7 +43,7 @@ export const Toggle = ({
     >
       <input
         {...otherProps}
-        aria-label={switchAriaLabel}
+        aria-label={otherProps['aria-label'] ?? switchAriaLabel}
         checked={value}
         className="peer sr-only"
         disabled={disabled}

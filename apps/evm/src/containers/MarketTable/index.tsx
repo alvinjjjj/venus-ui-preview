@@ -40,6 +40,7 @@ export interface MarketTableProps
     orderDirection: 'asc' | 'desc';
   };
   marketType?: 'supply' | 'borrow';
+  previewInteractions?: boolean;
   className?: string;
 }
 
@@ -49,6 +50,7 @@ export const MarketTable: React.FC<MarketTableProps> = ({
   poolName,
   poolComptrollerContractAddress,
   marketType,
+  previewInteractions = false,
   columns: columnKeys,
   userEModeGroup,
   eModeGroups,
@@ -67,6 +69,7 @@ export const MarketTable: React.FC<MarketTableProps> = ({
   const { t } = useTranslation();
 
   const [selectedAsset, setSelectedAsset] = useState<Asset>();
+  const [previewCollateral, setPreviewCollateral] = useState<Record<string, boolean>>({});
   const handleCloseMarketModal = () => setSelectedAsset(undefined);
 
   const { toggleCollateral } = useCollateral();
@@ -94,6 +97,14 @@ export const MarketTable: React.FC<MarketTableProps> = ({
   const isOnWrongChain = accountChainId !== currentChainId;
 
   const handleCollateralChange = async (asset: Asset) => {
+    if (previewInteractions) {
+      setPreviewCollateral(current => ({
+        ...current,
+        [asset.vToken.address.toLowerCase()]: !asset.isCollateralOfUser,
+      }));
+      return;
+    }
+
     try {
       await toggleCollateral({
         asset,
@@ -108,6 +119,7 @@ export const MarketTable: React.FC<MarketTableProps> = ({
   const columns = useColumns({
     columnKeys,
     collateralOnChange: handleCollateralChange,
+    previewInteractions,
     userEModeGroup,
     eModeGroups,
     marketType,
@@ -150,7 +162,15 @@ export const MarketTable: React.FC<MarketTableProps> = ({
         controls={controls}
         getRowHref={getRowHref}
         columns={columns}
-        data={filteredAssets}
+        data={
+          previewInteractions
+            ? filteredAssets.map(asset => ({
+                ...asset,
+                isCollateralOfUser:
+                  previewCollateral[asset.vToken.address.toLowerCase()] ?? asset.isCollateralOfUser,
+              }))
+            : filteredAssets
+        }
         className={cn(title && 'pt-4 sm:pt-4', className)}
         title={title}
         rowKeyExtractor={row => `market-table-row-${marketType}-${row.vToken.address}`}

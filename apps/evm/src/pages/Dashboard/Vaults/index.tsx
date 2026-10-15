@@ -71,7 +71,11 @@ export const Vaults: React.FC<VaultsProps> = ({ vaults }) => {
       placeholderTitle={t('account.vaults.placeholder.title')}
       placeholderRoute={routes.vaults.path}
       renderCard={(vault, isPreview) => (
-        <VaultCard vault={vault} to={isPreview ? routes.vaults.path : undefined} />
+        <VaultCard
+          vault={vault}
+          className="dashboard-position-card"
+          to={isPreview ? routes.vaults.path : undefined}
+        />
       )}
       getKey={vault => vault.key}
     />

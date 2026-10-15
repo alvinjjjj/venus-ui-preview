@@ -27,6 +27,7 @@ import { useUserChainSettings } from 'hooks/useUserChainSettings';
 import { useGetToken } from 'libs/tokens';
 import { useTranslation } from 'libs/translations';
 import { useStore } from 'store';
+import type { Pool } from 'types';
 import {
   convertDollarsToCents,
   formatCentsToReadableValue,
@@ -42,11 +43,13 @@ import { useExtractData } from './useExtractData';
 export interface AccountOverviewProps extends React.HTMLAttributes<HTMLDivElement> {
   showGraph?: boolean;
   accountAddress?: Address;
+  previewPool?: Pool;
 }
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({
   showGraph = true,
   accountAddress,
+  previewPool,
   ...otherProps
 }) => {
   const { t } = useTranslation();
@@ -97,7 +100,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     poolComptrollerAddress: corePoolComptrollerContractAddress,
     accountAddress,
   });
-  const pool = getPoolData?.pool;
+  const pool = previewPool ?? getPoolData?.pool;
 
   const { data: getVaultsData } = useGetVaults({
     accountAddress,

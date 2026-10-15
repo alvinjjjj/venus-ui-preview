@@ -1,9 +1,11 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import fakeAccountAddress from '__mocks__/models/address';
 import { poolData } from '__mocks__/models/pools';
 import BigNumber from 'bignumber.js';
+import { useCollateral } from 'hooks/useCollateral';
 import { defaultUserChainSettings, useUserChainSettings } from 'hooks/useUserChainSettings';
 import { en } from 'libs/translations';
+import { Route } from 'react-router';
 import type { UserChainSettings } from 'store';
 import { renderComponent } from 'testUtils/render';
 import type { Pool, TokenAction } from 'types';
@@ -58,6 +60,82 @@ describe('MarketTable', () => {
     );
 
     expect(screen.queryByPlaceholderText(en.marketTable.search.placeholder)).toBeNull();
+  });
+
+  it('keeps collateral switch clicks in the table and calls the collateral action', async () => {
+    const toggleCollateral = vi.fn();
+    (useCollateral as Mock).mockReturnValue({ toggleCollateral });
+    const asset = {
+      ...poolData[0].assets[0],
+      isCollateralOfUser: false,
+      disabledTokenActions: [] as TokenAction[],
+      userCollateralFactor: 1,
+    };
+
+    const { container } = renderComponent(
+      <MarketTable
+        assets={[asset]}
+        poolName={poolData[0].name}
+        poolComptrollerContractAddress={poolData[0].comptrollerAddress}
+        columns={['asset', 'collateral']}
+        marketType="supply"
+        controls={false}
+        rowControl={false}
+      />,
+      {
+        accountAddress: fakeAccountAddress,
+        otherRoutes: <Route path="*" element={<div data-testid="navigated">Navigated</div>} />,
+      },
+    );
+
+    const toggle = container.querySelector('tbody label.venus-toggle');
+    expect(toggle).not.toBeNull();
+    expect(toggle?.querySelector('input')).not.toBeDisabled();
+
+    fireEvent.click(toggle as HTMLLabelElement);
+
+    await waitFor(() =>
+      expect(toggleCollateral).toHaveBeenCalledWith({
+        asset,
+        poolName: poolData[0].name,
+        comptrollerAddress: poolData[0].comptrollerAddress,
+      }),
+    );
+    expect(screen.queryByTestId('navigated')).not.toBeInTheDocument();
+  });
+
+  it('changes collateral locally in the New Dashboard demo without calling the contract action', () => {
+    const toggleCollateral = vi.fn();
+    (useCollateral as Mock).mockReturnValue({ toggleCollateral });
+    const asset = {
+      ...poolData[0].assets[0],
+      isCollateralOfUser: false,
+      disabledTokenActions: [] as TokenAction[],
+      userCollateralFactor: 1,
+    };
+
+    const { container } = renderComponent(
+      <MarketTable
+        assets={[asset]}
+        poolName={poolData[0].name}
+        poolComptrollerContractAddress={poolData[0].comptrollerAddress}
+        columns={['asset', 'collateral']}
+        marketType="supply"
+        previewInteractions
+        controls={false}
+        rowControl={false}
+      />,
+      { accountAddress: fakeAccountAddress },
+    );
+
+    const toggle = container.querySelector<HTMLInputElement>('tbody label.venus-toggle input');
+    expect(toggle).not.toBeNull();
+    expect(toggle).not.toBeChecked();
+
+    fireEvent.click(toggle as HTMLInputElement);
+
+    expect(toggle).toBeChecked();
+    expect(toggleCollateral).not.toHaveBeenCalled();
   });
 
   it('filters by search input', () => {

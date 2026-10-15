@@ -8,14 +8,17 @@ import {
 } from 'components';
 import { NULL_ADDRESS } from 'constants/address';
 import { TX_TYPES } from 'constants/marketTxTypes';
+import { isNewDesignMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isDemoAddress, useDemo } from 'demo/state';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress, useChainId } from 'libs/wallet';
 import { useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import type { Token } from 'types';
+import { ChainId, type Token } from 'types';
 import { getTransactionName } from 'utilities';
-import { type Address, isAddress } from 'viem';
+import { isAddress } from 'viem';
+import { getNewPreviewTransactions } from './getNewPreviewTransactions';
 
 const FIRST_PAGE = 1;
 const ITEMS_PER_PAGE_COUNT = 20;
@@ -42,9 +45,7 @@ export const Transactions: React.FC = () => {
   const selectedTxType = txType ?? ALL_OPTION_VALUE;
   const selectedTransactionTypes = txType ? [txType] : TX_TYPES;
 
-  const selectedContractAddress = searchParams.get(CONTRACT_ADDRESS_PARAM_KEY)
-    ? (searchParams.get(CONTRACT_ADDRESS_PARAM_KEY) as Address)
-    : ALL_OPTION_VALUE;
+  const selectedContractAddress = searchParams.get(CONTRACT_ADDRESS_PARAM_KEY) ?? ALL_OPTION_VALUE;
 
   const setTxType = (newTxType: string) =>
     setSearchParams(currentSearchParams => ({
@@ -98,6 +99,10 @@ export const Transactions: React.FC = () => {
 
   const { t } = useTranslation();
   const { accountAddress } = useAccountAddress();
+  const isNewMode = useGlassPreview(state => isNewDesignMode(state.mode));
+  const isDemoLoggedIn = useDemo(state => state.loggedIn);
+  const isNewPreview =
+    chainId === ChainId.BSC_MAINNET && isNewMode && isDemoLoggedIn && isDemoAddress(accountAddress);
   const { data: poolData } = useGetPools({
     accountAddress,
     includeIsolatedPools: true,
@@ -132,7 +137,7 @@ export const Transactions: React.FC = () => {
         types: selectedTransactionTypes,
       },
       {
-        enabled: !!accountAddress && isTransactionHistoryFeatureEnabled,
+        enabled: !!accountAddress && isTransactionHistoryFeatureEnabled && !isNewPreview,
       },
     );
 
@@ -165,6 +170,13 @@ export const Transactions: React.FC = () => {
       ) || [];
 
     const otherOptions: SelectOption<string>[] = [];
+
+    if (isNewPreview) {
+      otherOptions.push({
+        label: t('account.transactions.txSource.trade'),
+        value: 'trade',
+      });
+    }
     const tokenOptions: Token[] = allAssets
       .map(a => ({
         symbol: `${a.vToken.underlyingToken.symbol} - ${a.poolName}`,
@@ -201,7 +213,7 @@ export const Transactions: React.FC = () => {
     }
 
     return [allOption, ...otherOptions];
-  }, [t, poolData, liquidityHubs, isLiquidityHubFeatureEnabled]);
+  }, [t, poolData, liquidityHubs, isLiquidityHubFeatureEnabled, isNewPreview]);
 
   // Reset contract address filter if the value in the URL is incorrect
   useEffect(() => {
@@ -215,9 +227,37 @@ export const Transactions: React.FC = () => {
   }, [selectedContractAddress, sourceSelectOptions, setSearchParams]);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const previewTransactions = useMemo(
+    () =>
+      isNewPreview && accountAddress && poolData
+        ? getNewPreviewTransactions({ accountAddress, pools: poolData.pools })
+        : [],
+    [isNewPreview, accountAddress, poolData],
+  );
+  const filteredPreviewTransactions = previewTransactions.filter(transaction => {
+    const matchesType =
+      selectedTxType === ALL_OPTION_VALUE || transaction.txType === selectedTxType;
+    const matchesSource =
+      selectedContractAddress === ALL_OPTION_VALUE ||
+      (selectedContractAddress === 'trade'
+        ? 'cycleId' in transaction
+        : transaction.contractAddress.toLowerCase() === selectedContractAddress.toLowerCase());
+
+    return matchesType && matchesSource;
+  });
+  const transactions = isNewPreview
+    ? filteredPreviewTransactions.slice(
+        (page - FIRST_PAGE) * ITEMS_PER_PAGE_COUNT,
+        page * ITEMS_PER_PAGE_COUNT,
+      )
+    : historicalTxsData?.transactions || [];
+  const transactionsCount = isNewPreview
+    ? filteredPreviewTransactions.length
+    : historicalTxsData?.count || 0;
+  const isLoading = !isNewPreview && areHistoricalTxsLoading;
 
   return (
-    <div ref={containerRef} className="grid grid-cols-1 gap-4">
+    <div ref={containerRef} className="dashboard-transactions grid grid-cols-1 gap-4">
       {accountAddress && (
         <div className="flex flex-row gap-3 md:gap-4">
           <Select
@@ -240,7 +280,11 @@ export const Transactions: React.FC = () => {
             placeLabelToLeft
             options={sourceSelectOptions}
             optionClassName="px-3 h-10 scrollbar-track-cards"
-            dropdownClassName="overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68"
+            dropdownClassName={
+              isNewMode
+                ? 'dashboard-source-options'
+                : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
+            }
             buttonClassName="m-w-1/2 sm:min-w-45"
             value={selectedContractAddress}
             onChange={newValue => setSelectedContractAddress(newValue.toString())}
@@ -248,15 +292,23 @@ export const Transactions: React.FC = () => {
         </div>
       )}
 
+      {isNewPreview && transactionsCount > 0 && (
+        <p className="dashboard-preview-label text-sm text-grey">
+          {t('account.transactions.previewData')}
+        </p>
+      )}
+
       <TransactionsList
-        transactions={historicalTxsData?.transactions || []}
-        isLoading={areHistoricalTxsLoading}
+        transactions={transactions}
+        isLoading={isLoading}
+        isPreview={isNewPreview}
+        glowFrame={isNewMode}
       />
 
-      {!areHistoricalTxsLoading && (
+      {!isLoading && (
         <Pagination
           initialPageIndex={FIRST_PAGE}
-          itemsCount={historicalTxsData?.count || 0}
+          itemsCount={transactionsCount}
           itemsPerPageCount={ITEMS_PER_PAGE_COUNT}
           onChange={newValue => setPage(newValue.toString())}
           scrollToRef={containerRef}
