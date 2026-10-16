@@ -7,8 +7,10 @@
 }
 .spoke-filters__fields { display: grid; grid-template-columns: 1fr; gap: calc(var(--spacing) * 3); }
 .spoke-filters__toggles { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 4); }
-@media (min-width: 640px) {
+.spoke-filters__select { display: none; }
+@media (min-width: 768px) {
   .spoke-filters__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spoke-filters__select { display: block; }
 }
 @media (min-width: 1024px) {
   .spoke-filters { flex-direction: row; align-items: center; justify-content: space-between; }
