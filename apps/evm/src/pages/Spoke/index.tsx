@@ -315,7 +315,7 @@ const Spoke: React.FC = () => {
                 <Select
                   size="medium"
                   variant="primary"
-                  className="spoke-filters__select"
+                  className="spoke-filters__select spoke-filters__select--pool"
                   buttonClassName={poolAddress === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={poolAddress}
                   onChange={value => setPoolAddress(String(value))}

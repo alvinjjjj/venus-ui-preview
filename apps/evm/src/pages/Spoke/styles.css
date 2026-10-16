@@ -8,6 +8,7 @@
 .spoke-filters__fields { display: grid; grid-template-columns: 1fr; gap: calc(var(--spacing) * 3); }
 .spoke-filters__toggles { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 4); }
 .spoke-filters__select { display: none; }
+.spoke-filters__select--pool { display: block; }
 @media (min-width: 768px) {
   .spoke-filters__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spoke-filters__select { display: block; }
