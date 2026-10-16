@@ -1,4 +1,4 @@
-import { type SpokeMarket, type SpokePool, useGetSpokePools } from 'clients/api';
+import { type SpokeMarket, useGetSpokePools } from 'clients/api';
 import {
   type CellProps,
   InfoIcon,
@@ -10,7 +10,6 @@ import {
   type TableColumn,
   TextField,
   Toggle,
-  TokenIcon,
   TokenIconWithSymbol,
   Tooltip,
   Wrapper,
@@ -20,11 +19,12 @@ import { useTranslation } from 'libs/translations';
 import { useMemo, useState } from 'react';
 import {
   compareBigNumbers,
-  compareNumbers,
+  compareNumbersWithMissingLast,
   formatCentsToReadableValue,
   formatPercentageToReadableValue,
   formatTokensToReadableValue,
 } from 'utilities';
+import { type SpokeLoanAsset, type SpokeOverviewPool, getSpokeOverview } from './overview';
 import './styles.css';
 
 const ALL = 'all';
@@ -34,7 +34,7 @@ export const getSpokeMarketPath = (market: SpokeMarket) =>
     .replace(':spokePoolAddress', market.poolAddress)
     .replace(':spokeMarketAddress', market.address);
 
-const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
+const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsset[] }> = ({
   pool,
   markets,
 }) => {
@@ -54,13 +54,22 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
         </tr>
       </thead>
       <tbody>
-        {pool.collateralMarkets.map(collateral => (
-          <tr key={collateral.address}>
+        {pool.collateralAssets.map(collateral => (
+          <tr key={collateral.symbol}>
             <td className="py-2 pr-8">
-              <TokenIconWithSymbol token={collateral.token} size="lg" />
+              <span className="inline-flex items-center gap-x-3">
+                <img
+                  src={collateral.iconSrc}
+                  alt={collateral.symbol}
+                  width={20}
+                  height={20}
+                  className="spoke-collateral-icon rounded-full"
+                />
+                {collateral.symbol}
+              </span>
             </td>
             <td className="py-2 text-right">
-              {formatPercentageToReadableValue(collateral.collateralFactorPercentage)}
+              {formatPercentageToReadableValue(collateral.maxLtvPercentage)}
             </td>
           </tr>
         ))}
@@ -68,20 +77,34 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
     </table>
   );
 
-  const columns: TableColumn<SpokeMarket>[] = [
+  const columns: TableColumn<SpokeLoanAsset>[] = [
     {
       key: 'asset',
       label: t('spoke.table.loanAsset'),
       selectOptionLabel: t('spoke.table.loanAsset'),
-      renderCell: market => <TokenIconWithSymbol token={market.token} />,
+      renderCell: ({ token }) => <TokenIconWithSymbol token={token} size="xl" />,
     },
     {
       key: 'borrowed',
       label: t('spoke.table.borrowed'),
       selectOptionLabel: t('spoke.table.borrowed'),
       align: 'right',
-      // User positions need a connected wallet on testnet; the preview has none.
-      renderCell: () => <span className="text-grey">-</span>,
+      renderCell: ({ token, preview }) =>
+        preview ? (
+          <LayeredValues
+            topValue={formatTokensToReadableValue({
+              value: preview.borrowedTokens,
+              token,
+              addSymbol: false,
+            })}
+            // Preview stablecoin examples use $1 per token.
+            bottomValue={formatCentsToReadableValue({
+              value: preview.borrowedTokens.multipliedBy(100),
+            })}
+          />
+        ) : (
+          <span className="text-grey">-</span>
+        ),
     },
     {
       key: 'borrowApy',
@@ -89,8 +112,15 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       selectOptionLabel: t('spoke.table.borrowApy'),
       align: 'right',
       sortRows: (a, b, direction) =>
-        compareNumbers(a.borrowApyPercentage, b.borrowApyPercentage, direction),
-      renderCell: market => formatPercentageToReadableValue(market.borrowApyPercentage),
+        compareNumbersWithMissingLast(
+          a.preview?.borrowApyPercentage ?? a.market?.borrowApyPercentage,
+          b.preview?.borrowApyPercentage ?? b.market?.borrowApyPercentage,
+          direction,
+        ),
+      renderCell: ({ market, preview }) =>
+        formatPercentageToReadableValue(
+          preview?.borrowApyPercentage ?? market?.borrowApyPercentage,
+        ),
     },
     {
       key: 'liquidity',
@@ -98,13 +128,16 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       selectOptionLabel: t('spoke.table.liquidity'),
       align: 'right',
       sortRows: (a, b, direction) =>
-        compareBigNumbers(a.liquidityCents, b.liquidityCents, direction),
-      renderCell: market => (
-        <LayeredValues
-          topValue={tokenValue(market, market.cashTokens)}
-          bottomValue={formatCentsToReadableValue({ value: market.liquidityCents })}
-        />
-      ),
+        compareBigNumbers(a.market?.liquidityCents, b.market?.liquidityCents, direction),
+      renderCell: ({ market }) =>
+        market ? (
+          <LayeredValues
+            topValue={tokenValue(market, market.cashTokens)}
+            bottomValue={formatCentsToReadableValue({ value: market.liquidityCents })}
+          />
+        ) : (
+          '-'
+        ),
     },
     {
       key: 'collateral',
@@ -119,13 +152,17 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       renderCell: () => (
         <Tooltip content={collateralInfo} triggerTabIndex={0} className="inline-flex">
           <div className="spoke-collateral-group inline-flex items-center">
-            {pool.collateralMarkets.map(({ token }, index) => (
-              <TokenIcon
-                key={token.address}
-                token={token}
-                size="lg"
+            {pool.collateralAssets.map(({ symbol, iconSrc }, index) => (
+              <img
+                key={symbol}
+                src={iconSrc}
+                alt={symbol}
+                width={20}
+                height={20}
                 className={
-                  index > 0 ? '-ml-1 overflow-hidden rounded-full' : 'overflow-hidden rounded-full'
+                  index > 0
+                    ? 'spoke-collateral-icon -ml-1 rounded-full'
+                    : 'spoke-collateral-icon rounded-full'
                 }
               />
             ))}
@@ -138,13 +175,17 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       label: t('spoke.table.totalBorrow'),
       selectOptionLabel: t('spoke.table.totalBorrow'),
       align: 'right',
-      sortRows: (a, b, direction) => compareBigNumbers(a.borrowCents, b.borrowCents, direction),
-      renderCell: market => (
-        <LayeredValues
-          topValue={tokenValue(market, market.borrowTokens)}
-          bottomValue={formatCentsToReadableValue({ value: market.borrowCents })}
-        />
-      ),
+      sortRows: (a, b, direction) =>
+        compareBigNumbers(a.market?.borrowCents, b.market?.borrowCents, direction),
+      renderCell: ({ market }) =>
+        market ? (
+          <LayeredValues
+            topValue={tokenValue(market, market.borrowTokens)}
+            bottomValue={formatCentsToReadableValue({ value: market.borrowCents })}
+          />
+        ) : (
+          '-'
+        ),
     },
   ];
 
@@ -153,12 +194,11 @@ const SpokePoolTable: React.FC<{ pool: SpokePool; markets: SpokeMarket[] }> = ({
       className="spoke-pool-table"
       data={markets}
       columns={columns}
-      rowKeyExtractor={market => market.address}
+      rowKeyExtractor={({ token }) => token.address}
       tableLayout="auto"
       breakpoint="md"
       hideCardDelimiter
-      getRowHref={getSpokeMarketPath}
-      initialOrder={{ orderBy: columns[5], orderDirection: 'desc' }}
+      getRowHref={({ market }) => (market ? getSpokeMarketPath(market) : '')}
       header={
         <div className="spoke-pool-table__title">
           <h3>{pool.name}</h3>
@@ -179,30 +219,32 @@ const Spoke: React.FC = () => {
   const [poolAddress, setPoolAddress] = useState<string>(ALL);
   const [showPaused, setShowPaused] = useState(false);
 
-  const pools = data?.pools ?? [];
+  const overview = useMemo(() => getSpokeOverview(data?.pools ?? []), [data]);
+  const pools = overview.pools;
 
   const { loanSymbols, collateralSymbols } = useMemo(() => {
     const loans = new Set<string>();
     const collaterals = new Set<string>();
-    for (const pool of data?.pools ?? []) {
-      for (const market of pool.loanMarkets) loans.add(market.token.symbol);
-      for (const market of pool.collateralMarkets) collaterals.add(market.token.symbol);
+    for (const pool of pools) {
+      for (const { token } of pool.loanAssets) loans.add(token.symbol);
+      for (const asset of pool.collateralAssets) collaterals.add(asset.symbol);
     }
     return { loanSymbols: [...loans].sort(), collateralSymbols: [...collaterals].sort() };
-  }, [data]);
+  }, [pools]);
 
   const filteredPools = pools
     .filter(pool => poolAddress === ALL || pool.address === poolAddress)
     .filter(
-      pool => collateral === ALL || pool.collateralMarkets.some(m => m.token.symbol === collateral),
+      pool =>
+        collateral === ALL || pool.collateralAssets.some(asset => asset.symbol === collateral),
     )
     .map(pool => ({
       pool,
-      markets: pool.loanMarkets.filter(
-        market =>
-          (showPaused || !market.isPaused) &&
-          (loanAsset === ALL || market.token.symbol === loanAsset) &&
-          (!search || market.token.symbol.toLowerCase().includes(search.toLowerCase())),
+      markets: pool.loanAssets.filter(
+        ({ token, market }) =>
+          (showPaused || !market?.isPaused) &&
+          (loanAsset === ALL || token.symbol === loanAsset) &&
+          (!search || token.symbol.toLowerCase().includes(search.toLowerCase())),
       ),
     }))
     .filter(({ markets }) => markets.length > 0);
@@ -210,13 +252,15 @@ const Spoke: React.FC = () => {
   const cells: CellProps[] = [
     {
       label: t('spoke.stats.totalBorrow'),
-      value: formatCentsToReadableValue({ value: data?.totalBorrowCents }),
+      value: formatCentsToReadableValue({ value: data ? overview.totalBorrowCents : undefined }),
     },
     {
       label: t('spoke.stats.availableLiquidity'),
-      value: formatCentsToReadableValue({ value: data?.availableLiquidityCents }),
+      value: formatCentsToReadableValue({
+        value: data ? overview.availableLiquidityCents : undefined,
+      }),
     },
-    { label: t('spoke.stats.pools'), value: data?.poolCount ?? '-' },
+    { label: t('spoke.stats.pools'), value: data ? pools.length : '-' },
   ];
 
   const option = (value: string, label: string) => ({ value, label });
@@ -232,7 +276,7 @@ const Spoke: React.FC = () => {
             cells={cells}
           />
 
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-6">
             <div className="spoke-filters">
               <div className="spoke-filters__fields">
                 <TextField
@@ -248,6 +292,7 @@ const Spoke: React.FC = () => {
                   size="medium"
                   variant="primary"
                   className="spoke-filters__select"
+                  buttonClassName={loanAsset === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={loanAsset}
                   onChange={value => setLoanAsset(String(value))}
                   options={[
@@ -259,6 +304,7 @@ const Spoke: React.FC = () => {
                   size="medium"
                   variant="primary"
                   className="spoke-filters__select"
+                  buttonClassName={collateral === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={collateral}
                   onChange={value => setCollateral(String(value))}
                   options={[
@@ -270,6 +316,7 @@ const Spoke: React.FC = () => {
                   size="medium"
                   variant="primary"
                   className="spoke-filters__select"
+                  buttonClassName={poolAddress === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={poolAddress}
                   onChange={value => setPoolAddress(String(value))}
                   options={[

@@ -12,18 +12,27 @@
 }
 @media (min-width: 1024px) {
   .spoke-filters { flex-direction: row; align-items: center; justify-content: space-between; }
-  .spoke-filters__fields { grid-template-columns: minmax(240px, 400px) repeat(3, minmax(160px, 240px)); flex: 1; }
-  .spoke-filters__toggles { justify-content: flex-end; }
+  .spoke-filters__fields {
+    grid-template-columns: minmax(0, calc(var(--spacing) * 60)) repeat(3, minmax(0, calc(var(--spacing) * 55)));
+    flex: 1;
+    min-width: 0;
+  }
+  .spoke-filters__toggles { justify-content: flex-end; flex-shrink: 0; }
 }
 .spoke-filters__search,
-.spoke-filters__select { width: 100%; }
+.spoke-filters__select { width: 100%; min-width: 0; }
 
 .spoke-pool-table__title h3 { font-size: var(--text-p2s); font-weight: 600; }
 .spoke-pool-table__title p { margin-top: 4px; font-size: var(--text-b1r); color: var(--color-grey); }
+.spoke-collateral-icon {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+  min-width: calc(var(--spacing) * 5);
+  flex-shrink: 0;
+}
 .spoke-empty { padding: calc(var(--spacing) * 10) 0; text-align: center; color: var(--color-grey); }
 
-/* New / Explorer: thin title weight, matching the landing type. */
-:root[data-glass-preview='v5'] .spoke-pool-table__title h3 { font-weight: 400; }
-
-/* Filter triggers match the search field: same height, outline and weight. */
-.spoke-filters__select [data-select-trigger] { font-weight: 500; }
+/* Match the Figma filter labels, including Select's independently styled content. */
+.spoke-filters__search input,
+.spoke-filters__select [data-select-trigger] > span { font-weight: 400; }
+.spoke-filters__select .spoke-filters__placeholder > span { color: var(--color-grey); }
