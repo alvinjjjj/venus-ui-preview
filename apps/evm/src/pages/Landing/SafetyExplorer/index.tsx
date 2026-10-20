@@ -111,7 +111,6 @@ const AuditorTile: React.FC<{
   start: boolean;
   unit: (count: number) => string;
 }> = ({ item, index, start, unit }) => {
-  const progress = useEased(start, 1400, 250 + index * 70);
   const { Logo, LogoOn } = item;
   return (
     <motion.li
@@ -127,7 +126,7 @@ const AuditorTile: React.FC<{
             <LogoOn className="venus-safety__logo-on" />
           </span>
           <span className="venus-safety__count">
-            <strong>{Math.round(item.count * progress)}</strong>
+            <strong>{item.count}</strong>
             {unit(item.count)}
             <svg viewBox="0 0 12 12" aria-hidden="true" className="venus-safety__arrow">
               <path d="M4 2 8 6 4 10" />
@@ -200,7 +199,7 @@ const ScoreCard: React.FC<{ start: boolean; copy: (typeof safetyCopyByLanguage)[
 /**
  * Explorer Section 4, "Safety before all": the auditors and their audit counts,
  * and CertiK Skynet's public score. Same margins, type and materials as
- * Sections 1–3; everything counts up once when the section comes into view.
+ * Sections 1–3; audit counts are immediately readable without a count-up.
  */
 export const SafetyExplorer: React.FC = () => {
   const { i18n } = useTranslation();
@@ -208,7 +207,6 @@ export const SafetyExplorer: React.FC = () => {
   const copy = safetyCopyByLanguage[language] ?? safetyCopyByLanguage.en;
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.35 });
-  const total = useEased(inView, 1600, 150);
   const unit = (count: number) => (count === 1 ? copy.audit : copy.audits);
 
   return (
@@ -225,7 +223,7 @@ export const SafetyExplorer: React.FC = () => {
           </motion.h2>
           <p>
             {fill(copy.body, {
-              audits: Math.round(TOTAL_AUDITS * total),
+              audits: TOTAL_AUDITS,
               firms: FIRMS,
             })}
           </p>

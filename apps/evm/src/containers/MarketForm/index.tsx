@@ -19,6 +19,8 @@ export interface MarketFormProps {
   initialActiveTabId?: string;
   onSubmitSuccess?: ModalProps['handleClose'];
   navType?: TabNavType;
+  earnOnly?: boolean;
+  borrowOnly?: boolean;
 }
 
 export const MarketForm: React.FC<MarketFormProps> = ({
@@ -27,6 +29,8 @@ export const MarketForm: React.FC<MarketFormProps> = ({
   poolComptrollerAddress,
   initialActiveTabId,
   navType,
+  earnOnly = false,
+  borrowOnly = false,
 }) => {
   const { t } = useTranslation();
 
@@ -75,7 +79,12 @@ export const MarketForm: React.FC<MarketFormProps> = ({
           action="borrow"
         >
           {({ asset, pool }) => (
-            <BorrowForm asset={asset} pool={pool} onSubmitSuccess={onSubmitSuccess} />
+            <BorrowForm
+              asset={asset}
+              pool={pool}
+              onSubmitSuccess={onSubmitSuccess}
+              hideEModeBanner={borrowOnly}
+            />
           )}
         </AssetAccessor>
       ),
@@ -111,17 +120,31 @@ export const MarketForm: React.FC<MarketFormProps> = ({
     title: t('marketForm.repayTab.title'),
     content: (
       <AssetAccessor vToken={vToken} poolComptrollerAddress={poolComptrollerAddress} action="repay">
-        {({ asset, pool }) => <Repay pool={pool} asset={asset} onSubmitSuccess={onSubmitSuccess} />}
+        {({ asset, pool }) => (
+          <Repay
+            pool={pool}
+            asset={asset}
+            onSubmitSuccess={onSubmitSuccess}
+            compactSourceSelector={borrowOnly}
+          />
+        )}
       </AssetAccessor>
     ),
   });
 
   return (
     <Tabs
-      tabs={tabs}
+      tabs={
+        earnOnly
+          ? tabs.filter(tab => tab.id === 'supply' || tab.id === 'withdraw')
+          : borrowOnly
+            ? tabs.filter(tab => tab.id === 'borrow' || tab.id === 'repay')
+            : tabs
+      }
       initialActiveTabId={initialActiveTabId}
       navType={navType}
-      variant="secondary"
+      variant={earnOnly || borrowOnly ? 'primary' : 'secondary'}
+      buttonClassName={earnOnly || borrowOnly ? 'font-normal' : undefined}
     />
   );
 };

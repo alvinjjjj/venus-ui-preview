@@ -1,0 +1,96 @@
+/* Scoped ambient effect values, not shared design tokens. */
+#page-container:has(.lite-markets) {
+  background-color: var(--color-background-active);
+}
+
+.lite-markets {
+  position: relative;
+  isolation: isolate;
+}
+
+.lite-markets [data-token-symbol] {
+  font-weight: 400;
+}
+
+.lite-ghost {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.4;
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 70%, transparent);
+}
+
+/* O/New share this viewport-sized sky. Retain the class name for existing scopes. */
+.original-stardust-layout {
+  isolation: isolate;
+}
+
+/* Let the shared sky continue behind Safety, Community and both footer variants.
+   About Us has no original-stardust-layout class; card surfaces stay intact. */
+.original-stardust-layout .venus-safety,
+.original-stardust-layout .venus-community,
+.original-stardust-layout footer {
+  background: transparent;
+}
+
+.lite-ghost--shared {
+  z-index: -1;
+  mask-image: none;
+}
+
+.lite-ghost__motion,
+.lite-ghost__still-layer,
+.lite-ghost .landing-mockup__flow-field,
+.lite-ghost .landing-mockup__flow-canvas,
+.lite-ghost .landing-mockup__flow-field > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lite-ghost__motion,
+.lite-ghost__still-layer {
+  filter: blur(4px);
+}
+
+.lite-ghost__still-layer {
+  opacity: 0.25;
+}
+
+/* Crisp stardust, scoped to Original Lite/Pro only. */
+.lite-ghost--stars .lite-ghost__motion,
+.lite-ghost--stars .lite-ghost__still-layer {
+  filter: none;
+}
+
+/* The shared renderer's legacy loading image contains a beam.
+   Keep it out of Original's star-only sky, including the first loading frame. */
+.lite-ghost--stars .landing-mockup__flow-field > img {
+  display: none;
+}
+
+.lite-ghost__still,
+.lite-ghost .landing-mockup__flow-field > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lite-ghost canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hidden canvases are paused by FlowField's visibility observer. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .lite-ghost__motion {
+    display: none;
+  }
+  .lite-ghost__still-layer {
+    opacity: 1;
+  }
+}

@@ -30,6 +30,7 @@ export const TokenIconWithSymbol: React.FC<TokenIconWithSymbolProps> = ({
 
       <div className="min-w-0">
         <p
+          data-token-symbol
           className={cn(
             'truncate font-semibold',
             displayChain && size === 'md' && 'text-b1r',

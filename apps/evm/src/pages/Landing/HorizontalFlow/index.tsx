@@ -1,5 +1,6 @@
 import { PAGE_CONTAINER_ID } from 'constants/layout';
-import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isExplorerMode } from 'demo/GlassVersions/store';
+import { useLandingDesignMode } from '../designContext';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { AssetOrbit } from '../AssetOrbit';
 import { LandingMockup } from '../LandingMockup';
@@ -19,7 +20,7 @@ export const HorizontalFlow: React.FC<{ heroKey: string }> = ({ heroKey }) => {
   const [desktop, setDesktop] = useState(() => window.matchMedia('(min-width: 1024px)').matches);
   const [progress, setProgress] = useState(0);
   const orbit = useLandingMotion(state => state.orbit);
-  const explorer = useGlassPreview(state => isExplorerMode(state.mode));
+  const explorer = isExplorerMode(useLandingDesignMode());
   const [distances, setDistances] = useState({ travel: 1340, hold: 320 });
 
   useEffect(() => {

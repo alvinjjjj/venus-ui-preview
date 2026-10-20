@@ -1,4 +1,5 @@
 import { PrimaryButton } from 'components';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { SwitchChain } from 'containers/SwitchChain';
 import { useTranslation } from 'libs/translations';
 import type { TxFormError } from 'types';
@@ -25,9 +26,10 @@ export const SubmitSection: React.FC<SubmitSectionProps> = ({
   isDelegateApprovedLoading,
 }) => {
   const { t } = useTranslation();
+  const { isLite } = useInterfaceMode();
 
   const submitButtonLabel =
-    !isFormValid && formError?.code !== 'REQUIRES_RISK_ACKNOWLEDGEMENT'
+    !isLite && !isFormValid && formError?.code !== 'REQUIRES_RISK_ACKNOWLEDGEMENT'
       ? t('marketForm.submitButtonLabel.enterValidAmount')
       : t('marketForm.submitButtonLabel.withdraw');
 

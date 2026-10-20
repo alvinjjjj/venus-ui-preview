@@ -2,7 +2,8 @@ import { ChainId, getToken } from '@venusprotocol/chains';
 import venusLogo from 'assets/img/venusLogo.svg';
 import { Icon } from 'components';
 import { Link } from 'containers/Link';
-import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isExplorerMode, isNewDesignMode } from 'demo/GlassVersions/store';
+import { useLandingDesignMode } from '../designContext';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useTranslation } from 'libs/translations';
 import { useState } from 'react';
@@ -87,9 +88,10 @@ export const AssetOrbit: React.FC<{
   const language = i18n.resolvedLanguage ?? i18n.language;
   const copy = copyByLanguage[language as keyof typeof copyByLanguage] ?? copyByLanguage.en;
   const light = useLiquidityLightPreview();
-  const explorer = useGlassPreview(state => isExplorerMode(state.mode));
+  const mode = useLandingDesignMode();
+  const explorer = isExplorerMode(mode);
   // New: orbit on the left, title and figures on the right (desktop flow only).
-  const split = useGlassPreview(state => state.mode === 'v5') && abstractAssets;
+  const split = isNewDesignMode(mode) && abstractAssets;
   const [selected, setSelected] = useState<string | null>(
     transitionProgress === undefined ? 'USDC' : null,
   );

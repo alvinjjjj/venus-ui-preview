@@ -20,6 +20,7 @@ import earnIconSrc from './assets/earn-icon.svg';
 import particleFieldSrc from './assets/particle-field.png';
 import { useLandingMotion } from './motionStore';
 import './styles.css';
+import './trusted-wallets.css';
 
 const states = [
   { label: 'Earn', value: '9.60%', icon: earnIconSrc, next: 'Borrow' },
@@ -38,6 +39,23 @@ const walletLogos = [
   { name: 'Brave Wallet', src: braveSrc },
   { name: 'Gate.io', src: gateSrc },
 ];
+
+export const TrustedWallets = () => (
+  <section className="landing-mockup__trusted lite-trusted-wallets" aria-label="Trusted by many">
+    <p>Trusted by many</p>
+    <div className="landing-mockup__logo-viewport" aria-label="Supported wallets and partners">
+      <div className="landing-mockup__logo-track">
+        {[0, 1].map(copy => (
+          <div className="landing-mockup__logo-group" key={copy} aria-hidden={copy === 1}>
+            {walletLogos.map(wallet => (
+              <img key={wallet.name} src={wallet.src} alt={copy === 0 ? wallet.name : ''} />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 const FlowFieldThree = lazy(() =>
   import('./FlowFieldThree').then(module => ({ default: module.FlowFieldThree })),

@@ -1,3 +1,65 @@
+/* Lite shares the Markets page surface without changing Pro or global tokens. */
+.lite-transaction-filter [data-select-trigger],
+.lite-transaction-filter [data-select-trigger] > span,
+.lite-transaction-options [data-select-option],
+.lite-transaction-options [data-token-symbol] {
+  font-weight: 400;
+}
+
+.venus-select-panel:has(.lite-transaction-options) {
+  background: var(--color-background);
+  border-color: var(--color-blue);
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.lite-transaction-options {
+  max-height: calc(var(--spacing) * 60);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-grey) transparent;
+}
+
+.lite-transaction-options [data-select-option] {
+  min-width: 0;
+  width: 100%;
+  white-space: normal;
+}
+
+.lite-transaction-options [data-select-option] > span {
+  min-width: 0;
+  overflow: hidden;
+}
+
+#root .lite-dashboard [data-token-symbol] {
+  font-weight: 400;
+}
+
+#page-container:has(.lite-dashboard) {
+  background-color: var(--color-background-active);
+}
+
+#root .lite-dashboard .glass-dashboard-overview,
+#root .lite-dashboard .glass-dashboard-tabs {
+  background-color: transparent;
+}
+
+/* Match Lite Markets' token amount / fiat value hierarchy using existing tokens. */
+#root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='primary'] {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: 400;
+}
+
+#root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='secondary'] {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: 400;
+  color: var(--color-light-grey);
+}
+
 /* New and Explorer share V5 materials. Keep dashboard summaries flat. */
 :root[data-glass-preview='v5'] #root .dashboard-page .glass-dashboard-overview.venus-glass-card,
 :root[data-glass-preview='v5'] #root .dashboard-page .glass-dashboard-tabs.venus-glass-card,

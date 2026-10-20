@@ -192,7 +192,7 @@ export const useColumns = ({
 
                   <div className="min-w-0">
                     <div className="flex items-center gap-x-1">
-                      <p className="truncate font-semibold">
+                      <p data-token-symbol className="truncate font-semibold">
                         {asset.vToken.underlyingToken.symbol}
                       </p>
 

@@ -1,6 +1,7 @@
 export enum Subdirectory {
   LANDING = '',
   SKILLS = 'skills',
+  ABOUT_US = 'about-us',
   TERMS_OF_USE = 'terms-of-use',
   FIXED_TERM_VAULT_TERMS_OF_USE = 'fixed-term-vault-terms-of-use',
   PRIVACY_POLICY = 'privacy-policy',
@@ -35,6 +36,7 @@ export enum Subdirectory {
 const routeSubdirectories = {
   landing: [Subdirectory.LANDING],
   skills: [Subdirectory.SKILLS],
+  aboutUs: [Subdirectory.ABOUT_US],
   termsOfUse: [Subdirectory.TERMS_OF_USE],
   fixedTermVaultTermsOfUse: [Subdirectory.FIXED_TERM_VAULT_TERMS_OF_USE],
   privacyPolicy: [Subdirectory.PRIVACY_POLICY],

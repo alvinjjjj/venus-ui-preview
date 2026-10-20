@@ -1,6 +1,9 @@
 import BigNumber from 'bignumber.js';
 import './materials.css';
 import './original.css';
+import '../LiteMarkets/entrance.css';
+import './pro.css';
+import '../LiteMarkets/trust-sections.css';
 
 import { useGetLiquidityHubs } from 'clients/api';
 import { type CellProps, Page, PageStatHeader, Wrapper } from 'components';
@@ -8,9 +11,16 @@ import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
 import { LiquidityHubTable } from './LiquidityHubTable';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { SafetyExplorer } from '../Landing/SafetyExplorer';
+import { CommunityExplorer } from '../Landing/CommunityExplorer';
+import { GhostBackground } from '../LiteMarkets/GhostBackground';
+import { MarketTotals } from '../LiteMarkets/MarketTotals';
 
 const LiquidityHubs: React.FC = () => {
   const { accountAddress } = useAccountAddress();
+  const { supportsModes, isLite } = useInterfaceMode();
+  const isPro = supportsModes && !isLite;
 
   const { t } = useTranslation();
   const {
@@ -58,22 +68,45 @@ const LiquidityHubs: React.FC = () => {
 
   return (
     <Page>
-      <Wrapper className="pt-5 sm:pt-10">
-        <div className="liquidity-hubs-page space-y-5 sm:space-y-12">
-          <PageStatHeader
-            className="liquidity-hubs-stat-header"
-            title={t('liquidityHubs.header')}
-            description={t('liquidityHubs.description')}
-            cells={cells}
-          />
+      <div className={isPro ? 'pro-hub-ambient' : undefined}>
+        {isPro && <GhostBackground />}
+        <Wrapper className={`pt-5 sm:pt-10${isPro ? ' liquidity-hubs-container' : ''}`}>
+          <div
+            className={`liquidity-hubs-page space-y-5 sm:space-y-12${
+              isPro ? ' liquidity-hubs-pro' : ''
+            }`}
+          >
+            {isPro ? (
+              <div className="liquidity-hubs-stat-header lite-enter flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between">
+                <div className="xl:max-w-140">
+                  <h1>{t('liquidityHubs.header')}</h1>
+                  <p>{t('liquidityHubs.description')}</p>
+                </div>
+                <MarketTotals />
+              </div>
+            ) : (
+              <PageStatHeader
+                className="liquidity-hubs-stat-header"
+                title={t('liquidityHubs.header')}
+                description={t('liquidityHubs.description')}
+                cells={cells}
+              />
+            )}
 
-          <LiquidityHubTable
-            className="liquidity-hubs-table"
-            data={liquidityHubs}
-            isFetching={isLoading}
-          />
+            <LiquidityHubTable
+              className={`liquidity-hubs-table${isPro ? ' lite-enter lite-enter--markets' : ''}`}
+              data={liquidityHubs}
+              isFetching={isLoading}
+            />
+          </div>
+        </Wrapper>
+      </div>
+      {isPro && (
+        <div className="lite-trust-sections pt-16 sm:pt-24">
+          <SafetyExplorer />
+          <CommunityExplorer showJoinBanner={false} />
         </div>
-      </Wrapper>
+      )}
     </Page>
   );
 };

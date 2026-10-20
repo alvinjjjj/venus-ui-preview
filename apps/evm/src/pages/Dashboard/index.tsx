@@ -3,6 +3,7 @@ import { Page, Spinner, Tabs } from 'components';
 import { AdBanner } from 'containers/AdBanner';
 import { isNewDesignMode, useGlassPreview } from 'demo/GlassVersions/store';
 import { isDemoAddress, useDemo } from 'demo/state';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useChain } from 'hooks/useChain';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 import type { Tab } from 'hooks/useTabs';
@@ -15,6 +16,7 @@ import { ChainId } from 'types';
 import { AccountOverview } from '../../containers/AccountOverview';
 import { Guide } from './Guide';
 import { Hubs } from './Hubs';
+import { LitePositions } from './LitePositions';
 import { Markets } from './Markets';
 import { getNewPreviewPool } from './Markets/getNewPreviewPool';
 import { Settings } from './Settings';
@@ -25,6 +27,7 @@ import './typography-study.css';
 
 export const Dashboard: React.FC = () => {
   const { t } = useTranslation();
+  const { isLite } = useInterfaceMode();
   const { corePoolComptrollerContractAddress } = useChain();
   const { chainId } = useChainId();
   const [, setSearchParams] = useSearchParams();
@@ -135,29 +138,48 @@ export const Dashboard: React.FC = () => {
 
   return (
     <Page>
-      <div className="dashboard-page contents">
-        <div className="dashboard-ad-banner mt-2 mb-12">
-          <AdBanner />
-        </div>
+      <div className={`dashboard-page contents${isLite ? ' lite-dashboard' : ''}`}>
+        {!isLite && (
+          <div className="dashboard-ad-banner mt-2 mb-12">
+            <AdBanner />
+          </div>
+        )}
 
-        <div className="space-y-12 mb-12">
+        <div className={isLite ? 'space-y-12 mb-24' : 'space-y-12 mb-12'}>
           <AccountOverview
             className="venus-glass-card glass-dashboard-overview w-full"
             accountAddress={accountAddress}
             previewPool={previewPool}
+            splitLayout={isLite}
           />
 
           <Guide />
         </div>
 
         <div className="venus-glass-card glass-dashboard-tabs">
-          <Tabs
-            tabs={tabs}
-            navType="searchParam"
-            variant="tertiary"
-            headerClassName="dashboard-main-tabs"
-          />
+          {isLite ? (
+            <LitePositions
+              corePool={pool}
+              liquidityHubs={liquidityHubs}
+              isHubsLoading={isGetLiquidityHubsLoading}
+            />
+          ) : (
+            <Tabs
+              tabs={tabs}
+              navType="searchParam"
+              variant="tertiary"
+              headerClassName="dashboard-main-tabs"
+            />
+          )}
         </div>
+        {isLite && (
+          <section aria-labelledby="lite-transactions-title" className="mt-12 mb-10 space-y-6">
+            <h2 id="lite-transactions-title" className="text-lg font-semibold">
+              Transaction
+            </h2>
+            <Transactions allowDemoPreview />
+          </section>
+        )}
       </div>
     </Page>
   );

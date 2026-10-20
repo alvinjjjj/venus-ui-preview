@@ -24,7 +24,8 @@ const getInitialMode = (): GlassPreviewMode => {
   const saved = localStorage.getItem('venus-glass-version');
   // O2 is now the approved Original design; keep previously saved selections on O.
   if (saved === 'o2') return 'v1';
-  if (saved === 'v1' || saved === 'v5' || saved === 'explorer') return saved;
+  if (saved === 'explorer') return 'v5';
+  if (saved === 'v1' || saved === 'v5') return saved;
   // Previously selected V3/V4 now open in New instead of a removed preview mode.
   return saved === 'v3' || saved === 'v6' ? 'v5' : 'v1';
 };
@@ -34,5 +35,5 @@ export const useGlassPreview = create<{
   setMode: (mode: GlassPreviewMode) => void;
 }>(set => ({
   mode: getInitialMode(),
-  setMode: mode => set({ mode }),
+  setMode: mode => set({ mode: mode === 'explorer' ? 'v5' : mode }),
 }));

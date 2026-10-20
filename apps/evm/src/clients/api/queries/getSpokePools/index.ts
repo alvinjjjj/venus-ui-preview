@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChainId, tokens } from '@venusprotocol/chains';
-import nvdabIcon from 'assets/img/spoke/nvdab.svg';
-import skhybIcon from 'assets/img/spoke/skhyb.svg';
-import spcxbIcon from 'assets/img/spoke/spcxb.svg';
-import tslabIcon from 'assets/img/spoke/tslab.svg';
+import nvdabIcon from 'assets/img/spoke/nvdab.png';
+import skhybIcon from 'assets/img/spoke/skhyb.png';
+import spcxbIcon from 'assets/img/spoke/spcxb.png';
+import tslabIcon from 'assets/img/spoke/tslab.png';
 import BigNumber from 'bignumber.js';
 import type { Token } from 'types';
 import type { Address } from 'viem';

@@ -16,6 +16,7 @@ import { useTranslation } from 'libs/translations';
 import { useEffect, useRef, useState } from 'react';
 import { footerCopyByLanguage } from './copy';
 import './styles.css';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 
 const CORE_POOL = '0xfD36E2c2a6789Db23113685031d7F16329158384';
 // The app footer's X icon points at flux.venus.io; this uses the X account itself.
@@ -31,8 +32,12 @@ interface FooterLink {
  * Explorer landing footer: brand and tagline, four link columns on a hairline grid,
  * a legal line, then a filled Venus wordmark with a soft light sweep.
  */
-export const FooterExplorer: React.FC = () => {
+export const FooterExplorer: React.FC<{ lite?: boolean; hideDividers?: boolean }> = ({
+  lite = false,
+  hideDividers = false,
+}) => {
   const light = useLiquidityLightPreview();
+  const hasAboutUs = useGlassPreview(state => state.mode === 'v1' || state.mode === 'v5');
   const { i18n } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
   const copy = footerCopyByLanguage[language] ?? footerCopyByLanguage.en;
@@ -82,6 +87,11 @@ export const FooterExplorer: React.FC = () => {
         { label: l.skills, to: routes.skills.path },
         { label: l.audits, href: `${VENUS_DOC_URL}/links/security-and-audits` },
         { label: l.github, href: VENUS_GITHUB_URL },
+        ...(hasAboutUs
+          ? [{ label: 'About Us', to: routes.aboutUs.path }]
+          : lite
+            ? [{ label: 'About Us' }]
+            : []),
       ],
     },
     {
@@ -102,7 +112,11 @@ export const FooterExplorer: React.FC = () => {
   ];
 
   return (
-    <footer className="venus-footer">
+    <footer
+      className={`venus-footer${lite ? ' venus-footer--lite' : ''}${
+        hideDividers ? ' venus-footer--no-dividers' : ''
+      }`}
+    >
       <div className="venus-footer__inner">
         <div className="venus-footer__top">
           <div className="venus-footer__brand">
@@ -128,34 +142,45 @@ export const FooterExplorer: React.FC = () => {
             </div>
           </div>
           <nav className="venus-footer__columns" aria-label="Footer">
-            {columns.map(column => (
-              <div key={column.title} className="venus-footer__column">
-                <h4>{column.title}</h4>
-                <ul>
-                  {column.links.map(link => (
-                    <li key={link.label}>
-                      {link.to ? (
-                        <Link to={link.to} noStyle className="venus-footer__link">
-                          {link.label}
-                        </Link>
-                      ) : (
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="venus-footer__link"
-                        >
-                          {link.label}
-                          <span aria-hidden="true" className="venus-footer__external">
-                            <Icon name="transactionLink" className="size-4 text-current" />
+            {columns
+              .filter(column => !lite || column.title !== copy.columns.products)
+              .map(column => (
+                <div key={column.title} className="venus-footer__column">
+                  <h4>{column.title}</h4>
+                  <ul>
+                    {column.links.map(link => (
+                      <li key={link.label}>
+                        {link.to ? (
+                          <Link to={link.to} noStyle className="venus-footer__link">
+                            {link.label}
+                            {link.to === routes.aboutUs.path && (
+                              <span aria-hidden="true" className="venus-footer__external">
+                                <Icon name="transactionLink" className="size-4 text-current" />
+                              </span>
+                            )}
+                          </Link>
+                        ) : link.href ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="venus-footer__link"
+                          >
+                            {link.label}
+                            <span aria-hidden="true" className="venus-footer__external">
+                              <Icon name="transactionLink" className="size-4 text-current" />
+                            </span>
+                          </a>
+                        ) : (
+                          <span className="venus-footer__link" aria-disabled="true">
+                            {link.label}
                           </span>
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
           </nav>
         </div>
         <div className="venus-footer__bottom">

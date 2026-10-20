@@ -27,7 +27,9 @@ const PAGE_PARAM_KEY = 'page';
 const TX_TYPE_PARAM_KEY = 'txType';
 const CONTRACT_ADDRESS_PARAM_KEY = 'contractAddress';
 
-export const Transactions: React.FC = () => {
+export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
+  allowDemoPreview = false,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { chainId } = useChainId();
 
@@ -102,7 +104,10 @@ export const Transactions: React.FC = () => {
   const isNewMode = useGlassPreview(state => isNewDesignMode(state.mode));
   const isDemoLoggedIn = useDemo(state => state.loggedIn);
   const isNewPreview =
-    chainId === ChainId.BSC_MAINNET && isNewMode && isDemoLoggedIn && isDemoAddress(accountAddress);
+    chainId === ChainId.BSC_MAINNET &&
+    (isNewMode || allowDemoPreview) &&
+    isDemoLoggedIn &&
+    isDemoAddress(accountAddress);
   const { data: poolData } = useGetPools({
     accountAddress,
     includeIsolatedPools: true,
@@ -259,31 +264,47 @@ export const Transactions: React.FC = () => {
   return (
     <div ref={containerRef} className="dashboard-transactions grid grid-cols-1 gap-4">
       {accountAddress && (
-        <div className="flex flex-row gap-3 md:gap-4">
+        <div
+          className={
+            allowDemoPreview
+              ? 'flex flex-col sm:flex-row gap-3 md:gap-4'
+              : 'flex flex-row gap-3 md:gap-4'
+          }
+        >
           <Select
-            className="flex-1 md:flex-none"
+            className={
+              allowDemoPreview ? 'lite-transaction-filter w-full sm:w-60' : 'flex-1 md:flex-none'
+            }
             size="small"
             variant="tertiary"
             placeLabelToLeft
             options={txTypeSelectOptions}
             optionClassName="px-3 h-10 scrollbar-track-cards"
-            dropdownClassName="overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey"
+            dropdownClassName={
+              allowDemoPreview
+                ? 'lite-transaction-options'
+                : 'overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey'
+            }
             buttonClassName="min-w-1/2 sm:min-w-45"
             value={selectedTxType}
             onChange={newValue => setTxType(newValue.toString())}
           />
 
           <Select
-            className="flex-1 md:flex-none"
+            className={
+              allowDemoPreview ? 'lite-transaction-filter w-full sm:w-60' : 'flex-1 md:flex-none'
+            }
             size="small"
             variant="tertiary"
             placeLabelToLeft
             options={sourceSelectOptions}
             optionClassName="px-3 h-10 scrollbar-track-cards"
             dropdownClassName={
-              isNewMode
-                ? 'dashboard-source-options'
-                : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
+              allowDemoPreview
+                ? 'lite-transaction-options'
+                : isNewMode
+                  ? 'dashboard-source-options'
+                  : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
             }
             buttonClassName="m-w-1/2 sm:min-w-45"
             value={selectedContractAddress}
@@ -292,7 +313,7 @@ export const Transactions: React.FC = () => {
         </div>
       )}
 
-      {isNewPreview && transactionsCount > 0 && (
+      {isNewPreview && !allowDemoPreview && transactionsCount > 0 && (
         <p className="dashboard-preview-label text-sm text-grey">
           {t('account.transactions.previewData')}
         </p>

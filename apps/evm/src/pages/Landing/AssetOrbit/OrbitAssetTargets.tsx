@@ -1,4 +1,5 @@
-import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isExplorerMode, isNewDesignMode } from 'demo/GlassVersions/store';
+import { useLandingDesignMode } from '../designContext';
 import { useNavigate } from 'hooks/useNavigate';
 import { useEffect, useState } from 'react';
 import { type OrbitProduct, orbitCoreProduct, orbitProducts } from '../LandingMockup/orbitProducts';
@@ -22,10 +23,11 @@ export const OrbitAssetTargets: React.FC<{
   hintLabel: string;
   ready: boolean;
 }> = ({ selectLabel, rateLabel, hintLabel, ready }) => {
-  const explorer = useGlassPreview(state => isExplorerMode(state.mode));
+  const mode = useLandingDesignMode();
+  const explorer = isExplorerMode(mode);
   // New: the spheres are Venus products (plus Venus Core in the centre). Hover shows the
   // name; a click (or Enter) opens the product.
-  const products = useGlassPreview(state => state.mode === 'v5');
+  const products = isNewDesignMode(mode);
   const { navigate } = useNavigate();
   const orbitSatellites = getOrbitSatellites(explorer);
   const openProduct = (product: OrbitProduct) => {

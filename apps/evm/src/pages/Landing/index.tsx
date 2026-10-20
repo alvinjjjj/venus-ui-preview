@@ -2,6 +2,7 @@ import { Page, Wrapper } from 'components';
 import { isExplorerMode, landingDesignByMode, useGlassPreview } from 'demo/GlassVersions/store';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useLocation } from 'react-router';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { Benefits } from './Benefits';
 import { CommunityExplorer } from './CommunityExplorer';
 import { FooterExplorer } from './FooterExplorer';
@@ -19,6 +20,7 @@ import { Wallets } from './Wallets';
 import './landing-light.css';
 
 export const Landing: React.FC = () => {
+  const { isLite } = useInterfaceMode();
   const { search } = useLocation();
   const showNewLanding = useGlassPreview(state => landingDesignByMode[state.mode] !== 'v1');
   const mode = useGlassPreview(state => state.mode);
@@ -39,7 +41,7 @@ export const Landing: React.FC = () => {
             <VenusSteps />
             <SafetyExplorer />
             <CommunityExplorer />
-            <FooterExplorer />
+            {!isLite && <FooterExplorer />}
           </>
         ) : null}
       </Page>

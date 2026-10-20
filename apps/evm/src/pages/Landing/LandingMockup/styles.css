@@ -13,6 +13,7 @@
 }
 
 /* New and Explorer share one continuous sky with the dark header. */
+:root:not([data-liquidity-theme='light']) .about-us-landing .landing-mockup,
 :root:is([data-glass-mode='v5'], [data-glass-mode='explorer']):not([data-liquidity-theme='light']) .landing-mockup {
   background: linear-gradient(
     180deg,
@@ -127,6 +128,7 @@
   transform: translateY(-15%);
 }
 
+.about-us-landing .landing-mockup__headline,
 :root:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .landing-mockup__headline {
   transform: translateY(-25%);
 }
@@ -380,6 +382,7 @@
   overflow: hidden;
 }
 
+.about-us-landing .landing-mockup__trusted,
 :root:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .landing-mockup__trusted {
   border-top: 0;
 }
@@ -451,6 +454,7 @@
     transform: translateY(-10%);
   }
 
+  .about-us-landing .landing-mockup__headline,
   :root:is([data-glass-mode='v5'], [data-glass-mode='explorer']) .landing-mockup__headline {
     transform: translateY(-20%);
   }

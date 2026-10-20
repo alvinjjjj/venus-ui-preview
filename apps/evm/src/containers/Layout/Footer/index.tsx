@@ -4,7 +4,8 @@ import { useTranslation } from 'libs/translations';
 import { useChainId } from 'libs/wallet';
 import { generateExplorerUrl } from 'utilities';
 
-import { Icon, type IconName } from 'components';
+import { Icon, type IconName, cn } from 'components';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import {
   VENUS_DISCORD_URL,
   VENUS_DOC_URL,
@@ -15,6 +16,10 @@ import {
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
 import { forwardRef } from 'react';
+import { FooterExplorer } from 'pages/Landing/FooterExplorer';
+import { TrustedWallets } from 'pages/Landing/LandingMockup';
+import { useLocation } from 'react-router';
+import { useStore as useLayoutStore } from '../store';
 
 interface SocialLink {
   iconName: IconName;
@@ -29,6 +34,13 @@ interface LinkConfig {
 
 export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
   const { chainId } = useChainId();
+  const { isLite, supportsModes } = useInterfaceMode();
+  const { pathname } = useLocation();
+  const isAbout = pathname.replace(/\/$/, '') === routes.aboutUs.path;
+  const isLiteMarketDetail = useLayoutStore(state => state.isLiteMarketDetail);
+  const showLiteFooter = (pathname === '/' || pathname === '') && !isLiteMarketDetail;
+  const isProHub =
+    supportsModes && !isLite && pathname.replace(/\/$/, '') === routes.liquidityHubs.path;
   const { t } = useTranslation();
 
   const xvs = useGetToken({
@@ -83,10 +95,23 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     },
   ];
 
+  if (isLite || isProHub || isAbout) {
+    return (
+      <div ref={ref} className="w-full shrink-0">
+        {!isAbout && <TrustedWallets />}
+        {(isProHub || showLiteFooter || isAbout) && <FooterExplorer lite={isLite} hideDividers />}
+        <GlassVersions />
+      </div>
+    );
+  }
+
   return (
     <footer
       ref={ref}
-      className="bg-background-active mt-10 p-5 space-y-4 sm:flex sm:flex-wrap sm:gap-4 sm:justify-between sm:items-center sm:space-y-0 md:px-6 xl:px-10"
+      className={cn(
+        'bg-background-active mt-10 p-5 space-y-4 sm:flex sm:flex-wrap sm:gap-4 sm:justify-between sm:items-center sm:space-y-0 md:px-6 xl:px-10',
+        isLite && 'mt-0 mb-0 w-full shrink-0 border-0',
+      )}
     >
       <div className="flex items-center gap-4 flex-wrap">
         {footerLinks.map(footerLink => {
@@ -113,7 +138,12 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
           </a>
         ))}
       </div>
-      <div className="venus-footer-preview w-full border-t border-dark-blue-hover pt-4">
+      <div
+        className={cn(
+          'venus-footer-preview w-full border-t border-dark-blue-hover pt-4',
+          isLite && 'hidden',
+        )}
+      >
         <GlassVersions />
       </div>
     </footer>

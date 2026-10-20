@@ -1,6 +1,7 @@
 import { cn } from '@venusprotocol/ui';
 
 import { PrimaryButton } from 'components';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { NULL_ADDRESS } from 'constants/address';
 import { SwitchChain } from 'containers/SwitchChain';
 import useDelegateApproval from 'hooks/useDelegateApproval';
@@ -27,6 +28,7 @@ export const SubmitSection: React.FC<SubmitSectionProps> = ({
   isRiskyOperation,
 }) => {
   const { t } = useTranslation();
+  const { isLite } = useInterfaceMode();
 
   const { address: leverageManagerContractAddress } = useGetContractAddress({
     name: 'LeverageManager',
@@ -46,6 +48,7 @@ export const SubmitSection: React.FC<SubmitSectionProps> = ({
   const approveDelegate = () => updatePoolDelegateStatus({ approvedStatus: true });
 
   const submitButtonLabel =
+    !isLite &&
     !isFormValid &&
     formError?.code !== 'REQUIRES_SWAP_PRICE_IMPACT_ACKNOWLEDGEMENT' &&
     formError?.code !== 'REQUIRES_RISK_ACKNOWLEDGEMENT'

@@ -36,8 +36,13 @@
 .venus-footer__social-icon { width: 16px; height: 16px; }
 
 .venus-footer__columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--spacing) * 8); }
+.venus-footer--lite { border-top: 0; }
+.venus-footer--lite .venus-footer__column::before { display: none; }
+.venus-footer--no-dividers { border-top: 0; }
+.venus-footer--no-dividers .venus-footer__column::before { display: none; }
 @media (min-width: 768px) {
   .venus-footer__columns { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .venus-footer--lite .venus-footer__columns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .venus-footer__column { position: relative; }
 @media (min-width: 768px) {

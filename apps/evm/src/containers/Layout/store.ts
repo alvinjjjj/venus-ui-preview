@@ -3,6 +3,8 @@ import { create } from 'zustand';
 type Modal = 'mobileMenu' | 'accountModal';
 
 interface State {
+  isLiteMarketDetail: boolean;
+  setIsLiteMarketDetail: (value: boolean) => void;
   isScrollToTopVisible: boolean;
   setScrollToTopVisible: (isScrollToTopVisible: State['isScrollToTopVisible']) => void;
   isCloseToBottom: boolean;
@@ -12,6 +14,8 @@ interface State {
 }
 
 export const useStore = create<State>()(set => ({
+  isLiteMarketDetail: false,
+  setIsLiteMarketDetail: value => set({ isLiteMarketDetail: value }),
   isScrollToTopVisible: false,
   setScrollToTopVisible: (v: boolean) => set({ isScrollToTopVisible: v }),
   isCloseToBottom: false,

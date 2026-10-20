@@ -1,0 +1,58 @@
+/* Match New landing's 12px blur-reveal and easing, scoped to Lite.
+   One CSS entrance per mounted section; data updates do not restart it.
+   Backwards fill covers only the delay, leaving no transformed ancestor
+   or persistent compositing layer around table menus once finished. */
+.lite-enter {
+  animation: lite-content-enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.lite-enter--subtitle { animation-delay: 0.08s; }
+.lite-enter--totals { animation-delay: 0.14s; }
+.lite-enter--markets { animation-delay: 0.22s; }
+
+/* Matte blue treatment, local to the market heading.
+   Retain the existing vertical flow without blurring the glyphs. */
+.lite-markets .lite-market-title {
+  background-image: linear-gradient(
+    180deg,
+    #4b89ff 0%,
+    #76a8ff 25%,
+    #4b89ff 50%,
+    #76a8ff 75%,
+    #4b89ff 100%
+  );
+}
+
+/* Original only: retain the blue gradient with just 10% white added. */
+.original-stardust-layout .lite-markets .lite-market-title {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, #4b89ff 90%, var(--color-white)) 0%,
+    color-mix(in srgb, #76a8ff 90%, var(--color-white)) 25%,
+    color-mix(in srgb, #4b89ff 90%, var(--color-white)) 50%,
+    color-mix(in srgb, #76a8ff 90%, var(--color-white)) 75%,
+    color-mix(in srgb, #4b89ff 90%, var(--color-white)) 100%
+  );
+}
+
+@media (forced-colors: active) {
+  .lite-markets .lite-market-title,
+  .original-stardust-layout .lite-markets .lite-market-title { background-image: none; }
+}
+
+@keyframes lite-content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lite-enter { animation: none; }
+}

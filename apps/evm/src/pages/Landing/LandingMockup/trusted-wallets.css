@@ -1,0 +1,21 @@
+/* Shared Lite closing strip, full-width and in normal document flow. */
+.landing-mockup__trusted.lite-trusted-wallets {
+  position: relative;
+  width: 100%;
+  border-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lite-trusted-wallets .landing-mockup__logo-track {
+    animation: none;
+    width: 100%;
+  }
+
+  .lite-trusted-wallets .landing-mockup__logo-viewport {
+    overflow-x: auto;
+  }
+
+  .lite-trusted-wallets .landing-mockup__logo-group[aria-hidden='true'] {
+    display: none;
+  }
+}

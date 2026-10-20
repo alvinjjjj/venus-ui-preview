@@ -1,0 +1,29 @@
+/* Lite-only overrides using existing surface, radius and color tokens. */
+.lite-loan-filter [data-select-trigger],
+.lite-loan-filter [data-select-trigger] > span {
+  font-weight: 400;
+}
+
+.venus-select-panel:has(.lite-loan-options) {
+  background: var(--color-background);
+  border-color: var(--color-blue);
+  padding: 0;
+}
+
+.lite-loan-options [data-select-option] {
+  font-weight: 400;
+  color: var(--color-white);
+}
+
+.lite-loan-options {
+  max-height: calc(var(--spacing) * 60);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-grey) transparent;
+}
+
+.lite-loan-options [data-select-option]:hover,
+.lite-loan-options [data-select-option]:focus-visible {
+  background: var(--color-dark-blue);
+}

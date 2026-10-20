@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router';
 import { PAGE_CONTAINER_ID } from 'constants/layout';
 import { Subdirectory, routes } from 'constants/routing';
 import { Layout } from 'containers/Layout';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 
 import { DISCORD_SERVER_URL } from 'constants/production';
@@ -14,6 +15,8 @@ import { MarketRedirect } from './MarketRedirect';
 import PageSuspense from './PageSuspense';
 
 const Landing = safeLazyLoad(() => import('pages/Landing'));
+const AboutUs = safeLazyLoad(() => import('pages/AboutUs'));
+const LiteMarkets = safeLazyLoad(() => import('pages/LiteMarkets'));
 const Markets = safeLazyLoad(() => import('pages/Markets'));
 const Market = safeLazyLoad(() => import('pages/Market'));
 const Dashboard = safeLazyLoad(() => import('pages/Dashboard'));
@@ -42,6 +45,7 @@ const LiquidityHub = safeLazyLoad(() => import('pages/LiquidityHub'));
 const ComponentGallery = safeLazyLoad(() => import('pages/ComponentGallery'));
 
 const AppRoutes = () => {
+  const { isLite, supportsModes } = useInterfaceMode();
   const location = useLocation();
   const swapRouteEnabled = useIsFeatureEnabled({ name: 'swapRoute' });
   const vaiRouteEnabled = useIsFeatureEnabled({ name: 'vaiRoute' });
@@ -98,7 +102,16 @@ const AppRoutes = () => {
           index
           element={
             <PageSuspense>
-              <Landing />
+              {supportsModes && !isLite ? (
+                <Navigate
+                  to={{ pathname: routes.liquidityHubs.path, search: location.search }}
+                  replace
+                />
+              ) : supportsModes && isLite ? (
+                <LiteMarkets />
+              ) : (
+                <Landing />
+              )}
             </PageSuspense>
           }
         />
@@ -307,6 +320,15 @@ const AppRoutes = () => {
             }
           />
         </Route>
+
+        <Route
+          path={Subdirectory.ABOUT_US}
+          element={
+            <PageSuspense>
+              <AboutUs />
+            </PageSuspense>
+          }
+        />
 
         <Route
           path={Subdirectory.SKILLS}

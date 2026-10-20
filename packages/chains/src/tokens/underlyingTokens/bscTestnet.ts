@@ -1,4 +1,5 @@
 import { iconSrcs } from '../../generated/manifests/tokenIcons';
+import tslabIcon from '../../images/tokens/tslab.png';
 import { ChainId, type Token } from '../../types';
 import { bnb } from '../nativeTokens';
 
@@ -472,7 +473,7 @@ export const bscTestnet: Token[] = [
     address: '0x10d63B1203E5A0719AbbE927C8BFc87135b2F129',
     decimals: 18,
     symbol: 'TSLAB',
-    iconSrc: iconSrcs.tslab,
+    iconSrc: tslabIcon,
   },
   {
     chainId: ChainId.BSC_TESTNET,

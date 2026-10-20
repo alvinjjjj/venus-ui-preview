@@ -1,4 +1,5 @@
-import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isExplorerMode } from 'demo/GlassVersions/store';
+import { useLandingDesignMode } from '../designContext';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // User-supplied draft values; replace these when the confirmed data is supplied.
@@ -112,7 +113,7 @@ export const ProofMetrics: React.FC<{
 }> = ({ labels, placeholderLabel, ready, units, eyebrow }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const [entered, setEntered] = useState(false);
-  const explorer = useGlassPreview(state => isExplorerMode(state.mode));
+  const explorer = isExplorerMode(useLandingDesignMode());
   const values = explorer ? explorerProofValues : proofValues;
   useEffect(() => {
     if (!ready || entered || !rootRef.current) return;

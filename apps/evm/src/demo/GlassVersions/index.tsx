@@ -23,7 +23,6 @@ import './v5-buttons.css';
 const versions: { id: GlassPreviewMode; label: string; description: string }[] = [
   { id: 'v1', label: 'O', description: 'Original' },
   { id: 'v5', label: 'New', description: 'New' },
-  { id: 'explorer', label: 'E', description: 'Explorer' },
 ];
 
 export const GlassVersions = () => {
@@ -44,7 +43,12 @@ export const GlassVersions = () => {
   const setVersion = useGlassPreview(state => state.setMode);
   const styleVersion = previewDesignByMode[version];
   const landingVersion = landingDesignByMode[version];
-  const isLandingRoute = location.pathname === '/';
+  // O/New now enter the product; their marketing composition lives at About Us.
+  // Keep Explorer's existing landing and its landing-specific materials intact.
+  const isLandingRoute =
+    version === 'v5'
+      ? location.pathname.replace(/\/$/, '') === '/about-us'
+      : location.pathname === '/';
   useLayoutEffect(() => {
     // V5 shares V4 materials, with a separate button shape override.
     document.documentElement.dataset.glassVersion = styleVersion === 'v5' ? 'v6' : styleVersion;

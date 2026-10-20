@@ -1,5 +1,8 @@
-import { Button } from '@venusprotocol/ui';
+import { Button, ButtonWrapper } from '@venusprotocol/ui';
 import { useDemo } from 'demo/state';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { routes } from 'constants/routing';
+import { Link } from 'containers/Link';
 import { createPortal } from 'react-dom';
 import type { Address } from 'viem';
 
@@ -21,9 +24,11 @@ export interface AccountModalProps {
 }
 
 export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPrime, onClose }) => {
-  const { logout, setLoginOpen } = useDemo();
+  const { logout } = useDemo();
+  const { isLite, setMode } = useInterfaceMode();
   const handleDisconnect = () => {
     logout();
+    setMode('lite');
 
     onClose?.();
   };
@@ -59,24 +64,26 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
                 </button>
               </div>
 
-              <ClaimRewardsButton className="h-12 bg-dark-blue-active sm:hidden" />
+              <ClaimRewardsButton
+                className={
+                  isLite ? 'h-12 bg-dark-blue-active' : 'h-12 bg-dark-blue-active sm:hidden'
+                }
+              />
             </div>
 
             <AccountOverview accountAddress={address} showGraph={false} />
 
             <Settings />
             <div className="flex flex-col gap-y-3">
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  onClose?.();
-                  setLoginOpen(true);
-                }}
-              >
-                Switch account
-              </Button>
-
               {isVip && <VipTelegramGroupButton />}
+
+              {isLite && (
+                <ButtonWrapper variant="primary" className="w-full" asChild>
+                  <Link to={routes.dashboard.path} onClick={onClose} noStyle>
+                    View Dashboard
+                  </Link>
+                </ButtonWrapper>
+              )}
 
               {/* When running in Safe Wallet app, user's wallet should be kept connected at all time */}
               {!config.isSafeApp && (

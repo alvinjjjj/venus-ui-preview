@@ -1,5 +1,6 @@
 import { PAGE_CONTAINER_ID } from 'constants/layout';
-import { isExplorerMode, useGlassPreview } from 'demo/GlassVersions/store';
+import { isExplorerMode, isNewDesignMode } from 'demo/GlassVersions/store';
+import { useLandingDesignMode } from '../designContext';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
@@ -113,12 +114,13 @@ export const FlowFieldThree: React.FC<{
   const interactiveRef = useRef(interactive);
   // Explorer-only sphere material and palette. HorizontalFlow is keyed by mode,
   // so the scene is rebuilt when the preview mode changes.
-  const explorer = useGlassPreview(state => isExplorerMode(state.mode));
+  const mode = useLandingDesignMode();
+  const explorer = isExplorerMode(mode);
   const explorerRef = useRef(explorer);
   explorerRef.current = explorer;
   // New: face-on orbit with a smaller core; the spheres turn together as one ring
   // (same pace, spacing kept) and pause while one is hovered to show its APY.
-  const calm = useGlassPreview(state => state.mode === 'v5');
+  const calm = isNewDesignMode(mode);
   const calmRef = useRef(calm);
   calmRef.current = calm;
   // The landing is keyed by theme, so the scene is rebuilt when light/dark changes.
@@ -1200,6 +1202,8 @@ export const FlowFieldThree: React.FC<{
         ),
       );
       spineMesh = new THREE.LineSegments(spineGeometry, spineMaterial);
+      // A zero-line ambient configuration must also omit the outgoing beam.
+      spineMesh.visible = lines > 0;
       scene.add(spineMesh);
 
       particlePositions = new Float32Array(particles * 3);

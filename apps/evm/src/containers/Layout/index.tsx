@@ -4,18 +4,21 @@ import { BODY_PORTAL_ID, PAGE_CONTAINER_ID } from 'constants/layout';
 
 import { Wrapper, cn } from 'components';
 import { Subdirectory, routes } from 'constants/routing';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import ScrollToTop from './ScrollToTop';
 import { useStore } from './store';
+import { useInterfaceMode, useInterfaceModeStore } from 'demo/useInterfaceMode';
+import { GhostBackground } from 'pages/LiteMarkets/GhostBackground';
 
 // Pages here render their own Wrapper so a full-bleed promo banner can sit above it.
 const NO_WRAPPER_PATHNAMES = [
   Subdirectory.LANDING,
   routes.markets.path,
   routes.liquidityHubs.path,
+  routes.aboutUs.path,
   routes.spoke.path,
 ] as string[];
 
@@ -24,6 +27,15 @@ export const Layout: React.FC = () => {
   const footerRef = useRef<HTMLDivElement>(null);
 
   const { pathname } = useLocation();
+  const { isLite, supportsModes, mode } = useInterfaceMode();
+  // Preserve the committed selection for ordinary links without mode state.
+  // Layout effects run before paint, after the destination has committed.
+  useLayoutEffect(() => {
+    if (useInterfaceModeStore.getState().mode !== mode) {
+      useInterfaceModeStore.getState().setMode(mode);
+    }
+  }, [mode]);
+  const showStardust = supportsModes && pathname.replace(/\/$/, '') !== routes.aboutUs.path;
 
   const isCloseToBottomState = useStore(state => state.isCloseToBottom);
   const setIsCloseToBottom = useStore(state => state.setIsCloseToBottom);
@@ -79,13 +91,18 @@ export const Layout: React.FC = () => {
         <NavBar className="shrink-0" />
 
         <div
-          className="flex flex-col grow overflow-x-hidden"
+          className={cn(
+            'flex flex-col grow overflow-x-hidden',
+            supportsModes && 'bg-background-active',
+            showStardust && 'original-stardust-layout',
+          )}
           id={PAGE_CONTAINER_ID}
           onScroll={handleScroll}
         >
+          {showStardust && <GhostBackground shared />}
           <Header />
 
-          <div className="relative flex grow flex-col">
+          <div className={cn('relative flex grow flex-col', isLite && 'shrink-0')}>
             <WrapperComp
               className={cn('relative w-full shrink-0 grow', !noWrapper && 'pt-5 sm:pt-10')}
             >

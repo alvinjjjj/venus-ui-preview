@@ -1,0 +1,67 @@
+/* Mode-label-only pearl highlight, with a subtle blue tint and vertical flow.
+   Scoped colors implement the requested treatment without changing global tokens. */
+.venus-interface-mode-label {
+  display: inline-block;
+  background: linear-gradient(180deg, #c5d8ed 0%, #edf5ff 20%, #ffffff 30%, #edf5ff 40%, #c5d8ed 50%, #edf5ff 70%, #ffffff 80%, #edf5ff 90%, #c5d8ed 100%) 0 0 / 100% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: venus-interface-mode-flow 4.5s linear infinite;
+}
+
+@keyframes venus-interface-mode-flow {
+  from { background-position: 0 100%; }
+  to { background-position: 0 0%; }
+}
+
+/* Mode switch: a blue-white highlight travels around the border.
+   Dedicated overlay avoids replacing the existing glass material layers. */
+@property --venus-mode-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.venus-mode-switch {
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--color-blue) 18%, transparent);
+}
+
+.venus-mode-border-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--venus-mode-border-angle), #429aff 0%, #429aff33 25%, #80caff 42%, #ffffff 50%, #80caff 58%, #429aff33 75%, #429aff 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: venus-mode-border-orbit 4.5s linear infinite;
+}
+
+@keyframes venus-mode-border-orbit {
+  to { --venus-mode-border-angle: 360deg; }
+}
+
+/* Blue-glass makes direct spans relative for text layering. The mode ring is
+   an overlay, not text: keep it pinned above the material and grain layers. */
+:root #root .venus-navigation .venus-mode-switch > .venus-mode-border-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .venus-interface-mode-label, .venus-mode-border-flow { animation: none; }
+}
+
+@media (forced-colors: active) {
+  .venus-mode-border-flow { display: none; }
+  .venus-interface-mode-label {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+  }
+}

@@ -1,0 +1,45 @@
+/* Pro Hub uses Lite's dark surface and type scale without changing global tokens. */
+.pro-hub-ambient {
+  position: relative;
+  isolation: isolate;
+}
+
+#root #page-container:has(.liquidity-hubs-pro) {
+  background: var(--color-background-active);
+}
+
+#root .liquidity-hubs-pro .liquidity-hubs-table,
+#root .liquidity-hubs-pro .liquidity-hubs-stat-header > .venus-glass-card {
+  background: var(--color-background-active);
+}
+
+#root .liquidity-hubs-pro .liquidity-hubs-stat-header h1 {
+  font-size: clamp(36px, 3.33vw, 48px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background-image: linear-gradient(
+    180deg,
+    #4b89ff 0%,
+    #76a8ff 25%,
+    #4b89ff 50%,
+    #76a8ff 75%,
+    #4b89ff 100%
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (forced-colors: active) {
+  #root .liquidity-hubs-pro .liquidity-hubs-stat-header h1 {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+#root .liquidity-hubs-pro .liquidity-hubs-stat-header h1 + p {
+  margin-top: calc(var(--spacing) * 4);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--color-light-grey);
+}

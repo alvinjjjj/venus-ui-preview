@@ -12,6 +12,7 @@ export interface TabsProps {
   className?: string;
   headerClassName?: string;
   buttonClassName?: string;
+  activeOnlySemibold?: boolean;
 }
 
 export const Tabs = ({
@@ -23,6 +24,7 @@ export const Tabs = ({
   headerClassName,
   buttonClassName,
   navType = 'state',
+  activeOnlySemibold = false,
 }: TabsProps) => {
   const { activeTab, setActiveTab } = useTabs({
     tabs,
@@ -78,6 +80,7 @@ export const Tabs = ({
                 <div
                   className={cn(
                     'mb-2 flex  font-semibold whitespace-nowrap transition-colors text-inherit',
+                    activeOnlySemibold && activeTab.id !== tab.id && 'font-normal',
                     variant === 'secondary' && 'justify-center',
                   )}
                 >

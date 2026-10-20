@@ -510,7 +510,9 @@ const JoinBanner: React.FC<{ copy: CommunityCopy; play: boolean }> = ({ copy, pl
  * runs over Venus's contracts and turns a finding into a reward, and a
  * governance card with the live proposal count and the latest vote.
  */
-export const CommunityExplorer: React.FC = () => {
+export const CommunityExplorer: React.FC<{ showJoinBanner?: boolean }> = ({
+  showJoinBanner = true,
+}) => {
   const { i18n } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
   const copy = communityCopyByLanguage[language] ?? communityCopyByLanguage.en;
@@ -523,7 +525,7 @@ export const CommunityExplorer: React.FC = () => {
       <div className="venus-community__inner">
         <BountyCard copy={copy} play={inView && !reduceMotion} />
         <GovernanceCard copy={copy} start={seen} />
-        <JoinBanner copy={copy} play={inView && !reduceMotion} />
+        {showJoinBanner && <JoinBanner copy={copy} play={inView && !reduceMotion} />}
       </div>
     </section>
   );

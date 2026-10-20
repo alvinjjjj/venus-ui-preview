@@ -1,0 +1,40 @@
+/* The requested 1440px cap uses the existing 4px spacing scale.
+   Scope the container override to Lite; the New landing stays unchanged. */
+.lite-markets .lite-market-container,
+#root .liquidity-hubs-container,
+.lite-trust-sections .venus-safety__inner,
+.lite-trust-sections .venus-community__inner {
+  width: 100%;
+  max-width: calc(var(--spacing) * 360);
+  margin-inline: auto;
+  padding-inline: calc(var(--spacing) * 5);
+}
+
+@media (min-width: 640px) {
+  .lite-markets .lite-market-container,
+  #root .liquidity-hubs-container,
+  .lite-trust-sections .venus-safety__inner,
+  .lite-trust-sections .venus-community__inner {
+    padding-inline: calc(var(--spacing) * 8);
+  }
+}
+
+/* Match Safety's responsive title/subtitle scale and rhythm.
+   The hero alone retains its existing bold weight and gradient. */
+.lite-markets .lite-market-title {
+  font-size: clamp(36px, 3.33vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.lite-markets .lite-market-heading > p {
+  margin-top: calc(var(--spacing) * 4);
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+/* Let the governance legend wrap inside the narrower, capped cards. */
+.lite-trust-sections .venus-community__tiles-foot {
+  flex-wrap: wrap;
+}
+

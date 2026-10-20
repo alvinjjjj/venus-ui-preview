@@ -1,6 +1,6 @@
 import type { Address } from 'viem';
 
-import { Modal, type ModalProps, ProtectionModeIndicator } from 'components';
+import { Modal, type ModalProps, ProtectionModeIndicator, TokenIcon } from 'components';
 import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
 import { MarketForm } from 'containers/MarketForm';
 import { useUserChainSettings } from 'hooks/useUserChainSettings';
@@ -11,6 +11,8 @@ export interface MarketFormModalProps {
   poolComptrollerAddress: Address;
   initialActiveTabId?: string;
   onClose: ModalProps['handleClose'];
+  earnOnly?: boolean;
+  borrowOnly?: boolean;
 }
 
 export const MarketFormModal: React.FC<MarketFormModalProps> = ({
@@ -18,6 +20,8 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
   poolComptrollerAddress,
   initialActiveTabId,
   onClose,
+  earnOnly,
+  borrowOnly,
 }) => {
   const [userChainSettings] = useUserChainSettings();
 
@@ -29,7 +33,12 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
     <Modal
       isOpen
       title={
-        <span className="inline-flex items-center gap-x-2">
+        <span
+          className={`inline-flex items-center gap-x-2 ${
+            earnOnly || borrowOnly ? 'font-normal' : ''
+          }`}
+        >
+          {(earnOnly || borrowOnly) && <TokenIcon token={asset.vToken.underlyingToken} size="md" />}
           {asset.isProtectionModeEnabled && (
             <ProtectionModeIndicator
               variant="icon"
@@ -48,6 +57,8 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
         poolComptrollerAddress={poolComptrollerAddress}
         initialActiveTabId={initialActiveTabId}
         onSubmitSuccess={onClose}
+        earnOnly={earnOnly}
+        borrowOnly={borrowOnly}
       />
     </Modal>
   );
