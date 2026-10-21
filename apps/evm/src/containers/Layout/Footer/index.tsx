@@ -41,8 +41,8 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
   const isAbout = pathname.replace(/\/$/, '') === routes.aboutUs.path;
   const isLiteMarketDetail = useLayoutStore(state => state.isLiteMarketDetail);
   const showLiteFooter = (pathname === '/' || pathname === '') && !isLiteMarketDetail;
-  const isProHub =
-    supportsModes && !isLite && pathname.replace(/\/$/, '') === routes.liquidityHubs.path;
+  const isPro = supportsModes && !isLite;
+  const isProHub = isPro && pathname.replace(/\/$/, '') === routes.liquidityHubs.path;
   const { t } = useTranslation();
 
   const xvs = useGetToken({
@@ -99,11 +99,13 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
 
   if (isExperiment && isLite && !isAbout) return <GlassVersions />;
 
-  if (isLite || isProHub || isAbout) {
+  // Every Pro page now ends with the same Explorer footer as the Liquidity Hub
+  // ("Trusted by many" stays on the Hub and Lite only).
+  if (isLite || isPro || isAbout) {
     return (
       <div ref={ref} className="w-full shrink-0">
-        {!isAbout && <TrustedWallets />}
-        {(isProHub || showLiteFooter || isAbout) && <FooterExplorer lite={isLite} hideDividers />}
+        {!isAbout && (isLite || isProHub) && <TrustedWallets />}
+        {(isPro || showLiteFooter || isAbout) && <FooterExplorer lite={isLite} hideDividers />}
         <GlassVersions />
       </div>
     );

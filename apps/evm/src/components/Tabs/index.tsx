@@ -9,6 +9,8 @@ export interface TabsProps {
   onTabChange?: (newIndex: number) => void;
   navType?: TabNavType;
   initialActiveTabId?: string;
+  activeTabId?: string;
+  hideHeader?: boolean;
   className?: string;
   headerClassName?: string;
   buttonClassName?: string;
@@ -20,17 +22,20 @@ export const Tabs = ({
   variant = 'primary',
   onTabChange,
   initialActiveTabId,
+  activeTabId,
+  hideHeader = false,
   className,
   headerClassName,
   buttonClassName,
   navType = 'state',
   activeOnlySemibold = false,
 }: TabsProps) => {
-  const { activeTab, setActiveTab } = useTabs({
+  const { activeTab: internalActiveTab, setActiveTab } = useTabs({
     tabs,
     navType,
     initialActiveTabId,
   });
+  const activeTab = tabs.find(tab => tab.id === activeTabId) ?? internalActiveTab;
 
   const handleChange = (index: number, e?: React.MouseEvent) => {
     e?.preventDefault();
@@ -47,7 +52,7 @@ export const Tabs = ({
 
   return (
     <div className={cn('space-y-6', className)}>
-      {variant === 'primary' ? (
+      {hideHeader ? null : variant === 'primary' ? (
         <ButtonGroup
           buttonLabels={tabs.map(({ title }) => title)}
           className={headerClassName}

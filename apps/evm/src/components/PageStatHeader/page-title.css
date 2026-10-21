@@ -1,0 +1,27 @@
+/* Shared Pro page title (Liquidity Hub design): Liquidity Hub, Vaults, Venus Core / pools, Spoke.
+   Unlayered, so it wins over the text-p1s / sm:text-h6 utilities on the same element. */
+.venus-page-title {
+  font-size: clamp(36px, 3.33vw, 48px);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background-image: linear-gradient(180deg, #4b89ff 0%, #76a8ff 25%, #4b89ff 50%, #76a8ff 75%, #4b89ff 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtitle: Venus Core's 16px size, Liquidity Hub's grey and spacing. */
+.venus-page-subtitle {
+  margin-top: calc(var(--spacing) * 4);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-light-grey);
+}
+
+@media (forced-colors: active) {
+  .venus-page-title {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}

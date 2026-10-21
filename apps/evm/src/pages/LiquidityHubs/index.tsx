@@ -12,8 +12,6 @@ import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
 import { LiquidityHubTable } from './LiquidityHubTable';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
-import { SafetyExplorer } from '../Landing/SafetyExplorer';
-import { CommunityExplorer } from '../Landing/CommunityExplorer';
 import { GhostBackground } from '../LiteMarkets/GhostBackground';
 import { MarketTotals } from '../LiteMarkets/MarketTotals';
 
@@ -70,7 +68,8 @@ const LiquidityHubs: React.FC = () => {
     <Page>
       <div className={isPro ? 'pro-hub-ambient' : undefined}>
         {isPro && <GhostBackground />}
-        <Wrapper className={`pt-5 sm:pt-10${isPro ? ' liquidity-hubs-container' : ''}`}>
+        {/* Pro uses the default Wrapper (max-w-7xl + responsive px) so its side margins match Venus Core. */}
+        <Wrapper className="pt-5 sm:pt-10">
           <div
             className={`liquidity-hubs-page space-y-5 sm:space-y-12${
               isPro ? ' liquidity-hubs-pro' : ''
@@ -79,8 +78,8 @@ const LiquidityHubs: React.FC = () => {
             {isPro ? (
               <div className="liquidity-hubs-stat-header lite-enter flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between">
                 <div className="xl:max-w-140">
-                  <h1>{t('liquidityHubs.header')}</h1>
-                  <p>{t('liquidityHubs.description')}</p>
+                  <h1 className="venus-page-title">{t('liquidityHubs.header')}</h1>
+                  <p className="venus-page-subtitle">{t('liquidityHubs.description')}</p>
                 </div>
                 <MarketTotals />
               </div>
@@ -101,12 +100,7 @@ const LiquidityHubs: React.FC = () => {
           </div>
         </Wrapper>
       </div>
-      {isPro && (
-        <div className="lite-trust-sections pt-16 sm:pt-24">
-          <SafetyExplorer />
-          <CommunityExplorer showJoinBanner={false} />
-        </div>
-      )}
+      {/* Safety / Community sections live on About Us; Pro keeps only Trusted by many + footer. */}
     </Page>
   );
 };

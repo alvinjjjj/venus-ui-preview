@@ -2,6 +2,9 @@
 .pro-hub-ambient {
   position: relative;
   isolation: isolate;
+  /* The hub list fills the first screen; "Trusted by many" + footer start below the fold
+     (100dvh minus the 80px app header), so they are only seen after scrolling. */
+  min-height: calc(100dvh - calc(var(--spacing) * 20));
 }
 
 #root #page-container:has(.liquidity-hubs-pro) {
@@ -39,7 +42,7 @@
 
 #root .liquidity-hubs-pro .liquidity-hubs-stat-header h1 + p {
   margin-top: calc(var(--spacing) * 4);
-  font-size: var(--text-lg);
+  font-size: var(--text-base);
   line-height: 1.5;
   color: var(--color-light-grey);
 }

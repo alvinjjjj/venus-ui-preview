@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { AssetApy, Modal, Select, Tabs, TokenIcon } from 'components';
+import { AssetApy, InfoIcon, Modal, Select, Tabs, TokenIcon } from 'components';
 import { MarketForm } from 'containers/MarketForm';
 import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
 import { useChain } from 'hooks/useChain';
@@ -34,16 +34,57 @@ export function BorrowSourceModal({
   );
   const [selectedCollateral, setSelectedCollateral] = useState(collateralAssets[0]?.vToken.address);
   const collateral = collateralAssets.find(item => item.vToken.address === selectedCollateral);
+  const percent = (value: number | undefined) =>
+    value !== undefined && Number.isFinite(value) ? `${Number(value.toFixed(2))}%` : '—';
   const collateralSelector = (
     <Select
       aria-label="Collateral asset"
       className="w-36 shrink-0"
+      dropdownClassName={experimental ? 'lite-collateral-options' : undefined}
+      // E: a small table — the asset with its Max LTV and Liquidation threshold side by side.
+      menuTitle={
+        experimental ? (
+          <div className="lite-collateral-head">
+            <p className="lite-collateral-title">Select collateral</p>
+            <div className="lite-collateral-row lite-collateral-cols">
+              <span>Asset</span>
+              <span>
+                Max LTV{' '}
+                <InfoIcon tooltip="The maximum you can borrow against this asset, as a share of its value." />
+              </span>
+              <span>
+                LT{' '}
+                <InfoIcon tooltip="Liquidation threshold: when your debt reaches this share of the collateral value, the position can be liquidated." />
+              </span>
+            </div>
+          </div>
+        ) : undefined
+      }
       value={selectedCollateral ?? ''}
       onChange={value => setSelectedCollateral(String(value) as typeof selectedCollateral)}
-      options={collateralAssets.map(item => ({
-        value: item.vToken.address,
-        label: <span className="inline-flex items-center gap-2"><TokenIcon token={item.vToken.underlyingToken} size="md" />{item.vToken.underlyingToken.symbol}</span>,
-      }))}
+      options={collateralAssets.map(item => {
+        const name = (
+          <span className="inline-flex items-center gap-2 min-w-0">
+            <TokenIcon token={item.vToken.underlyingToken} size="md" />
+            <span className="truncate">{item.vToken.underlyingToken.symbol}</span>
+          </span>
+        );
+        return {
+          value: item.vToken.address,
+          label: experimental
+            ? ({ isRenderedInButton }: { isRenderedInButton: boolean }) =>
+                isRenderedInButton ? (
+                  name
+                ) : (
+                  <span className="lite-collateral-row">
+                    {name}
+                    <span>{percent(item.collateralFactor * 100)}</span>
+                    <span>{percent(item.liquidationThresholdPercentage)}</span>
+                  </span>
+                )
+            : name,
+        };
+      })}
     />
   );
   const penalty = (

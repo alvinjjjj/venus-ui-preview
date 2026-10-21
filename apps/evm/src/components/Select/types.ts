@@ -24,7 +24,7 @@ export interface SelectProps<TValue extends string | number = string | number>
   buttonClassName?: string;
   size?: 'small' | 'medium' | 'large';
   variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-  menuTitle?: string;
+  menuTitle?: React.ReactNode;
   menuPosition?: 'left' | 'right';
   disabled?: boolean;
 }

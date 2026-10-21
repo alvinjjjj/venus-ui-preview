@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'components';
 import type { Asset } from 'types';
+import getCombinedApy from 'utilities/getCombinedApy';
 import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
 import qqqb from 'assets/img/spoke/qqqb.png';
 import spyb from 'assets/img/spoke/spyb.png';
@@ -28,6 +29,11 @@ export type BorrowSource = {
   liquidity?: number;
   borrowed?: number;
   collateral: Collateral[];
+};
+type SortableBorrowSource = BorrowSource & {
+  sortApy: BigNumber;
+  sortLiquidity: BigNumber;
+  sortBorrowed: BigNumber;
 };
 
 // User-requested layout fixtures only. Never pass these into a transaction form.
@@ -79,11 +85,13 @@ export function BorrowSources({
   rows,
   onBack,
   experimental = false,
+  modeSwitch,
 }: {
   asset: Asset;
   rows: LiteAsset[];
   onBack: () => void;
   experimental?: boolean;
+  modeSwitch?: React.ReactNode;
 }) {
   const [search, setSearch] = useState('');
   const [openedSource, setOpenedSource] = useState<BorrowSource>();
@@ -96,10 +104,27 @@ export function BorrowSources({
     { name: 'Venus Core', collateral: coreCollateral },
     ...mockSources,
   ];
+  // Resolve live Core values on each render so sorting follows refreshed data.
+  const sortableSources: SortableBorrowSource[] = sources.map(source => ({
+    ...source,
+    sortApy: source.apy === undefined
+      ? getCombinedApy({
+          type: 'borrow',
+          baseApyPercentage: asset.borrowApyPercentage,
+          tokenDistributions: asset.borrowTokenDistributions,
+        }).totalApyPercentage
+      : new BigNumber(source.apy),
+    sortLiquidity: source.liquidity === undefined
+      ? asset.liquidityCents
+      : new BigNumber(source.liquidity).times(asset.tokenPriceCents),
+    sortBorrowed: source.borrowed === undefined
+      ? asset.borrowBalanceCents
+      : new BigNumber(source.borrowed).times(asset.tokenPriceCents),
+  }));
   const collateralOptions = [
     ...new Map(sources.flatMap(source => source.collateral).map(c => [c.symbol, c])).values(),
   ];
-  const filtered = sources.filter(
+  const filtered = sortableSources.filter(
     source =>
       source.name.toLowerCase().includes(search.trim().toLowerCase()) &&
       (!collateralFilter || source.collateral.some(c => c.symbol === collateralFilter)),
@@ -119,16 +144,18 @@ export function BorrowSources({
         : value.multipliedBy(asset.tokenPriceCents);
     return (
       <div className="tabular-nums">
-        {formatTokensToReadableValue({ value, token })}
+        <span className="lite-amount">{formatTokensToReadableValue({ value, token, addSymbol: false })}</span>
+        <span className="lite-amount-symbol"> {token.symbol}</span>
         <p className="text-light-grey">{formatCentsToReadableValue({ value: cents })}</p>
       </div>
     );
   };
-  const columns: TableColumn<BorrowSource>[] = [
+  const columns: TableColumn<SortableBorrowSource>[] = [
     {
       key: 'yield',
       label: 'Yield',
       selectOptionLabel: 'Yield',
+      sortRows: (a, b, direction) => a.name.localeCompare(b.name) * (direction === 'asc' ? 1 : -1),
       renderCell: source => (
         <button
           type="button"
@@ -145,6 +172,8 @@ export function BorrowSources({
       label: 'APY',
       selectOptionLabel: 'APY',
       align: 'right',
+      sortRows: (a, b, direction) =>
+        (a.sortApy.comparedTo(b.sortApy) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: source =>
         source.apy === undefined ? (
           <AssetApy asset={asset} type="borrow" />
@@ -157,6 +186,8 @@ export function BorrowSources({
       label: 'Liquidity',
       selectOptionLabel: 'Liquidity',
       align: 'right',
+      sortRows: (a, b, direction) =>
+        (a.sortLiquidity.comparedTo(b.sortLiquidity) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: source => renderAmount(source, 'liquidity'),
     },
     {
@@ -164,6 +195,9 @@ export function BorrowSources({
       label: 'Collateral',
       selectOptionLabel: 'Collateral',
       align: 'right',
+      sortRows: (a, b, direction) =>
+        (a.collateral.length - b.collateral.length || a.name.localeCompare(b.name)) *
+        (direction === 'asc' ? 1 : -1),
       renderCell: source => (
         <div className="flex justify-end items-center gap-1">
           <div className="flex items-center -space-x-2">
@@ -197,6 +231,8 @@ export function BorrowSources({
       label: 'Total Borrow',
       selectOptionLabel: 'Total Borrow',
       align: 'right',
+      sortRows: (a, b, direction) =>
+        (a.sortBorrowed.comparedTo(b.sortBorrowed) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: source => renderAmount(source, 'borrowed'),
     },
   ];
@@ -205,6 +241,7 @@ export function BorrowSources({
       <Table
         data={filtered}
         columns={columns}
+        initialOrder={{ orderBy: columns[4], orderDirection: 'desc' }}
         rowKeyExtractor={source => source.name}
         rowOnClick={(_, source) => setOpenedSource(source)}
         tableLayout="auto"
@@ -250,6 +287,7 @@ export function BorrowSources({
                 ]}
               />
             </div>
+            {modeSwitch}
           </div>
         }
       />

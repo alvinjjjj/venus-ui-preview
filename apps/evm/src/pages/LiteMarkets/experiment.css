@@ -19,8 +19,57 @@
   border-radius: var(--radius-lg);
   box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%);
 }
+/* Reuse New's neutral header material for rewards and the connected account. */
+:root[data-glass-study='lite-experiment'] .venus-header-actions :is([data-rewards-button], .venus-connected-wallet) {
+  background: rgb(255 255 255 / 7%);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  color: var(--color-white);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+  backdrop-filter: blur(12px) saturate(130%);
+}
+:root[data-glass-study='lite-experiment'] .venus-header-actions .venus-connected-wallet > div {
+  background: transparent;
+  border-radius: inherit;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-header-actions :is([data-rewards-button], .venus-connected-wallet) {
+  background: rgb(255 255 255 / 55%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%), 0 2px 6px rgb(30 55 85 / 7%);
+}
 :root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel { background: rgb(250 250 248 / 85%); border-color: rgb(30 40 55 / 9%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), 0 24px 64px rgb(30 40 55 / 14%); }
 /* New's neutral glass controls: blue is reserved for the selected segment. */
+/* Old triggers stay unchanged; only expanded menus use New's reflected glass. */
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-dropdown-surface {
+  background: linear-gradient(125deg, rgb(255 255 255 / 8%), transparent 65%), rgb(20 24 31 / 58%);
+  border-color: rgb(255 255 255 / 12%);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 14%), 0 12px 32px rgb(0 0 0 / 18%);
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--color-grey) 45%, transparent) transparent;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-panel { max-height: 298px !important; }
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-title { min-height: calc(var(--spacing) * 12); padding: calc(var(--spacing) * 3); }
+:root[data-glass-study='lite-experiment'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]) {
+  height: calc(var(--spacing) * 10);
+  padding: 0 calc(var(--spacing) * 3);
+  border-radius: var(--radius-lg);
+  background: transparent;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]):is(:hover, :active) { background: rgb(255 255 255 / 6%); }
+:root[data-glass-study='lite-experiment'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]):focus-visible { outline: 2px solid var(--color-blue); outline-offset: -2px; }
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-reset:disabled { color: var(--color-grey); opacity: 1; }
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-dropdown-surface {
+  background: linear-gradient(125deg, rgb(255 255 255 / 24%), transparent 65%), rgb(255 255 255 / 64%);
+  border-color: rgb(30 40 55 / 10%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 80%), 0 12px 32px rgb(30 40 55 / 12%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]):is(:hover, :active) { background: rgb(30 55 85 / 5%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-study='lite-experiment'] :is(#root, body) .venus-dropdown-surface { background-color: rgb(20 24 31 / 96%); }
+  :root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-dropdown-surface { background-color: rgb(255 255 255 / 96%); }
+}
 .lite-borrow-popup-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .button-bevel-outline,
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .button-highlight::after { display: none !important; }
@@ -32,10 +81,32 @@
   box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%) !important;
   backdrop-filter: blur(12px) saturate(130%);
 }
-:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-group] { background: transparent; border: 0; gap: var(--spacing); }
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-group] {
+  background: var(--color-dark-blue);
+  border: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
+  border-radius: var(--radius-lg); /* 8px outer frame */
+  padding: var(--spacing);
+  gap: 0;
+}
 :root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant][data-venus-button-active='true'] {
   background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
   border-color: white !important;
+}
+/* Form mode switches share the Earn/Borrow segmented-control material. */
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-group] > [data-venus-button-variant] {
+  flex: 1 1 0%;
+  min-width: 0;
+  border-radius: calc(var(--radius-lg) - 2px) !important; /* nests inside the 8px frame */
+  background: transparent !important;
+  color: var(--color-grey) !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-group] > [data-venus-button-variant][data-venus-button-active='true'] {
+  background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+  color: var(--color-white) !important;
+  border-color: color-mix(in srgb, var(--color-white) 20%, transparent) !important;
+  box-shadow: inset 0 1px 2px rgb(255 255 255 / 20%), 0 2px 4px rgb(0 0 0 / 16%) !important;
 }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant]:is(:disabled,[aria-disabled='true']) { opacity: .45; box-shadow: none !important; }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-toggle-track { background: rgb(0 0 0 / 22%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%), inset 0 2px 3px rgb(0 0 0 / 28%); }
@@ -62,6 +133,7 @@
   display: flex;
   flex-direction: column;
   padding-block: calc(var(--spacing) * 6);
+  padding-top: calc(var(--spacing) * 2);
 }
 .lite-experiment .lite-market-container > div { gap: calc(var(--spacing) * 6); flex: 1 1 0%; min-height: 0; }
 .lite-experiment .lite-market-hero { flex-shrink: 0; width: 100%; max-width: 1440px; margin-inline: auto; }
@@ -74,18 +146,46 @@
   min-height: 0;
   flex: 1 1 0%;
 }
-.lite-experiment-tabs > :first-child { flex-shrink: 0; margin-bottom: calc(var(--spacing) * 4); z-index: 1; }
-.lite-experiment-tabs > :first-child > :first-child { justify-content: flex-start; }
-.lite-experiment-tabs > :first-child > :last-child:not(.lite-mode-pills) { display: none; }
-.lite-mode-pills { position: relative; isolation: isolate; width: max-content; margin-inline: auto; gap: calc(var(--spacing) * 2); }
+.lite-experiment-tabs:not(.lite-experiment-tabs--embedded) > :first-child { flex-shrink: 0; margin-bottom: calc(var(--spacing) * 4); z-index: 1; }
+.lite-experiment-tabs:not(.lite-experiment-tabs--embedded) > :first-child > :first-child { justify-content: flex-start; }
+.lite-experiment-tabs:not(.lite-experiment-tabs--embedded) > :first-child > :last-child:not(.lite-mode-pills) { display: none; }
+.lite-mode-pills {
+  position: relative;
+  isolation: isolate;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: 0;
+  flex-shrink: 0;
+  height: calc(var(--spacing) * 9);
+  gap: 0;
+  padding: var(--spacing);
+  border: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
+  border-radius: var(--radius-lg); /* 8px outer frame */
+  background: var(--color-dark-blue);
+}
 .lite-mode-pills::before { content: none; }
-.lite-mode-pills > button { width: calc(var(--spacing) * 24); height: calc(var(--spacing) * 10); border-radius: calc(var(--spacing) * 2) calc(var(--spacing) * 2) 0 0; border: 1px solid var(--color-dark-blue-active); background: var(--color-dark-blue); transition: color 200ms ease, background-color 200ms ease; }
+/* The complete mode track uses the wallet's original neutral raised frame. */
+:root[data-glass-study='lite-experiment'] :is(
+  .lite-mode-pills,
+  .venus-popup-panel [data-venus-button-group]
+) {
+  border-color: rgb(255 255 255 / 12%);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(
+  .lite-mode-pills,
+  .venus-popup-panel [data-venus-button-group]
+) {
+  border-color: rgb(30 40 55 / 10%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%), 0 2px 6px rgb(30 55 85 / 7%);
+}
+.lite-mode-pills > button { width: calc(var(--spacing) * 20); height: 100%; border-radius: calc(var(--radius-lg) - 2px); border: 1px solid transparent; background: transparent; transition: color 200ms ease, background-color 200ms ease; }
 .lite-mode-pills > button.text-white { background: transparent; border-color: transparent; color: var(--color-white); }
 /* Reuse the Pro blue-glass material locally; no global token changes. */
 .lite-mode-pills > button.text-white {
   background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
-  border-color: var(--color-white);
-  box-shadow: inset 0 1px 2px rgb(255 255 255 / 20%);
+  border-color: color-mix(in srgb, var(--color-white) 20%, transparent);
+  box-shadow: inset 0 1px 2px rgb(255 255 255 / 20%), 0 2px 4px rgb(0 0 0 / 16%);
 }
 .lite-mode-pills > button { position: relative; font-size: var(--text-sm); }
 /* Match the popup's solid selected outline, without a rotating highlight. */
@@ -114,7 +214,7 @@
 .lite-experiment .lite-experiment-scroll,
 .lite-experiment .lite-inline-sources { border-top-left-radius: calc(var(--spacing) * 2); }
 .lite-mode-pills > button > :first-child { margin-bottom: 0; justify-content: center; }
-.lite-mode-pills > button > :last-child { display: none; }
+.lite-mode-pills > button > :last-child:not(:first-child) { display: none; }
 .lite-mode-pills > button:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .lite-mode-pills::before { transition: none; } }
 .lite-experiment-tabs > :last-child { margin-top: 0; }
@@ -126,16 +226,24 @@
   overscroll-behavior: contain;
 }
 .lite-experiment .lite-market-heading { max-width: 100%; }
-.lite-experiment .lite-market-hero { justify-content: center; text-align: center; }
-.lite-experiment-bottom-totals { flex-shrink: 0; margin-top: auto; }
-.lite-experiment-bottom-totals > div { gap: calc(var(--spacing) * 8); }
-.lite-experiment-bottom-totals p:first-child { font-size: var(--text-sm); margin-bottom: var(--spacing); }
-.lite-experiment-bottom-totals p:last-child { font-size: var(--text-2xl); }
+.lite-experiment .lite-market-hero { flex-direction: column; justify-content: center; text-align: center; }
+.lite-experiment-top-totals { flex-shrink: 0; align-self: center; text-align: left; }
+.lite-experiment-top-totals > div { gap: calc(var(--spacing) * 8); }
+.lite-experiment-top-totals > div > div { display: flex; flex-direction: column; gap: calc(var(--spacing) * 2); }
+.lite-experiment-top-totals p:first-child { font-size: var(--text-sm); margin-bottom: 0; }
+.lite-experiment-top-totals p:last-child { font-size: var(--text-2xl); font-weight: 400; line-height: 1; color: var(--color-white); }
 .lite-experiment .lite-experiment-earn { gap: calc(var(--spacing) * 3); }
 .lite-experiment-earn > p { flex-shrink: 0; }
 .lite-experiment .lite-market-title { font-size: var(--text-3xl); line-height: 1; }
 .lite-experiment .lite-market-heading > p { font-size: var(--text-sm); margin-top: var(--spacing); }
+.lite-experiment section[aria-label='Earn markets'] { flex: 0 1 auto; gap: calc(var(--spacing) * 3); }
+.lite-experiment section[aria-label='Earn markets'] > .lite-experiment-tabs { margin-block: 0; }
+.lite-market-description { flex-shrink: 0; margin-block: calc(var(--spacing) * 3) 0 !important; /* 12px section gap + 12px = 24px below the market box */ font-size: var(--text-sm); text-align: center; }
 .lite-experiment .lite-market-hero { gap: calc(var(--spacing) * 4); }
+.lite-market-toolbar { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 3); min-height: calc(var(--spacing) * 9); } /* same 36px row even when only the breadcrumb is shown */
+.lite-market-toolbar > .lite-experiment-controls { flex: 1; min-width: 0; }
+.lite-market-toolbar:has(> .lite-experiment-controls) > .lite-mode-pills { margin-left: 0; }
+.lite-market-toolbar > .lite-experiment-controls { justify-content: flex-end; }
 .lite-experiment-controls { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--spacing) * 3); }
 .lite-experiment-controls > :first-child { flex: 1; min-width: 0; }
 /* Compact desktop Earn draft; do not alter shared controls or Borrow. */
@@ -158,9 +266,19 @@
 .lite-borrow-source-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: calc(var(--spacing) * 3); }
 .lite-borrow-source-header > button { flex-shrink: 0; }
 .lite-borrow-source-header > .lite-experiment-controls { margin-left: auto; flex: 0 1 calc(var(--spacing) * 96); min-width: 0; }
+.lite-borrow-source-header:has(.lite-mode-pills) > button { flex-basis: 100%; }
+.lite-borrow-source-header:has(.lite-mode-pills) > .lite-experiment-controls { margin-left: 0; flex: 1; }
+.lite-borrow-source-header > .lite-mode-pills { margin-left: auto; }
 .lite-borrow-source-header .lite-experiment-controls > :first-child { min-width: calc(var(--spacing) * 32); }
+@media (max-width: 639px) {
+  .lite-market-toolbar { flex-wrap: wrap; }
+  .lite-market-toolbar > .lite-experiment-controls { flex-basis: 100%; }
+  .lite-market-toolbar > .lite-mode-pills { margin-left: auto; }
+}
 @media (min-width: 768px) {
   .lite-experiment-scroll.lite-borrow-sources tr { grid-template-columns: 25% 15% 22% 16% 22%; }
+  /* Asset lists (Earn / Borrow): wider APY column so the range and the Prime badge sit on one line. */
+  .lite-experiment-scroll:not(.lite-borrow-sources) tr { grid-template-columns: 22% 32% 23% 23%; }
   .lite-experiment-scroll.lite-borrow-sources tbody tr { height: calc(var(--spacing) * 15); min-height: calc(var(--spacing) * 15); }
   .lite-borrow-sources td { min-width: 0; }
 }
@@ -334,9 +452,6 @@
 .lite-experiment .lite-inline-sources { border-color: color-mix(in srgb, var(--color-white) 16%, transparent); border-top-left-radius: calc(var(--spacing) * 2); }
 .lite-experiment-scroll > .venus-glass-card::before,
 .lite-experiment-scroll > .venus-glass-card::after { content: none; }
-.lite-mode-pills::before,
-.lite-mode-pills > button { border-radius: calc(var(--spacing) * 2); }
-.lite-mode-pills > button:not(.text-white) { border-color: color-mix(in srgb, var(--color-white) 8%, transparent); }
 /* E-only floating frame: neutral downward depth, without ambient blue bloom.
    Keep scrolling inside the token body so the frame shadow is not clipped. */
 .lite-experiment-tabs > :last-child:has(.lite-experiment-earn) { overflow: visible; }
@@ -345,4 +460,96 @@
   box-shadow:
     0 calc(var(--spacing) * 2) calc(var(--spacing) * 4) calc(var(--spacing) * -2) rgb(0 0 0 / 45%),
     0 calc(var(--spacing) * 8) calc(var(--spacing) * 16) calc(var(--spacing) * -4) rgb(0 0 0 / 65%);
+}
+
+/* E lists: amount cells show the number only (the row already names the token), at the original size. */
+.lite-experiment .lite-amount-symbol { display: none; }
+/* APY (2nd column in every E list) is one step larger (16px); Liquidity / Total keep the original size. */
+@media (min-width: 768px) {
+  .lite-experiment tbody td:nth-child(2) { font-size: var(--text-base); line-height: calc(var(--spacing) * 6); }
+  .lite-experiment tbody td:nth-child(2) :is(span, p, div) { font-size: inherit; line-height: inherit; }
+}
+
+/* E Borrow popup: collateral picker as a small table (Asset · Max LTV · LT). */
+.venus-select-panel:has(.lite-collateral-options) { min-width: calc(var(--spacing) * 88); }
+.lite-collateral-head { display: grid; gap: calc(var(--spacing) * 2); }
+.lite-collateral-title { color: var(--color-white); font-size: var(--text-sm); font-weight: 600; }
+.lite-collateral-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--spacing) * 20) calc(var(--spacing) * 16);
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  width: 100%;
+}
+.lite-collateral-row > :not(:first-child) { text-align: right; font-weight: 400; font-variant-numeric: tabular-nums; }
+.lite-collateral-cols { color: var(--color-grey); font-size: var(--text-xs); }
+.lite-collateral-cols > span { display: inline-flex; align-items: center; justify-content: flex-end; gap: calc(var(--spacing) * 1); }
+.lite-collateral-cols > span:first-child { justify-content: flex-start; }
+/* keep the ✓ out of the grid so every row's columns line up */
+.lite-collateral-options [data-select-option] { position: relative; padding-right: calc(var(--spacing) * 9) !important; }
+.lite-collateral-options [data-select-option] > svg { position: absolute !important; right: calc(var(--spacing) * 3); margin: 0 !important; }
+/* Mobile: the menu opens as a sheet whose title bar is centred with 24px padding; line the
+   column labels up with the option rows (12px row padding, 36px reserved for the ✓). */
+.text-center:has(> .lite-collateral-head) { flex: 1 1 auto; min-width: 0; padding-inline: 0 !important; }
+.text-center > .lite-collateral-head {
+  width: calc(100% + calc(var(--spacing) * 6));
+  margin-left: calc(var(--spacing) * -3);
+  text-align: left;
+}
+.text-center > .lite-collateral-head .lite-collateral-cols { padding-right: calc(var(--spacing) * 3); font-size: var(--text-xs); }
+/* keep the sheet's close button on the title line, clear of the column labels */
+.venus-popup-header:has(.lite-collateral-head) > button { top: calc(var(--spacing) * 6); margin-top: 0; }
+
+/* E popups: input fields and the health bar use New's recessed "well" material
+   (surface/field/fill + track-border + popup/drop inner shadow), same as the New site. */
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field {
+  border-radius: var(--radius-lg);
+  border-color: rgb(255 255 255 / 8%);
+  background: rgb(0 0 0 / 22%);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%);
+  transition: border-color 140ms ease-out, box-shadow 140ms ease-out;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field:hover { border-color: rgb(255 255 255 / 12%); }
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field:focus-within {
+  border-color: var(--color-blue);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%), 0 0 0 2px rgb(17 153 250 / 18%);
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field[data-has-error] { border-color: var(--color-red); }
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field[data-disabled] { background: transparent; box-shadow: none; }
+
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-progress-rail {
+  background: rgb(0 0 0 / 22%) !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%), inset 0 2px 3px rgb(0 0 0 / 28%);
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-progress-fill {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 25%), transparent 65%);
+}
+
+/* light theme */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel .venus-text-field {
+  border-color: rgb(30 40 55 / 7%);
+  background: rgb(30 55 85 / 5%);
+  box-shadow: inset 0 2px 4px rgb(30 40 55 / 14%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel .venus-text-field:hover { border-color: rgb(30 40 55 / 10%); }
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel .venus-progress-rail {
+  background: rgb(30 55 85 / 5%) !important;
+  box-shadow: inset 0 0 0 1px rgb(30 40 55 / 7%), inset 0 2px 3px rgb(30 40 55 / 14%);
+}
+
+/* E popups: buttons sitting inside a field (collateral selector, MAX / SAFE MAX) share one
+   40px height so both keep the same 7px top/bottom and 8px side inset inside the 56px field,
+   and the selector's icon/label/chevron are centred on the button's midline. */
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']) {
+  height: calc(var(--spacing) * 10);
+  padding-block: 0;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] {
+  padding-inline: calc(var(--spacing) * 3);
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] > span,
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] > span > span {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
 }

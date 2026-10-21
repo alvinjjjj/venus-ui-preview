@@ -6,6 +6,7 @@ import lightIcon from '../ThemeSetting/dark.svg';
 import darkIcon from '../ThemeSetting/light.svg';
 import { useDemoTheme, useLiquidityLightPreview } from '../useLiquidityLightPreview';
 import { ChangeNotes } from './ChangeNotes';
+import { mountEHeaderMirror } from './eHeaderMirror';
 import { MotionControls } from './MotionControls';
 import './button-materials.css';
 import './controller.css';
@@ -69,8 +70,15 @@ export const GlassVersions = () => {
       document.documentElement.removeAttribute('data-glass-landing');
     };
   }, [version, styleVersion, isLandingRoute]);
+  // E keeps O's materials, but its header (except logo, Pro/Lite label and the Lite switch) and
+  // its Pro buttons / segmented controls mirror New's styles.
   useLayoutEffect(() => {
-    if (styleVersion !== 'v5') return;
+    if (version !== 'lite-experiment') return;
+    return mountEHeaderMirror();
+  }, [version]);
+  const isEHeaderLight = version === 'lite-experiment';
+  useLayoutEffect(() => {
+    if (styleVersion !== 'v5' && !isEHeaderLight) return;
     const updateLight = (event: PointerEvent) => {
       if (!(event.target instanceof Element)) return;
       const button = event.target.closest<HTMLElement>(
@@ -78,6 +86,8 @@ export const GlassVersions = () => {
       );
       if (
         !button ||
+        (isEHeaderLight &&
+          !!button.closest('.venus-mode-switch, .lite-markets, .venus-popup-panel')) ||
         button.matches(':disabled, [aria-disabled="true"]') ||
         button.closest('.account-preview')
       )
@@ -92,7 +102,7 @@ export const GlassVersions = () => {
       document.removeEventListener('pointermove', updateLight);
       document.removeEventListener('pointerdown', updateLight);
     };
-  }, [styleVersion]);
+  }, [styleVersion, isEHeaderLight]);
   return createPortal(
     <>
       <aside className="preview-controller" aria-label="Design preview" data-collapsed={collapsed}>

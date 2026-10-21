@@ -19,7 +19,7 @@ export interface DropdownProps {
   buttonClassName?: string;
   size?: 'small' | 'medium' | 'large';
   variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-  menuTitle?: string;
+  menuTitle?: React.ReactNode;
   menuPosition?: 'left' | 'right';
   matchTriggerWidth?: boolean;
   menuClassName?: string;

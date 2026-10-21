@@ -218,7 +218,7 @@ export const Dropdown = ({
         rootClassName="z-100001"
         noHorizontalPadding
         onBlur={onBlur}
-        title={menuTitle}
+        title={menuTitle as React.ComponentProps<typeof Modal>['title']}
         portalContainer={modalPortalContainer}
       >
         {optionsDom({ setIsDropdownOpen, optionClassName })}

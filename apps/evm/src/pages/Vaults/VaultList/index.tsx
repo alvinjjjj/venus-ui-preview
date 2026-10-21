@@ -1,11 +1,11 @@
 import { MultiSelect, TextField, type TextFieldProps, cn } from 'components';
+import 'components/PageStatHeader/page-title.css';
 import { VaultCard } from 'containers/VaultCard';
 import { useTranslation } from 'libs/translations';
 import { type FC, type HTMLAttributes, useState } from 'react';
 import type { Vault } from 'types';
 
 import { NoResults } from './NoResults';
-import bannerVault from './asset/banner-vault.png';
 import { useFilterOptions } from './hooks/useFilterOptions';
 
 const multiSelectClassName = 'sm:flex-1/3 sm:min-w-45 xl:flex-none';
@@ -53,16 +53,9 @@ export const VaultList: FC<VaultListProps> = ({ vaults, className, ...props }) =
   return (
     <div className="flex flex-col">
       <div className="relative pb-6">
-        <img
-          src={bannerVault}
-          alt={t('vault.overview.bannerVaultIllustration')}
-          className="pointer-events-none absolute right-6 -bottom-[3px] hidden h-38 xl:block 2xl:h-42"
-          loading="lazy"
-        />
-
         <div className="mb-3">
-          <h1 className="text-p1s sm:text-h6">{t('vault.header')}</h1>
-          <p className="text-1br">{t('vault.description')}</p>
+          <h1 className="venus-page-title text-p1s sm:text-h6">{t('vault.header')}</h1>
+          <p className="venus-page-subtitle">{t('vault.description')}</p>
         </div>
 
         <div className="flex flex-col xl:flex-row xl:items-center gap-3">

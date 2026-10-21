@@ -28,6 +28,7 @@ export function BorrowMarkets({
   loading,
   ready,
   experimental = false,
+  modeSwitch,
   selected,
   onSelect: setSelected,
 }: {
@@ -35,6 +36,7 @@ export function BorrowMarkets({
   loading: boolean;
   ready: boolean;
   experimental?: boolean;
+  modeSwitch?: React.ReactNode;
   selected?: string;
   onSelect: (address: string | undefined) => void;
 }) {
@@ -87,12 +89,20 @@ export function BorrowMarkets({
       label: field === 'borrow' ? 'Total Borrow' : 'Liquidity',
       selectOptionLabel: field === 'borrow' ? 'Total Borrow' : 'Liquidity',
       align: 'right' as const,
+      sortRows: (a: Asset, b: Asset, direction: 'asc' | 'desc') =>
+        (a[field === 'borrow' ? 'borrowBalanceCents' : 'liquidityCents'].comparedTo(
+          b[field === 'borrow' ? 'borrowBalanceCents' : 'liquidityCents'],
+        ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (asset: Asset) => (
         <div className="tabular-nums">
-          {formatTokensToReadableValue({
-            value: field === 'borrow' ? asset.borrowBalanceTokens : asset.cashTokens,
-            token: asset.vToken.underlyingToken,
-          })}
+          <span className="lite-amount">
+            {formatTokensToReadableValue({
+              value: field === 'borrow' ? asset.borrowBalanceTokens : asset.cashTokens,
+              token: asset.vToken.underlyingToken,
+              addSymbol: false,
+            })}
+          </span>
+          <span className="lite-amount-symbol"> {asset.vToken.underlyingToken.symbol}</span>
           <p className="text-light-grey">
             {formatCentsToReadableValue({
               value: field === 'borrow' ? asset.borrowBalanceCents : asset.liquidityCents,
@@ -117,7 +127,7 @@ export function BorrowMarkets({
           columns={columns}
           rowKeyExtractor={asset => asset.vToken.address}
           rowOnClick={(_, asset) => setSelected(asset.vToken.address)}
-          initialOrder={{ orderBy: columns[1], orderDirection: 'asc' }}
+          initialOrder={{ orderBy: columns[3], orderDirection: 'desc' }}
           tableLayout="auto"
           breakpoint="md"
           hideCardDelimiter
@@ -128,6 +138,8 @@ export function BorrowMarkets({
               : 'No borrowable assets found.'
           }
           header={
+            <div className={experimental ? 'lite-market-toolbar' : undefined}>
+            {modeSwitch}
             <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
                 aria-label="Search loan assets"
@@ -159,6 +171,7 @@ export function BorrowMarkets({
                   })),
                 ]}
               />
+            </div>
             </div>
           }
         />
