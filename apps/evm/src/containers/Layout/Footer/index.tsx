@@ -1,4 +1,5 @@
 import { GlassVersions } from 'demo/GlassVersions';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useGetToken } from 'libs/tokens';
 import { useTranslation } from 'libs/translations';
 import { useChainId } from 'libs/wallet';
@@ -35,6 +36,7 @@ interface LinkConfig {
 export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
   const { chainId } = useChainId();
   const { isLite, supportsModes } = useInterfaceMode();
+  const isExperiment = useGlassPreview(state => state.mode === 'lite-experiment');
   const { pathname } = useLocation();
   const isAbout = pathname.replace(/\/$/, '') === routes.aboutUs.path;
   const isLiteMarketDetail = useLayoutStore(state => state.isLiteMarketDetail);
@@ -94,6 +96,8 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       to: routes.termsOfUse.path,
     },
   ];
+
+  if (isExperiment && isLite && !isAbout) return <GlassVersions />;
 
   if (isLite || isProHub || isAbout) {
     return (

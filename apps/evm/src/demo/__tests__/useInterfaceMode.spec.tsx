@@ -10,7 +10,7 @@ vi.mock('../GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
 }));
 
-describe.each(['v1', 'v5'])('%s interface mode commits with navigation', previewMode => {
+describe.each(['v1', 'v5', 'lite-experiment'])('%s interface mode commits with navigation', previewMode => {
   beforeEach(() => {
     preview.mode = previewMode;
     wallet.accountAddress = '0x123';

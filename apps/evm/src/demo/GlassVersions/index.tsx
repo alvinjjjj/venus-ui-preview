@@ -23,6 +23,7 @@ import './v5-buttons.css';
 const versions: { id: GlassPreviewMode; label: string; description: string }[] = [
   { id: 'v1', label: 'O', description: 'Original' },
   { id: 'v5', label: 'New', description: 'New' },
+  { id: 'lite-experiment', label: 'E', description: 'Lite experiment' },
 ];
 
 export const GlassVersions = () => {
@@ -45,18 +46,17 @@ export const GlassVersions = () => {
   const landingVersion = landingDesignByMode[version];
   // O/New now enter the product; their marketing composition lives at About Us.
   // Keep Explorer's existing landing and its landing-specific materials intact.
-  const isLandingRoute =
-    version === 'v5'
-      ? location.pathname.replace(/\/$/, '') === '/about-us'
-      : location.pathname === '/';
+  const isLandingRoute = isExplorerMode(version)
+    ? location.pathname.replace(/\/$/, '') === '/about-us'
+    : location.pathname === '/';
   useLayoutEffect(() => {
     // V5 shares V4 materials, with a separate button shape override.
     document.documentElement.dataset.glassVersion = styleVersion === 'v5' ? 'v6' : styleVersion;
     document.documentElement.dataset.glassPreview = styleVersion;
     // New mirrors Explorer, so it carries Explorer's mode attribute for the shared CSS.
-    document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : version;
-    // E inherits all New-only styling; preserve the exact selection for scoped studies.
-    document.documentElement.dataset.glassChoice = version === 'explorer' ? 'v5' : version;
+    document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : styleVersion;
+    // Keep E's exact selection in glassStudy while inheriting O's materials.
+    document.documentElement.dataset.glassChoice = styleVersion;
     document.documentElement.dataset.glassStudy = version;
     document.documentElement.toggleAttribute('data-glass-landing', isLandingRoute);
     localStorage.setItem('venus-glass-version', version);
@@ -126,7 +126,15 @@ export const GlassVersions = () => {
                   aria-pressed={version === item.id}
                   title={item.description}
                   aria-label={item.description}
-                  onClick={() => setVersion(item.id)}
+                  onClick={() => {
+                    setVersion(item.id);
+                    if (item.id === 'lite-experiment') {
+                      navigate(
+                        { pathname: '/', search: location.search },
+                        { state: { interfaceMode: 'lite' } },
+                      );
+                    }
+                  }}
                   className={`preview-version preview-${item.id}`}
                 >
                   {item.label}

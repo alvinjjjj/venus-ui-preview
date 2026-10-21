@@ -37,7 +37,7 @@ export const FooterExplorer: React.FC<{ lite?: boolean; hideDividers?: boolean }
   hideDividers = false,
 }) => {
   const light = useLiquidityLightPreview();
-  const hasAboutUs = useGlassPreview(state => state.mode === 'v1' || state.mode === 'v5');
+  const hasAboutUs = useGlassPreview(state => state.mode !== 'explorer');
   const { i18n } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
   const copy = footerCopyByLanguage[language] ?? footerCopyByLanguage.en;

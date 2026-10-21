@@ -1,9 +1,8 @@
 import { create } from 'zustand';
 
-export type GlassPreviewMode = 'v1' | 'v5' | 'explorer';
+export type GlassPreviewMode = 'v1' | 'v5' | 'explorer' | 'lite-experiment';
 
-// E inherits the current New design and demo behaviour. Individual studies use
-// data-glass-study, so the baseline stays shared as New continues to evolve.
+// E inherits Original materials; its Lite layout remains independently scoped.
 export const isNewDesignMode = (mode: GlassPreviewMode) => mode === 'v5' || mode === 'explorer';
 export const isExplorerMode = isNewDesignMode;
 
@@ -11,6 +10,7 @@ export const previewDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v1: 'v1',
   v5: 'v5',
   explorer: 'v5',
+  'lite-experiment': 'v1',
 };
 
 // New and Explorer use their landing compositions while Original keeps the existing page.
@@ -18,6 +18,7 @@ export const landingDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v1: 'v1',
   v5: 'v5',
   explorer: 'v5',
+  'lite-experiment': 'v1',
 };
 
 const getInitialMode = (): GlassPreviewMode => {
@@ -25,7 +26,7 @@ const getInitialMode = (): GlassPreviewMode => {
   // O2 is now the approved Original design; keep previously saved selections on O.
   if (saved === 'o2') return 'v1';
   if (saved === 'explorer') return 'v5';
-  if (saved === 'v1' || saved === 'v5') return saved;
+  if (saved === 'v1' || saved === 'v5' || saved === 'lite-experiment') return saved;
   // Previously selected V3/V4 now open in New instead of a removed preview mode.
   return saved === 'v3' || saved === 'v6' ? 'v5' : 'v1';
 };

@@ -25,6 +25,11 @@ import {
 } from 'utilities';
 
 import { NULL_ADDRESS } from 'constants/address';
+import { BalanceUpdates } from 'components';
+import { AccountPoolHealth } from 'containers/AccountPoolHealth';
+import { AccountPoolDailyEarnings } from 'containers/AccountPoolDailyEarnings';
+import { shouldShowAccountHealth } from 'utilities';
+import { EarnDetails } from '../EarnDetails';
 import { HEALTH_FACTOR_MODERATE_THRESHOLD } from 'constants/healthFactor';
 import { ConnectWallet } from 'containers/ConnectWallet';
 import useDebounceValue from 'hooks/useDebounceValue';
@@ -35,10 +40,13 @@ import { ApyBreakdown } from '../ApyBreakdown';
 import { OperationDetails } from '../OperationDetails';
 import { calculateAmountDollars } from '../calculateAmountDollars';
 import SubmitSection from './SubmitSection';
+import { InlineSubmit } from '../InlineSubmit';
 import TEST_IDS from './testIds';
 import useForm, { type FormValues, type UseFormInput } from './useForm';
 
 export interface WithdrawFormUiProps {
+  collateralSelector?: React.ReactElement;
+  compact?: boolean;
   isUserConnected: boolean;
   asset: Asset;
   pool: Pool;
@@ -55,6 +63,8 @@ export interface WithdrawFormUiProps {
 }
 
 export const WithdrawFormUi: React.FC<WithdrawFormUiProps> = ({
+  compact = false,
+  collateralSelector,
   isUserConnected,
   onSubmitSuccess,
   asset,
@@ -222,9 +232,50 @@ export const WithdrawFormUi: React.FC<WithdrawFormUiProps> = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={compact ? 'lite-withdraw-grid' : undefined}>
+      {compact && (
+        <EarnDetails
+          yieldContent={
+            <>
+              <ApyBreakdown
+                renderType="accordion"
+                pool={pool}
+                simulatedPool={simulatedPool}
+                balanceMutations={balanceMutations}
+              />
+              {isUserConnected && (
+                <AccountPoolDailyEarnings pool={pool} simulatedPool={simulatedPool} />
+              )}
+            </>
+          }
+          position={
+            isUserConnected ? (
+              <BalanceUpdates pool={pool} balanceMutations={balanceMutations} />
+            ) : (
+              <p>Connect your wallet to see your position.</p>
+            )
+          }
+          risk={
+            <p>
+              Withdrawing collateral can reduce your account health. Review the impact before
+              confirming.
+            </p>
+          }
+          health={active =>
+            isUserConnected && shouldShowAccountHealth({ pool, simulatedPool }) ? (
+              <AccountPoolHealth
+                pool={pool}
+                simulatedPool={simulatedPool}
+                compact={active !== 'Risk'}
+              />
+            ) : undefined
+          }
+        />
+      )}
       <div className="space-y-4">
         <TokenTextField
+          leftAdornment={collateralSelector}
+          displayTokenIcon={!collateralSelector}
           data-testid={TEST_IDS.valueInput}
           name="amountTokens"
           token={asset.vToken.underlyingToken}
@@ -259,7 +310,7 @@ export const WithdrawFormUi: React.FC<WithdrawFormUiProps> = ({
           }
         />
 
-        {!isUserConnected && (
+        {!isUserConnected && !compact && (
           <ApyBreakdown
             pool={pool}
             simulatedPool={simulatedPool}
@@ -268,80 +319,93 @@ export const WithdrawFormUi: React.FC<WithdrawFormUiProps> = ({
         )}
       </div>
 
-      <ConnectWallet
-        className={cn('space-y-4', isUserConnected ? 'mt-2' : 'mt-6')}
-        analyticVariant="withdraw_form"
-      >
-        <div className="space-y-4">
-          <LabeledInlineContent
-            label={t('marketForm.availableAmount')}
-            data-testid={TEST_IDS.availableAmount}
-          >
-            {readableWithdrawableAmountTokens}
-          </LabeledInlineContent>
+      {!isUserConnected && (
+        <InlineSubmit>
+          <ConnectWallet analyticVariant="withdraw_form" />
+        </InlineSubmit>
+      )}
+      {isUserConnected && (
+        <ConnectWallet
+          className={cn('space-y-4', isUserConnected ? 'mt-2' : 'mt-6')}
+          analyticVariant="withdraw_form"
+        >
+          <div className="space-y-4">
+            <LabeledInlineContent
+              label={t('marketForm.availableAmount')}
+              data-testid={TEST_IDS.availableAmount}
+            >
+              {readableWithdrawableAmountTokens}
+            </LabeledInlineContent>
 
-          <Delimiter />
+            <Delimiter />
 
-          {canUnwrapToNativeToken && (
-            <>
-              <LabeledInlineContent
-                data-testid={TEST_IDS.receiveNativeToken}
-                label={t('marketForm.receiveNativeToken.label', {
-                  tokenSymbol: nativeToken.symbol,
-                })}
-                tooltip={t('marketForm.receiveNativeToken.tooltip', {
-                  wrappedNativeTokenSymbol: asset.vToken.underlyingToken.symbol,
-                  nativeTokenSymbol: nativeToken.symbol,
-                })}
-              >
-                <Toggle
-                  onChange={handleToggleReceiveNativeToken}
-                  value={formValues.receiveNativeToken}
-                />
-              </LabeledInlineContent>
+            {canUnwrapToNativeToken && (
+              <>
+                <LabeledInlineContent
+                  data-testid={TEST_IDS.receiveNativeToken}
+                  label={t('marketForm.receiveNativeToken.label', {
+                    tokenSymbol: nativeToken.symbol,
+                  })}
+                  tooltip={t('marketForm.receiveNativeToken.tooltip', {
+                    wrappedNativeTokenSymbol: asset.vToken.underlyingToken.symbol,
+                    nativeTokenSymbol: nativeToken.symbol,
+                  })}
+                >
+                  <Toggle
+                    onChange={handleToggleReceiveNativeToken}
+                    value={formValues.receiveNativeToken}
+                  />
+                </LabeledInlineContent>
 
-              <Delimiter />
-            </>
-          )}
+                <Delimiter />
+              </>
+            )}
 
-          <OperationDetails
-            action="withdraw"
-            pool={pool}
-            simulatedPool={simulatedPool}
-            balanceMutations={balanceMutations}
-          />
+            {!compact && (
+              <OperationDetails
+                action="withdraw"
+                pool={pool}
+                simulatedPool={simulatedPool}
+                balanceMutations={balanceMutations}
+              />
+            )}
 
-          {shouldAskUserRiskAcknowledgement && (
-            <AcknowledgementToggle
-              label={t('marketForm.acknowledgements.riskyOperation.label')}
-              tooltip={t('marketForm.acknowledgements.riskyOperation.tooltip')}
-              value={formValues.acknowledgeRisk}
-              onChange={(_, checked) => handleToggleAcknowledgeRisk(checked)}
+            {shouldAskUserRiskAcknowledgement && (
+              <AcknowledgementToggle
+                label={t('marketForm.acknowledgements.riskyOperation.label')}
+                tooltip={t('marketForm.acknowledgements.riskyOperation.tooltip')}
+                value={formValues.acknowledgeRisk}
+                onChange={(_, checked) => handleToggleAcknowledgeRisk(checked)}
+              />
+            )}
+          </div>
+
+          <InlineSubmit>
+            <SubmitSection
+              isFormSubmitting={isSubmitting}
+              isFormValid={isFormValid}
+              formError={formError}
+              isDelegateApproved={isDelegateApproved}
+              isDelegateApprovedLoading={isDelegateApprovedLoading}
+              approveDelegateAction={approveDelegateAction}
+              isApproveDelegateLoading={isApproveDelegateLoading}
             />
-          )}
-        </div>
-
-        <SubmitSection
-          isFormSubmitting={isSubmitting}
-          isFormValid={isFormValid}
-          formError={formError}
-          isDelegateApproved={isDelegateApproved}
-          isDelegateApprovedLoading={isDelegateApprovedLoading}
-          approveDelegateAction={approveDelegateAction}
-          isApproveDelegateLoading={isApproveDelegateLoading}
-        />
-      </ConnectWallet>
+          </InlineSubmit>
+        </ConnectWallet>
+      )}
     </form>
   );
 };
 
 export interface WithdrawFormProps {
+  collateralSelector?: React.ReactElement;
+  compact?: boolean;
   asset: Asset;
   pool: Pool;
   onSubmitSuccess?: () => void;
 }
 
-const WithdrawForm: React.FC<WithdrawFormProps> = ({ asset, pool, onSubmitSuccess }) => {
+const WithdrawForm: React.FC<WithdrawFormProps> = ({ asset, pool, onSubmitSuccess, compact, collateralSelector }) => {
   const isWrapUnwrapNativeTokenEnabled = useIsFeatureEnabled({ name: 'wrapUnwrapNativeToken' });
   const { accountAddress } = useAccountAddress();
 
@@ -427,6 +491,8 @@ const WithdrawForm: React.FC<WithdrawFormProps> = ({ asset, pool, onSubmitSucces
 
   return (
     <WithdrawFormUi
+      collateralSelector={collateralSelector}
+      compact={compact}
       isUserConnected={!!accountAddress}
       isWrapUnwrapNativeTokenEnabled={isWrapUnwrapNativeTokenEnabled}
       onSubmitSuccess={onSubmitSuccess}

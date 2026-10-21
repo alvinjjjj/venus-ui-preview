@@ -12,6 +12,7 @@ import ScrollToTop from './ScrollToTop';
 import { useStore } from './store';
 import { useInterfaceMode, useInterfaceModeStore } from 'demo/useInterfaceMode';
 import { GhostBackground } from 'pages/LiteMarkets/GhostBackground';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 
 // Pages here render their own Wrapper so a full-bleed promo banner can sit above it.
 const NO_WRAPPER_PATHNAMES = [
@@ -28,6 +29,8 @@ export const Layout: React.FC = () => {
 
   const { pathname } = useLocation();
   const { isLite, supportsModes, mode } = useInterfaceMode();
+  const isExperiment = useGlassPreview(state => state.mode === 'lite-experiment');
+  const fixedLite = isExperiment && isLite && (pathname === '/' || pathname === '');
   // Preserve the committed selection for ordinary links without mode state.
   // Layout effects run before paint, after the destination has committed.
   useLayoutEffect(() => {
@@ -95,11 +98,12 @@ export const Layout: React.FC = () => {
             'flex flex-col grow overflow-x-hidden',
             supportsModes && 'bg-background-active',
             showStardust && 'original-stardust-layout',
+            fixedLite && 'lite-experiment-layout',
           )}
           id={PAGE_CONTAINER_ID}
           onScroll={handleScroll}
         >
-          {showStardust && <GhostBackground shared />}
+          {showStardust && <GhostBackground shared layeredLines={fixedLite} />}
           <Header />
 
           <div className={cn('relative flex grow flex-col', isLite && 'shrink-0')}>

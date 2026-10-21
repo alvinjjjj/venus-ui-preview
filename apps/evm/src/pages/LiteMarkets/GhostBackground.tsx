@@ -34,6 +34,7 @@ const originalStars = {
   twinkle: 0.8,
   drift: 1,
 };
+const lineOnlyStars = { ...originalStars, stars: 0 };
 
 // Deterministic, line-free still sky for compact/reduced-motion rendering.
 const stillStars = Array.from({ length: originalStars.stars }, (_, index) => {
@@ -50,8 +51,8 @@ const stillStars = Array.from({ length: originalStars.stars }, (_, index) => {
   };
 });
 
-export function GhostBackground({ shared = false }: { shared?: boolean }) {
-  const original = useGlassPreview(state => state.mode === 'v1' || state.mode === 'v5');
+export function GhostBackground({ shared = false, layeredLines = false }: { shared?: boolean; layeredLines?: boolean }) {
+  const original = useGlassPreview(state => state.mode !== 'explorer');
   const reducedMotion = useReducedMotion();
   const compact = useIsMdDown();
   const still = original ? (
@@ -86,6 +87,13 @@ export function GhostBackground({ shared = false }: { shared?: boolean }) {
       }`}
       aria-hidden="true"
     >
+      {layeredLines && !reducedMotion && !compact && (
+        <div className="lite-ghost__hero-field">
+          <Suspense fallback={null}>
+            <FlowField settings={flow} starTuning={lineOnlyStars} variant="depth-pulse" interactive={false} />
+          </Suspense>
+        </div>
+      )}
       {(!original || reducedMotion || compact) && (
         <div className="lite-ghost__still-layer">{still}</div>
       )}

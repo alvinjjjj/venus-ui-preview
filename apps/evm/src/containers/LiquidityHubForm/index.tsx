@@ -4,8 +4,12 @@ import { useDemo } from 'demo/state';
 import type { TabNavType } from 'hooks/useTabs';
 import { useState } from 'react';
 import type { VhToken } from 'types';
+import { EarnDetails } from 'containers/MarketForm/EarnDetails';
+import { InlineSubmit } from 'containers/MarketForm/InlineSubmit';
 
 export interface LiquidityHubFormProps {
+  compactEarn?: boolean;
+  inlineHeader?: boolean;
   vhToken: VhToken;
   initialActiveTabId?: string;
   onSubmitSuccess?: () => void;
@@ -16,6 +20,8 @@ export const LiquidityHubForm = ({
   vhToken,
   initialActiveTabId,
   navType,
+  compactEarn = false,
+  inlineHeader = false,
 }: LiquidityHubFormProps) => {
   const { loggedIn, setLoginOpen } = useDemo();
   const [amount, setAmount] = useState('');
@@ -25,7 +31,15 @@ export const LiquidityHubForm = ({
     <LiquidityHubAccessor vhToken={vhToken}>
       {({ liquidityHub }) => (
         <Tabs
-          variant="secondary"
+          variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
+          className={
+            compactEarn
+              ? 'lite-compact-market-tabs'
+              : inlineHeader
+                ? 'lite-single-market-tabs'
+                : undefined
+          }
+          headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
           initialActiveTabId={initialActiveTabId}
           navType={navType}
           tabs={['supply', 'withdraw'].map(action => {
@@ -37,7 +51,9 @@ export const LiquidityHubForm = ({
               title: action === 'supply' ? 'Supply' : 'Withdraw',
               content: (
                 <form
-                  className="space-y-4"
+                  className={
+                    compactEarn ? 'lite-hub-grid' : inlineHeader ? 'lite-simple-hub' : 'space-y-4'
+                  }
                   onSubmit={event => {
                     event.preventDefault();
                     if (!loggedIn) {
@@ -74,37 +90,70 @@ export const LiquidityHubForm = ({
                   {loggedIn && (
                     <>
                       <p className="text-light-grey text-b1r">
-                        {action === 'supply' ? 'Wallet balance' : 'Supplied balance'}:{' '}
-                        {balance.toLocaleString()} {vhToken.underlyingToken.symbol}
+                        <span>{action === 'supply' ? 'Wallet balance' : 'Supplied balance'}</span>{' '}
+                        <span>
+                          {balance.toLocaleString()} {vhToken.underlyingToken.symbol}
+                        </span>
                       </p>
-                      <Delimiter />
+                      {!inlineHeader && <Delimiter />}
                     </>
                   )}
-                  <ApyBreakdown
-                    items={[
-                      {
-                        type: 'supply',
-                        token: vhToken.underlyingToken,
-                        baseApyPercentage: liquidityHub.supplyApyPercentage,
-                        tokenDistributions: liquidityHub.supplyTokenDistributions,
-                      },
-                    ]}
-                    renderType="block"
-                  />
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    data-liquidity-hub-submit="true"
-                    data-liquidity-hub-amount-valid={loggedIn && valid}
-                    disabled={loggedIn && !valid}
-                  >
-                    {loggedIn ? (action === 'supply' ? 'Supply' : 'Withdraw') : 'Connect Wallet'}
-                  </Button>
-                  {message && (
-                    <p className="text-light-grey text-b1r" role="status">
-                      {message}
-                    </p>
+                  {compactEarn ? (
+                    <EarnDetails
+                      yieldContent={
+                        <ApyBreakdown
+                          items={[
+                            {
+                              type: 'supply',
+                              token: vhToken.underlyingToken,
+                              baseApyPercentage: liquidityHub.supplyApyPercentage,
+                              tokenDistributions: liquidityHub.supplyTokenDistributions,
+                            },
+                          ]}
+                          renderType="accordion"
+                        />
+                      }
+                      position={
+                        loggedIn ? (
+                          <p>
+                            Supplied balance: {supplied.toLocaleString()}{' '}
+                            {vhToken.underlyingToken.symbol}
+                          </p>
+                        ) : (
+                          <p>Connect your wallet to see your position.</p>
+                        )
+                      }
+                      risk={<p>This is a preview. No transaction will be sent.</p>}
+                    />
+                  ) : (
+                    <ApyBreakdown
+                      items={[
+                        {
+                          type: 'supply',
+                          token: vhToken.underlyingToken,
+                          baseApyPercentage: liquidityHub.supplyApyPercentage,
+                          tokenDistributions: liquidityHub.supplyTokenDistributions,
+                        },
+                      ]}
+                      renderType={inlineHeader ? 'accordion' : 'block'}
+                    />
                   )}
+                  <InlineSubmit>
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      data-liquidity-hub-submit="true"
+                      data-liquidity-hub-amount-valid={loggedIn && valid}
+                      disabled={loggedIn && !valid}
+                    >
+                      {loggedIn ? (action === 'supply' ? 'Supply' : 'Withdraw') : 'Connect Wallet'}
+                    </Button>
+                    {message && (
+                      <p className="text-light-grey text-b1r" role="status">
+                        {message}
+                      </p>
+                    )}
+                  </InlineSubmit>
                 </form>
               ),
             };

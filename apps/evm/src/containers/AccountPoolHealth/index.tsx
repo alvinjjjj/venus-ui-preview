@@ -8,12 +8,14 @@ export interface AccountPoolHealthProps {
   pool: Pool;
   simulatedPool?: Pool;
   className?: string;
+  compact?: boolean;
 }
 
 export const AccountPoolHealth: React.FC<AccountPoolHealthProps> = ({
   pool,
   simulatedPool,
   className,
+  compact = false,
 }) => {
   const { t } = useTranslation();
 
@@ -21,13 +23,15 @@ export const AccountPoolHealth: React.FC<AccountPoolHealthProps> = ({
 
   return (
     <div className={cn('space-y-4', className)}>
-      <AccountHealthBar
-        borrowBalanceCents={refPool.userBorrowBalanceCents?.toNumber()}
-        borrowBalanceProtectedCents={refPool.userBorrowBalanceProtectedCents?.toNumber()}
-        borrowLimitCents={refPool.userBorrowLimitCents?.toNumber()}
-        borrowLimitProtectedCents={refPool.userBorrowLimitProtectedCents?.toNumber()}
-        liquidationThresholdCents={refPool.userLiquidationThresholdCents?.toNumber()}
-      />
+      {!compact && (
+        <AccountHealthBar
+          borrowBalanceCents={refPool.userBorrowBalanceCents?.toNumber()}
+          borrowBalanceProtectedCents={refPool.userBorrowBalanceProtectedCents?.toNumber()}
+          borrowLimitCents={refPool.userBorrowLimitCents?.toNumber()}
+          borrowLimitProtectedCents={refPool.userBorrowLimitProtectedCents?.toNumber()}
+          liquidationThresholdCents={refPool.userLiquidationThresholdCents?.toNumber()}
+        />
+      )}
 
       <LabeledInlineContent
         label={t('accountHealth.healthFactor.label')}

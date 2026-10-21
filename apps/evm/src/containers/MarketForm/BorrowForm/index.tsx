@@ -27,6 +27,7 @@ import TEST_IDS from './testIds';
 import useForm, { type FormValues, type UseFormInput } from './useForm';
 
 export interface BorrowFormProps {
+  penalty?: React.ReactNode;
   asset: Asset;
   pool: Pool;
   onSubmitSuccess?: () => void;
@@ -38,6 +39,7 @@ const BorrowForm: React.FC<BorrowFormProps> = ({
   pool,
   onSubmitSuccess,
   hideEModeBanner = false,
+  penalty,
 }) => {
   const { t } = useTranslation();
   const { nativeToken } = useChain();
@@ -369,6 +371,7 @@ const BorrowForm: React.FC<BorrowFormProps> = ({
         )}
 
         <Footer
+          penalty={penalty}
           analyticVariant="borrow_form"
           balanceMutations={balanceMutations}
           pool={pool}

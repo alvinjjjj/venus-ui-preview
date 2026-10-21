@@ -13,9 +13,14 @@ import {
   Tooltip,
   TokenIconWithSymbol,
   TokenIcon,
+  MultiSelect,
   Wrapper,
 } from 'components';
 import { MarketFormModal } from 'containers/MarketFormModal';
+import { MarketForm } from 'containers/MarketForm';
+import { LiquidityHubForm } from 'containers/LiquidityHubForm';
+import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
+import { useUserChainSettings } from 'hooks/useUserChainSettings';
 import { LiquidityHubFormModal } from 'containers/LiquidityHubFormModal';
 import { PrimeBadge } from 'components/Apy/PrimeBadge';
 import { PrimeApy } from 'components/Apy/PrimeBadge/PrimeApy';
@@ -33,6 +38,9 @@ import { SafetyExplorer } from '../Landing/SafetyExplorer';
 import { CommunityExplorer } from '../Landing/CommunityExplorer';
 import './entrance.css';
 import './trust-sections.css';
+import './experiment.css';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { formatEarnApyRange, matchesEarnCategories } from './experiment';
 
 function MarketApy({ market }: { market: LiteMarket }) {
   if (market.asset) return <AssetApy asset={market.asset} type="supply" />;
@@ -116,17 +124,23 @@ function BestMarketApy({ row }: { row: LiteAsset }) {
   );
 }
 
-function AssetSources({ row, onBack }: { row: LiteAsset; onBack: () => void }) {
+function AssetSources({
+  row,
+  onBack,
+  inline = false,
+  framed = false,
+}: { row: LiteAsset; onBack: () => void; inline?: boolean; framed?: boolean }) {
   const { corePoolComptrollerContractAddress } = useChain();
+  const [userChainSettings] = useUserChainSettings();
   const [openedMarket, setOpenedMarket] = useState<LiteMarket>();
   useEffect(() => {
-    if (!openedMarket) return;
+    if (!openedMarket || inline) return;
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setOpenedMarket(undefined);
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [openedMarket]);
+  }, [openedMarket, inline]);
   const columns: TableColumn<LiteMarket>[] = [
     {
       key: 'yield',
@@ -136,7 +150,7 @@ function AssetSources({ row, onBack }: { row: LiteAsset; onBack: () => void }) {
         <button
           type="button"
           onClick={() => setOpenedMarket(market)}
-          aria-haspopup="dialog"
+          aria-haspopup={inline ? undefined : 'dialog'}
           className="font-normal text-white hover:text-blue text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
         >
           {market.name}
@@ -168,9 +182,64 @@ function AssetSources({ row, onBack }: { row: LiteAsset; onBack: () => void }) {
     })),
   ];
 
+  if (inline && openedMarket) {
+    return (
+      <section
+        className="lite-inline-market"
+        aria-label={`${row.token.symbol} ${openedMarket.name} form`}
+      >
+        <nav aria-label="Earn navigation" className="lite-inline-market-path">
+          <button type="button" onClick={onBack}>
+            Earn
+          </button>
+          <span aria-hidden="true">/</span>
+          <button
+            type="button"
+            onClick={() => setOpenedMarket(undefined)}
+            className="inline-flex items-center gap-2"
+          >
+            <TokenIcon token={row.token} size="md" className="size-4" />
+            {row.token.symbol}
+          </button>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{openedMarket.name}</span>
+        </nav>
+        <div className="lite-inline-market-body" key={openedMarket.id}>
+          <div className="lite-inline-market-form">
+            {openedMarket.asset ? (
+              openedMarket.asset.isGated && !userChainSettings.doNotShowGatedAssetModal ? (
+                <GatedAssetAcknowledgementModal
+                  inline
+                  onReject={() => setOpenedMarket(undefined)}
+                />
+              ) : (
+                <MarketForm
+                  inlineHeader
+                  vToken={openedMarket.asset.vToken}
+                  poolComptrollerAddress={corePoolComptrollerContractAddress}
+                  initialActiveTabId="supply"
+                  earnOnly
+                  onSubmitSuccess={() => setOpenedMarket(undefined)}
+                />
+              )
+            ) : openedMarket.hub ? (
+              <LiquidityHubForm
+                inlineHeader
+                vhToken={openedMarket.hub.vhToken}
+                initialActiveTabId="supply"
+                onSubmitSuccess={() => setOpenedMarket(undefined)}
+              />
+            ) : null}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <>
       <Table
+        className={inline || framed ? 'lite-inline-sources' : undefined}
         data={row.markets}
         columns={columns}
         rowKeyExtractor={market => market.id}
@@ -221,6 +290,8 @@ function AssetSources({ row, onBack }: { row: LiteAsset; onBack: () => void }) {
 }
 
 export default function LiteMarkets() {
+  const experimental = useGlassPreview(state => state.mode === 'lite-experiment');
+  const [categories, setCategories] = useState<string[]>([]);
   const { corePoolComptrollerContractAddress } = useChain();
   const { accountAddress } = useAccountAddress();
   const poolQuery = useGetPool({
@@ -243,9 +314,21 @@ export default function LiteMarkets() {
     hubsQuery.data?.liquidityHubs ?? [],
     corePoolComptrollerContractAddress,
   );
+  const categoryOptions = [
+    ...new Map(
+      (poolQuery.data?.pool.assets ?? []).flatMap(asset =>
+        asset.marketCategory ? [[asset.marketCategory.tag, asset.marketCategory] as const] : [],
+      ),
+    ).values(),
+  ]
+    .sort((a, b) => a.order - b.order)
+    .map(item => ({ value: item.tag, label: item.label }));
+  if (!categoryOptions.some(item => item.value === 'others'))
+    categoryOptions.push({ value: 'others', label: 'Others' });
   const active = rows.find(row => row.key === selected);
   const filtered = rows.filter(
     row =>
+      (!experimental || matchesEarnCategories(row, categories)) &&
       isVisibleLiteAsset(row, poolQuery.data?.pool.eModeGroups ?? []) &&
       row.token.symbol.toLowerCase().includes(search.trim().toLowerCase()),
   );
@@ -272,7 +355,17 @@ export default function LiteMarkets() {
       label: 'APY',
       selectOptionLabel: 'APY',
       align: 'right',
-      renderCell: row => <BestMarketApy row={row} />,
+      renderCell: row =>
+        experimental ? (
+          <span
+            className="tabular-nums"
+            title="Current APY across the selected markets; excludes conditional Prime simulations."
+          >
+            {formatEarnApyRange(row)}
+          </span>
+        ) : (
+          <BestMarketApy row={row} />
+        ),
       sortRows: (a, b, direction) =>
         (BigNumber.maximum(...a.markets.map(m => m.apy)).comparedTo(
           BigNumber.maximum(...b.markets.map(m => m.apy)),
@@ -296,11 +389,11 @@ export default function LiteMarkets() {
 
   return (
     <Page>
-      <div className="lite-markets">
+      <div className={`lite-markets${experimental ? ' lite-experiment' : ''}`}>
         <GhostBackground />
         <Wrapper className="lite-market-container w-full py-10 sm:py-16">
           <div className="flex flex-col gap-10 sm:gap-12">
-            <div className="lite-enter flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="lite-market-hero lite-enter flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
               <div className="lite-market-heading">
                 <div>
                   <h1 className="venus-interface-mode-label lite-market-title font-bold">
@@ -311,10 +404,13 @@ export default function LiteMarkets() {
                   Simple yet powerful lending and borrowing for any DeFi yield strategy.
                 </p>
               </div>
-              <MarketTotals />
+              {!experimental && <MarketTotals />}
             </div>
             <section aria-label="Earn markets" className="lite-enter lite-enter--markets space-y-6">
               <Tabs
+                className={experimental ? `lite-experiment-tabs${marketTab === 1 ? ' lite-borrow-selected' : ''}` : undefined}
+                headerClassName={experimental ? 'lite-mode-pills' : undefined}
+                buttonClassName={experimental ? 'text-xs sm:text-sm' : undefined}
                 activeOnlySemibold
                 variant="tertiary"
                 initialActiveTabId="earn"
@@ -326,38 +422,69 @@ export default function LiteMarkets() {
                     content: (
                       <>
                         {active ? (
-                          <AssetSources row={active} onBack={() => setSelected(undefined)} />
+                          <AssetSources
+                            row={active}
+                            framed={experimental}
+                            onBack={() => setSelected(undefined)}
+                          />
                         ) : (
-                          <>
-                            <Table
-                              data={ready ? filtered : []}
-                              columns={columns}
-                              rowKeyExtractor={row => row.key}
-                              rowOnClick={(_, row) => setSelected(row.key)}
-                              initialOrder={{ orderBy: columns[1], orderDirection: 'desc' }}
-                              isFetching={loading}
-                              tableLayout="auto"
-                              breakpoint="md"
-                              hideCardDelimiter
-                              placeholder={
-                                !ready
-                                  ? 'Market data is unavailable. Please refresh to try again.'
-                                  : 'No assets found. Try another symbol.'
+                          <div className={experimental ? 'lite-experiment-earn' : undefined}>
+                            <div
+                              className={experimental ? 'lite-experiment-scroll' : undefined}
+                              role={experimental ? 'region' : undefined}
+                              aria-label={
+                                experimental ? 'Earn token list, scroll for more assets' : undefined
                               }
-                              header={
-                                <TextField
-                                  aria-label="Search assets"
-                                  placeholder="Search asset"
-                                  size="sm"
-                                  inputContainerClassName="venus-market-search-surface"
-                                  leftIconSrc="magnifier"
-                                  value={search}
-                                  onChange={event => setSearch(event.target.value)}
-                                  className="sm:max-w-75"
-                                />
-                              }
-                            />
-                          </>
+                              tabIndex={experimental ? 0 : undefined}
+                            >
+                              <Table
+                                data={ready ? filtered : []}
+                                columns={columns}
+                                rowKeyExtractor={row => row.key}
+                                rowOnClick={(_, row) => setSelected(row.key)}
+                                initialOrder={{ orderBy: columns[1], orderDirection: 'desc' }}
+                                isFetching={loading}
+                                tableLayout="auto"
+                                breakpoint="md"
+                                hideCardDelimiter
+                                placeholder={
+                                  !ready
+                                    ? 'Market data is unavailable. Please refresh to try again.'
+                                    : 'No assets found. Try another symbol.'
+                                }
+                                header={
+                                  <div
+                                    className={
+                                      experimental ? 'lite-experiment-controls' : undefined
+                                    }
+                                  >
+                                    <TextField
+                                      aria-label="Search assets"
+                                      placeholder="Search asset"
+                                      size="sm"
+                                      inputContainerClassName="venus-market-search-surface"
+                                      leftIconSrc="magnifier"
+                                      value={search}
+                                      onChange={event => setSearch(event.target.value)}
+                                      className="sm:max-w-75"
+                                    />
+                                    {experimental && (
+                                      <MultiSelect
+                                        options={categoryOptions}
+                                        value={categories}
+                                        onChange={setCategories}
+                                        placeholder="All Categories"
+                                        title="Category"
+                                        resetLabel="Reset"
+                                        renderCount={count => `${count} categories`}
+                                        className="sm:w-52 shrink-0"
+                                      />
+                                    )}
+                                  </div>
+                                }
+                              />
+                            </div>
+                          </div>
                         )}
                       </>
                     ),
@@ -367,6 +494,7 @@ export default function LiteMarkets() {
                     title: 'Borrow',
                     content: (
                       <BorrowMarkets
+                        experimental={experimental}
                         selected={selectedBorrow}
                         onSelect={setSelectedBorrow}
                         rows={rows.filter(row =>
@@ -380,9 +508,10 @@ export default function LiteMarkets() {
                 ]}
               />
             </section>
+            {experimental && <div className="lite-experiment-bottom-totals"><MarketTotals /></div>}
           </div>
         </Wrapper>
-        {!isMarketDetail && (
+        {!experimental && !isMarketDetail && (
           <div className="lite-trust-sections">
             <SafetyExplorer />
             <CommunityExplorer showJoinBanner={false} />

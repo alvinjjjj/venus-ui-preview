@@ -9,6 +9,7 @@ import type { Asset } from 'types';
 import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
 import type { LiteAsset } from './data';
 import type { BorrowSource } from './BorrowSources';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 
 export function BorrowSourceModal({
   asset,
@@ -22,6 +23,7 @@ export function BorrowSourceModal({
   onClose: () => void;
 }) {
   const { corePoolComptrollerContractAddress } = useChain();
+  const experimental = useGlassPreview(state => state.mode === 'lite-experiment');
   const [settings] = useUserChainSettings();
   const isPreview = source.apy !== undefined;
   const token = asset.vToken.underlyingToken;
@@ -32,6 +34,24 @@ export function BorrowSourceModal({
   );
   const [selectedCollateral, setSelectedCollateral] = useState(collateralAssets[0]?.vToken.address);
   const collateral = collateralAssets.find(item => item.vToken.address === selectedCollateral);
+  const collateralSelector = (
+    <Select
+      aria-label="Collateral asset"
+      className="w-36 shrink-0"
+      value={selectedCollateral ?? ''}
+      onChange={value => setSelectedCollateral(String(value) as typeof selectedCollateral)}
+      options={collateralAssets.map(item => ({
+        value: item.vToken.address,
+        label: <span className="inline-flex items-center gap-2"><TokenIcon token={item.vToken.underlyingToken} size="md" />{item.vToken.underlyingToken.symbol}</span>,
+      }))}
+    />
+  );
+  const penalty = (
+    <div className="flex items-center justify-between gap-4 text-sm">
+      <span className="text-light-grey">Liquidation penalty{collateral ? ` (${collateral.vToken.underlyingToken.symbol})` : ''}</span>
+      <span>{collateral && Number.isFinite(collateral.liquidationPenaltyPercentage) ? `${collateral.liquidationPenaltyPercentage}%` : '—'}</span>
+    </div>
+  );
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -197,6 +217,7 @@ export function BorrowSourceModal({
       }
     >
       <Tabs
+        headerClassName={experimental ? 'lite-borrow-popup-tabs' : undefined}
         variant="secondary"
         initialActiveTabId="loan"
         tabs={[
@@ -207,29 +228,16 @@ export function BorrowSourceModal({
               previewForm('Collateral')
             ) : (
               <div className="space-y-5">
-                <Select
-                  aria-label="Collateral asset"
-                  value={selectedCollateral ?? ''}
-                  onChange={value =>
-                    setSelectedCollateral(String(value) as typeof selectedCollateral)
-                  }
-                  options={collateralAssets.map(item => ({
-                    value: item.vToken.address,
-                    label: (
-                      <span className="inline-flex items-center gap-2 font-normal">
-                        <TokenIcon token={item.vToken.underlyingToken} size="md" />
-                        {item.vToken.underlyingToken.symbol}
-                      </span>
-                    ),
-                  }))}
-                />
+                {!experimental && collateralSelector}
                 {collateral ? (
                   collateral.isGated && !settings.doNotShowGatedAssetModal ? (
-                    <p className="text-sm text-light-grey">
-                      Open this asset from Earn to review its access requirements.
-                    </p>
+                    <div className="space-y-3">
+                      {experimental && collateralSelector}
+                      <p className="text-sm text-light-grey">Open this asset from Earn to review its access requirements.</p>
+                    </div>
                   ) : (
                     <MarketForm
+                      collateralSelector={experimental ? collateralSelector : undefined}
                       key={collateral.vToken.address}
                       vToken={collateral.vToken}
                       poolComptrollerAddress={corePoolComptrollerContractAddress}
@@ -257,6 +265,7 @@ export function BorrowSourceModal({
               />
             ) : (
               <MarketForm
+                borrowPenalty={experimental ? penalty : undefined}
                 vToken={asset.vToken}
                 poolComptrollerAddress={corePoolComptrollerContractAddress}
                 borrowOnly
@@ -265,7 +274,7 @@ export function BorrowSourceModal({
               />
             ),
           },
-          { id: 'info', title: <span className="font-normal">Info</span>, content: info },
+          ...(!experimental ? [{ id: 'info', title: <span className="font-normal">Info</span>, content: info }] : []),
         ]}
       />
     </Modal>

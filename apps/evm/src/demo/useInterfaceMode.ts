@@ -14,7 +14,7 @@ export const useInterfaceModeStore = create<{
 // O and New share the interface mode. E retains its existing navigation.
 export const useInterfaceMode = () => {
   const preview = useGlassPreview(state => state.mode);
-  const supportsModes = preview === 'v1' || preview === 'v5';
+  const supportsModes = preview === 'v1' || preview === 'v5' || preview === 'lite-experiment';
   const { accountAddress } = useAccountAddress();
   const { mode, setMode } = useInterfaceModeStore();
   const { state } = useLocation();

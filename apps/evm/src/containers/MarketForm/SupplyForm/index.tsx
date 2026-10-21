@@ -41,12 +41,22 @@ import TEST_IDS from './testIds';
 import useForm, { type FormValues } from './useForm';
 
 export interface SupplyFormProps {
+  collateralSelector?: React.ReactElement;
   asset: Asset;
   pool: Pool;
   onSubmitSuccess?: () => void;
+  compact?: boolean;
+  streamlined?: boolean;
 }
 
-const SupplyForm: React.FC<SupplyFormProps> = ({ asset, pool, onSubmitSuccess }) => {
+const SupplyForm: React.FC<SupplyFormProps> = ({
+  asset,
+  pool,
+  onSubmitSuccess,
+  compact = false,
+  streamlined = false,
+  collateralSelector,
+}) => {
   const { t } = useTranslation();
   const { captureAnalyticEvent } = useAnalytics();
 
@@ -91,7 +101,7 @@ const SupplyForm: React.FC<SupplyFormProps> = ({ asset, pool, onSubmitSuccess })
   });
 
   const shouldSelectNativeToken =
-    canWrapNativeToken && userWalletNativeTokenBalanceTokens?.gt(asset.userWalletBalanceTokens);
+    !collateralSelector && canWrapNativeToken && userWalletNativeTokenBalanceTokens?.gt(asset.userWalletBalanceTokens);
 
   const initialFormValues: FormValues = useMemo(
     () => ({
@@ -377,127 +387,145 @@ const SupplyForm: React.FC<SupplyFormProps> = ({ asset, pool, onSubmitSuccess })
     }));
   };
 
+  const inputFields = (
+    <>
+      <LabeledInlineContent
+        className={compact || streamlined ? 'lite-collateral-control' : undefined}
+        label={t('marketForm.collateral')}
+      >
+        <Toggle
+          onChange={handleToggleCollateral}
+          value={
+            asset.isCollateralOfUser && (!pool.userEModeGroup || asset.userCollateralFactor > 0)
+          }
+          disabled={
+            !isUserConnected ||
+            isAccountOnWrongChain ||
+            isCollateralToggleDisabled ||
+            (pool.userEModeGroup && asset.userCollateralFactor === 0)
+          }
+        />
+      </LabeledInlineContent>
+
+      {!collateralSelector && (isIntegratedSwapFeatureEnabled || canWrapNativeToken) ? (
+        <SelectTokenTextField
+          data-testid={TEST_IDS.selectTokenTextField}
+          selectedToken={formValues.fromToken}
+          value={formValues.amountTokens}
+          hasError={!isSubmitting && !!formError && Number(formValues.amountTokens) > 0}
+          disabled={
+            !isUserConnected ||
+            isSubmitting ||
+            isApproveFromTokenLoading ||
+            formError?.code === 'SUPPLY_CAP_ALREADY_REACHED'
+          }
+          onChange={amountTokens => {
+            captureAmountSetAnalyticEvent({
+              amountTokens,
+              maxSelected: false,
+            });
+
+            setFormValues(currentFormValues => ({
+              ...currentFormValues,
+              amountTokens,
+            }));
+          }}
+          onChangeSelectedToken={fromToken =>
+            setFormValues(currentFormValues => ({
+              ...currentFormValues,
+              amountTokens: initialFormValues.amountTokens,
+              fromToken,
+            }))
+          }
+          rightMaxButton={{
+            label: t('marketForm.rightMaxButtonLabel'),
+            onClick: handleRightMaxButtonClick,
+          }}
+          tokenBalances={tokenBalances}
+          description={
+            !isSubmitting && !!formError?.message ? (
+              <p className="text-red">{formError.message}</p>
+            ) : undefined
+          }
+        />
+      ) : (
+        <TokenTextField
+          leftAdornment={collateralSelector}
+          displayTokenIcon={!collateralSelector}
+          data-testid={TEST_IDS.tokenTextField}
+          name="amountTokens"
+          token={asset.vToken.underlyingToken}
+          value={formValues.amountTokens}
+          onChange={amountTokens => {
+            captureAmountSetAnalyticEvent({
+              amountTokens,
+              maxSelected: false,
+            });
+
+            setFormValues(currentFormValues => ({
+              ...currentFormValues,
+              amountTokens,
+            }));
+          }}
+          disabled={
+            !isUserConnected ||
+            isSubmitting ||
+            isApproveFromTokenLoading ||
+            formError?.code === 'SUPPLY_CAP_ALREADY_REACHED'
+          }
+          rightMaxButton={{
+            label: t('marketForm.rightMaxButtonLabel'),
+            onClick: handleRightMaxButtonClick,
+          }}
+          hasError={
+            isUserConnected && !isSubmitting && !!formError && Number(formValues.amountTokens) > 0
+          }
+          description={
+            isUserConnected && !isSubmitting && !!formError?.message ? (
+              <p className="text-red">{formError.message}</p>
+            ) : undefined
+          }
+        />
+      )}
+
+      {streamlined && !isUserConnected && (
+        <div className="lite-wallet-stat">
+          <LabeledInlineContent label={t('marketForm.walletBalance')}>—</LabeledInlineContent>
+        </div>
+      )}
+      {isUserConnected && (
+        <>
+          <div className={streamlined ? 'lite-wallet-stat space-y-2' : 'space-y-2'}>
+            <LabeledInlineContent label={t('marketForm.walletBalance')}>
+              {readableFromTokenUserWalletBalanceTokens}
+            </LabeledInlineContent>
+
+            <SpendingLimit
+              token={formValues.fromToken}
+              walletBalanceTokens={fromTokenUserWalletBalanceTokens}
+              walletSpendingLimitTokens={fromTokenWalletSpendingLimitTokens}
+              onRevoke={revokeFromTokenWalletSpendingLimit}
+              isRevokeLoading={isRevokeFromTokenWalletSpendingLimitLoading}
+              data-testid={TEST_IDS.spendingLimit}
+            />
+          </div>
+
+          {!compact && !streamlined && <Delimiter />}
+        </>
+      )}
+    </>
+  );
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="space-y-4">
+      <div
+        className={compact ? 'lite-supply-grid' : streamlined ? 'lite-simple-fields' : 'space-y-4'}
+      >
         <SwitchChainNotice />
-
-        <LabeledInlineContent label={t('marketForm.collateral')}>
-          <Toggle
-            onChange={handleToggleCollateral}
-            value={
-              asset.isCollateralOfUser && (!pool.userEModeGroup || asset.userCollateralFactor > 0)
-            }
-            disabled={
-              !isUserConnected ||
-              isAccountOnWrongChain ||
-              isCollateralToggleDisabled ||
-              (pool.userEModeGroup && asset.userCollateralFactor === 0)
-            }
-          />
-        </LabeledInlineContent>
-
-        {isIntegratedSwapFeatureEnabled || canWrapNativeToken ? (
-          <SelectTokenTextField
-            data-testid={TEST_IDS.selectTokenTextField}
-            selectedToken={formValues.fromToken}
-            value={formValues.amountTokens}
-            hasError={!isSubmitting && !!formError && Number(formValues.amountTokens) > 0}
-            disabled={
-              !isUserConnected ||
-              isSubmitting ||
-              isApproveFromTokenLoading ||
-              formError?.code === 'SUPPLY_CAP_ALREADY_REACHED'
-            }
-            onChange={amountTokens => {
-              captureAmountSetAnalyticEvent({
-                amountTokens,
-                maxSelected: false,
-              });
-
-              setFormValues(currentFormValues => ({
-                ...currentFormValues,
-                amountTokens,
-              }));
-            }}
-            onChangeSelectedToken={fromToken =>
-              setFormValues(currentFormValues => ({
-                ...currentFormValues,
-                amountTokens: initialFormValues.amountTokens,
-                fromToken,
-              }))
-            }
-            rightMaxButton={{
-              label: t('marketForm.rightMaxButtonLabel'),
-              onClick: handleRightMaxButtonClick,
-            }}
-            tokenBalances={tokenBalances}
-            description={
-              !isSubmitting && !!formError?.message ? (
-                <p className="text-red">{formError.message}</p>
-              ) : undefined
-            }
-          />
-        ) : (
-          <TokenTextField
-            data-testid={TEST_IDS.tokenTextField}
-            name="amountTokens"
-            token={asset.vToken.underlyingToken}
-            value={formValues.amountTokens}
-            onChange={amountTokens => {
-              captureAmountSetAnalyticEvent({
-                amountTokens,
-                maxSelected: false,
-              });
-
-              setFormValues(currentFormValues => ({
-                ...currentFormValues,
-                amountTokens,
-              }));
-            }}
-            disabled={
-              !isUserConnected ||
-              isSubmitting ||
-              isApproveFromTokenLoading ||
-              formError?.code === 'SUPPLY_CAP_ALREADY_REACHED'
-            }
-            rightMaxButton={{
-              label: t('marketForm.rightMaxButtonLabel'),
-              onClick: handleRightMaxButtonClick,
-            }}
-            hasError={
-              isUserConnected && !isSubmitting && !!formError && Number(formValues.amountTokens) > 0
-            }
-            description={
-              isUserConnected && !isSubmitting && !!formError?.message ? (
-                <p className="text-red">{formError.message}</p>
-              ) : undefined
-            }
-          />
-        )}
-
-        {isUserConnected && (
-          <>
-            <div className="space-y-2">
-              <LabeledInlineContent label={t('marketForm.walletBalance')}>
-                {readableFromTokenUserWalletBalanceTokens}
-              </LabeledInlineContent>
-
-              <SpendingLimit
-                token={formValues.fromToken}
-                walletBalanceTokens={fromTokenUserWalletBalanceTokens}
-                walletSpendingLimitTokens={fromTokenWalletSpendingLimitTokens}
-                onRevoke={revokeFromTokenWalletSpendingLimit}
-                isRevokeLoading={isRevokeFromTokenWalletSpendingLimitLoading}
-                data-testid={TEST_IDS.spendingLimit}
-              />
-            </div>
-
-            <Delimiter />
-          </>
-        )}
-
+        {streamlined ? <div className="lite-input-group">{inputFields}</div> : inputFields}
         <Footer
+          streamlined={streamlined}
+          compact={compact}
           analyticVariant="supply_form"
           balanceMutations={balanceMutations}
           pool={pool}

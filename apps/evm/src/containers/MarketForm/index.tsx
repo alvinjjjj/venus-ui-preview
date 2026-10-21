@@ -14,6 +14,8 @@ import WithdrawForm from './WithdrawForm';
 import rocketIconSrc from './rocket.svg';
 
 export interface MarketFormProps {
+  collateralSelector?: React.ReactElement;
+  borrowPenalty?: React.ReactNode;
   vToken: VToken;
   poolComptrollerAddress: Address;
   initialActiveTabId?: string;
@@ -21,6 +23,8 @@ export interface MarketFormProps {
   navType?: TabNavType;
   earnOnly?: boolean;
   borrowOnly?: boolean;
+  compactEarn?: boolean;
+  inlineHeader?: boolean;
 }
 
 export const MarketForm: React.FC<MarketFormProps> = ({
@@ -31,6 +35,10 @@ export const MarketForm: React.FC<MarketFormProps> = ({
   navType,
   earnOnly = false,
   borrowOnly = false,
+  compactEarn = false,
+  inlineHeader = false,
+  collateralSelector,
+  borrowPenalty,
 }) => {
   const { t } = useTranslation();
 
@@ -49,7 +57,14 @@ export const MarketForm: React.FC<MarketFormProps> = ({
           action="supply"
         >
           {({ asset, pool }) => (
-            <SupplyForm asset={asset} pool={pool} onSubmitSuccess={onSubmitSuccess} />
+            <SupplyForm
+              collateralSelector={collateralSelector}
+              asset={asset}
+              pool={pool}
+              onSubmitSuccess={onSubmitSuccess}
+              compact={compactEarn}
+              streamlined={inlineHeader}
+            />
           )}
         </AssetAccessor>
       ),
@@ -64,7 +79,13 @@ export const MarketForm: React.FC<MarketFormProps> = ({
           action="withdraw"
         >
           {({ asset, pool }) => (
-            <WithdrawForm asset={asset} pool={pool} onSubmitSuccess={onSubmitSuccess} />
+            <WithdrawForm
+              collateralSelector={collateralSelector}
+              asset={asset}
+              pool={pool}
+              onSubmitSuccess={onSubmitSuccess}
+              compact={compactEarn}
+            />
           )}
         </AssetAccessor>
       ),
@@ -80,6 +101,7 @@ export const MarketForm: React.FC<MarketFormProps> = ({
         >
           {({ asset, pool }) => (
             <BorrowForm
+              penalty={borrowPenalty}
               asset={asset}
               pool={pool}
               onSubmitSuccess={onSubmitSuccess}
@@ -134,6 +156,8 @@ export const MarketForm: React.FC<MarketFormProps> = ({
 
   return (
     <Tabs
+      className={compactEarn ? 'lite-compact-market-tabs' : inlineHeader ? 'lite-single-market-tabs' : undefined}
+      headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
       tabs={
         earnOnly
           ? tabs.filter(tab => tab.id === 'supply' || tab.id === 'withdraw')

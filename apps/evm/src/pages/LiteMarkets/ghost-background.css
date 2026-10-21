@@ -85,6 +85,15 @@
   height: 100%;
 }
 
+/* E restores the quiet ambient lines beneath the crisp star layer.
+   Both retain the original 40% background opacity, without extra blur. */
+.lite-ghost__hero-field {
+  position: absolute;
+  inset: 0;
+  filter: none;
+  pointer-events: none;
+}
+
 /* Hidden canvases are paused by FlowField's visibility observer. */
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
   .lite-ghost__motion {

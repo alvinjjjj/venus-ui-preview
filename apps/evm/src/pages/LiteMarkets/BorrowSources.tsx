@@ -78,10 +78,12 @@ export function BorrowSources({
   asset,
   rows,
   onBack,
+  experimental = false,
 }: {
   asset: Asset;
   rows: LiteAsset[];
   onBack: () => void;
+  experimental?: boolean;
 }) {
   const [search, setSearch] = useState('');
   const [openedSource, setOpenedSource] = useState<BorrowSource>();
@@ -210,7 +212,7 @@ export function BorrowSources({
         hideCardDelimiter
         placeholder="No markets match these filters."
         header={
-          <div className="space-y-5">
+          <div className={experimental ? 'lite-borrow-source-header' : 'space-y-5'}>
             <button
               type="button"
               onClick={onBack}
@@ -221,7 +223,7 @@ export function BorrowSources({
               <TokenIcon token={token} size="md" className="size-4" />
               {token.symbol}
             </button>
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
                 aria-label="Search borrowing markets"
                 placeholder="Search market"

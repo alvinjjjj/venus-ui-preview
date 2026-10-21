@@ -27,12 +27,14 @@ export function BorrowMarkets({
   rows,
   loading,
   ready,
+  experimental = false,
   selected,
   onSelect: setSelected,
 }: {
   rows: LiteAsset[];
   loading: boolean;
   ready: boolean;
+  experimental?: boolean;
   selected?: string;
   onSelect: (address: string | undefined) => void;
 }) {
@@ -102,9 +104,13 @@ export function BorrowMarkets({
   ];
 
   return (
-    <>
+    <div className={experimental ? 'lite-experiment-earn' : undefined}>
+      <div className={experimental ? `lite-experiment-scroll${active ? ' lite-borrow-sources' : ''}` : undefined}
+        role={experimental ? 'region' : undefined}
+        aria-label={experimental ? 'Borrow markets, scroll for more assets' : undefined}
+        tabIndex={experimental ? 0 : undefined}>
       {active ? (
-        <BorrowSources asset={active} rows={rows} onBack={() => setSelected(undefined)} />
+        <BorrowSources experimental={experimental} asset={active} rows={rows} onBack={() => setSelected(undefined)} />
       ) : (
         <Table
           data={ready ? filtered : []}
@@ -122,7 +128,7 @@ export function BorrowMarkets({
               : 'No borrowable assets found.'
           }
           header={
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
                 aria-label="Search loan assets"
                 placeholder="Search asset"
@@ -158,6 +164,7 @@ export function BorrowMarkets({
           }
         />
       )}
-    </>
+      </div>
+    </div>
   );
 }
