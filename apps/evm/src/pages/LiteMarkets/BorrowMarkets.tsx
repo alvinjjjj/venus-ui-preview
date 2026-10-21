@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   AssetApy,
-  Select,
+  MultiSelect,
   Table,
   type TableColumn,
   TextField,
@@ -39,7 +39,7 @@ export function BorrowMarkets({
   onSelect: (address: string | undefined) => void;
 }) {
   const [search, setSearch] = useState('');
-  const [tokenFilter, setTokenFilter] = useState('');
+  const [tokenFilter, setTokenFilter] = useState<string[]>([]);
   useEffect(() => {
     if (selected) document.getElementById(PAGE_CONTAINER_ID)?.scrollTo({ top: 0 });
   }, [selected]);
@@ -53,7 +53,7 @@ export function BorrowMarkets({
   const active = assets.find(asset => asset.vToken.address === selected);
   const filtered = assets.filter(
     asset =>
-      (!tokenFilter || asset.vToken.address === tokenFilter) &&
+      (tokenFilter.length === 0 || tokenFilter.includes(asset.vToken.address)) &&
       asset.vToken.underlyingToken.symbol.toLowerCase().includes(search.trim().toLowerCase()),
   );
 
@@ -139,16 +139,15 @@ export function BorrowMarkets({
                 onChange={event => setSearch(event.target.value)}
                 className="sm:max-w-75"
               />
-              <Select
+              <MultiSelect
                 className="lite-loan-filter w-full sm:w-60 shrink-0"
-                buttonClassName="rounded-lg h-12"
-                dropdownClassName="lite-loan-options"
-                optionClassName="px-4 h-12 font-normal"
-                aria-label="Filter loan assets"
+                placeholder="All loan assets"
+                title="Loan assets"
+                resetLabel="All loan assets"
+                renderCount={count => `${count} loan assets`}
                 value={tokenFilter}
-                onChange={value => setTokenFilter(String(value))}
+                onChange={setTokenFilter}
                 options={[
-                  { label: 'All loan assets', value: '' },
                   ...assets.map(asset => ({
                     label: (
                       <span className="inline-flex items-center gap-2 font-normal">
