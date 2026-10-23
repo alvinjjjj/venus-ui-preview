@@ -1,0 +1,123 @@
+/* Figma 3212:68745 — copper Prime only, scoped to the E preview in both themes.
+   VIP/Fill and VIP/Ring are atmospheric metal roles, not UI action colors.
+   Gold eligibility is deliberately deferred; APY calculations are untouched. */
+:root[data-glass-study='lite-experiment'] {
+  --lite-prime-disc-fill: linear-gradient(110deg, #9b6850, #cea58b 25%, #f2d8c4 50%, #d4ab90 75%, #a77359);
+  /* Text uses the lighter existing copper stops so the dark hover surface
+     does not swallow the small numerals; the disc keeps its full metal range. */
+  --lite-prime-text-start: #cea58b;
+  --lite-prime-text-highlight: #f2d8c4;
+  --lite-prime-text-end: #d4ab90;
+  --lite-prime-text-fill: linear-gradient(110deg, var(--lite-prime-text-start), var(--lite-prime-text-highlight) 45%, var(--lite-prime-text-end));
+  --lite-prime-ring: linear-gradient(110deg, #856153, #f2d8c4 48%, #724c3d);
+  --lite-prime-ring-opacity: .72;
+  --lite-prime-mark: #222222;
+  --lite-prime-hover: #30354a;
+  --lite-prime-active: #101218;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] {
+  /* Preserve legible 14px text on light surfaces instead of copying the very
+     pale metal highlight into small type. The disc/ring keep the Figma metal. */
+  --lite-prime-text-start: var(--e-light-prime-start);
+  --lite-prime-text-highlight: color-mix(in srgb, var(--e-light-prime-end) 60%, var(--e-light-prime-start));
+  --lite-prime-text-end: var(--e-light-prime-start);
+  --lite-prime-hover: #ececec;
+  --lite-prime-active: #e2e5ea;
+}
+
+/* Use the existing inline vector mark. Paint the circular metal via CSS so
+   repeated SVG gradient IDs cannot make icons borrow another badge's palette. */
+:root[data-glass-study='lite-experiment'] :is(#root, body) :is(.venus-prime-icon-original, .venus-prime-icon-dark, .venus-prime-icon-light) {
+  display: none;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-prime-token-icon {
+  display: block;
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  background: var(--lite-prime-disc-fill);
+  border-radius: 50%;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-prime-token-icon circle {
+  fill: none;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-prime-token-icon path {
+  fill: var(--lite-prime-mark);
+}
+
+/* Figma: 14px/150% semibold, 16px icon, gap 4px, padding 4px x 2px.
+   The 1px stroke is an inset overlay, so it does not add to the 25px height. */
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'][data-venus-button-variant='senary'] {
+  position: relative;
+  isolation: isolate;
+  height: auto;
+  min-height: 0;
+  padding: calc(var(--spacing) / 2) var(--spacing);
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--text-sm--line-height);
+  transform: none !important;
+  transition: background-color 160ms ease-out !important;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'] > span {
+  gap: var(--spacing);
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'] .venus-prime-token-icon {
+  margin: 0;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge-text='prime'] {
+  background-image: var(--lite-prime-text-fill) !important;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--text-sm--line-height);
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'][data-venus-button-variant='senary']:is(:hover, :focus-visible):not(:disabled) {
+  background: var(--lite-prime-hover) !important;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'][data-venus-button-variant='senary']:is(:active, [data-venus-button-active='true']):not(:disabled) {
+  background: var(--lite-prime-active) !important;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime']::before {
+  content: none !important;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--lite-prime-ring);
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box xor, linear-gradient(#000 0 0);
+  opacity: var(--lite-prime-ring-opacity);
+  pointer-events: none;
+  transition: opacity 160ms ease-out;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime']:is(:hover, :focus-visible)::after {
+  opacity: 1;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime']:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-reward-star {
+  background: var(--color-green);
+  mask: var(--reward-star-image) center / 100% 100% no-repeat;
+  -webkit-mask: var(--reward-star-image) center / 100% 100% no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime'] {
+    transition: none !important;
+  }
+  :root[data-glass-study='lite-experiment'] :is(#root, body) [data-apy-badge='prime']::after {
+    transition: none;
+  }
+}

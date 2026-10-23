@@ -116,6 +116,7 @@ export function BorrowMarkets({
   return (
     <div className={experimental ? 'lite-experiment-earn' : undefined}>
       <div className={experimental ? `lite-experiment-scroll${active ? ' lite-borrow-sources' : ''}` : undefined}
+        data-loading={experimental && loading && !active ? 'true' : undefined}
         role={experimental ? 'region' : undefined}
         aria-label={experimental ? 'Borrow markets, scroll for more assets' : undefined}
         tabIndex={experimental ? 0 : undefined}>
@@ -133,9 +134,11 @@ export function BorrowMarkets({
           hideCardDelimiter
           isFetching={loading}
           placeholder={
-            !ready
-              ? 'Market data is unavailable. Please refresh to try again.'
-              : 'No borrowable assets found.'
+            loading
+              ? undefined
+              : !ready
+                ? 'Market data is unavailable. Please refresh to try again.'
+                : 'No borrowable assets found.'
           }
           header={
             <div className={experimental ? 'lite-market-toolbar' : undefined}>

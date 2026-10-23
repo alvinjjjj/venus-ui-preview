@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from 'clients/api/queryClient';
 import { DemoActionNotice } from 'demo/DemoActionNotice';
 import { DemoLogin } from 'demo/DemoLogin';
+import { InterfaceOnboarding } from 'demo/InterfaceOnboarding';
 import { LiquidityLightPreview } from 'demo/LiquidityLightPreview';
 import { AnalyticProvider } from 'libs/analytics';
 import { ErrorBoundary } from 'libs/errors';
@@ -18,6 +19,7 @@ const App = () => (
           <Web3Wrapper>
             <AnalyticProvider>
               <AppRoutes />
+              <InterfaceOnboarding />
               <DemoLogin />
               <DemoActionNotice />
             </AnalyticProvider>

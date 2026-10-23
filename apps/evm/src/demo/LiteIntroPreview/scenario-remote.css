@@ -1,0 +1,47 @@
+/* Preview tooling only. Render in the native dialog's top layer while it is open,
+   so blur / inert never disable the controls needed to test the experience. */
+.intro-scenario-remote {
+  position: fixed;
+  right: var(--intro-edge);
+  bottom: max(calc(var(--spacing) * 4), env(safe-area-inset-bottom));
+  z-index: 10;
+  width: min(calc(var(--spacing) * 68), calc(100% - var(--intro-edge) * 2));
+  color: var(--intro-text);
+  background: var(--intro-panel);
+  border: 1px solid var(--intro-line);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 16%);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+.intro-scenario-remote[data-expanded='true'] { width: min(calc(var(--spacing) * 160), calc(100% - var(--intro-edge) * 2)); max-height: calc(100dvh - var(--spacing) * 8); overflow-y: auto; }
+.intro-remote-toggle { display: flex; align-items: center; gap: calc(var(--spacing) * 3); min-height: calc(var(--spacing) * 14); width: 100%; padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4); background: none; color: inherit; text-align: left; border: 0; border-radius: var(--radius-xl); }
+.intro-remote-toggle > svg { width: calc(var(--spacing) * 5); height: calc(var(--spacing) * 5); flex-shrink: 0; color: var(--intro-secondary); }
+.intro-remote-toggle > span { display: grid; gap: calc(var(--spacing) / 2); }
+.intro-remote-toggle strong, .intro-remote-scenarios strong { font-size: var(--text-sm); font-weight: var(--font-weight-semibold); }
+.intro-remote-toggle small, .intro-remote-scenarios small { font-size: var(--text-xs); color: var(--intro-secondary); }
+.intro-remote-toggle .intro-remote-chevron { margin-left: auto; }
+.intro-scenario-remote[data-expanded='true'] .intro-remote-chevron { transform: rotate(180deg); }
+.intro-remote-body { display: grid; gap: calc(var(--spacing) * 4); padding: 0 calc(var(--spacing) * 4) calc(var(--spacing) * 4); }
+.intro-remote-scenarios { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: calc(var(--spacing) * 2); }
+.intro-remote-scenarios button { display: grid; gap: var(--spacing); padding: calc(var(--spacing) * 3); text-align: left; background: var(--intro-raised); color: var(--intro-text); border: 1px solid var(--intro-line); border-radius: var(--radius-lg); }
+.intro-remote-scenarios button:hover { border-color: var(--intro-accent); }
+.intro-remote-comment { padding-top: calc(var(--spacing) * 3); border-top: 1px solid var(--intro-line); }
+.intro-remote-comment dl { display: flex; flex-wrap: wrap; gap: calc(var(--spacing) * 3); margin: 0; font-size: var(--text-xs); }
+.intro-remote-comment dl > div { display: flex; gap: var(--spacing); }
+.intro-remote-comment dt { color: var(--intro-secondary); }
+.intro-remote-comment dd { margin: 0; }
+.intro-remote-comment p { margin: calc(var(--spacing) * 3) 0 0; color: var(--intro-secondary); font-size: var(--text-xs); }
+.intro-remote-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 3); color: var(--intro-secondary); font-size: var(--text-xs); }
+.intro-remote-actions > div { display: flex; gap: calc(var(--spacing) * 4); }
+.intro-remote-actions button { background: transparent; border: 0; padding-block: var(--spacing); color: var(--intro-text); text-decoration: underline; text-underline-offset: var(--spacing); }
+@media (min-width: 640px) {
+  .intro-remote-body { grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); }
+  .intro-remote-comment { padding: 0 0 0 calc(var(--spacing) * 4); border-top: 0; border-left: 1px solid var(--intro-line); }
+  .intro-remote-actions { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .intro-dialog:has(.intro-scenario-remote) .intro-welcome { margin-bottom: calc(var(--spacing) * 24); }
+  .intro-scenario-remote[data-expanded='true'] { box-shadow: 0 8px 32px rgb(0 0 0 / 32%); }
+  .intro-remote-scenarios button { padding: calc(var(--spacing) * 2); }
+}

@@ -1,0 +1,243 @@
+/* E Light: approved cool grey-white direction, isolated from O, New and Dark.
+   Local semantic roles (not shared palette changes) make the intended Figma
+   Color-mode aliases explicit. Composite fills/shadows remain material recipes. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] {
+  --e-light-surface-canvas: #f4f7fb;
+  --e-light-surface-panel: #fbfcfe;
+  --e-light-surface-raised: #ffffff;
+  --e-light-surface-subtle: #edf2f8;
+  --e-light-surface-field: #eaf0f7;
+  --e-light-surface-control: #f7f9fc;
+  --e-light-surface-hover: #e6eef9;
+  --e-light-surface-disabled: #e4eaf2;
+  --e-light-text-primary: #17263d;
+  --e-light-text-secondary: #53627a;
+  --e-light-text-muted: #5b6b83;
+  --e-light-text-on-accent: #ffffff;
+  --e-light-border-subtle: #d4dde8;
+  --e-light-border-control: #b7c4d5;
+  --e-light-border-focus: #2464cb;
+  --e-light-border-error: #b72c45;
+  --e-light-accent-start: #2059be;
+  --e-light-accent-middle: #2468cf;
+  --e-light-accent-end: #1e55b4;
+  --e-light-accent-highlight: #2c6fd6;
+  --e-light-accent-hover: #205fc4;
+  --e-light-heading-start: #2664bd;
+  --e-light-heading-end: #3b76cf;
+  --e-light-label-start: #405a7a;
+  --e-light-label-end: #5e7594;
+  --e-light-prime-start: #72452e;
+  --e-light-prime-end: #986447;
+  --e-light-success: #00815e;
+  --e-light-warning: #926109;
+  --e-light-danger: #bf3045;
+  /* Atmospheric roles are separate from UI action/focus colors. */
+  --e-light-ambient-line: #8398b4;
+  --e-light-ambient-dust: #7890ae;
+  --e-light-ambient-particle: #4d89c5;
+  --e-light-ambient-opacity: .6;
+  --e-light-ambient-dust-opacity: .35;
+  --e-light-shadow-panel: 0 1px 2px rgb(31 53 83 / 5%), 0 12px 32px -16px rgb(31 53 83 / 18%);
+  --e-light-shadow-floating: 0 12px 40px -12px rgb(31 53 83 / 18%);
+  --e-light-shadow-overlay: 0 24px 64px -20px rgb(31 53 83 / 24%);
+  --e-light-shadow-control: inset 0 1px 1px rgb(255 255 255 / 95%), inset 0 -1px 1px rgb(45 70 105 / 9%), 0 2px 4px rgb(31 53 83 / 6%);
+  --e-light-shadow-field: inset 0 1px 3px rgb(31 53 83 / 9%);
+  --e-light-action-fill: radial-gradient(ellipse at 48% 12%, var(--e-light-accent-highlight), transparent 65%), linear-gradient(115deg, var(--e-light-accent-start), var(--e-light-accent-middle) 46%, var(--e-light-accent-end));
+  --e-light-action-hover: linear-gradient(115deg, var(--e-light-accent-hover), var(--e-light-accent-middle) 46%, var(--e-light-accent-start));
+
+  /* Compatibility aliases for existing Venus components. Literal white is only
+     the on-accent role; legacy `white` continues to mean primary foreground. */
+  --color-background: var(--e-light-surface-canvas);
+  --color-background-active: var(--e-light-surface-canvas);
+  --color-background-hover: var(--e-light-surface-hover);
+  --color-background-disabled: var(--e-light-surface-disabled);
+  --color-dark-blue: var(--e-light-surface-raised);
+  --color-dark-blue-hover: var(--e-light-border-control);
+  --color-dark-blue-active: var(--e-light-surface-subtle);
+  --color-dark-blue-disabled: var(--e-light-surface-disabled);
+  --color-white: var(--e-light-text-primary);
+  --color-grey: var(--e-light-text-secondary);
+  --color-light-grey: var(--e-light-text-secondary);
+  --color-light-grey-disabled: var(--e-light-text-muted);
+  --color-lightGrey: var(--e-light-border-subtle);
+  --color-cards: var(--e-light-surface-panel);
+  --color-blue: var(--e-light-border-focus);
+  --color-blue-hover: var(--e-light-accent-hover);
+  --color-blue-active: var(--e-light-accent-end);
+  --color-green: var(--e-light-success);
+  --color-yellow: var(--e-light-warning);
+  --color-red: var(--e-light-danger);
+}
+
+/* A light canvas, near-white panels and cool downward shadows, not a translucent
+   black card floating above white. Keep the existing geometry and ambient tuning. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(body, #page-container, .venus-header-row) {
+  background-color: var(--e-light-surface-canvas);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.lite-experiment-scroll, .lite-inline-sources, .venus-glass-card) {
+  background: var(--e-light-surface-panel);
+  border-color: var(--e-light-border-subtle);
+  box-shadow: var(--e-light-shadow-panel);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .lite-experiment-scroll > .venus-glass-card {
+  background: transparent;
+  box-shadow: none;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .lite-ghost {
+  opacity: .18;
+}
+/* Visible silver-blue details live in the margins; keep the title / figures
+   quiet. No blur, glow, extra animation loop or change to the Dark sky. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .lite-ghost--light-ambient {
+  opacity: var(--e-light-ambient-opacity);
+  mask-image: radial-gradient(ellipse 48% 38% at 50% 26%, transparent 0%, rgb(0 0 0 / 18%) 60%, black 100%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .lite-ghost__light-dust {
+  position: absolute;
+  inset: 0;
+  fill: var(--e-light-ambient-dust);
+  opacity: var(--e-light-ambient-dust-opacity);
+  filter: none;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.lite-market-title, .venus-page-title) {
+  background-image: linear-gradient(180deg, var(--e-light-heading-start), var(--e-light-heading-end) 25%, var(--e-light-heading-start) 50%, var(--e-light-heading-end) 75%, var(--e-light-heading-start));
+}
+/* Use the existing title leading so the gradient paint box includes descenders. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .lite-market-title {
+  line-height: var(--text-3xl--line-height);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-navigation .venus-interface-mode-label {
+  background-image: linear-gradient(180deg, var(--e-light-label-start), var(--e-light-label-end) 25%, var(--e-light-label-start) 50%, var(--e-light-label-end) 75%, var(--e-light-label-start));
+}
+
+/* The same roles apply to body-portaled menus and transactional/account panels. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel {
+  background: rgb(251 253 255 / 96%);
+  border-color: var(--e-light-border-subtle);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), var(--e-light-shadow-overlay);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-backdrop {
+  background: rgb(35 53 80 / 12%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-dropdown-surface {
+  background: linear-gradient(125deg, rgb(255 255 255 / 35%), transparent 65%), rgb(251 253 255 / 96%);
+  border-color: var(--e-light-border-control);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), var(--e-light-shadow-floating);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]):is(:hover, :focus-visible) {
+  background: var(--e-light-surface-hover);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.lite-mode-pills, .venus-popup-panel [data-venus-button-group], .venus-settings [role='group'][aria-label='Theme']) {
+  background: var(--e-light-surface-subtle) !important;
+  border-color: var(--e-light-border-subtle) !important;
+  box-shadow: inset 0 1px 2px rgb(31 53 83 / 7%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel :is([data-venus-button-variant]:not([data-venus-button-variant='text']):not([data-apy-badge='prime']), [data-select-trigger]) {
+  --material-fill: var(--e-light-surface-control) !important;
+  --material-hover: var(--e-light-surface-hover) !important;
+  --material-ink: var(--e-light-text-primary) !important;
+  --material-hover-ink: var(--e-light-text-primary) !important;
+  --material-shadow: var(--e-light-shadow-control) !important;
+  --material-hover-shadow: var(--e-light-shadow-control) !important;
+  background: var(--material-fill) !important;
+  color: var(--material-ink) !important;
+  border-color: var(--e-light-border-subtle) !important;
+  box-shadow: var(--material-shadow) !important;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel [data-venus-button-group] > [data-venus-button-variant]:not([data-venus-button-active='true']) {
+  background: transparent !important;
+  color: var(--e-light-text-secondary) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-demo-login, .venus-primary-action:not(.venus-multiselect-trigger, [data-select-trigger], [aria-haspopup]), [data-venus-button-active='true'], .lite-mode-pills > button[aria-pressed='true'], [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true']):not(:disabled):not([aria-disabled='true']) {
+  --material-fill: var(--e-light-action-fill) !important;
+  --material-hover: var(--e-light-action-hover) !important;
+  --material-ink: var(--e-light-text-on-accent) !important;
+  --material-hover-ink: var(--e-light-text-on-accent) !important;
+  --material-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), 0 2px 4px rgb(31 53 83 / 12%) !important;
+  --material-hover-shadow: var(--material-shadow) !important;
+  background: var(--material-fill) !important;
+  color: var(--material-ink) !important;
+  border-color: rgb(255 255 255 / 50%) !important;
+  box-shadow: var(--material-shadow) !important;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-demo-login, .venus-primary-action:not(.venus-multiselect-trigger, [data-select-trigger], [aria-haspopup]), [data-venus-button-active='true'], .lite-mode-pills > button[aria-pressed='true']):not(:disabled):not([aria-disabled='true']):is(:hover, :focus-visible) {
+  background: var(--e-light-action-hover) !important;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel [data-venus-button-variant]:is(:disabled, [aria-disabled='true']) {
+  --material-fill: var(--e-light-surface-disabled) !important;
+  --material-ink: var(--e-light-text-muted) !important;
+  background: var(--material-fill) !important;
+  color: var(--material-ink) !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+/* Restate state selectors after the Light default, so that focus/error never
+   collapse into ordinary grey and disabled controls do not retain a deep well. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field {
+  background: var(--e-light-surface-field);
+  border-color: var(--e-light-border-control);
+  box-shadow: var(--e-light-shadow-field);
+  color: var(--e-light-text-primary);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:hover {
+  border-color: var(--e-light-text-muted);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:focus-within {
+  border-color: var(--e-light-border-focus);
+  box-shadow: var(--e-light-shadow-field), 0 0 0 2px rgb(36 100 203 / 18%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field[data-has-error] {
+  border-color: var(--e-light-border-error);
+  box-shadow: var(--e-light-shadow-field), 0 0 0 2px rgb(183 44 69 / 12%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field:is([data-disabled], :has(input:disabled)) {
+  background: var(--e-light-surface-disabled);
+  border-color: var(--e-light-border-subtle);
+  box-shadow: none;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) input::placeholder {
+  color: var(--e-light-text-muted);
+}
+/* Search is a neutral utility, not a blue recessed field. Reuse the control
+   surface in both states; keyboard focus remains visible as a thin blue edge. */
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field.venus-market-search-surface {
+  background: var(--e-light-surface-control);
+  box-shadow: none;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-text-field.venus-market-search-surface:focus-within {
+  background: var(--e-light-surface-control);
+  border-color: var(--e-light-border-focus);
+  box-shadow: none;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel .venus-progress-rail {
+  background: var(--e-light-surface-subtle) !important;
+  box-shadow: inset 0 1px 3px rgb(31 53 83 / 10%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-toggle-track {
+  background: var(--e-light-border-control) !important;
+  box-shadow: inset 0 1px 2px rgb(31 53 83 / 12%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-toggle-knob {
+  background: var(--e-light-surface-raised) !important;
+  box-shadow: 0 1px 3px rgb(31 53 83 / 22%);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) .venus-toggle:has(input:checked) .venus-toggle-track {
+  background: var(--e-light-action-fill) !important;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.bg-green, .bg-yellow, .bg-red) > .text-background {
+  color: var(--e-light-text-on-accent);
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] ::selection {
+  background: var(--e-light-border-focus);
+  color: var(--e-light-text-on-accent);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  :root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-popup-panel, .venus-dropdown-surface) {
+    background: var(--e-light-surface-panel);
+  }
+}

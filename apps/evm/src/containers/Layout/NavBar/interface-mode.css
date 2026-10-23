@@ -26,6 +26,15 @@
   box-shadow: 0 2px 12px color-mix(in srgb, var(--color-blue) 18%, transparent);
 }
 
+/* Lite E's mode entry stays black in Light and Dark, as requested. This is
+   the existing dark background-active value, pinned only to this control;
+   the moving border below and all shared theme tokens stay unchanged. */
+:root[data-glass-study='lite-experiment'] #root .venus-navigation .venus-mode-switch {
+  background: rgb(16 18 24);
+  color: #fff;
+  border: 1px solid var(--color-blue);
+}
+
 .venus-mode-border-flow {
   position: absolute;
   inset: 0;

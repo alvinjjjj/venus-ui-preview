@@ -10,6 +10,11 @@
 }
 :root[data-glass-study='lite-experiment'] .venus-popup-backdrop { background: rgb(0 0 0 / 18%); backdrop-filter: blur(4px); }
 :root[data-glass-study='lite-experiment'] .venus-popup-header { background: transparent; border-radius: inherit; }
+/* Position/yield separators are supporting structure, not input outlines.
+   Reuse the current theme's border color at a lower strength in both modes. */
+:root[data-glass-study='lite-experiment'] :is(.venus-popup-panel, .lite-inline-market) form hr {
+  border-color: color-mix(in srgb, var(--color-dark-blue-hover) 40%, transparent);
+}
 :root[data-glass-study='lite-experiment'] .venus-popup-header:not(.venus-popup-header-back) { justify-content: flex-start; }
 :root[data-glass-study='lite-experiment'] .venus-popup-header:not(.venus-popup-header-back) h2 { padding-left: 0; padding-right: calc(var(--spacing) * 8); text-align: left; justify-content: flex-start; }
 :root[data-glass-study='lite-experiment'] #root .venus-demo-login {
@@ -37,7 +42,7 @@
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%), 0 2px 6px rgb(30 55 85 / 7%);
 }
 :root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel { background: rgb(250 250 248 / 85%); border-color: rgb(30 40 55 / 9%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), 0 24px 64px rgb(30 40 55 / 14%); }
-/* New's neutral glass controls: blue is reserved for the selected segment. */
+/* New's neutral glass controls; selected segments and enabled primary submits use blue. */
 /* Old triggers stay unchanged; only expanded menus use New's reflected glass. */
 :root[data-glass-study='lite-experiment'] :is(#root, body) .venus-dropdown-surface {
   background: linear-gradient(125deg, rgb(255 255 255 / 8%), transparent 65%), rgb(20 24 31 / 58%);
@@ -73,7 +78,7 @@
 .lite-borrow-popup-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .button-bevel-outline,
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .button-highlight::after { display: none !important; }
-:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant]:not([data-venus-button-variant='text']) {
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant]:not([data-venus-button-variant='text']):not([data-apy-badge='prime']) {
   background: rgb(255 255 255 / 7%) !important;
   color: var(--color-white) !important;
   border: 1px solid transparent !important;
@@ -88,7 +93,8 @@
   padding: var(--spacing);
   gap: 0;
 }
-:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant][data-venus-button-active='true'] {
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [data-venus-button-variant][data-venus-button-active='true'],
+:root[data-glass-study='lite-experiment'] .venus-popup-panel [type='submit'][data-venus-button-variant='primary']:not(:disabled):not([aria-disabled='true']) {
   background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
   border-color: white !important;
 }
@@ -126,6 +132,13 @@
   overflow: hidden;
 }
 .lite-experiment-layout .lite-markets { display: flex; flex: 1 1 0%; min-height: 0; overflow: hidden; }
+/* On phones the compact footer follows the market viewport instead of taking
+   the token body's height. Keep the existing internal list scroll unchanged. */
+@media (max-width: 639px) {
+  .lite-experiment-layout { overflow-y: auto !important; }
+  .lite-experiment-layout > .relative { flex: 0 0 auto; overflow: visible; }
+  .lite-experiment-layout > .relative > .relative { flex: 0 0 auto; height: 100svh; }
+}
 .lite-experiment .lite-market-container {
   /* Requested 1440px hero content plus existing side gutters. */
   max-width: calc(1440px + var(--spacing) * 12);
@@ -541,15 +554,173 @@
    40px height so both keep the same 7px top/bottom and 8px side inset inside the 56px field,
    and the selector's icon/label/chevron are centred on the button's midline. */
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']) {
-  height: calc(var(--spacing) * 10);
-  padding-block: 0;
+  height: calc(var(--spacing) * 10) !important;
+  padding-block: 0 !important;
+}
+/* MAX / SAFE MAX use Regular weight, like the amount text beside them, and turn bold on hover. */
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-venus-button-size='sm'],
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-venus-button-size='sm'] * {
+  font-weight: 400 !important;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-venus-button-size='sm']:is(:hover, :focus-visible):not(:disabled),
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-venus-button-size='sm']:is(:hover, :focus-visible):not(:disabled) * {
+  font-weight: 600 !important;
 }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] {
-  padding-inline: calc(var(--spacing) * 3);
+  padding-inline: calc(var(--spacing) * 3) !important;
 }
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] > span,
 :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field [data-select-trigger] > span > span {
   display: flex;
   align-items: center;
   align-self: stretch;
+}
+
+/* E list rows: hover is a soft floating card (inset 8px, 8px radius, ~4% white) that fades in,
+   instead of a solid grey bar touching the box edges. (No › hint: the right column is flush
+   with the card edge, so it would collide with the figures.)
+   Grid rows (main lists) draw the card with ::before; real table rows (token sources) can't
+   host an absolutely-positioned pseudo-element without Chrome treating it as an extra cell,
+   so they tint their cells instead. */
+@media (min-width: 768px) {
+  .lite-experiment tbody tr,
+  .lite-experiment tbody tr:hover {
+    background: transparent !important;
+  }
+  .lite-experiment .lite-experiment-scroll tbody tr {
+    position: relative;
+    isolation: isolate;
+  }
+  .lite-experiment .lite-experiment-scroll tbody tr::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
+    z-index: -1;
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0%);
+    transition: background-color 150ms ease, box-shadow 150ms ease;
+    pointer-events: none;
+  }
+  .lite-experiment .lite-experiment-scroll tbody tr:is(:hover, :focus-visible)::before {
+    background: rgb(255 255 255 / 4%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
+  }
+  :root[data-liquidity-theme='light'] .lite-experiment .lite-experiment-scroll tbody tr:is(:hover, :focus-visible)::before {
+    background: rgb(30 55 85 / 4%);
+    box-shadow: inset 0 0 0 1px rgb(30 40 55 / 7%);
+  }
+  .lite-experiment tbody tr:not(.lite-experiment-scroll tr) > td {
+    transition: background-color 150ms ease;
+  }
+  .lite-experiment tbody tr:not(.lite-experiment-scroll tr):is(:hover, :focus-visible) > td {
+    background: rgb(255 255 255 / 4%);
+  }
+  .lite-experiment tbody tr:not(.lite-experiment-scroll tr):is(:hover, :focus-visible) > td:first-child {
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  }
+  .lite-experiment tbody tr:not(.lite-experiment-scroll tr):is(:hover, :focus-visible) > td:last-child {
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+  :root[data-liquidity-theme='light'] .lite-experiment tbody tr:not(.lite-experiment-scroll tr):is(:hover, :focus-visible) > td {
+    background: rgb(30 55 85 / 4%);
+  }
+}
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .lite-experiment .lite-experiment-scroll tbody tr::before,
+  .lite-experiment tbody tr > td { transition: none; }
+}
+
+/* E multi-select options (Loan assets / Categories): the label held an inline token icon on the
+   text baseline, so icon + symbol sat ~5px above the checkbox. Centre it on the row. */
+:root[data-glass-study='lite-experiment'] .venus-multiselect-option > span:first-child {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+:root[data-glass-study='lite-experiment'] .venus-multiselect-option > span:first-child > * {
+  display: flex;
+  align-items: center;
+}
+
+/* E lists while market data loads: keep the full card height (header + spinner) so the box
+   doesn't collapse and then jump when the rows arrive. */
+.lite-experiment .lite-experiment-scroll[data-loading='true'] {
+  min-height: min(calc(var(--spacing) * 122), 100%);
+}
+@media (min-width: 768px) {
+  .lite-experiment .lite-experiment-scroll[data-loading='true'] {
+    min-height: calc(var(--spacing) * 122);
+  }
+}
+
+/* E entrance without the "transparent → solid" flash.
+   The shared .lite-enter animation fades + blurs the whole markets section. While an ancestor has
+   opacity < 1 or a filter, the browser can't apply the card's own backdrop-filter, so the glass
+   card looked see-through for the 0.6s entrance and then snapped to its frosted state.
+   In E the section only rises (transform doesn't break backdrop-filter).
+   Token-list cards must remain solid: Earn/Borrow remounts the list, and replaying a
+   card fade would make the entire surface + controls flash transparent on every switch. */
+.lite-experiment .lite-enter--markets {
+  animation-name: lite-e-rise;
+}
+.lite-experiment .lite-enter--markets .lite-experiment-scroll {
+  animation: none;
+}
+.lite-experiment .lite-enter--markets :is(.lite-inline-sources, .lite-market-description) {
+  animation: lite-e-fade 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.22s backwards;
+}
+@keyframes lite-e-rise {
+  from { transform: translateY(12px); }
+  to { transform: none; }
+}
+@keyframes lite-e-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lite-experiment .lite-enter--markets :is(.lite-inline-sources, .lite-market-description) {
+    animation: none;
+  }
+}
+
+/* E popups: in-field buttons (token selector, MAX / SAFE MAX) get the same glass + pointer light
+   as the header wallet button. New only gives the light to primary/secondary buttons, so the
+   tertiary MAX needs it here. --glass-x / --glass-y are set by the preview's pointer listener. */
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']) {
+  position: relative;
+  isolation: isolate;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%) !important;
+  transition: transform 420ms cubic-bezier(.22, 1.35, .36, 1), box-shadow 240ms ease-out !important;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm'])::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--glass-x, 50%) var(--glass-y, 50%), rgb(255 255 255 / 22%), transparent 70%);
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']):not(:disabled):is(:hover, :focus-visible)::before {
+  opacity: .65;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']):not(:disabled):active {
+  transform: scale(.965, .94);
+  transition-duration: 100ms !important;
+}
+:root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']):not(:disabled):active::before {
+  opacity: 1;
+}
+:root[data-glass-study='lite-experiment'][data-liquidity-theme='light'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']) {
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 85%), inset 0 -1px 1px rgb(45 78 110 / 10%), 0 4px 10px rgb(30 55 85 / 8%) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm']),
+  :root[data-glass-study='lite-experiment'] .venus-popup-panel .venus-text-field :is([data-select-trigger], [data-venus-button-size='sm'])::before {
+    transition: none !important;
+    transform: none !important;
+  }
 }

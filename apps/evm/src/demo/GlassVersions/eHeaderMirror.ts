@@ -30,8 +30,10 @@ const BUTTONS = [
   '.venus-progress-mark',
 ].join(', ');
 const SCOPE = `:is(.venus-navigation *, ${BUTTONS})`;
+// Popups keep E's own controls (segmented Supply/Withdraw, toggles, health bar), except the
+// buttons inside an amount field (token selector, MAX / SAFE MAX), which get New's glass + hover light.
 const KEEP_E =
-  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *, .lite-markets *, .venus-popup-panel *)';
+  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *, .lite-markets *):where(:not(.venus-popup-panel *), .venus-popup-panel .venus-text-field *)';
 
 const NEW_ATTRS: Record<string, string> = {
   glassVersion: 'v6',

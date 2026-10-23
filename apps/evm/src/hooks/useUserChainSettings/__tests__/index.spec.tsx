@@ -1,6 +1,9 @@
+import fakeAccountAddress from '__mocks__/models/address';
+import { useAccountAddress } from 'libs/wallet';
 import type { UserChainSettings } from 'store';
 import { renderHook as renderHookWithContext } from 'testUtils/render';
 import { ChainId } from 'types';
+import type { Mock } from 'vitest';
 import { useUserChainSettings } from '..';
 
 vi.unmock('hooks/useUserChainSettings');
@@ -18,6 +21,26 @@ vi.mock('store', () => ({
 }));
 
 describe('useUserChainSettings', () => {
+  it('does not hide public markets behind a saved My assets filter when disconnected', () => {
+    (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
+    mockStoreState.userSettings = {
+      [ChainId.BSC_TESTNET]: { showUserAssetsOnly: true },
+    };
+    const { result } = renderHookWithContext(() => useUserChainSettings());
+    expect(result.current[0].showUserAssetsOnly).toBe(false);
+    expect(mockStoreState.userSettings[ChainId.BSC_TESTNET]?.showUserAssetsOnly).toBe(true);
+  });
+
+  it('retains the saved My assets preference for connected users', () => {
+    mockStoreState.userSettings = {
+      [ChainId.BSC_TESTNET]: { showUserAssetsOnly: true },
+    };
+    const { result } = renderHookWithContext(() => useUserChainSettings(), {
+      accountAddress: fakeAccountAddress,
+    });
+    expect(result.current[0].showUserAssetsOnly).toBe(true);
+  });
+
   it('returns correct settings from the store', () => {
     mockStoreState.userSettings = {
       [ChainId.BSC_TESTNET]: {

@@ -5,6 +5,8 @@ import type {
 import { type MutationObserverOptions, useMutation } from '@tanstack/react-query';
 
 import type { TransactionType } from 'types';
+import { isLocalPreview } from 'demo/isLocalPreview';
+import { useRealSendTransaction } from './useRealSendTransaction';
 import type {
   Abi,
   Account,
@@ -51,7 +53,11 @@ export interface UseSendTransactionInput<
   options?: UseSendTransactionOptions<TMutateInput>;
 }
 
-export const useSendTransaction = <
+// Real transactions are only sent when the preview runs on the local dev server
+// (see demo/isLocalPreview). Deployed previews (Vercel) keep simulating every action, so
+// nobody can move real funds from the public review site.
+
+export const useSimulatedSendTransaction = <
   TMutateInput extends Record<string, unknown> | void,
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends ContractFunctionName<TAbi, 'payable' | 'nonpayable'>,
@@ -70,3 +76,7 @@ export const useSendTransaction = <
       return undefined;
     },
   });
+
+export const useSendTransaction = (
+  isLocalPreview ? useRealSendTransaction : useSimulatedSendTransaction
+) as typeof useSimulatedSendTransaction;

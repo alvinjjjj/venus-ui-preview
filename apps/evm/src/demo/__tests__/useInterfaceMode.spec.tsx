@@ -10,52 +10,98 @@ vi.mock('../GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
 }));
 
-describe.each(['v1', 'v5', 'lite-experiment'])('%s interface mode commits with navigation', previewMode => {
-  beforeEach(() => {
-    preview.mode = previewMode;
-    wallet.accountAddress = '0x123';
-    useInterfaceModeStore.getState().setMode('lite');
-  });
-
-  it.each([
-    ['pro', 'lite', '/'],
-    ['lite', 'pro', '/liquidity-hubs'],
-  ] as const)('uses destination mode instead of the previous %s mode', (previous, next, path) => {
-    useInterfaceModeStore.getState().setMode(previous);
-    const { result } = renderHook(() => useInterfaceMode(), {
-      wrapper: ({ children }) => (
-        <MemoryRouter initialEntries={[{ pathname: path, state: { interfaceMode: next } }]}>
-          {children}
-        </MemoryRouter>
-      ),
+describe.each(['v1', 'v5', 'lite-experiment'])(
+  '%s interface mode commits with navigation',
+  previewMode => {
+    beforeEach(() => {
+      preview.mode = previewMode;
+      wallet.accountAddress = '0x123';
+      useInterfaceModeStore.getState().setMode('lite');
     });
-    expect(result.current.mode).toBe(next);
-    expect(result.current.isLite).toBe(next === 'lite');
-    // Rendering the destination must not eagerly mutate the external store.
-    expect(useInterfaceModeStore.getState().mode).toBe(previous);
-  });
 
-  it('retains the committed mode on ordinary inner-page links', () => {
-    useInterfaceModeStore.getState().setMode('pro');
-    const { result } = renderHook(() => useInterfaceMode(), {
-      wrapper: ({ children }) => (
-        <MemoryRouter initialEntries={['/dashboard']}>{children}</MemoryRouter>
-      ),
+    it.each([
+      ['pro', 'lite', '/'],
+      ['lite', 'pro', '/liquidity-hubs'],
+    ] as const)('uses destination mode instead of the previous %s mode', (previous, next, path) => {
+      useInterfaceModeStore.getState().setMode(previous);
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={[{ pathname: path, state: { interfaceMode: next } }]}>
+            {children}
+          </MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe(next);
+      expect(result.current.isLite).toBe(next === 'lite');
+      // Rendering the destination must not eagerly mutate the external store.
+      expect(useInterfaceModeStore.getState().mode).toBe(previous);
     });
-    expect(result.current.mode).toBe('pro');
-  });
 
-  it('keeps disconnected users in Lite despite Pro navigation state', () => {
-    wallet.accountAddress = undefined;
-    const { result } = renderHook(() => useInterfaceMode(), {
-      wrapper: ({ children }) => (
-        <MemoryRouter
-          initialEntries={[{ pathname: '/liquidity-hubs', state: { interfaceMode: 'pro' } }]}
-        >
-          {children}
-        </MemoryRouter>
-      ),
+    it('retains the committed mode on ordinary inner-page links', () => {
+      useInterfaceModeStore.getState().setMode('pro');
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={['/dashboard']}>{children}</MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe('pro');
     });
-    expect(result.current.mode).toBe('lite');
-  });
-});
+
+    it('recognizes a direct Pro deep link without requiring old in-memory mode state', () => {
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={['/markets/0x123?chainId=56']}>{children}</MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe('pro');
+      expect(result.current.isLite).toBe(false);
+      expect(useInterfaceModeStore.getState().mode).toBe('lite');
+    });
+
+    it('honors a guest choosing Pro without treating them as connected', () => {
+      wallet.accountAddress = undefined;
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter
+            initialEntries={[{ pathname: '/liquidity-hubs', state: { interfaceMode: 'pro' } }]}
+          >
+            {children}
+          </MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe('pro');
+      expect(result.current.isLite).toBe(false);
+      expect(wallet.accountAddress).toBeUndefined();
+    });
+
+    it.each([
+      ['/', 'lite'],
+      ['/liquidity-hubs', 'pro'],
+      ['/markets/0x123', 'pro'],
+    ] as const)('opens guest entry %s in its public %s surface', (path, expected) => {
+      wallet.accountAddress = undefined;
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => <MemoryRouter initialEntries={[path]}>{children}</MemoryRouter>,
+      });
+      expect(result.current.mode).toBe(expected);
+      expect(wallet.accountAddress).toBeUndefined();
+      expect(useInterfaceModeStore.getState().mode).toBe('lite');
+    });
+
+    it('does not change the selected Pro surface when a wallet disconnects or reconnects', () => {
+      useInterfaceModeStore.getState().setMode('pro');
+      const { result, rerender } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter initialEntries={['/dashboard']}>{children}</MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe('pro');
+      wallet.accountAddress = undefined;
+      rerender();
+      expect(result.current.mode).toBe('pro');
+      wallet.accountAddress = '0x456';
+      rerender();
+      expect(result.current.mode).toBe('pro');
+    });
+  },
+);

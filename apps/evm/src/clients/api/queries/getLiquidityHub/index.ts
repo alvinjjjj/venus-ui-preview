@@ -1,4 +1,5 @@
 import snapshot from 'demo/hubs.json';
+import { withDemoLiquidityHubBalance } from 'demo/withDemoLiquidityHubBalance';
 import { VError } from 'libs/errors';
 import type { ChainId, LiquidityHub, Token } from 'types';
 
@@ -25,6 +26,7 @@ export interface GetLiquidityHubOutput {
 export const getLiquidityHub = async ({
   tokens,
   vhTokenAddress,
+  accountAddress,
 }: GetLiquidityHubInput): Promise<GetLiquidityHubOutput> => {
   const payload = {
     hub: snapshot.result.find(hub => hub.hubAddress.toLowerCase() === vhTokenAddress.toLowerCase()),
@@ -47,6 +49,8 @@ export const getLiquidityHub = async ({
     : undefined;
 
   return {
-    liquidityHub,
+    liquidityHub: liquidityHub
+      ? withDemoLiquidityHubBalance(liquidityHub, accountAddress)
+      : undefined,
   };
 };

@@ -1,5 +1,6 @@
 import { cn } from '@venusprotocol/ui';
 import { useLocation, useNavigate } from 'react-router';
+import { useGlassPreview } from '../GlassVersions/store';
 import { useDemoTheme, useLiquidityLightPreview } from '../useLiquidityLightPreview';
 import lightIcon from './dark.svg';
 import darkIcon from './light.svg';
@@ -9,6 +10,8 @@ export const ThemeSetting = () => {
   const navigate = useNavigate();
   const isLight = useLiquidityLightPreview();
   const saveTheme = useDemoTheme(state => state.setTheme);
+  // New and E: same glass segmented buttons as 30D / 6M / 1Y. O keeps the flat switch.
+  const glass = useGlassPreview(state => state.mode !== 'v1');
   const setTheme = (theme: 'light' | 'dark') => {
     const params = new URLSearchParams(location.search);
     params.delete('theme');
@@ -19,7 +22,10 @@ export const ThemeSetting = () => {
     <div className="flex items-center justify-between">
       <span className="text-light-grey">Theme</span>
       <div
-        className="flex h-10 rounded-lg border border-dark-blue-hover bg-dark-blue"
+        className={cn(
+          'flex h-10 rounded-lg',
+          glass ? 'gap-1' : 'border border-dark-blue-hover bg-dark-blue',
+        )}
         role="group"
         aria-label="Theme"
       >
@@ -30,9 +36,21 @@ export const ThemeSetting = () => {
             aria-label={`${theme === 'light' ? 'Light' : 'Dark'} mode`}
             aria-pressed={isLight === (theme === 'light')}
             onClick={() => setTheme(theme)}
+            {...(glass
+              ? {
+                  'data-venus-button-material': 'glass',
+                  'data-venus-button-variant': 'secondary',
+                  'data-venus-button-size': 'md',
+                  ...(isLight === (theme === 'light') ? { 'data-venus-button-active': 'true' } : {}),
+                }
+              : {})}
             className={cn(
               'flex items-center justify-center rounded-lg px-3 py-1.5 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue',
-              isLight === (theme === 'light') ? 'bg-blue' : 'hover:bg-dark-blue-hover',
+              glass
+                ? 'relative border'
+                : isLight === (theme === 'light')
+                  ? 'bg-blue'
+                  : 'hover:bg-dark-blue-hover',
             )}
           >
             <img

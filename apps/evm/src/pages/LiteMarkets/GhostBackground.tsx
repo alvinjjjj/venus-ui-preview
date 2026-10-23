@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { useIsMdDown } from 'hooks/responsive';
 import { useGlassPreview } from 'demo/GlassVersions/store';
+import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import {
   defaultExplorerStarTuning,
   defaultFlowSettings,
@@ -51,8 +52,16 @@ const stillStars = Array.from({ length: originalStars.stars }, (_, index) => {
   };
 });
 
+// E Light reuses the sky's deterministic positions at one sixth of its density.
+// This static distant layer costs no animation loop and also serves compact /
+// reduced-motion views; only the existing line particles need to move.
+const lightDust = stillStars.filter((_, index) => index % 6 === 0);
+
 export function GhostBackground({ shared = false, layeredLines = false }: { shared?: boolean; layeredLines?: boolean }) {
-  const original = useGlassPreview(state => state.mode !== 'explorer');
+  const mode = useGlassPreview(state => state.mode);
+  const original = mode !== 'explorer';
+  const light = useLiquidityLightPreview();
+  const lightAmbient = mode === 'lite-experiment' && light && layeredLines;
   const reducedMotion = useReducedMotion();
   const compact = useIsMdDown();
   const still = original ? (
@@ -84,20 +93,27 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
     <div
       className={`lite-ghost${original ? ' lite-ghost--stars' : ''}${
         shared ? ' lite-ghost--shared' : ''
-      }`}
+      }${lightAmbient ? ' lite-ghost--light-ambient' : ''}`}
       aria-hidden="true"
     >
       {layeredLines && !reducedMotion && !compact && (
         <div className="lite-ghost__hero-field">
           <Suspense fallback={null}>
-            <FlowField settings={flow} starTuning={lineOnlyStars} variant="depth-pulse" interactive={false} />
+            <FlowField key={lightAmbient ? 'e-light-lines' : 'ambient-lines'} settings={flow} starTuning={lineOnlyStars} variant="depth-pulse" interactive={false} ambientLight={lightAmbient} />
           </Suspense>
         </div>
       )}
-      {(!original || reducedMotion || compact) && (
+      {lightAmbient && (
+        <svg className="lite-ghost__light-dust lite-ghost__still" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          {lightDust.map((star, index) => (
+            <circle key={index} cx={star.x} cy={star.y} r={star.radius} opacity={star.opacity} />
+          ))}
+        </svg>
+      )}
+      {!lightAmbient && (!original || reducedMotion || compact) && (
         <div className="lite-ghost__still-layer">{still}</div>
       )}
-      {!reducedMotion && !compact && (
+      {!lightAmbient && !reducedMotion && !compact && (
         <div className="lite-ghost__motion">
           <Suspense fallback={null}>
             <FlowField

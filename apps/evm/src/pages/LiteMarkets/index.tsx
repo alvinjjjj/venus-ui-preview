@@ -509,6 +509,7 @@ export default function LiteMarkets() {
                           <div className={experimental ? 'lite-experiment-earn' : undefined}>
                             <div
                               className={experimental ? 'lite-experiment-scroll' : undefined}
+                              data-loading={experimental && loading ? 'true' : undefined}
                               role={experimental ? 'region' : undefined}
                               aria-label={
                                 experimental ? 'Earn token list, scroll for more assets' : undefined
@@ -525,10 +526,14 @@ export default function LiteMarkets() {
                                 tableLayout="auto"
                                 breakpoint="md"
                                 hideCardDelimiter
+                                // While loading, keep the table (header + spinner) instead of the
+                                // "unavailable" placeholder, so the card doesn't flash a different layout.
                                 placeholder={
-                                  !ready
-                                    ? 'Market data is unavailable. Please refresh to try again.'
-                                    : 'No assets found. Try another symbol.'
+                                  loading
+                                    ? undefined
+                                    : !ready
+                                      ? 'Market data is unavailable. Please refresh to try again.'
+                                      : 'No assets found. Try another symbol.'
                                 }
                                 header={
                                   <div className={experimental ? 'lite-market-toolbar' : undefined}>

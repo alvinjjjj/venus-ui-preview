@@ -1,4 +1,5 @@
 import snapshot from 'demo/hubs.json';
+import { withDemoLiquidityHubBalance } from 'demo/withDemoLiquidityHubBalance';
 import type { Address } from 'viem';
 
 import { VError } from 'libs/errors';
@@ -21,6 +22,7 @@ export interface GetLiquidityHubsResponse {
 
 export const getLiquidityHubs = async ({
   tokens,
+  accountAddress,
 }: GetLiquidityHubsInput): Promise<GetLiquidityHubsOutput> => {
   const payload = snapshot as unknown as GetLiquidityHubsResponse;
 
@@ -41,7 +43,7 @@ export const getLiquidityHubs = async ({
       const liquidityHub = formatToLiquidityHub({ apiLiquidityHub, tokens });
 
       if (liquidityHub) {
-        acc.push(liquidityHub);
+        acc.push(withDemoLiquidityHubBalance(liquidityHub, accountAddress));
       }
 
       return acc;

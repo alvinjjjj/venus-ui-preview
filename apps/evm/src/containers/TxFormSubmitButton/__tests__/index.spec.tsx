@@ -21,6 +21,18 @@ import { TxFormSubmitButton, type TxFormSubmitButtonProps } from '..';
 
 const swapDetailsMock = vi.fn();
 
+beforeAll(() => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
+
 vi.mock('containers/SwapDetails', () => ({
   SwapDetails: (props: unknown) => {
     swapDetailsMock(props);

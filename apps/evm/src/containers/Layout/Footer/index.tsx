@@ -1,12 +1,10 @@
 import { GlassVersions } from 'demo/GlassVersions';
-import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useGetToken } from 'libs/tokens';
 import { useTranslation } from 'libs/translations';
 import { useChainId } from 'libs/wallet';
 import { generateExplorerUrl } from 'utilities';
 
 import { Icon, type IconName, cn } from 'components';
-import { useInterfaceMode } from 'demo/useInterfaceMode';
 import {
   VENUS_DISCORD_URL,
   VENUS_DOC_URL,
@@ -16,14 +14,14 @@ import {
 } from 'constants/production';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
-import { forwardRef } from 'react';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { FooterExplorer } from 'pages/Landing/FooterExplorer';
-import { TrustedWallets } from 'pages/Landing/LandingMockup';
+import { forwardRef } from 'react';
 import { useLocation } from 'react-router';
-import { useStore as useLayoutStore } from '../store';
 
 interface SocialLink {
   iconName: IconName;
+  label: string;
   href?: string;
 }
 
@@ -36,13 +34,8 @@ interface LinkConfig {
 export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
   const { chainId } = useChainId();
   const { isLite, supportsModes } = useInterfaceMode();
-  const isExperiment = useGlassPreview(state => state.mode === 'lite-experiment');
   const { pathname } = useLocation();
   const isAbout = pathname.replace(/\/$/, '') === routes.aboutUs.path;
-  const isLiteMarketDetail = useLayoutStore(state => state.isLiteMarketDetail);
-  const showLiteFooter = (pathname === '/' || pathname === '') && !isLiteMarketDetail;
-  const isPro = supportsModes && !isLite;
-  const isProHub = isPro && pathname.replace(/\/$/, '') === routes.liquidityHubs.path;
   const { t } = useTranslation();
 
   const xvs = useGetToken({
@@ -52,6 +45,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
   const socialLinks: SocialLink[] = [
     {
       iconName: 'venus',
+      label: 'Venus token explorer',
       href:
         xvs &&
         generateExplorerUrl({
@@ -62,18 +56,22 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     },
     {
       iconName: 'discord',
+      label: 'Discord',
       href: VENUS_DISCORD_URL,
     },
     {
       iconName: 'telegram',
+      label: 'Telegram',
       href: VENUS_TELEGRAM_URL,
     },
     {
       iconName: 'x',
+      label: 'X',
       href: VENUS_FLUX_URL,
     },
     {
       iconName: 'github',
+      label: 'GitHub',
       href: VENUS_GITHUB_URL,
     },
   ];
@@ -88,6 +86,10 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       to: routes.skills.path,
     },
     {
+      label: 'About',
+      to: routes.aboutUs.path,
+    },
+    {
       label: t('footer.links.privacyPolicy'),
       to: routes.privacyPolicy.path,
     },
@@ -97,15 +99,12 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     },
   ];
 
-  if (isExperiment && isLite && !isAbout) return <GlassVersions />;
-
-  // Every Pro page now ends with the same Explorer footer as the Liquidity Hub
-  // ("Trusted by many" stays on the Hub and Lite only).
-  if (isLite || isPro || isAbout) {
+  // Product pages use the original compact link/social bar. Keep the large
+  // brand footer on the About presentation only; do not delete that component.
+  if (isAbout) {
     return (
       <div ref={ref} className="w-full shrink-0">
-        {!isAbout && (isLite || isProHub) && <TrustedWallets />}
-        {(isPro || showLiteFooter || isAbout) && <FooterExplorer lite={isLite} hideDividers />}
+        <FooterExplorer lite={isLite} hideDividers />
         <GlassVersions />
       </div>
     );
@@ -115,11 +114,13 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     <footer
       ref={ref}
       className={cn(
-        'bg-background-active mt-10 p-5 space-y-4 sm:flex sm:flex-wrap sm:gap-4 sm:justify-between sm:items-center sm:space-y-0 md:px-6 xl:px-10',
+        'venus-compact-footer bg-background-active mt-10 p-5 space-y-4 sm:flex sm:flex-wrap sm:gap-4 sm:justify-between sm:items-center sm:space-y-0 md:px-6 xl:px-10',
         isLite && 'mt-0 mb-0 w-full shrink-0 border-0',
+        // Leave the existing preview launcher's slot clear of the GitHub link.
+        supportsModes && 'sm:pr-20 xl:pr-20',
       )}
     >
-      <div className="flex items-center gap-4 flex-wrap">
+      <nav className="flex items-center gap-4 flex-wrap" aria-label="Footer">
         {footerLinks.map(footerLink => {
           const { label, ...restProps } = footerLink;
 
@@ -129,7 +130,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
             </Link>
           );
         })}
-      </div>
+      </nav>
 
       <div className="flex flex-none items-center">
         {socialLinks.map(socialLink => (
@@ -139,6 +140,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
             key={socialLink.href}
             target="_blank"
             rel="noreferrer"
+            aria-label={socialLink.label}
           >
             <Icon name={socialLink.iconName} className="text-white h-3 w-3" />
           </a>
@@ -147,7 +149,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       <div
         className={cn(
           'venus-footer-preview w-full border-t border-dark-blue-hover pt-4',
-          isLite && 'hidden',
+          supportsModes && 'hidden',
         )}
       >
         <GlassVersions />

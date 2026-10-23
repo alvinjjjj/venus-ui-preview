@@ -142,7 +142,9 @@ export const Form: React.FC<FormProps> = ({
     }));
 
   const isLoading =
-    isSubmitting || isGetLiquidityHubsLoading || isGetPoolLoading || isGetSimulatedPoolLoading;
+    isSubmitting ||
+    isGetLiquidityHubsLoading ||
+    (affectsCorePool && (isGetPoolLoading || isGetSimulatedPoolLoading));
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

@@ -97,6 +97,8 @@ export const FlowFieldThree: React.FC<{
   interactive: boolean;
   connectedFlow?: boolean;
   transitionProgress?: number;
+  /** Optional ink palette for the E Light ambient layer, not the landing hero. */
+  ambientLight?: boolean;
 }> = ({
   settings,
   starTuning,
@@ -104,6 +106,7 @@ export const FlowFieldThree: React.FC<{
   interactive,
   connectedFlow = false,
   transitionProgress,
+  ambientLight = false,
 }) => {
   const orbitSettings = useLandingMotion(state => state.orbit);
   const orbitRef = useRef(orbitSettings);
@@ -136,6 +139,17 @@ export const FlowFieldThree: React.FC<{
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
+
+    // The opt-in is passed only by E Light. All existing hero / Dark rendering
+    // keeps its original materials, geometry, density and timing.
+    const ambient = ambientLight && lightRef.current;
+    const ambientStyle = ambient ? getComputedStyle(mount) : undefined;
+    const ambientColor = (name: string, fallback: THREE.Color) => {
+      const value = ambientStyle?.getPropertyValue(name).trim();
+      return value ? new THREE.Color(value) : fallback.clone();
+    };
+    const lightTrack = ambientColor('--e-light-ambient-line', LIGHT_TRACK);
+    const lightParticle = ambientColor('--e-light-ambient-particle', LIGHT_INK);
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -226,7 +240,7 @@ export const FlowFieldThree: React.FC<{
     // Light comets: a short streak per particle, rotated to its direction of travel, fading
     // from a transparent tail to a solid head.
     const cometMaterial = new THREE.ShaderMaterial({
-      uniforms: { uPixelRatio: { value: pixelRatio }, uColor: { value: LIGHT_INK.clone() } },
+      uniforms: { uPixelRatio: { value: pixelRatio }, uColor: { value: lightParticle } },
       vertexShader: `
         attribute float aSize;
         attribute float aIntensity;
@@ -271,6 +285,11 @@ export const FlowFieldThree: React.FC<{
       foregroundMaterial.blending = THREE.NormalBlending;
       foregroundMaterial.opacity = 0.1;
       particleMaterial.blending = THREE.NormalBlending;
+    }
+    // Local atmospheric calibration: thin ink paths, no luminous wide-band glow.
+    if (ambient) {
+      lineMaterial.opacity = 0.32;
+      foregroundMaterial.opacity = 0;
     }
 
     let lineMesh: THREE.LineSegments | undefined;
@@ -1125,7 +1144,9 @@ export const FlowFieldThree: React.FC<{
           );
           vertices.set([start.x, start.y, 0, end.x, end.y, 0], index);
           const fade = 1 - 0.53 * (segment / SEGMENTS);
-          if (lightRef.current)
+          if (ambient)
+            lineColor.copy(lightTrack);
+          else if (lightRef.current)
             lineColor
               .copy(LIGHT_PAPER)
               .lerp(LIGHT_TRACK, Math.min(0.34, 0.08 + intensity * 0.45 * fade));
@@ -1191,6 +1212,10 @@ export const FlowFieldThree: React.FC<{
 
       spineMaterial.color.setHex(hasDepth ? 0x167ac0 : 0x48bcff);
       spineMaterial.opacity = hasDepth ? 0.48 : 0.72;
+      if (ambient) {
+        spineMaterial.color.copy(lightTrack);
+        spineMaterial.opacity = 0.2;
+      }
       const spineGeometry = new THREE.BufferGeometry();
       spineGeometry.setAttribute(
         'position',
@@ -1227,6 +1252,8 @@ export const FlowFieldThree: React.FC<{
         particleSizes[index] = lightRef.current
           ? (tier < 0.72 ? 18 : 24) * (hasDepth ? [0.8, 1, 1.15][depth] : 1)
           : (tier < 0.72 ? 4.5 : tier < 0.96 ? 6.8 : 10.5) * (hasDepth ? [0.82, 1, 1.2][depth] : 1);
+        // Retain the travel paths and speed, but use shorter, quieter ink traces.
+        if (ambient) particleSizes[index] *= 0.55;
         particleColors.set(
           tier < 0.72 ? [0.25, 0.58, 0.9] : tier < 0.96 ? [0.13, 0.68, 1] : [0.45, 0.85, 1],
           index * 3,
@@ -1663,7 +1690,7 @@ export const FlowFieldThree: React.FC<{
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, []);
+  }, [ambientLight]);
 
   useEffect(() => {
     const previous = appliedRef.current;

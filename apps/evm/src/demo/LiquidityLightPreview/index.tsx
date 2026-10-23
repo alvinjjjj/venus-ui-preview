@@ -1,6 +1,8 @@
 import { useLayoutEffect } from 'react';
 import { useLiquidityLightPreview } from '../useLiquidityLightPreview';
 import './preview.css';
+import './e-light.css';
+import './prime-refresh.css';
 
 export const LiquidityLightPreview = () => {
   const enabled = useLiquidityLightPreview();

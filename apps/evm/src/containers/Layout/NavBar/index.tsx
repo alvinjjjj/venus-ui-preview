@@ -7,8 +7,8 @@ import { PAGE_CONTAINER_ID } from 'constants/layout';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
 import venusLogoLightSrc from 'demo/LiquidityLightPreview/venusLogoLight.svg';
-import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import { useEffect } from 'react';
@@ -22,8 +22,8 @@ import { MenuItem } from './MenuItem';
 import { NavButtonWrapper } from './NavButtonWrapper';
 import { Settings } from './Settings';
 import { SettingsButton } from './SettingsButton';
-import { useDashboardMenuItem, useMenuItems } from './useMenuItems';
 import './interface-mode.css';
+import { useDashboardMenuItem, useMenuItems } from './useMenuItems';
 
 export type NavBarProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -147,7 +147,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
 
           <ConnectButton />
 
-          {original && isUserConnected && (
+          {original && (
             <div
               role="group"
               aria-label="Interface mode"

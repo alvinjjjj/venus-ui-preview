@@ -2,14 +2,16 @@ import { Icon } from 'components/Icon';
 import { useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { useIntroductionPreview } from '../InterfaceOnboarding/previewStore';
 import lightIcon from '../ThemeSetting/dark.svg';
 import darkIcon from '../ThemeSetting/light.svg';
+import { useInterfaceMode } from '../useInterfaceMode';
 import { useDemoTheme, useLiquidityLightPreview } from '../useLiquidityLightPreview';
 import { ChangeNotes } from './ChangeNotes';
-import { mountEHeaderMirror } from './eHeaderMirror';
 import { MotionControls } from './MotionControls';
 import './button-materials.css';
 import './controller.css';
+import { mountEHeaderMirror } from './eHeaderMirror';
 import {
   type GlassPreviewMode,
   isExplorerMode,
@@ -28,11 +30,13 @@ const versions: { id: GlassPreviewMode; label: string; description: string }[] =
 ];
 
 export const GlassVersions = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [notes, setNotes] = useState(false);
   const [motionOpen, setMotionOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const previewIntroduction = useIntroductionPreview(state => state.preview);
+  const { isLite } = useInterfaceMode();
   const isLight = useLiquidityLightPreview();
   const saveTheme = useDemoTheme(state => state.setTheme);
   const toggleTheme = () => {
@@ -55,7 +59,9 @@ export const GlassVersions = () => {
     document.documentElement.dataset.glassVersion = styleVersion === 'v5' ? 'v6' : styleVersion;
     document.documentElement.dataset.glassPreview = styleVersion;
     // New mirrors Explorer, so it carries Explorer's mode attribute for the shared CSS.
-    document.documentElement.dataset.glassMode = isExplorerMode(version) ? 'explorer' : styleVersion;
+    document.documentElement.dataset.glassMode = isExplorerMode(version)
+      ? 'explorer'
+      : styleVersion;
     // Keep E's exact selection in glassStudy while inheriting O's materials.
     document.documentElement.dataset.glassChoice = styleVersion;
     document.documentElement.dataset.glassStudy = version;
@@ -82,12 +88,13 @@ export const GlassVersions = () => {
     const updateLight = (event: PointerEvent) => {
       if (!(event.target instanceof Element)) return;
       const button = event.target.closest<HTMLElement>(
-        '[data-venus-button-variant="primary"], [data-venus-button-variant="secondary"]',
+        '[data-venus-button-variant="primary"], [data-venus-button-variant="secondary"], .venus-text-field [data-venus-button-variant]',
       );
       if (
         !button ||
         (isEHeaderLight &&
-          !!button.closest('.venus-mode-switch, .lite-markets, .venus-popup-panel')) ||
+          (!!button.closest('.venus-mode-switch, .lite-markets') ||
+            (!!button.closest('.venus-popup-panel') && !button.closest('.venus-text-field')))) ||
         button.matches(':disabled, [aria-disabled="true"]') ||
         button.closest('.account-preview')
       )
@@ -193,6 +200,15 @@ export const GlassVersions = () => {
                 onClick={() => setNotes(!notes)}
               >
                 <Icon name="comment" />
+              </button>
+              <button
+                type="button"
+                aria-label={`Preview ${isLite ? 'Pro' : 'Lite'} introduction`}
+                aria-haspopup="dialog"
+                data-tip={isLite ? 'Pro 引導預覽' : 'Lite 引導預覽'}
+                onClick={() => previewIntroduction(isLite ? 'pro' : 'lite')}
+              >
+                <Icon name="eye" />
               </button>
             </div>
           </>

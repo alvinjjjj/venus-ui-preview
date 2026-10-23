@@ -7,6 +7,18 @@ import { useAuthModal } from 'libs/wallet';
 import { renderComponent } from 'testUtils/render';
 import { ConnectWallet } from '..';
 
+beforeAll(() => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
+
 describe('ConnectWallet', () => {
   beforeEach(() => {
     (useAuthModal as Mock).mockReturnValue({ openAuthModal: vi.fn() });

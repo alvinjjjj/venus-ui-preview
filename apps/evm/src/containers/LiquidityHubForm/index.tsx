@@ -6,6 +6,10 @@ import { useState } from 'react';
 import type { VhToken } from 'types';
 import { EarnDetails } from 'containers/MarketForm/EarnDetails';
 import { InlineSubmit } from 'containers/MarketForm/InlineSubmit';
+import { isLocalPreview } from 'demo/isLocalPreview';
+import { useTranslation } from 'libs/translations';
+import { SupplyTabs } from './SupplyTabs';
+import { WithdrawForm } from './WithdrawForm';
 
 export interface LiquidityHubFormProps {
   compactEarn?: boolean;
@@ -16,7 +20,62 @@ export interface LiquidityHubFormProps {
   navType?: TabNavType;
 }
 
-export const LiquidityHubForm = ({
+export const LiquidityHubForm = (props: LiquidityHubFormProps) =>
+  isLocalPreview ? <RealLiquidityHubForm {...props} /> : <PreviewLiquidityHubForm {...props} />;
+
+/** Upstream Venus form (real balances, approvals and transactions). Local dev server only. */
+const RealLiquidityHubForm = ({
+  vhToken,
+  initialActiveTabId,
+  navType,
+  onSubmitSuccess,
+  compactEarn = false,
+  inlineHeader = false,
+}: LiquidityHubFormProps) => {
+  const { t } = useTranslation();
+  return (
+    <Tabs
+      variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
+      className={
+        compactEarn
+          ? 'lite-compact-market-tabs'
+          : inlineHeader
+            ? 'lite-single-market-tabs'
+            : undefined
+      }
+      headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
+      initialActiveTabId={initialActiveTabId}
+      navType={navType}
+      tabs={[
+        {
+          id: 'supply',
+          title: t('liquidityHubForm.supplyTabTitle'),
+          content: (
+            <LiquidityHubAccessor vhToken={vhToken}>
+              {({ liquidityHub }) => (
+                <SupplyTabs liquidityHub={liquidityHub} onSubmitSuccess={onSubmitSuccess} />
+              )}
+            </LiquidityHubAccessor>
+          ),
+        },
+        {
+          id: 'withdraw',
+          title: t('liquidityHubForm.withdrawTabTitle'),
+          content: (
+            <LiquidityHubAccessor vhToken={vhToken}>
+              {({ liquidityHub }) => (
+                <WithdrawForm liquidityHub={liquidityHub} onSubmitSuccess={onSubmitSuccess} />
+              )}
+            </LiquidityHubAccessor>
+          ),
+        },
+      ]}
+    />
+  );
+};
+
+/** Simulated form used on deployed previews: no wallet transaction is ever sent. */
+const PreviewLiquidityHubForm = ({
   vhToken,
   initialActiveTabId,
   navType,

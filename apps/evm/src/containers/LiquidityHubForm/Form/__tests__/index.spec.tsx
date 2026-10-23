@@ -82,6 +82,20 @@ describe('LiquidityHubForm Form', () => {
   const mockUseSimulatePoolMutations = useSimulatePoolMutations as Mock;
   const mockUseAccountAddress = useAccountAddress as Mock;
 
+  beforeAll(() => {
+    // jsdom does not implement the observer used by the shared button outline.
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
+  });
+
+  afterAll(() => vi.unstubAllGlobals());
+
   beforeEach(() => {
     mockUseGetPool.mockImplementation(() => ({
       data: {
@@ -122,6 +136,26 @@ describe('LiquidityHubForm Form', () => {
     );
 
     await waitFor(() => expect(input.value).toBe('8.765'));
+  });
+
+  it('does not block wallet supply on unrelated Core pool simulation loading', () => {
+    mockUseGetPool.mockReturnValue({ isLoading: true });
+    mockUseSimulatePoolMutations.mockReturnValue({ isLoading: true });
+
+    renderForm({
+      initialFormValues: { amountTokens: '1' },
+      balanceMutations: [
+        {
+          type: 'liquidityHub',
+          vhTokenAddress: liquidityHub.vhToken.address,
+          action: 'supply',
+          amountTokens: new BigNumber(1),
+        },
+      ],
+    });
+
+    expect(screen.getByRole('button', { name: submitButtonLabel })).toBeEnabled();
+    expect(screen.queryByText('Loading')).not.toBeInTheDocument();
   });
 
   it('submits the current values, resets the form, and calls onSubmitSuccess', async () => {
@@ -290,6 +324,14 @@ describe('LiquidityHubForm Form', () => {
     });
 
     renderForm({
+      balanceMutations: [
+        {
+          type: 'asset',
+          action: 'withdraw',
+          vTokenAddress: poolData[0].assets[0].vToken.address,
+          amountTokens: new BigNumber(1),
+        },
+      ],
       initialFormValues: {
         amountTokens: '1',
       },

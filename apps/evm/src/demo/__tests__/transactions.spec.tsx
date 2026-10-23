@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook } from '@testing-library/react';
-import type { useSendTransaction as UseSendTransaction } from 'hooks/useSendTransaction';
+import type { useSimulatedSendTransaction as UseSimulatedSendTransaction } from 'hooks/useSendTransaction';
 import type { PropsWithChildren } from 'react';
 
-const { useSendTransaction }: { useSendTransaction: typeof UseSendTransaction } =
-  await vi.importActual('hooks/useSendTransaction');
+// Deployed previews use the simulated hook; the local dev server sends real transactions.
+const { useSimulatedSendTransaction: useSendTransaction }: {
+  useSimulatedSendTransaction: typeof UseSimulatedSendTransaction;
+} = await vi.importActual('hooks/useSendTransaction');
 
 it('acknowledges a demo action without preparing, signing or confirming a transaction', async () => {
   const fn = vi.fn(() => {
