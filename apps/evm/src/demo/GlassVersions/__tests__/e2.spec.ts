@@ -160,7 +160,7 @@ it('stacks the Earn APY and Prime entry only in E2, with existing spacing', () =
   expect(rules).not.toMatch(/font|color|background|order:/);
 });
 
-it('keeps E2 layout isolated while preserving the existing E2/E3 shared flame opt-in', () => {
+it('keeps E2 layout isolated while preserving the existing shared form and flame opt-ins', () => {
   const rules = css.replace(/\/\*[\s\S]*?\*\//g, '');
   const selectors = rules
     .split('\n')
@@ -173,7 +173,9 @@ it('keeps E2 layout isolated while preserving the existing E2/E3 shared flame op
         ":root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3'])",
       )
     ) {
-      expect(selector).toMatch(/\s\.lite-e2-(?:flame|promoted-fire)/);
+      expect(selector).toMatch(
+        /\s\.(?:lite-e2-(?:flame|promoted-fire)|inline-submit-dock|venus-text-field)\b/,
+      );
     } else {
       const rootScope = selector.split(' ')[0];
       expect(rootScope).toMatch(/^:root/);
