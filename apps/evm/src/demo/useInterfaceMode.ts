@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router';
 import { create } from 'zustand';
 import { useGlassPreview } from './GlassVersions/store';
+import { isLiteExperimentMode } from './GlassVersions/variants';
 import { isProPage } from './InterfaceOnboarding/policy';
 
 export const useInterfaceModeStore = create<{
@@ -14,7 +15,7 @@ export const useInterfaceModeStore = create<{
 // Lite / Pro select a public browsing surface, independently of wallet access.
 export const useInterfaceMode = () => {
   const preview = useGlassPreview(state => state.mode);
-  const supportsModes = preview === 'v1' || preview === 'v5' || preview === 'lite-experiment';
+  const supportsModes = preview === 'v1' || preview === 'v5' || isLiteExperimentMode(preview);
   const { mode, setMode } = useInterfaceModeStore();
   const { state, pathname } = useLocation();
   // The destination and its mode commit in the same router update. Never mutate

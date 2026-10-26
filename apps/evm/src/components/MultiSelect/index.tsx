@@ -69,6 +69,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
               key={option.value}
               type="button"
               onClick={() => toggle(option.value)}
+              aria-pressed={value.includes(option.value)}
               className="venus-multiselect-option hover:bg-background-hover active:bg-background-hover flex h-12 w-full cursor-pointer items-center justify-between px-4 py-3 text-left"
             >
               <span className="text-b1r whitespace-nowrap text-white">{option.label}</span>
@@ -100,7 +101,10 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
 
           <Icon
             name="chevronDown"
-            className={cn('venus-dropdown-chevron text-grey ml-2 size-3 flex-none', isDropdownOpen && 'rotate-180')}
+            className={cn(
+              'venus-dropdown-chevron text-grey ml-2 size-3 flex-none',
+              isDropdownOpen && 'rotate-180',
+            )}
           />
         </Button>
       )}

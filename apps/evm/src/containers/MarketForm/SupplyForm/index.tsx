@@ -1,4 +1,6 @@
 import BigNumber from 'bignumber.js';
+import { Button } from '@venusprotocol/ui';
+import { ApyBreakdown } from '../ApyBreakdown';
 import { useEffect, useMemo, useState } from 'react';
 import type { Address } from 'viem';
 
@@ -47,6 +49,9 @@ export interface SupplyFormProps {
   onSubmitSuccess?: () => void;
   compact?: boolean;
   streamlined?: boolean;
+  marketDetails?: React.ReactNode;
+  cardLayout?: boolean;
+  marketName?: string;
 }
 
 const SupplyForm: React.FC<SupplyFormProps> = ({
@@ -56,8 +61,12 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
   compact = false,
   streamlined = false,
   collateralSelector,
+  marketDetails,
+  cardLayout = false,
+  marketName,
 }) => {
   const { t } = useTranslation();
+  const [reviewing, setReviewing] = useState(false);
   const { captureAnalyticEvent } = useAnalytics();
 
   const { chainId: accountChainId } = useAccountChainId();
@@ -387,9 +396,8 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
     }));
   };
 
-  const inputFields = (
-    <>
-      <LabeledInlineContent
+  const collateralControl = (
+<LabeledInlineContent
         className={compact || streamlined ? 'lite-collateral-control' : undefined}
         label={t('marketForm.collateral')}
       >
@@ -406,6 +414,11 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
           }
         />
       </LabeledInlineContent>
+  );
+
+  const inputFields = (
+    <>
+      {!cardLayout && collateralControl}
 
       {!collateralSelector && (isIntegratedSwapFeatureEnabled || canWrapNativeToken) ? (
         <SelectTokenTextField
@@ -450,6 +463,9 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
         />
       ) : (
         <TokenTextField
+          id={cardLayout ? "e3-supply-amount" : undefined}
+          label={cardLayout ? "You supply" : undefined}
+          className={cardLayout ? "lite-e3-amount" : undefined}
           leftAdornment={collateralSelector}
           displayTokenIcon={!collateralSelector}
           data-testid={TEST_IDS.tokenTextField}
@@ -468,13 +484,14 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
             }));
           }}
           disabled={
-            !isUserConnected ||
+            (!cardLayout && !isUserConnected) ||
             isSubmitting ||
             isApproveFromTokenLoading ||
             formError?.code === 'SUPPLY_CAP_ALREADY_REACHED'
           }
           rightMaxButton={{
             label: t('marketForm.rightMaxButtonLabel'),
+            disabled: !isUserConnected,
             onClick: handleRightMaxButtonClick,
           }}
           hasError={
@@ -517,13 +534,47 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
   );
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={event => {
+      if (cardLayout && !reviewing) {
+        event.preventDefault();
+        if (new BigNumber(formValues.amountTokens).isFinite() && new BigNumber(formValues.amountTokens).gt(0)) setReviewing(true);
+        return;
+      }
+      return handleSubmit(event);
+    }} className={cardLayout ? "lite-e3-supply-card" : undefined}>
       <div
         className={compact ? 'lite-supply-grid' : streamlined ? 'lite-simple-fields' : 'space-y-4'}
       >
         <SwitchChainNotice />
-        {streamlined ? <div className="lite-input-group">{inputFields}</div> : inputFields}
+        {cardLayout && <div className="lite-e3-step-heading" aria-live="polite"><span>{reviewing ? 'Review supply' : 'Supply'}</span><span className="text-light-grey text-sm">{reviewing ? '2 / 2' : '1 / 2'}</span></div>}
+        {cardLayout && reviewing ? (
+          <>
+            <Button type="button" size="sm" variant="secondary" disabled={isSubmitting || isApproveFromTokenLoading} onClick={() => setReviewing(false)}>Back to edit</Button>
+            <div className="lite-e3-review-summary">
+              <div className="lite-e3-review-amount">{new BigNumber(formValues.amountTokens).toFormat()} <span>{asset.vToken.underlyingToken.symbol}</span></div>
+              <p className="text-light-grey">Supply to {marketName}</p>
+            </div>
+            <LabeledInlineContent label="Network fee">Shown in wallet before confirmation</LabeledInlineContent>
+            {formError?.message && isUserConnected && <p role="alert" className="text-red">{formError.message}</p>}
+          </>
+        ) : (
+          <>
+            {streamlined ? <div className="lite-input-group">{inputFields}</div> : inputFields}
+            {!cardLayout && marketDetails}
+          </>
+        )}
+        {cardLayout && !reviewing ? (
+          <>
+            <div className="lite-e3-destination-summary">
+              {marketDetails}
+              <ApyBreakdown pool={pool} balanceMutations={balanceMutations} renderType="accordion" />
+            </div>
+            <Button type="submit" variant="secondary" className="w-full lite-e3-review-button" disabled={!new BigNumber(formValues.amountTokens).isFinite() || !new BigNumber(formValues.amountTokens).gt(0)}>Review supply</Button>
+          </>
+        ) : (
         <Footer
+          beforeSubmit={cardLayout ? collateralControl : undefined}
+          collapseApy={cardLayout}
           streamlined={streamlined}
           compact={compact}
           analyticVariant="supply_form"
@@ -545,6 +596,7 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
           }
           isLoading={isSubmitting || isGetSwapQuoteLoading}
         />
+        )}
       </div>
     </form>
   );

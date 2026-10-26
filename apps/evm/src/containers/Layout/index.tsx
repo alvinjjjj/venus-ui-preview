@@ -13,6 +13,7 @@ import { useStore } from './store';
 import { useInterfaceMode, useInterfaceModeStore } from 'demo/useInterfaceMode';
 import { GhostBackground } from 'pages/LiteMarkets/GhostBackground';
 import { useGlassPreview } from 'demo/GlassVersions/store';
+import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
 
 // Pages here render their own Wrapper so a full-bleed promo banner can sit above it.
 const NO_WRAPPER_PATHNAMES = [
@@ -29,7 +30,8 @@ export const Layout: React.FC = () => {
 
   const { pathname } = useLocation();
   const { isLite, supportsModes, mode } = useInterfaceMode();
-  const isExperiment = useGlassPreview(state => state.mode === 'lite-experiment');
+  const isE3 = useGlassPreview(state => state.mode === 'lite-experiment-v3');
+  const isExperiment = useGlassPreview(state => isLiteExperimentMode(state.mode));
   const fixedLite = isExperiment && isLite && (pathname === '/' || pathname === '');
   // Preserve the committed selection for ordinary links without mode state.
   // Layout effects run before paint, after the destination has committed.
@@ -90,7 +92,8 @@ export const Layout: React.FC = () => {
 
   return (
     <>
-      <div className="h-dvh flex flex-col">
+      <div className={cn("h-dvh flex flex-col", isE3 && showStardust && "lite-e3-sky-layout")}>
+        {isE3 && showStardust && <GhostBackground shared />}
         <NavBar className="shrink-0" />
 
         <div
@@ -103,7 +106,7 @@ export const Layout: React.FC = () => {
           id={PAGE_CONTAINER_ID}
           onScroll={handleScroll}
         >
-          {showStardust && <GhostBackground shared layeredLines={fixedLite} />}
+          {showStardust && !isE3 && <GhostBackground shared layeredLines={fixedLite} />}
           <Header />
 
           <div className={cn('relative flex grow flex-col', isLite && 'shrink-0')}>

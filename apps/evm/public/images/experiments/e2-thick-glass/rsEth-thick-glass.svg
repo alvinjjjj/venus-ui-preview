@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="rsEth thick glass icon"><defs><linearGradient id="rsEth-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#619898" /><stop offset=".6" stop-color="#2c4444" /><stop offset="1" stop-color="#446a6a" /></linearGradient><radialGradient id="rsEth-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#e2f3f3" stop-opacity=".52" /><stop offset=".45" stop-color="#e2f3f3" stop-opacity=".14" /><stop offset="1" stop-color="#e2f3f3" stop-opacity="0" /></radialGradient><radialGradient id="rsEth-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#89e6e6" stop-opacity=".4" /><stop offset="1" stop-color="#89e6e6" stop-opacity="0" /></radialGradient><linearGradient id="rsEth-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#e2f3f3" stop-opacity=".8" /><stop offset=".45" stop-color="#89e6e6" stop-opacity=".08" /><stop offset="1" stop-color="#89e6e6" stop-opacity=".55" /></linearGradient><clipPath id="rsEth-src-clip0_288_333">
+<rect width="391" height="391" fill="white" />
+</clipPath>
+</defs><circle cx="128" cy="128" r="122" fill="url(#rsEth-base)" /><circle cx="128" cy="128" r="122" fill="url(#rsEth-shine)" /><circle cx="128" cy="128" r="122" fill="url(#rsEth-transmit)" /><g transform="translate(20.000000 20.000000) scale(0.55242967) translate(-0.0 -0.0)" fill="none"><g clip-path="url(#rsEth-src-clip0_288_333)">
+<g opacity="0.3">
+<path opacity="0.8" d="M201.583 20.4868V149.853L310.924 198.715L201.583 20.4868Z" fill="white" />
+<path d="M201.583 20.4868L92.2233 198.715L201.583 149.853V20.4868Z" fill="white" />
+<path opacity="0.8" d="M201.583 282.549V370.454L311 219.072L201.583 282.549Z" fill="white" />
+<path d="M201.583 370.454V282.537L92.2232 219.072L201.583 370.454Z" fill="white" />
+<path opacity="0.5" d="M201.583 262.205L310.923 198.715L201.583 149.885V262.205Z" fill="white" />
+<path d="M92.2236 198.715L201.583 262.205V149.885L92.2236 198.715Z" fill="white" fill-opacity="0.3" />
+</g>
+<g opacity="0.3">
+<path opacity="0.8" d="M201.585 27V146.905L302.929 192.194L201.585 27Z" fill="white" />
+<path d="M201.585 27L100.223 192.194L201.585 146.905V27Z" fill="white" />
+<path opacity="0.8" d="M201.588 288.452V361.089L292 236L201.588 288.452Z" fill="white" />
+<path d="M201.588 361.089V288.441L111.223 236L201.588 361.089Z" fill="white" />
+<path opacity="0.5" d="M201.585 258.106L302.929 199.259L201.585 154V258.106Z" fill="white" />
+<path d="M100.223 199.259L201.585 258.106V154L100.223 199.259Z" fill="white" fill-opacity="0.3" />
+</g>
+<path d="M201.589 58.8782V159.862L286.941 198.003L201.589 58.8782Z" fill="#C1DCDC" />
+<path d="M201.589 58.8782L116.223 198.003L201.589 159.862V58.8782Z" fill="white" />
+<path d="M201.589 263.444V332.063L287 213.894L201.589 263.444Z" fill="#C1DCDC" />
+<path d="M201.589 332.063V263.434L116.223 213.894L201.589 332.063Z" fill="white" />
+<path opacity="0.5" d="M201.589 247.563L286.941 198.003L201.589 159.886V247.563Z" fill="white" />
+<path d="M116.223 198.003L201.589 247.563V159.886L116.223 198.003Z" fill="white" fill-opacity="0.3" />
+</g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#rsEth-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#89e6e6" stroke-opacity=".12" /></svg>

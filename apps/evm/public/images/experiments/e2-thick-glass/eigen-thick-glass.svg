@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="eigen thick glass icon"><defs><linearGradient id="eigen-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#c8d4e0" /><stop offset=".6" stop-color="#8191a4" /><stop offset="1" stop-color="#a8bdcc" /></linearGradient><radialGradient id="eigen-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#ffffff" stop-opacity=".52" /><stop offset=".45" stop-color="#ffffff" stop-opacity=".14" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" /></radialGradient><radialGradient id="eigen-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#d9edfa" stop-opacity=".4" /><stop offset="1" stop-color="#d9edfa" stop-opacity="0" /></radialGradient><linearGradient id="eigen-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#ffffff" stop-opacity=".8" /><stop offset=".45" stop-color="#d9edfa" stop-opacity=".08" /><stop offset="1" stop-color="#d9edfa" stop-opacity=".55" /></linearGradient></defs><circle cx="128" cy="128" r="122" fill="url(#eigen-base)" /><circle cx="128" cy="128" r="122" fill="url(#eigen-shine)" /><circle cx="128" cy="128" r="122" fill="url(#eigen-transmit)" /><g transform="translate(20.000000 20.000000) scale(0.54000000) translate(-0.0 -0.0)" fill="none"><path d="M215.6 110V80H185.6V110H215.6Z" fill="#1A0C6D" />
+<path d="M154.4 200V80H94.4V200H154.4Z" fill="#1A0C6D" />
+<path d="M154.4 320V200H94.4V320H154.4Z" fill="#1A0C6D" />
+<path d="M274.4 200V140H244.4V200H274.4Z" fill="#1A0C6D" />
+<path d="M244.4 320V260H214.4V320H244.4Z" fill="#1A0C6D" />
+<path d="M274.4 320V260H244.4V320H274.4Z" fill="#1A0C6D" />
+<path d="M184.4 320V260H154.4V320H184.4Z" fill="#1A0C6D" />
+<path d="M304.4 140V80H274.4V140H304.4Z" fill="#1A0C6D" />
+<path d="M244.4 200V80H214.4V200H244.4Z" fill="#1A0C6D" />
+<path d="M214.4 320V200H184.4V320H214.4Z" fill="#1A0C6D" />
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#eigen-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#d9edfa" stroke-opacity=".12" /></svg>

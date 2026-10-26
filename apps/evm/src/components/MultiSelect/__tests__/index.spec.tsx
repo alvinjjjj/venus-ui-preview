@@ -1,8 +1,26 @@
 import { fireEvent, screen } from '@testing-library/react';
+import { useState } from 'react';
 
 import { renderComponent } from 'testUtils/render';
 
 import { MultiSelect } from '..';
+
+vi.mock('hooks/responsive', async importOriginal => ({
+  ...(await importOriginal<typeof import('hooks/responsive')>()),
+  useBreakpointUp: () => true,
+}));
+
+beforeAll(() => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
 
 describe('MultiSelect', () => {
   const options = [
@@ -34,5 +52,33 @@ describe('MultiSelect', () => {
 
     expect(menu).toHaveClass('overflow-hidden');
     expect(menu).not.toHaveClass('overflow-visible');
+  });
+
+  it('exposes selected options and clears both selection feedback and the trigger on reset', () => {
+    const ControlledSelect = () => {
+      const [value, setValue] = useState<string[]>([]);
+      return (
+        <MultiSelect
+          options={options}
+          value={value}
+          onChange={setValue}
+          placeholder="All options"
+          renderCount={count => `${count} options`}
+          title="Select options"
+          resetLabel="Reset"
+        />
+      );
+    };
+    renderComponent(<ControlledSelect />);
+    fireEvent.click(screen.getByRole('button', { name: 'All options' }));
+    const option = screen.getAllByRole('button', { name: 'First option', pressed: false })[0];
+    fireEvent.click(option);
+    expect(option).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(screen.getAllByRole('button', { name: 'Reset' })[0]);
+    expect(option).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: 'All options' })).toHaveAttribute(
+      'data-multiselect-has-value',
+      'false',
+    );
   });
 });

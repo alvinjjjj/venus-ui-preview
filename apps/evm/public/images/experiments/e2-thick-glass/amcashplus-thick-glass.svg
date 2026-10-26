@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="amcashplus-title">
+<title id="amcashplus-title">AMCASH+ thick glass token icon</title><defs><linearGradient id="amcashplus-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#d3dde7" /><stop offset=".6" stop-color="#8b9caf" /><stop offset="1" stop-color="#b4c9d7" /></linearGradient>
+<radialGradient id="amcashplus-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#ffffff" stop-opacity=".52" /><stop offset=".45" stop-color="#ffffff" stop-opacity=".14" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" /></radialGradient>
+<radialGradient id="amcashplus-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#e2f3ff" stop-opacity=".4" /><stop offset="1" stop-color="#e2f3ff" stop-opacity="0" /></radialGradient>
+<linearGradient id="amcashplus-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#ffffff" stop-opacity=".8" /><stop offset=".45" stop-color="#e2f3ff" stop-opacity=".08" /><stop offset="1" stop-color="#e2f3ff" stop-opacity=".55" /></linearGradient><clipPath id="amcashplus-source-A"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath><clipPath id="amcashplus-clip0_2766_19088">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+<clipPath id="amcashplus-clip1_2766_19088">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+<clipPath id="amcashplus-clip2_2766_19088">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+<clipPath id="amcashplus-clip3_2766_19088">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+</defs>
+<g id="amcashplus-glass"><circle cx="128" cy="128" r="122" fill="url(#amcashplus-base)" /><circle cx="128" cy="128" r="122" fill="url(#amcashplus-shine)" /><circle cx="128" cy="128" r="122" fill="url(#amcashplus-transmit)" /><circle cx="128" cy="128" r="121" stroke="url(#amcashplus-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" stroke="#e2f3ff" stroke-opacity=".12" /></g>
+<g transform="translate(20 20) scale(5.4)" fill="none"><g clip-path="url(#amcashplus-clip3_2766_19088)">
+<path d="M13.5111 13.3H9.51111V23.3H13.5111V13.3Z" fill="black" />
+<path d="M27.5111 9.30005H13.5111V13.3H27.5111V9.30005Z" fill="black" />
+<path d="M21.5111 23.3H13.5111V29.3H21.5111V23.3Z" fill="black" />
+<path d="M13.5111 15.3C13.5111 14.1954 14.4065 13.3 15.5111 13.3H14.5111H13.5111V15.3Z" fill="black" />
+<path d="M13.5111 9.30005C13.5111 12.8425 13.0536 13.3 9.51111 13.3H13.5111V9.30005Z" fill="black" />
+<path d="M13.5111 29.3C13.5111 23.9863 13.0536 23.3 9.51111 23.3H13.5111V29.3Z" fill="black" />
+<path d="M17.5111 23.3C15.3019 23.3 13.5111 22.4046 13.5111 21.3V23.3H17.5111Z" fill="black" />
+<path d="M23.5111 23.3L29.5111 26.4667L23.5111 29.3V23.3Z" fill="#B72025" />
+</g>
+</g></svg>

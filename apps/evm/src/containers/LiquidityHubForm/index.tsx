@@ -12,6 +12,8 @@ import { SupplyTabs } from './SupplyTabs';
 import { WithdrawForm } from './WithdrawForm';
 
 export interface LiquidityHubFormProps {
+  supplyOnly?: boolean;
+  walletFirst?: boolean;
   compactEarn?: boolean;
   inlineHeader?: boolean;
   vhToken: VhToken;
@@ -31,10 +33,13 @@ const RealLiquidityHubForm = ({
   onSubmitSuccess,
   compactEarn = false,
   inlineHeader = false,
+  supplyOnly = false,
+  walletFirst = false,
 }: LiquidityHubFormProps) => {
   const { t } = useTranslation();
   return (
     <Tabs
+      hideHeader={supplyOnly}
       variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
       className={
         compactEarn
@@ -53,7 +58,7 @@ const RealLiquidityHubForm = ({
           content: (
             <LiquidityHubAccessor vhToken={vhToken}>
               {({ liquidityHub }) => (
-                <SupplyTabs liquidityHub={liquidityHub} onSubmitSuccess={onSubmitSuccess} />
+                <SupplyTabs liquidityHub={liquidityHub} onSubmitSuccess={onSubmitSuccess} walletFirst={walletFirst} />
               )}
             </LiquidityHubAccessor>
           ),
@@ -81,6 +86,7 @@ const PreviewLiquidityHubForm = ({
   navType,
   compactEarn = false,
   inlineHeader = false,
+  supplyOnly = false,
 }: LiquidityHubFormProps) => {
   const { loggedIn, setLoginOpen } = useDemo();
   const [amount, setAmount] = useState('');
@@ -90,6 +96,7 @@ const PreviewLiquidityHubForm = ({
     <LiquidityHubAccessor vhToken={vhToken}>
       {({ liquidityHub }) => (
         <Tabs
+      hideHeader={supplyOnly}
           variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
           className={
             compactEarn

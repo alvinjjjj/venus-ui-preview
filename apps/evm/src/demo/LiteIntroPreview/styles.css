@@ -223,3 +223,6 @@
   .intro-welcome::before { display: none; }
   .intro-spotlight { outline-color: Highlight; }
 }
+
+/* Align the introduction pointer with the actual header mode control. */
+.intro-live-preview .intro-welcome::before { right: auto; left: calc(var(--intro-arrow-left, 50%) - var(--spacing) * 2); }

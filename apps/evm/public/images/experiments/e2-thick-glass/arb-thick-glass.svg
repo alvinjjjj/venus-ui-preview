@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="arb thick glass icon"><defs><linearGradient id="arb-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#617d98" /><stop offset=".6" stop-color="#2c3844" /><stop offset="1" stop-color="#44576a" /></linearGradient><radialGradient id="arb-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#e2ebf3" stop-opacity=".52" /><stop offset=".45" stop-color="#e2ebf3" stop-opacity=".14" /><stop offset="1" stop-color="#e2ebf3" stop-opacity="0" /></radialGradient><radialGradient id="arb-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#89b8e6" stop-opacity=".4" /><stop offset="1" stop-color="#89b8e6" stop-opacity="0" /></radialGradient><linearGradient id="arb-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#e2ebf3" stop-opacity=".8" /><stop offset=".45" stop-color="#89b8e6" stop-opacity=".08" /><stop offset="1" stop-color="#89b8e6" stop-opacity=".55" /></linearGradient></defs><circle cx="128" cy="128" r="122" fill="url(#arb-base)" /><circle cx="128" cy="128" r="122" fill="url(#arb-shine)" /><circle cx="128" cy="128" r="122" fill="url(#arb-transmit)" /><g transform="translate(20.000000 20.000000) scale(0.08640000) translate(-0.0 -0.0)"><g id="arb-src-Layer_x0020_1">
+	<g id="arb-src-_2405588477232">
+		<g>
+			<g>
+				<path d="M226,760v980c0,63,33,120,88,152l849,490c54,31,121,31,175,0l849-490c54-31,88-89,88-152V760      c0-63-33-120-88-152l-849-490c-54-31-121-31-175,0L314,608c-54,31-87,89-87,152H226z" fill="#213147" />
+				<g>
+					<g>
+						<g>
+							<path d="M1435,1440l-121,332c-3,9-3,19,0,29l208,571l241-139l-289-793C1467,1422,1442,1422,1435,1440z" fill="#12AAFF" />
+						</g>
+						<g>
+							<path d="M1678,882c-7-18-32-18-39,0l-121,332c-3,9-3,19,0,29l341,935l241-139L1678,883V882z" fill="#12AAFF" />
+						</g>
+					</g>
+				</g>
+				<g>
+					<path d="M1250,155c6,0,12,2,17,5l918,530c11,6,17,18,17,30v1060c0,12-7,24-17,30l-918,530c-5,3-11,5-17,5       s-12-2-17-5l-918-530c-11-6-17-18-17-30V719c0-12,7-24,17-30l918-530c5-3,11-5,17-5l0,0V155z M1250,0c-33,0-65,8-95,25L237,555       c-59,34-95,96-95,164v1060c0,68,36,130,95,164l918,530c29,17,62,25,95,25s65-8,95-25l918-530c59-34,95-96,95-164V719       c0-68-36-130-95-164L1344,25c-29-17-62-25-95-25l0,0H1250z" fill="#9DCCED" />
+				</g>
+				<polygon points="642,2179 727,1947 897,2088 738,2234     " fill="#213147" />
+				<g>
+					<path d="M1172,644H939c-17,0-33,11-39,27L401,2039l241,139l550-1507c5-14-5-28-19-28L1172,644z" fill="#FFFFFF" />
+					<path d="M1580,644h-233c-17,0-33,11-39,27L738,2233l241,139l620-1701c5-14-5-28-19-28V644z" fill="#FFFFFF" />
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#arb-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#89b8e6" stroke-opacity=".12" /></svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-labelledby="qqqb-title">
+<title id="qqqb-title">QQQB thick glass token icon</title><defs><linearGradient id="qqqb-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#4165dc" /><stop offset=".6" stop-color="#101d88" /><stop offset="1" stop-color="#2c42a8" /></linearGradient>
+<radialGradient id="qqqb-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#e6edff" stop-opacity=".52" /><stop offset=".45" stop-color="#e6edff" stop-opacity=".14" /><stop offset="1" stop-color="#e6edff" stop-opacity="0" /></radialGradient>
+<radialGradient id="qqqb-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#8caeff" stop-opacity=".4" /><stop offset="1" stop-color="#8caeff" stop-opacity="0" /></radialGradient>
+<linearGradient id="qqqb-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#e6edff" stop-opacity=".8" /><stop offset=".45" stop-color="#8caeff" stop-opacity=".08" /><stop offset="1" stop-color="#8caeff" stop-opacity=".55" /></linearGradient><clipPath id="qqqb-source-A"><path fill="#fff" d="M0 0h24v24H0z" /></clipPath><clipPath id="qqqb-clip0_4998_51578">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+<clipPath id="qqqb-clip1_4998_51578">
+<rect width="40" height="40" fill="white" />
+</clipPath>
+</defs>
+<g id="qqqb-glass"><circle cx="128" cy="128" r="122" fill="url(#qqqb-base)" /><circle cx="128" cy="128" r="122" fill="url(#qqqb-shine)" /><circle cx="128" cy="128" r="122" fill="url(#qqqb-transmit)" /><circle cx="128" cy="128" r="121" stroke="url(#qqqb-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" stroke="#8caeff" stroke-opacity=".12" /></g>
+<g transform="translate(20 20) scale(5.4)" fill="none"><g clip-path="url(#qqqb-clip0_4998_51578)">
+<g clip-path="url(#qqqb-clip1_4998_51578)">
+<g opacity="0.2">
+<path d="M13.785 17.4462L20 11.2319L26.2168 17.4487L29.8331 13.8331L20 4L10.1694 13.83L13.785 17.4456M4 20L7.61625 16.3831L11.2319 20L7.61562 23.6144L4 20ZM13.785 22.5531L20 28.7669L26.2168 22.55L29.835 26.1637L20 36L10.1694 26.1688L10.1644 26.1631L13.785 22.5525M28.7668 20L32.3825 16.3844L36 20L32.3843 23.6156L28.7668 20Z" fill="#DADADA" />
+<path d="M23.6658 20L19.9995 16.3281L17.287 19.0394L16.9745 19.3519L16.3326 19.9937L16.3276 19.9987L16.3326 20.0037L19.9995 23.67L23.6683 20.0012H23.6651" fill="#DADADA" />
+</g>
+<path d="M33.6608 26.0484L33.5772 25.0806L31.8228 24.5968L28.8152 21.6935L26.3089 20.5645L23.8861 17.1774L22.5494 15.9677L23.1342 14.0323L21.3797 12.3387L20.1266 13.3871V15.9677L18.957 17.0161L21.2962 19.2742V19.5161L20.1266 20.6452L22.6329 22.9032V24.1935L23.8025 26.371H25.0557L26.3089 25.2419L25.7241 24.6774L25.0557 22.8226H26.3924L27.4785 25.0806L28.7316 26.371L24.9722 27.5806L23.719 28.7903L22.5494 27.5806L22.0481 25.8871L20.2101 25.2419L20.1266 24.0323H18.957L18.3722 26.5323V27.1774L18.957 28.7903L16.1165 30L15.3646 28.9516L15.8658 27.8226V26.371H14.0278L11.7722 28.7903H11.438L9.85063 28.3065V25.8065L6.67595 25.3226L4.5038 26.5323L3.08354 26.0484L3 23.4677L8.93165 20.6452H9.26582L9.93418 21.129L11.6051 19.5161V18.3065L14.0278 16.0484L15.281 13.3871L16.9519 10.7258L19.6253 10.0806L21.2962 10L21.3797 11.2903L23.719 13.3871V15.9677L27.562 19.4355L30.9873 21.6129L32.9089 22.1774L33.6608 24.0323L36 25.0806L34.8304 26.371H33.6608V26.0484Z" fill="#F2F4F7" />
+</g>
+</g>
+</g></svg>

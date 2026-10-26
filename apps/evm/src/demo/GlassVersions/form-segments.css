@@ -1,0 +1,106 @@
+/* Final form segments: a single component recipe for Supply/Withdraw,
+   Borrow/Repay and Wallet/Collateral, including body-portaled dialogs.
+   These component-local aliases reuse the existing palette/material recipes;
+   they are the roles to map to Figma modes, not new global design tokens. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] {
+  --segment-track-fill: var(--color-dark-blue);
+  --segment-track-edge: color-mix(in srgb, var(--color-white) 12%, transparent);
+  --segment-track-shadow: inset 0 1px 1px rgb(255 255 255 / 9%);
+  --segment-text: var(--color-grey);
+  --segment-hover-fill: color-mix(in srgb, var(--color-white) 6%, transparent);
+  --segment-selected-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
+  --segment-selected-hover: radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6);
+  --segment-selected-text: #fff;
+  --segment-selected-edge: rgb(255 255 255 / 20%);
+  --segment-selected-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), 0 2px 4px rgb(0 0 0 / 16%);
+  background: var(--segment-track-fill) !important;
+  border: 1px solid var(--segment-track-edge) !important;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing);
+  gap: 0;
+  box-shadow: var(--segment-track-shadow) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] {
+  --segment-track-fill: var(--e-light-surface-subtle);
+  --segment-track-edge: var(--e-light-border-subtle);
+  --segment-track-shadow: inset 0 1px 2px rgb(31 53 83 / 7%);
+  --segment-text: var(--e-light-text-secondary);
+  --segment-hover-fill: var(--e-light-surface-hover);
+  --segment-selected-fill: var(--e-light-action-fill);
+  --segment-selected-hover: var(--e-light-action-hover);
+  --segment-selected-text: var(--e-light-text-on-accent);
+  --segment-selected-edge: rgb(255 255 255 / 50%);
+  --segment-selected-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), 0 2px 4px rgb(31 53 83 / 12%);
+}
+
+/* Selection and interaction are separate axes. A hovered inactive segment
+   stays neutral; a focused segment keeps its current selection styling. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+  --segment-fill: transparent;
+  --segment-ink: var(--segment-text);
+  --segment-edge: transparent;
+  --segment-shadow: none;
+  --material-fill: var(--segment-fill) !important;
+  --material-hover: var(--segment-fill) !important;
+  --material-ink: var(--segment-ink) !important;
+  --material-hover-ink: var(--segment-ink) !important;
+  --material-edge: var(--segment-edge) !important;
+  --material-shadow: var(--segment-shadow) !important;
+  --material-hover-shadow: var(--segment-shadow) !important;
+  flex: 1 1 0%;
+  min-width: 0;
+  border: 1px solid var(--segment-edge) !important;
+  border-radius: calc(var(--radius-lg) - var(--spacing) / 2) !important;
+  background: var(--segment-fill) !important;
+  color: var(--segment-ink) !important;
+  box-shadow: var(--segment-shadow) !important;
+  font-weight: var(--font-weight-normal);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  transform: none !important;
+  transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true'] {
+  --segment-fill: var(--segment-selected-fill);
+  --segment-ink: var(--segment-selected-text);
+  --segment-edge: var(--segment-selected-edge);
+  --segment-shadow: var(--segment-selected-shadow);
+}
+
+@media (hover: hover) {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='false']:not(:disabled):not([aria-disabled='true']):hover {
+    --segment-fill: var(--segment-hover-fill);
+  }
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true']:not(:disabled):not([aria-disabled='true']):hover {
+    --segment-fill: var(--segment-selected-hover);
+  }
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:focus-visible {
+  outline: 2px solid var(--color-blue) !important;
+  outline-offset: calc(var(--spacing) / 2) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:is(:disabled, [aria-disabled='true']) {
+  --segment-fill: transparent;
+  --segment-ink: var(--segment-text);
+  --segment-edge: transparent;
+  --segment-shadow: none;
+  opacity: .45 !important;
+}
+
+/* The track owns the material. Standalone bevels, pointer spotlights and
+   perimeter traces would make an inactive segment look independently raised. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after,
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] .button-bevel-outline {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+    transition: none !important;
+  }
+}

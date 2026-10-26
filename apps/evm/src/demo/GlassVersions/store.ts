@@ -1,6 +1,7 @@
 import { create } from 'zustand';
+import { type GlassPreviewMode, resolveSavedPreviewMode } from './variants';
 
-export type GlassPreviewMode = 'v1' | 'v5' | 'explorer' | 'lite-experiment';
+export type { GlassPreviewMode } from './variants';
 
 // E inherits Original materials; its Lite layout remains independently scoped.
 export const isNewDesignMode = (mode: GlassPreviewMode) => mode === 'v5' || mode === 'explorer';
@@ -11,6 +12,9 @@ export const previewDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v5: 'v5',
   explorer: 'v5',
   'lite-experiment': 'v1',
+  'lite-experiment-v2': 'v1',
+  'lite-experiment-v2-legacy': 'v1',
+  'lite-experiment-v3': 'v1',
 };
 
 // New and Explorer use their landing compositions while Original keeps the existing page.
@@ -19,16 +23,17 @@ export const landingDesignByMode: Record<GlassPreviewMode, 'v1' | 'v5'> = {
   v5: 'v5',
   explorer: 'v5',
   'lite-experiment': 'v1',
+  'lite-experiment-v2': 'v1',
+  'lite-experiment-v2-legacy': 'v1',
+  'lite-experiment-v3': 'v1',
 };
 
 const getInitialMode = (): GlassPreviewMode => {
-  const saved = localStorage.getItem('venus-glass-version');
-  // O2 is now the approved Original design; keep previously saved selections on O.
-  if (saved === 'o2') return 'v1';
-  if (saved === 'explorer') return 'v5';
-  if (saved === 'v1' || saved === 'v5' || saved === 'lite-experiment') return saved;
-  // Previously selected V3/V4 now open in New instead of a removed preview mode.
-  return saved === 'v3' || saved === 'v6' ? 'v5' : 'v1';
+  try {
+    return resolveSavedPreviewMode(localStorage.getItem('venus-glass-version'));
+  } catch {
+    return 'v1';
+  }
 };
 
 export const useGlassPreview = create<{
@@ -36,5 +41,5 @@ export const useGlassPreview = create<{
   setMode: (mode: GlassPreviewMode) => void;
 }>(set => ({
   mode: getInitialMode(),
-  setMode: mode => set({ mode: mode === 'explorer' ? 'v5' : mode }),
+  setMode: mode => set({ mode: mode === 'explorer' || mode === 'v5' ? 'lite-experiment-v2' : mode }),
 }));

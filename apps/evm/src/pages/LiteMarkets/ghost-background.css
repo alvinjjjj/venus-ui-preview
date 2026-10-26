@@ -103,3 +103,110 @@
     opacity: 1;
   }
 }
+
+/* E3-only sky treatment. Values below tune decorative sky geometry/timing,
+   without changing shared design tokens or other preview backgrounds. */
+.lite-ghost--e3 {
+  opacity: 0.85;
+}
+
+.lite-ghost__meteors {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.lite-ghost__meteor {
+  position: absolute;
+  top: 12%;
+  left: 62%;
+  width: 140px;
+  height: 2px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, #b8d8ff 85%, #fff);
+  opacity: 0;
+  transform: rotate(135deg);
+  animation: lite-e3-meteor 9s linear infinite;
+}
+
+.lite-ghost__meteor:nth-child(2) {
+  top: 34%;
+  left: 95%;
+  width: 70px;
+  height: 1px;
+  animation-delay: 3s;
+}
+
+.lite-ghost__meteor:nth-child(3) {
+  top: 5%;
+  left: 28%;
+  width: 210px;
+  height: 3px;
+  animation-delay: 6s;
+}
+
+@keyframes lite-e3-meteor {
+  0%, 3% { opacity: 0; transform: translate(0, 0) rotate(135deg); }
+  5% { opacity: 1; }
+  12% { opacity: 0; transform: translate(-260px, 260px) rotate(135deg); }
+  100% { opacity: 0; transform: translate(-260px, 260px) rotate(135deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lite-ghost__meteors { display: none; }
+}
+
+/* Static E3 nebula: edge-weighted atmosphere leaves the form's reading area dark.
+   These local illustration values describe the sky, not UI surface tokens. */
+.lite-ghost--e3:not(.lite-ghost--light-ambient)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 24% 42% at 0% 48%, rgb(52 102 174 / 22%), transparent 90%),
+    radial-gradient(ellipse 15% 30% at 13% 66%, rgb(67 59 129 / 18%), transparent 85%),
+    radial-gradient(ellipse 22% 40% at 100% 30%, rgb(83 63 142 / 23%), transparent 90%),
+    radial-gradient(ellipse 17% 30% at 92% 65%, rgb(37 94 149 / 16%), transparent 85%);
+}
+
+.lite-ghost__near-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 767px) {
+  .lite-ghost--e3::before,
+  .lite-ghost__near-stars {
+    opacity: 0.65;
+  }
+}
+
+/* Light galaxy shares the deterministic ambient field and existing palette.
+   Center mask protects the transaction form; motion is one composited layer. */
+.lite-ghost__light-galaxy {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: var(--e-light-ambient-particle);
+  mask-image: linear-gradient(90deg, black 8%, rgb(0 0 0 / 18%) 37%, rgb(0 0 0 / 18%) 63%, black 92%);
+}
+.lite-ghost__galaxy-haze {
+  stroke: var(--e-light-ambient-particle);
+  stroke-width: 90;
+  opacity: .12;
+  filter: blur(28px);
+}
+.lite-ghost__galaxy-drift {
+  transform-origin: center;
+  animation: lite-galaxy-drift 36s ease-in-out infinite alternate;
+}
+@keyframes lite-galaxy-drift {
+  from { transform: translate(-8px, 6px) rotate(-1deg); }
+  to { transform: translate(8px, -6px) rotate(1deg); }
+}
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .lite-ghost__galaxy-drift { animation: none; }
+}

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { AssetApy, InfoIcon, Modal, Select, Tabs, TokenIcon } from 'components';
+import { AssetApy, Icon, InfoIcon, Modal, SecondaryButton, Select, Tabs, TokenIcon } from 'components';
 import { MarketForm } from 'containers/MarketForm';
 import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
 import { useChain } from 'hooks/useChain';
@@ -10,20 +10,29 @@ import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utiliti
 import type { LiteAsset } from './data';
 import type { BorrowSource } from './BorrowSources';
 import { useGlassPreview } from 'demo/GlassVersions/store';
+import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
+import { CollateralPicker } from './CollateralPicker';
 
 export function BorrowSourceModal({
   asset,
   source,
   rows,
   onClose,
+  inline = false,
+  initialCollateralSymbol,
+  onBackAssets,
 }: {
   asset: Asset;
   source: BorrowSource;
   rows: LiteAsset[];
   onClose: () => void;
+  inline?: boolean;
+  initialCollateralSymbol?: string;
+  onBackAssets?: () => void;
 }) {
   const { corePoolComptrollerContractAddress } = useChain();
-  const experimental = useGlassPreview(state => state.mode === 'lite-experiment');
+  const experimental = useGlassPreview(state => isLiteExperimentMode(state.mode));
+  const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
   const [settings] = useUserChainSettings();
   const isPreview = source.apy !== undefined;
   const token = asset.vToken.underlyingToken;
@@ -32,8 +41,31 @@ export function BorrowSourceModal({
       market.asset && market.asset.collateralFactor > 0 ? [market.asset] : [],
     ),
   );
-  const [selectedCollateral, setSelectedCollateral] = useState(collateralAssets[0]?.vToken.address);
+  const [selectedCollateral, setSelectedCollateral] = useState(
+    collateralAssets.find(item => item.vToken.underlyingToken.symbol === initialCollateralSymbol)?.vToken.address
+      ?? collateralAssets[0]?.vToken.address,
+  );
+  const [previewCollateralSymbol, setPreviewCollateralSymbol] = useState(initialCollateralSymbol ?? source.collateral[0]?.symbol);
+  const [activeTab, setActiveTab] = useState(initialCollateralSymbol ? 'collateral' : 'loan');
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const backRef = useRef<HTMLButtonElement>(null);
   const collateral = collateralAssets.find(item => item.vToken.address === selectedCollateral);
+  const previewCollateral = source.collateral.find(item => item.symbol === previewCollateralSymbol);
+  const mobileCollateralSelector = (
+    <SecondaryButton
+      size="sm"
+      className="px-3"
+      aria-label={`Choose ${isPreview ? previewCollateralSymbol ?? '' : collateral?.vToken.underlyingToken.symbol ?? ''} collateral`}
+      aria-haspopup="dialog"
+      onClick={() => setPickerOpen(true)}
+    >
+      <span className="inline-flex items-center gap-2">
+        {!isPreview && collateral ? <TokenIcon token={collateral.vToken.underlyingToken} size="md" /> : previewCollateral?.iconSrc ? <img src={previewCollateral.iconSrc} alt="" className="size-5" /> : null}
+        {isPreview ? previewCollateralSymbol : collateral?.vToken.underlyingToken.symbol}
+        <Icon name="chevronDown" className="size-3" />
+      </span>
+    </SecondaryButton>
+  );
   const percent = (value: number | undefined) =>
     value !== undefined && Number.isFinite(value) ? `${Number(value.toFixed(2))}%` : '—';
   const collateralSelector = (
@@ -94,14 +126,21 @@ export function BorrowSourceModal({
     </div>
   );
   useEffect(() => {
+    if (inline) return;
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [onClose]);
+  }, [onClose, inline]);
+  useEffect(() => {
+    if (inline) {
+      backRef.current?.focus({ preventScroll: true });
+      backRef.current?.closest('.lite-inline-market')?.scrollIntoView?.({ block: 'start' });
+    }
+  }, [inline]);
   if (!isPreview && asset.isGated && !settings.doNotShowGatedAssetModal) {
-    return <GatedAssetAcknowledgementModal onReject={onClose} />;
+    return <GatedAssetAcknowledgementModal inline={inline} onReject={onClose} />;
   }
   const money = (value: BigNumber) => formatCentsToReadableValue({ value });
   const liquidity = isPreview
@@ -200,11 +239,11 @@ export function BorrowSourceModal({
       <div className="flex items-center justify-between rounded-lg border border-light-grey/20 p-4">
         <span className="inline-flex items-center gap-2">
           {action === 'Collateral' ? (
-            <>
-              {source.collateral[0]?.iconSrc && (
-                <img src={source.collateral[0].iconSrc} alt="" className="size-5 rounded-full" />
+            inline ? mobileCollateralSelector : <>
+              {previewCollateral?.iconSrc && (
+                <img src={previewCollateral.iconSrc} alt="" className="size-5 rounded-full" />
               )}
-              {source.collateral[0]?.symbol ?? 'Collateral'}
+              {previewCollateralSymbol ?? 'Collateral'}
             </>
           ) : (
             <>
@@ -246,21 +285,15 @@ export function BorrowSourceModal({
       </button>
     </div>
   );
-  return (
-    <Modal
-      isOpen
-      handleClose={onClose}
-      title={
-        <span className="inline-flex items-center gap-2 font-normal">
-          <TokenIcon token={token} size="md" />
-          {token.symbol} / {source.name}
-        </span>
-      }
-    >
+  const content = (
+    <>
+      {isE2 && isPreview && <p className="lite-e2-preview-source-label mb-4">Preview market · Transactions unavailable</p>}
       <Tabs
         headerClassName={experimental ? 'lite-borrow-popup-tabs' : undefined}
         variant="secondary"
-        initialActiveTabId="loan"
+        activeTabId={activeTab}
+        initialActiveTabId={initialCollateralSymbol ? 'collateral' : 'loan'}
+        onTabChange={index => setActiveTab(['collateral', 'loan', 'info'][index] ?? 'loan')}
         tabs={[
           {
             id: 'collateral',
@@ -278,7 +311,7 @@ export function BorrowSourceModal({
                     </div>
                   ) : (
                     <MarketForm
-                      collateralSelector={experimental ? collateralSelector : undefined}
+                      collateralSelector={experimental ? inline ? mobileCollateralSelector : collateralSelector : undefined}
                       key={collateral.vToken.address}
                       vToken={collateral.vToken}
                       poolComptrollerAddress={corePoolComptrollerContractAddress}
@@ -318,6 +351,38 @@ export function BorrowSourceModal({
           ...(!experimental ? [{ id: 'info', title: <span className="font-normal">Info</span>, content: info }] : []),
         ]}
       />
-    </Modal>
+    </>
+  );
+  if (inline) return (
+    <section className="lite-inline-market lite-mobile-borrow-form" aria-label={`${token.symbol} ${source.name} form`}>
+      <nav className="lite-inline-market-path" aria-label="Borrow navigation">
+        <button ref={backRef} type="button" aria-label={`Back to ${token.symbol} borrowing markets`} onClick={onClose}><Icon name="chevronLeft" className="size-4" /></button>
+        <button type="button" onClick={onBackAssets ?? onClose}>Borrow</button>
+        <span aria-hidden="true">/</span>
+        <button type="button" onClick={onClose}>{token.symbol}</button>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{source.name}</span>
+      </nav>
+      <div className="lite-inline-market-body"><div className="lite-inline-market-form">{content}</div></div>
+      {pickerOpen && <CollateralPicker
+        source={source}
+        rows={rows}
+        onClose={() => setPickerOpen(false)}
+        onSelect={choice => {
+          if (choice.asset) setSelectedCollateral(choice.asset.vToken.address);
+          setPreviewCollateralSymbol(choice.symbol);
+          setActiveTab('collateral');
+          setPickerOpen(false);
+        }}
+      />}
+    </section>
+  );
+  return (
+    <Modal
+      isOpen
+      className={isE2 ? 'lite-e2-borrow-modal' : undefined}
+      handleClose={onClose}
+      title={<span className="inline-flex items-center gap-2 font-normal"><TokenIcon token={token} size="md" />{token.symbol} / {source.name}</span>}
+    >{content}</Modal>
   );
 }

@@ -10,7 +10,7 @@ vi.mock('../GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
 }));
 
-describe.each(['v1', 'v5', 'lite-experiment'])(
+describe.each(['v1', 'v5', 'lite-experiment', 'lite-experiment-v2', 'lite-experiment-v3'])(
   '%s interface mode commits with navigation',
   previewMode => {
     beforeEach(() => {

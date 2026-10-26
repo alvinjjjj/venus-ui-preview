@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="zk thick glass icon"><defs><linearGradient id="zk-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#435265" /><stop offset=".6" stop-color="#111c2c" /><stop offset="1" stop-color="#2b4054" /></linearGradient><radialGradient id="zk-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#dcebf9" stop-opacity=".52" /><stop offset=".45" stop-color="#dcebf9" stop-opacity=".14" /><stop offset="1" stop-color="#dcebf9" stop-opacity="0" /></radialGradient><radialGradient id="zk-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#8bbacb" stop-opacity=".4" /><stop offset="1" stop-color="#8bbacb" stop-opacity="0" /></radialGradient><linearGradient id="zk-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#dcebf9" stop-opacity=".8" /><stop offset=".45" stop-color="#8bbacb" stop-opacity=".08" /><stop offset="1" stop-color="#8bbacb" stop-opacity=".55" /></linearGradient><clipPath id="zk-src-clip-coin-zk-full">
+      <rect width="48" height="48" />
+    </clipPath>
+  </defs><circle cx="128" cy="128" r="122" fill="url(#zk-base)" /><circle cx="128" cy="128" r="122" fill="url(#zk-shine)" /><circle cx="128" cy="128" r="122" fill="url(#zk-transmit)" /><g transform="translate(20.000000 20.000000) scale(4.50000000) translate(-0.0 -0.0)"><g id="zk-src-coin-zk-full" clip-path="url(#zk-src-clip-coin-zk-full)">
+    <g id="zk-src-Group_228" data-name="Group 228" transform="translate(87 87)">
+      </g>
+    <path id="zk-src-Path_1636" data-name="Path 1636" d="M0,16.2,10.76,5.442v5.38H21.52l-10.76,8.07v8.07Z" transform="translate(5.17 7.798)" fill="#fff" />
+    <path id="zk-src-Path_1637" data-name="Path 1637" d="M43.368,16.2l-10.76,10.76v-5.38H21.848l10.76-8.07V5.442Z" transform="translate(-0.539 7.798)" fill="#fff" />
+  </g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#zk-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#8bbacb" stroke-opacity=".12" /></svg>

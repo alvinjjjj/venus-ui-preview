@@ -110,14 +110,44 @@ export function InterfaceWelcomeDialog({
 }: InterfaceWelcomeDialogProps) {
   const content = welcomeContent[variant];
   const dialog = useRef<HTMLDialogElement>(null);
+  const spotlight = useRef<HTMLButtonElement>(null);
+  const welcome = useRef<HTMLElement>(null);
   useEffect(() => {
     const element = dialog.current;
     if (open && element && !element.open) {
+      // Match the actual header control rather than drawing a larger substitute.
+      const source = document.querySelector<HTMLButtonElement>(`button[aria-label="Switch to ${content.name}"]`);
+      if (source && spotlight.current) {
+        const bounds = source.getBoundingClientRect();
+        const style = getComputedStyle(source);
+        for (const property of ['background', 'color', 'border', 'border-radius', 'box-shadow', 'font-family', 'font-size', 'font-weight', 'line-height', 'padding', 'box-sizing']) {
+          spotlight.current.style.setProperty(property, style.getPropertyValue(property));
+        }
+        const originalRing = source.querySelector<HTMLElement>('.venus-mode-border-flow');
+        const previewRing = spotlight.current.querySelector<HTMLElement>('.venus-mode-border-flow');
+        if (originalRing && previewRing) {
+          const ringStyle = getComputedStyle(originalRing);
+          previewRing.style.display = ringStyle.display;
+          previewRing.style.opacity = ringStyle.opacity;
+          previewRing.style.animation = ringStyle.animation;
+        }
+        Object.assign(spotlight.current.style, {
+          top: `${bounds.top}px`, left: `${bounds.left}px`, right: 'auto',
+          width: `${bounds.width}px`, height: `${bounds.height}px`, minWidth: '0', minHeight: '0',
+        });
+      }
       element.showModal();
+      if (source && welcome.current) {
+        const anchor = source.getBoundingClientRect();
+        const panel = welcome.current.getBoundingClientRect();
+        welcome.current.style.setProperty('--intro-arrow-left', `${anchor.left + anchor.width / 2 - panel.left}px`);
+      }
+      // Initial dialog focus belongs to its content; keyboard controls retain focus rings.
+      welcome.current?.focus({ preventScroll: true });
       onShown?.();
     }
     if (!open && element?.open) element.close();
-  }, [open, onShown]);
+  }, [open, onShown, content.name]);
 
   return (
     <dialog
@@ -135,14 +165,16 @@ export function InterfaceWelcomeDialog({
       }}
     >
       <button
+        ref={spotlight}
         className="intro-button intro-spotlight"
         type="button"
         onClick={onTry}
         aria-label={`Try Venus ${content.name}`}
       >
         {content.name}
+        <span aria-hidden="true" className="venus-mode-border-flow" />
       </button>
-      <section className="intro-welcome">
+      <section ref={welcome} tabIndex={-1} className="intro-welcome" style={{ outline: 'none' }}>
         <div className="intro-welcome-header">
           <h1 id="intro-title">
             Meet Venus <span>{content.name}.</span>

@@ -1,6 +1,6 @@
 import { type ButtonProps, TertiaryButton } from '@venusprotocol/ui';
 import BigNumber from 'bignumber.js';
-import { forwardRef } from 'react';
+import { createContext, useContext, forwardRef, type ReactNode } from 'react';
 
 import type { Token } from 'types';
 
@@ -9,6 +9,9 @@ import formatCentsToReadableValue from 'utilities/formatCentsToReadableValue';
 import { getDecimals } from 'utilities/getDecimals';
 import { TextField, type TextFieldProps } from '../TextField';
 import { getStep } from './getStep';
+
+/** Optional composition slot for asset-first forms; absent in existing forms. */
+export const TokenAmountLayout = createContext<{ selector?: ReactNode; afterInput?: ReactNode; token?: Token; guestPreview?: { value: string; onChange: (value: string) => void; details: ReactNode } } | undefined>(undefined);
 
 export interface RightMaxButton extends Omit<ButtonProps, 'variant' | 'children' | 'small'> {
   label: string;
@@ -49,6 +52,8 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
     ref,
   ) => {
     const { t } = useTranslation();
+    const layoutContext = useContext(TokenAmountLayout);
+    const layout = !layoutContext?.token || (layoutContext.token.chainId === token.chainId && layoutContext.token.address.toLowerCase() === token.address.toLowerCase()) ? layoutContext : undefined;
     const step = getStep({ decimals: token.decimals });
 
     const handleChange: TextFieldProps['onChange'] = ({ currentTarget: { value: newValue } }) => {
@@ -56,7 +61,7 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
       const valueDecimals = getDecimals({ value: newValue });
 
       if (valueDecimals <= token.decimals) {
-        onChange(newValue);
+        (layout?.guestPreview?.onChange ?? onChange)(newValue);
       }
     };
 
@@ -68,6 +73,7 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
         : undefined;
 
     return (
+      <>
       <TextField
         ref={ref}
         placeholder={placeholder ?? '0.00'}
@@ -76,8 +82,7 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
         step={step}
         onChange={handleChange}
         type="number"
-        value={value}
-        leftIconSrc={displayTokenIcon ? token : undefined}
+        value={layout?.guestPreview?.value ?? value}
         topRightAdornment={
           topRightAdornment || typeof tokenPriceCents === 'number' ? (
             <div className="flex items-center gap-x-2">
@@ -97,14 +102,20 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
         }
         rightAdornment={
           rightMaxButton ? (
-            <TertiaryButton size="sm" className="px-2" disabled={disabled} {...rightMaxButton}>
+            <TertiaryButton size="sm" className="px-2" {...rightMaxButton} disabled={layout?.guestPreview ? true : rightMaxButton.disabled ?? disabled}>
               {rightMaxButton.label}
             </TertiaryButton>
           ) : undefined
         }
-        disabled={disabled}
+        disabled={layout?.guestPreview ? false : disabled}
         {...otherProps}
+        aria-label={layout?.guestPreview ? 'Supply amount' : otherProps['aria-label']}
+        leftIconSrc={layout?.selector ? undefined : otherProps.leftIconSrc ?? (displayTokenIcon ? token : undefined)}
+        leftAdornment={layout?.selector ? <>{layout.selector}</> : otherProps.leftAdornment}
       />
+      {layout?.afterInput}
+      {layout?.guestPreview?.details}
+      </>
     );
   },
 );

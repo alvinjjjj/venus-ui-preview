@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="sol thick glass icon"><defs><linearGradient id="sol-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#435265" /><stop offset=".6" stop-color="#111c2c" /><stop offset="1" stop-color="#2b4054" /></linearGradient><radialGradient id="sol-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#dcebf9" stop-opacity=".52" /><stop offset=".45" stop-color="#dcebf9" stop-opacity=".14" /><stop offset="1" stop-color="#dcebf9" stop-opacity="0" /></radialGradient><radialGradient id="sol-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#8bbacb" stop-opacity=".4" /><stop offset="1" stop-color="#8bbacb" stop-opacity="0" /></radialGradient><linearGradient id="sol-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#dcebf9" stop-opacity=".8" /><stop offset=".45" stop-color="#8bbacb" stop-opacity=".08" /><stop offset="1" stop-color="#8bbacb" stop-opacity=".55" /></linearGradient><linearGradient id="sol-src-paint0_linear_1401_4712" x1="22.518" y1="6.07728" x2="9.83626" y2="25.1133" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3" />
+<stop offset="1" stop-color="#DC1FFF" />
+</linearGradient>
+<linearGradient id="sol-src-paint1_linear_1401_4712" x1="18.6542" y1="3.5033" x2="5.97243" y2="22.5393" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3" />
+<stop offset="1" stop-color="#DC1FFF" />
+</linearGradient>
+<linearGradient id="sol-src-paint2_linear_1401_4712" x1="20.5738" y1="4.78214" x2="7.89204" y2="23.8181" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3" />
+<stop offset="1" stop-color="#DC1FFF" />
+</linearGradient>
+<clipPath id="sol-src-clip0_1401_4712">
+<rect width="32" height="32" fill="white" />
+</clipPath>
+</defs><circle cx="128" cy="128" r="122" fill="url(#sol-base)" /><circle cx="128" cy="128" r="122" fill="url(#sol-shine)" /><circle cx="128" cy="128" r="122" fill="url(#sol-transmit)" /><g transform="translate(20.000000 20.000000) scale(6.75000000) translate(-0.0 -0.0)" fill="none"><g clip-path="url(#sol-src-clip0_1401_4712)">
+<path d="M10.5995 20.2117C10.696 20.0885 10.8288 20.0166 10.9696 20.0166H23.7377C23.971 20.0166 24.0877 20.3759 23.9228 20.5864L21.4005 23.8049C21.304 23.9281 21.1712 23.9999 21.0304 23.9999H8.26229C8.02897 23.9999 7.91231 23.6406 8.07724 23.4301L10.5995 20.2117Z" fill="url(#sol-src-paint0_linear_1401_4712)" />
+<path d="M10.5995 8.19506C10.7001 8.07186 10.8328 8 10.9696 8H23.7377C23.971 8 24.0877 8.35932 23.9228 8.56978L21.4005 11.7883C21.304 11.9115 21.1712 11.9833 21.0304 11.9833H8.26229C8.02897 11.9833 7.91231 11.624 8.07724 11.4135L10.5995 8.19506Z" fill="url(#sol-src-paint1_linear_1401_4712)" />
+<path d="M21.4005 14.1649C21.304 14.0417 21.1712 13.9698 21.0304 13.9698H8.26229C8.02897 13.9698 7.91231 14.3292 8.07724 14.5396L10.5995 17.7581C10.696 17.8813 10.8288 17.9532 10.9696 17.9532H23.7377C23.971 17.9532 24.0877 17.5938 23.9228 17.3834L21.4005 14.1649Z" fill="url(#sol-src-paint2_linear_1401_4712)" />
+</g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#sol-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#8bbacb" stroke-opacity=".12" /></svg>

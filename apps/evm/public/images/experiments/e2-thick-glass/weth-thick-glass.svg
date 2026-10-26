@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="weth thick glass icon"><defs><linearGradient id="weth-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#e8edf5" /><stop offset=".6" stop-color="#b9c7d8" /><stop offset="1" stop-color="#d3dfea" /></linearGradient><radialGradient id="weth-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#ffffff" stop-opacity=".52" /><stop offset=".45" stop-color="#ffffff" stop-opacity=".14" /><stop offset="1" stop-color="#ffffff" stop-opacity="0" /></radialGradient><radialGradient id="weth-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#d9edfa" stop-opacity=".4" /><stop offset="1" stop-color="#d9edfa" stop-opacity="0" /></radialGradient><linearGradient id="weth-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#ffffff" stop-opacity=".8" /><stop offset=".45" stop-color="#d9edfa" stop-opacity=".08" /><stop offset="1" stop-color="#d9edfa" stop-opacity=".55" /></linearGradient><clipPath id="weth-src-clip0_1481_22469">
+<rect width="20" height="20" fill="white" />
+</clipPath>
+</defs><circle cx="128" cy="128" r="122" fill="url(#weth-base)" /><circle cx="128" cy="128" r="122" fill="url(#weth-shine)" /><circle cx="128" cy="128" r="122" fill="url(#weth-transmit)" /><g transform="translate(20.000000 20.000000) scale(10.80000000) translate(-0.0 -0.0)" fill="none"><g clip-path="url(#weth-src-clip0_1481_22469)">
+<path opacity="1" d="M9.99706 7.91869V2L5.19995 10.1478L9.99706 13.051V7.91869Z" fill="#5e6eae" />
+<path opacity="1" d="M9.99707 13.051L14.8 10.1478L9.99707 2V7.91869V13.051Z" fill="#40579d" />
+<path opacity="1" d="M9.99706 13.051L14.8 10.1478L9.99706 7.9187L5.19995 10.1478L9.99706 13.051Z" fill="#263c7e" />
+<path opacity="1" d="M9.99706 13.9793L5.19995 11.082L9.99706 18V13.9793Z" fill="#677db9" />
+<path opacity="1" d="M14.8 11.082L9.99707 13.9793V18L14.8 11.082Z" fill="#3f5598" />
+</g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#weth-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#d9edfa" stroke-opacity=".12" /></svg>

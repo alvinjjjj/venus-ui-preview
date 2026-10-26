@@ -587,11 +587,11 @@
   .lite-experiment tbody tr:hover {
     background: transparent !important;
   }
-  .lite-experiment .lite-experiment-scroll tbody tr {
+  .lite-experiment :is(.lite-experiment-scroll, .lite-e2-earn-sources) tbody tr {
     position: relative;
     isolation: isolate;
   }
-  .lite-experiment .lite-experiment-scroll tbody tr::before {
+  .lite-experiment :is(.lite-experiment-scroll, .lite-e2-earn-sources) tbody tr::before {
     content: '';
     position: absolute;
     inset: calc(var(--spacing) * 1) calc(var(--spacing) * 2);
@@ -602,11 +602,11 @@
     transition: background-color 150ms ease, box-shadow 150ms ease;
     pointer-events: none;
   }
-  .lite-experiment .lite-experiment-scroll tbody tr:is(:hover, :focus-visible)::before {
+  .lite-experiment :is(.lite-experiment-scroll, .lite-e2-earn-sources) tbody tr:is(:hover, :focus-visible)::before {
     background: rgb(255 255 255 / 4%);
     box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
   }
-  :root[data-liquidity-theme='light'] .lite-experiment .lite-experiment-scroll tbody tr:is(:hover, :focus-visible)::before {
+  :root[data-liquidity-theme='light'] .lite-experiment :is(.lite-experiment-scroll, .lite-e2-earn-sources) tbody tr:is(:hover, :focus-visible)::before {
     background: rgb(30 55 85 / 4%);
     box-shadow: inset 0 0 0 1px rgb(30 40 55 / 7%);
   }
@@ -627,7 +627,7 @@
   }
 }
 @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
-  .lite-experiment .lite-experiment-scroll tbody tr::before,
+  .lite-experiment :is(.lite-experiment-scroll, .lite-e2-earn-sources) tbody tr::before,
   .lite-experiment tbody tr > td { transition: none; }
 }
 

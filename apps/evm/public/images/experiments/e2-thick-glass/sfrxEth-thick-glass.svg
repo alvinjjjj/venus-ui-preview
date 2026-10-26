@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="sfrxEth thick glass icon"><defs><linearGradient id="sfrxEth-base" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#435265" /><stop offset=".6" stop-color="#111c2c" /><stop offset="1" stop-color="#2b4054" /></linearGradient><radialGradient id="sfrxEth-shine" cx="28%" cy="20%" r="65%"><stop stop-color="#dcebf9" stop-opacity=".52" /><stop offset=".45" stop-color="#dcebf9" stop-opacity=".14" /><stop offset="1" stop-color="#dcebf9" stop-opacity="0" /></radialGradient><radialGradient id="sfrxEth-transmit" cx="62%" cy="100%" r="55%"><stop stop-color="#8bbacb" stop-opacity=".4" /><stop offset="1" stop-color="#8bbacb" stop-opacity="0" /></radialGradient><linearGradient id="sfrxEth-rim" x1="0" y1="0" x2=".6" y2="1"><stop stop-color="#dcebf9" stop-opacity=".8" /><stop offset=".45" stop-color="#8bbacb" stop-opacity=".08" /><stop offset="1" stop-color="#8bbacb" stop-opacity=".55" /></linearGradient></defs><circle cx="128" cy="128" r="122" fill="url(#sfrxEth-base)" /><circle cx="128" cy="128" r="122" fill="url(#sfrxEth-shine)" /><circle cx="128" cy="128" r="122" fill="url(#sfrxEth-transmit)" /><g transform="translate(20.000000 20.000000) scale(0.76201228) translate(-0.0 -0.0)"><g>
+	<g>
+		</g>
+	<g>
+		</g>
+	<g>
+		<g>
+			<path d="M145.03,88.34c17.93,1.6,32.04,16.45,32.48,34.69l27.51,11.43l-14.34-23.38l30.49-30.49l-18.22-18.22     L176.83,88.5l-31.79-51.84V88.34z" fill="#FFFFFF" />
+			<path d="M177.04,129.82c-2.64,15.88-15.76,28.21-32.01,29.67v18.88l60.54-36.69L177.04,129.82z" fill="#FFFFFF" />
+			<path d="M106.58,129.82l-28.53,11.85l60.54,36.69v-18.88C122.34,158.03,109.22,145.7,106.58,129.82z" fill="#FFFFFF" />
+			<polygon points="204.89,160.92 145.03,197.2 145.03,245.25 169.66,210.54 195.37,236.25 213.59,218.03      184.79,189.23    " fill="#FFFFFF" />
+			<polygon points="138.59,197.2 78.73,160.92 98.83,189.23 70.03,218.03 88.25,236.25 113.96,210.55 138.59,245.24         " fill="#FFFFFF" />
+			<path d="M78.6,134.47l27.51-11.43c0.44-18.24,14.55-33.09,32.48-34.69V36.66L106.8,88.5L80.67,62.37L62.45,80.6     l30.49,30.49L78.6,134.47z" fill="#FFFFFF" />
+		</g>
+		<path d="M143.07,119.81L143.07,119.81c-8.83-2.71-8.83-4.21-8.83-5.42c0-1.68,2.54-4,7.31-4    c2.82,0,7.56,0.7,7.56,5.42h8.59c0-8.38-6.49-14.01-16.15-14.01c-10.33,0-15.9,6.49-15.9,12.59c0,8.34,7.32,11.3,14.84,13.62v0    c8.83,2.71,8.88,4.23,8.88,5.44c0,1.68-2.54,4-7.31,4c-2.83,0-7.56-0.7-7.56-5.42h-8.59c0,8.38,6.49,14.01,16.15,14.01    c10.33,0,15.9-6.49,15.9-12.59C157.97,125.1,150.6,122.12,143.07,119.81z" fill="#FFFFFF" />
+	</g>
+</g>
+</g><circle cx="128" cy="128" r="121" fill="none" stroke="url(#sfrxEth-rim)" stroke-width="2.8" /><circle cx="128" cy="128" r="116.5" fill="none" stroke="#8bbacb" stroke-opacity=".12" /></svg>

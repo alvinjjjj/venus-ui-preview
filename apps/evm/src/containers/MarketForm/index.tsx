@@ -15,6 +15,12 @@ import rocketIconSrc from './rocket.svg';
 
 export interface MarketFormProps {
   collateralSelector?: React.ReactElement;
+  supplyAssetSelector?: React.ReactElement;
+  supplyMarketDetails?: React.ReactNode;
+  supplyCardLayout?: boolean;
+  supplyMarketName?: string;
+  supplyOnly?: boolean;
+  actionOnly?: 'supply' | 'withdraw' | 'borrow' | 'repay';
   borrowPenalty?: React.ReactNode;
   vToken: VToken;
   poolComptrollerAddress: Address;
@@ -38,6 +44,12 @@ export const MarketForm: React.FC<MarketFormProps> = ({
   compactEarn = false,
   inlineHeader = false,
   collateralSelector,
+  supplyAssetSelector,
+  supplyMarketDetails,
+  supplyCardLayout = false,
+  supplyMarketName,
+  supplyOnly = false,
+  actionOnly,
   borrowPenalty,
 }) => {
   const { t } = useTranslation();
@@ -58,7 +70,10 @@ export const MarketForm: React.FC<MarketFormProps> = ({
         >
           {({ asset, pool }) => (
             <SupplyForm
-              collateralSelector={collateralSelector}
+              collateralSelector={supplyAssetSelector ?? collateralSelector}
+              marketDetails={supplyMarketDetails}
+              cardLayout={supplyCardLayout}
+              marketName={supplyMarketName}
               asset={asset}
               pool={pool}
               onSubmitSuccess={onSubmitSuccess}
@@ -147,7 +162,7 @@ export const MarketForm: React.FC<MarketFormProps> = ({
             pool={pool}
             asset={asset}
             onSubmitSuccess={onSubmitSuccess}
-            compactSourceSelector={borrowOnly}
+            compactSourceSelector={borrowOnly || actionOnly === 'repay'}
           />
         )}
       </AssetAccessor>
@@ -156,10 +171,11 @@ export const MarketForm: React.FC<MarketFormProps> = ({
 
   return (
     <Tabs
+      hideHeader={supplyOnly || !!actionOnly}
       className={compactEarn ? 'lite-compact-market-tabs' : inlineHeader ? 'lite-single-market-tabs' : undefined}
       headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
       tabs={
-        earnOnly
+        actionOnly ? tabs.filter(tab => tab.id === actionOnly) : supplyOnly ? tabs.filter(tab => tab.id === 'supply') : earnOnly
           ? tabs.filter(tab => tab.id === 'supply' || tab.id === 'withdraw')
           : borrowOnly
             ? tabs.filter(tab => tab.id === 'borrow' || tab.id === 'repay')

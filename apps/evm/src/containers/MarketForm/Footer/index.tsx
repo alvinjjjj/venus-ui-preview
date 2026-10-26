@@ -12,6 +12,8 @@ import { InlineSubmit } from '../InlineSubmit';
 
 export interface FooterProps {
   penalty?: React.ReactNode;
+  beforeSubmit?: React.ReactNode;
+  collapseApy?: boolean;
   compact?: boolean;
   streamlined?: boolean;
   analyticVariant: string;
@@ -36,6 +38,8 @@ export const Footer: React.FC<FooterProps> = ({
   compact = false,
   streamlined = false,
   penalty,
+  beforeSubmit,
+  collapseApy = false,
   balanceMutations,
   pool,
   simulatedPool,
@@ -153,12 +157,13 @@ export const Footer: React.FC<FooterProps> = ({
           <ApyBreakdown
             pool={pool}
             balanceMutations={balanceMutations}
-            renderType={streamlined ? 'accordion' : 'block'}
+            renderType={streamlined || collapseApy ? 'accordion' : 'block'}
           />
           {penalty}
         </>
       )}
 
+      {beforeSubmit}
       <InlineSubmit>
         {streamlined && isUserConnected && shouldShowAccountHealth({pool, simulatedPool}) && (
           <div className="lite-action-health"><AccountPoolHealth pool={pool} simulatedPool={simulatedPool} /></div>

@@ -53,56 +53,59 @@ beforeAll(() => {
 });
 afterAll(() => vi.unstubAllGlobals());
 
-describe.each(['v1', 'v5', 'lite-experiment'])('%s guest navigation', previewMode => {
-  beforeEach(() => {
-    preview.mode = previewMode;
-    (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
-    useInterfaceModeStore.getState().setMode('lite');
-    useStore.setState({ openModal: undefined });
-  });
+describe.each(['v1', 'v5', 'lite-experiment', 'lite-experiment-v2', 'lite-experiment-v3'])(
+  '%s guest navigation',
+  previewMode => {
+    beforeEach(() => {
+      preview.mode = previewMode;
+      (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
+      useInterfaceModeStore.getState().setMode('lite');
+      useStore.setState({ openModal: undefined });
+    });
 
-  it('lets a guest switch both public surfaces while retaining Connect Wallet and URL parameters', () => {
-    renderComponent(
-      <>
-        <NavBar />
-        <Location />
-      </>,
-      {
-        routerInitialEntries: ['/?chainId=56&asset=USDT'],
-        routePath: '*',
-      },
-    );
-    expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Switch to Pro' }));
-    expect(screen.getByTestId('current-page').textContent).toContain(
-      '/liquidity-hubs?chainId=56&asset=USDT',
-    );
-    expect(screen.getByTestId('current-page').textContent).toContain('"interfaceMode":"pro"');
-    expect(screen.getByRole('button', { name: 'Choose chain' })).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
+    it('lets a guest switch both public surfaces while retaining Connect Wallet and URL parameters', () => {
+      renderComponent(
+        <>
+          <NavBar />
+          <Location />
+        </>,
+        {
+          routerInitialEntries: ['/?chainId=56&asset=USDT'],
+          routePath: '*',
+        },
+      );
+      expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
+      fireEvent.click(screen.getByRole('button', { name: 'Switch to Pro' }));
+      expect(screen.getByTestId('current-page').textContent).toContain(
+        '/liquidity-hubs?chainId=56&asset=USDT',
+      );
+      expect(screen.getByTestId('current-page').textContent).toContain('"interfaceMode":"pro"');
+      expect(screen.getByRole('button', { name: 'Choose chain' })).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('button', { name: 'Switch to Lite' }));
-    expect(screen.getByTestId('current-page').textContent).toContain('/?chainId=56&asset=USDT');
-    expect(screen.getByTestId('current-page').textContent).toContain('"interfaceMode":"lite"');
-    expect(screen.queryByRole('button', { name: 'Choose chain' })).toBeNull();
-    expect(useAccountAddress().accountAddress).toBeUndefined();
-  });
+      fireEvent.click(screen.getByRole('button', { name: 'Switch to Lite' }));
+      expect(screen.getByTestId('current-page').textContent).toContain('/?chainId=56&asset=USDT');
+      expect(screen.getByTestId('current-page').textContent).toContain('"interfaceMode":"lite"');
+      expect(screen.queryByRole('button', { name: 'Choose chain' })).toBeNull();
+      expect(useAccountAddress().accountAddress).toBeUndefined();
+    });
 
-  it('opens a direct Pro link with the Pro label, public navigation and a Lite return button', () => {
-    renderComponent(
-      <>
-        <NavBar />
-        <Location />
-      </>,
-      {
-        routerInitialEntries: ['/markets/0x123?chainId=56'],
-        routePath: '*',
-      },
-    );
-    expect(screen.getByText('Pro', { selector: '.venus-interface-mode-label' })).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Switch to Lite' })).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Choose chain' })).toBeTruthy();
-    expect(useAccountAddress().accountAddress).toBeUndefined();
-  });
-});
+    it('opens a direct Pro link with the Pro label, public navigation and a Lite return button', () => {
+      renderComponent(
+        <>
+          <NavBar />
+          <Location />
+        </>,
+        {
+          routerInitialEntries: ['/markets/0x123?chainId=56'],
+          routePath: '*',
+        },
+      );
+      expect(screen.getByText('Pro', { selector: '.venus-interface-mode-label' })).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Switch to Lite' })).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Connect Wallet' })).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Choose chain' })).toBeTruthy();
+      expect(useAccountAddress().accountAddress).toBeUndefined();
+    });
+  },
+);

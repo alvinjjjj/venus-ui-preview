@@ -1,5 +1,7 @@
+import { PromotedTokenFire } from './PromotedTokenFire';
+import { LiteMarketAction } from './LiteMarketAction';
 import BigNumber from 'bignumber.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGetPool, useGetLiquidityHubs } from 'clients/api';
 import {
   Apy,
@@ -25,10 +27,14 @@ import { LiquidityHubFormModal } from 'containers/LiquidityHubFormModal';
 import { PrimeBadge } from 'components/Apy/PrimeBadge';
 import { PrimeApy } from 'components/Apy/PrimeBadge/PrimeApy';
 import { useChain } from 'hooks/useChain';
+import { useBreakpointUp } from 'hooks/responsive';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
 import { aggregateLiteAssets } from './data';
 import type { LiteAsset, LiteMarket } from './data';
+import { E3ActionCard } from './E3ActionCard';
+import { LiteMarketStage } from './LiteMarketStage';
+import { TokenPlanets } from './TokenPlanets';
 import { GhostBackground } from './GhostBackground';
 import { isVisibleLiteAsset } from './visibility';
 import { BorrowMarkets } from './BorrowMarkets';
@@ -41,6 +47,7 @@ import './entrance.css';
 import './trust-sections.css';
 import './experiment.css';
 import { useGlassPreview } from 'demo/GlassVersions/store';
+import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
 import { formatEarnApyRange, matchesEarnCategories } from './experiment';
 
 function MarketApy({ market }: { market: LiteMarket }) {
@@ -64,7 +71,7 @@ const amount = (value: BigNumber, token: LiteAsset['token']) =>
 const highestApyMarket = (row: LiteAsset) =>
   row.markets.reduce((best, market) => (market.apy.gt(best.apy) ? market : best));
 
-function BestMarketApy({ row }: { row: LiteAsset }) {
+function BestMarketApy({ row, plain = false }: { row: LiteAsset; plain?: boolean }) {
   const best = highestApyMarket(row);
   // Keep the highest market's APY, but do not lose a different market's Prime offer.
   // The badge uses that Core market's total, never Hub APY plus Core rewards.
@@ -98,7 +105,7 @@ function BestMarketApy({ row }: { row: LiteAsset }) {
   );
   return (
     <div className="flex justify-end items-center gap-1 flex-wrap">
-      <MarketApy market={best} />
+      {plain && !bestHasPrime ? <span className="lite-base-apy tabular-nums font-semibold">{best.apy.isFinite() ? `${best.apy.toFixed(2)}%` : '—'}</span> : <MarketApy market={best} />}
       {!bestHasPrime && !prime && hasUsdtCore && (
         <Tooltip content="Prime APY reference from supplied screenshot; not a live rate.">
           <PrimeApy
@@ -183,11 +190,19 @@ function AssetSources({
   onBack,
   inline = false,
   framed = false,
+  mobile = false,
   modeSwitch,
-}: { row: LiteAsset; onBack: () => void; inline?: boolean; framed?: boolean; modeSwitch?: React.ReactNode }) {
+}: { row: LiteAsset; onBack: () => void; inline?: boolean; framed?: boolean; mobile?: boolean; modeSwitch?: React.ReactNode }) {
   const { corePoolComptrollerContractAddress } = useChain();
   const [userChainSettings] = useUserChainSettings();
   const [openedMarket, setOpenedMarket] = useState<LiteMarket>();
+  const mobileFormRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (mobile && openedMarket) {
+      mobileFormRef.current?.scrollIntoView?.({ block: 'start' });
+    }
+  }, [mobile, openedMarket]);
+  const isE2Sources = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
   useEffect(() => {
     if (!openedMarket || inline) return;
     const handleKey = (event: KeyboardEvent) => {
@@ -209,7 +224,7 @@ function AssetSources({
           aria-haspopup={inline ? undefined : 'dialog'}
           className="font-normal text-white hover:text-blue text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
         >
-          {market.name}
+          {isE2Sources ? (market.asset ? 'Core Pool' : market.name) : market.name}
         </button>
       ),
     },
@@ -218,7 +233,12 @@ function AssetSources({
       label: 'APY',
       selectOptionLabel: 'APY',
       align: 'right',
-      renderCell: market => <BestMarketApy row={{ ...row, markets: [market] }} />,
+      renderCell: market => (
+        <div>
+          <BestMarketApy row={{ ...row, markets: [market] }} plain={isE2Sources} />
+          {mobile && <p className="lite-mobile-secondary">{usd(market.supplyUsd)} TVL</p>}
+        </div>
+      ),
       sortRows: (a, b, direction) =>
         (a.apy.comparedTo(b.apy) ?? 0) * (direction === 'desc' ? -1 : 1),
     },
@@ -246,10 +266,20 @@ function AssetSources({
   if (inline && openedMarket) {
     return (
       <section
+        ref={mobileFormRef}
         className="lite-inline-market"
         aria-label={`${row.token.symbol} ${openedMarket.name} form`}
       >
         <nav aria-label="Earn navigation" className="lite-inline-market-path">
+          {mobile && (
+            <button
+              type="button"
+              aria-label="Back to Earn sources"
+              onClick={() => setOpenedMarket(undefined)}
+            >
+              <Icon name="chevronLeft" className="size-5" />
+            </button>
+          )}
           <button type="button" onClick={onBack}>
             Earn
           </button>
@@ -257,6 +287,7 @@ function AssetSources({
           <button
             type="button"
             onClick={() => setOpenedMarket(undefined)}
+            aria-label={`Back to ${row.token.symbol} Earn markets`}
             className="inline-flex items-center gap-2"
           >
             <TokenIcon token={row.token} size="md" className="size-4" />
@@ -275,7 +306,7 @@ function AssetSources({
                 />
               ) : (
                 <MarketForm
-                  inlineHeader
+                  inlineHeader={!mobile}
                   vToken={openedMarket.asset.vToken}
                   poolComptrollerAddress={corePoolComptrollerContractAddress}
                   initialActiveTabId="supply"
@@ -285,7 +316,7 @@ function AssetSources({
               )
             ) : openedMarket.hub ? (
               <LiquidityHubForm
-                inlineHeader
+                inlineHeader={!mobile}
                 vhToken={openedMarket.hub.vhToken}
                 initialActiveTabId="supply"
                 onSubmitSuccess={() => setOpenedMarket(undefined)}
@@ -300,14 +331,14 @@ function AssetSources({
   return (
     <>
       <Table
-        className={inline || framed ? 'lite-inline-sources' : undefined}
+        className={inline || framed ? `lite-inline-sources${isE2Sources ? ' lite-e2-earn-sources' : ''}${mobile ? ' lite-mobile-table' : ''}` : undefined}
         data={row.markets}
-        columns={columns}
+        columns={mobile ? columns.slice(0, 2) : columns}
         rowKeyExtractor={market => market.id}
         rowOnClick={(_, market) => setOpenedMarket(market)}
         initialOrder={{ orderBy: columns[1], orderDirection: 'desc' }}
         tableLayout="auto"
-        breakpoint="md"
+        breakpoint={mobile ? undefined : 'md'}
         hideCardDelimiter
         header={
           <div className={framed ? 'lite-market-toolbar' : undefined}>
@@ -354,7 +385,13 @@ function AssetSources({
 }
 
 export default function LiteMarkets() {
-  const experimental = useGlassPreview(state => state.mode === 'lite-experiment');
+  const isLegacyE2 = useGlassPreview(state => state.mode === 'lite-experiment-v2-legacy');
+  const experimental = useGlassPreview(state => isLiteExperimentMode(state.mode));
+  const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
+  const isE3 = useGlassPreview(state => state.mode === 'lite-experiment-v3');
+  const desktop = useBreakpointUp('md');
+  const mobile = isE2 && !isLegacyE2 && !desktop;
+  const [exploreMarkets, setExploreMarkets] = useState(false);
   const [categories, setCategories] = useState<string[]>([]);
   const { corePoolComptrollerContractAddress } = useChain();
   const { accountAddress } = useAccountAddress();
@@ -408,10 +445,11 @@ export default function LiteMarkets() {
         <button
           type="button"
           onClick={() => setSelected(row.key)}
-          className="cursor-pointer hover:text-blue focus-visible:outline-2 focus-visible:outline-blue"
+          className={`cursor-pointer hover:text-blue focus-visible:outline-2 focus-visible:outline-blue${isE2 && row.token.symbol === 'USDC' ? ' inline-flex items-center gap-1.5' : ''}`}
           aria-label={`Compare ${row.token.symbol} markets`}
         >
           <TokenIconWithSymbol token={row.token} size="xl" />
+          {isLegacyE2 && row.token.symbol === 'USDC' && <PromotedTokenFire />}
         </button>
       ),
     },
@@ -422,13 +460,13 @@ export default function LiteMarkets() {
       align: 'right',
       renderCell: row =>
         experimental ? (
-          <div className="flex justify-end items-center gap-2 whitespace-nowrap">
-            <span
-              className="tabular-nums"
+          <div className="lite-earn-apy flex justify-end items-center gap-2 whitespace-nowrap">
+            {(mobile || !(isE2 && !isLegacyE2 && row.markets.some(market => market.asset?.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255'))) && <span
+              className="lite-base-apy tabular-nums"
               title="Current APY across the selected markets; excludes conditional Prime simulations."
             >
-              {formatEarnApyRange(row)}
-            </span>
+              {isE2 && !isLegacyE2 ? `${highestApyMarket(row).apy.toFixed(2)}%` : formatEarnApyRange(row)}
+            </span>}
             <EarnPrimeEntry row={row} />
           </div>
         ) : (
@@ -450,7 +488,9 @@ export default function LiteMarkets() {
         ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (row: LiteAsset) => (
         <div className="tabular-nums">
-          <span className="lite-amount">{amount(row[field], row.token)}</span>
+          <span className={field === 'liquidity' ? 'lite-amount lite-liquidity-amount' : 'lite-amount'}>
+            {amount(row[field], row.token)}
+          </span>
           <span className="lite-amount-symbol"> {row.token.symbol}</span>
           <p className="text-light-grey">
             {usd(row[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'])}
@@ -458,12 +498,20 @@ export default function LiteMarkets() {
         </div>
       ),
     })),
+    ...(isLegacyE2 ? [{
+      key: 'earnAction', label: <span className="sr-only">Action</span>, selectOptionLabel: 'Action', align: 'right' as const,
+      renderCell: (row: LiteAsset) => <LiteMarketAction action="Earn" symbol={row.token.symbol} promoted={row.token.symbol === 'USDC'} onSelect={() => setSelected(row.key)} />,
+    }] : []),
   ];
 
   return (
     <Page>
-      <div className={`lite-markets${experimental ? ' lite-experiment' : ''}`}>
+      <div className={`lite-markets${experimental ? ' lite-experiment' : ''}`} data-mobile-detail={mobile && isMarketDetail ? 'true' : undefined}>
         <GhostBackground />
+        {isE2 && <TokenPlanets
+          rows={rows.filter(row => isVisibleLiteAsset(row, poolQuery.data?.pool.eModeGroups ?? []))}
+          onSelect={row => { setMarketTab(0); setSelected(row.key); }}
+        />}
         <Wrapper className="lite-market-container w-full py-10 sm:py-16">
           <div className="flex flex-col gap-10 sm:gap-12">
             <div className="lite-market-hero lite-enter flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
@@ -473,15 +521,28 @@ export default function LiteMarkets() {
                     Universal Money Markets
                   </h1>
                 </div>
+                {isE2 && <p className="lite-e2-hero-subtitle text-light-grey">Simple yet powerful lending and borrowing for any DeFi yield strategy.</p>}
                 {!experimental && <p className="text-light-grey">
                   Simple yet powerful lending and borrowing for any DeFi yield strategy.
                 </p>}
               </div>
-              {experimental ? (
-                <div className="lite-experiment-top-totals"><MarketTotals /></div>
-              ) : <MarketTotals />}
+              {!isE2 && (experimental ? (
+                <div className="lite-experiment-top-totals"><MarketTotals variant={isE2 || isE3 ? 'inline' : undefined} supplyUpdateIntervalMs={isE3 ? 5000 : undefined} /></div>
+              ) : <MarketTotals />)}
             </div>
-            <section aria-label="Earn markets" className="lite-enter lite-enter--markets space-y-6">
+            <LiteMarketStage enabled={isE2}>
+            {isE2 && <div className="lite-experiment-top-totals"><MarketTotals variant="inline" supplyUpdateIntervalMs={5000} /></div>}
+            <section aria-label={marketTab === 1 ? 'Borrow markets' : 'Earn markets'} className="lite-enter lite-enter--markets space-y-6">
+              {isE3 && !exploreMarkets && marketTab === 0 ? (
+                <E3ActionCard
+                  rows={rows.filter(row => isVisibleLiteAsset(row, poolQuery.data?.pool.eModeGroups ?? []))}
+                  loading={loading}
+                  ready={ready}
+                  onExplore={() => setExploreMarkets(true)}
+                />
+              ) : (
+              <>
+              {isE3 && <button type="button" className="text-blue text-sm" onClick={() => { setExploreMarkets(false); setMarketTab(0); }}>Back to quick supply</button>}
               <Tabs
                 className={experimental ? `lite-experiment-tabs lite-experiment-tabs--embedded${marketTab === 1 ? ' lite-borrow-selected' : ''}` : undefined}
                 activeTabId={experimental ? (marketTab === 1 ? 'borrow' : 'earn') : undefined}
@@ -502,13 +563,15 @@ export default function LiteMarkets() {
                           <AssetSources
                             row={active}
                             framed={experimental}
+                            mobile={mobile}
+                            inline={mobile}
                             // Inside a token the breadcrumb is the way back, so no Earn/Borrow switch here.
                             onBack={() => setSelected(undefined)}
                           />
                         ) : (
                           <div className={experimental ? 'lite-experiment-earn' : undefined}>
                             <div
-                              className={experimental ? 'lite-experiment-scroll' : undefined}
+                              className={experimental ? `lite-experiment-scroll${isE2 ? ' lite-e2-asset-list lite-e2-earn-list' : ''}` : undefined}
                               data-loading={experimental && loading ? 'true' : undefined}
                               role={experimental ? 'region' : undefined}
                               aria-label={
@@ -518,13 +581,14 @@ export default function LiteMarkets() {
                             >
                               <Table
                                 data={ready ? filtered : []}
-                                columns={columns}
+                                className={mobile ? 'lite-mobile-table' : undefined}
+                                columns={mobile ? columns.slice(0, 2) : columns}
                                 rowKeyExtractor={row => row.key}
                                 rowOnClick={(_, row) => setSelected(row.key)}
                                 initialOrder={{ orderBy: columns[1], orderDirection: 'desc' }}
                                 isFetching={loading}
                                 tableLayout="auto"
-                                breakpoint="md"
+                                breakpoint={mobile ? undefined : 'md'}
                                 hideCardDelimiter
                                 // While loading, keep the table (header + spinner) instead of the
                                 // "unavailable" placeholder, so the card doesn't flash a different layout.
@@ -580,6 +644,7 @@ export default function LiteMarkets() {
                     title: 'Borrow',
                     content: (
                       <BorrowMarkets
+                        mobile={mobile}
                         modeSwitch={modeSwitch}
                         experimental={experimental}
                         selected={selectedBorrow}
@@ -594,12 +659,15 @@ export default function LiteMarkets() {
                   },
                 ]}
               />
-              {experimental && (
+              </>
+              )}
+              {experimental && !isE2 && !isE3 && (
                 <p className="lite-market-description text-light-grey">
                   Simple yet powerful lending and borrowing for any DeFi yield strategy.
                 </p>
               )}
             </section>
+            </LiteMarketStage>
           </div>
         </Wrapper>
         {!experimental && !isMarketDetail && (

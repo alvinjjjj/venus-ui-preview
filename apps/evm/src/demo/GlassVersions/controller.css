@@ -3,7 +3,11 @@
 .preview-controller button:focus-visible, .preview-controller a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 .preview-controller-heading { display: flex; align-items: center; justify-content: space-between; font-size: 12px; }
 .preview-controller-heading button { width: 32px; height: 32px; }
-.preview-dpad { display: grid; grid-template-columns: repeat(3,44px); grid-template-rows: 44px; gap: 4px; justify-content: center; margin: 4px 0 12px; }
+.preview-collection-tabs { display: flex; gap: var(--spacing); }
+.preview-controller-heading .preview-collection-tab { width: auto; padding-inline: var(--spacing); font-size: var(--text-xs); }
+.preview-collection-tab[aria-selected='true'] { font-weight: var(--font-weight-semibold); text-decoration: underline; text-underline-offset: var(--spacing); }
+.preview-dpad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: calc(var(--spacing) * 11); gap: var(--spacing); justify-content: center; margin: 4px 0 12px; }
+.preview-dpad--before { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .preview-current { grid-column: 1 / -1; text-align: center; font-size: 11px; opacity: .6; }
 .preview-motion { border-top: 1px solid rgb(140 150 170 / 24%); padding: 8px 0; }
 .preview-controller:has(.preview-motion-panel) { width: 260px; }
@@ -38,3 +42,34 @@
 .preview-frame-tabs button, .preview-frame-actions button { flex: 1; min-height: 36px; font-size: var(--text-xs); border: 1px solid var(--color-light-grey); }
 .preview-content-toggle { display: flex; align-items: center; gap: calc(var(--spacing) * 2); margin-top: calc(var(--spacing) * 4); font-size: var(--text-xs); }
 .preview-content-toggle input { accent-color: var(--color-blue); }
+
+.preview-controller-heading .preview-component-link {
+  font-size: var(--text-xs);
+  padding-inline: var(--spacing);
+  color: inherit;
+}
+.preview-component-link[aria-current='page'] {
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: var(--spacing);
+}
+
+/* Balance the compact Final / Test / com. navigation and single final version. */
+.preview-controller-heading { gap: var(--spacing); }
+.preview-controller-heading .preview-component-link {
+  min-height: calc(var(--spacing) * 8);
+  font-weight: var(--font-weight-normal);
+  background: transparent;
+  color: inherit;
+}
+.preview-controller-heading .preview-component-link[aria-current='page'] {
+  background: transparent;
+  color: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+  text-underline-offset: var(--spacing);
+}
+.preview-dpad:not(.preview-dpad--before) {
+  grid-template-columns: calc(var(--spacing) * 22);
+  margin-top: calc(var(--spacing) * 2);
+}

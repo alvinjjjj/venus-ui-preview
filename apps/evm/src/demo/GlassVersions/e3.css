@@ -1,0 +1,1350 @@
+/* E3 layout only. Existing palette, materials, controls and transaction forms are inherited.
+   Width uses the existing spacing scale to fit a single transaction form. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-action {
+  width: 100%;
+  max-width: calc(var(--spacing) * 128);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-mode { align-self: center; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card {
+  padding: calc(var(--spacing) * 6);
+  border-radius: var(--radius-xl);
+  background: var(--color-cards);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-selectors {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: calc(var(--spacing) * 3);
+  margin-bottom: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form :is(.lite-simple-fields, .lite-input-group) {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form input[type='number'] {
+  text-align: left;
+  font-size: var(--text-2xl);
+  min-width: 0;
+}
+
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-market-container {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-enter--markets { overflow: visible; }
+@media (max-width: 639px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-card { padding: calc(var(--spacing) * 4); }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-selectors { grid-template-columns: minmax(0, 1fr); }
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-compact-market-switch {
+  position: static;
+  width: 100%;
+  height: calc(var(--spacing) * 12);
+  margin-bottom: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action),
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) main,
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) .lite-markets {
+  overflow: auto !important;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-input-group {
+  border: 0;
+  padding: 0;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .venus-text-field:has(input[type='number']) {
+  flex-direction: row-reverse;
+  min-height: calc(var(--spacing) * 24);
+  padding: calc(var(--spacing) * 4);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .venus-text-field > .grow { min-width: 0; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative,
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative > .relative {
+  overflow: visible;
+  flex: 0 0 auto;
+  height: auto;
+}
+/* Supply-first composition: one asset control within the amount field; secondary choices follow. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-heading {
+  margin-bottom: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-heading h2 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin-bottom: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-heading p { font-size: var(--text-sm); }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-input-group > .lite-collateral-control {
+  order: 3;
+  padding-top: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-input-group > .lite-wallet-stat { order: 2; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-single-market-tabs > :last-child { margin-top: 0; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--spacing) * 4);
+  font-size: var(--text-sm);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-hub-asset { margin-bottom: calc(var(--spacing) * 4); }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .venus-text-field:has(input[type='number']) {
+  min-height: calc(var(--spacing) * 28);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form input[type='number'] { font-size: var(--text-3xl); }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .venus-text-field > .grow {
+  flex-wrap: wrap;
+}
+@media (max-width: 639px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-market-title { font-size: var(--text-2xl); }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-market-container { padding-inline: calc(var(--spacing) * 4); }
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-simple-fields { align-items: stretch; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .venus-text-field > .grow { flex-wrap: nowrap; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-input-group .venus-text-field { opacity: 1; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-input-group .venus-text-field input:disabled { opacity: .6; }
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-form .lite-metric-grid > div > button { width: 100%; justify-content: space-between; }
+/* Compact content-width tabs reuse the existing button components and materials. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-action-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-action-tabs button {
+  flex: 0 0 auto;
+  width: auto;
+  min-height: calc(var(--spacing) * 10);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-market-heading > p {
+  margin-top: calc(var(--spacing) * 3);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  text-align: center;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-context {
+  display: grid;
+  gap: calc(var(--spacing) * 4);
+  margin-bottom: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card { border-radius: var(--radius-lg); }
+/* Opted into the shared Pro materials via eHeaderMirror. Inactive tabs reveal
+   that same material and pointer light only on hover or keyboard focus. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:not(:hover):not(:focus-visible) {
+  background: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:not(:hover):not(:focus-visible)::before,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:not(:hover):not(:focus-visible)::after,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:not(:hover):not(:focus-visible) .button-bevel-outline {
+  opacity: 0 !important;
+}
+
+/* Reuse the actual Pro switch's blue-white orbit, rather than a filled primary button. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button {
+  position: relative;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='true'] {
+  background: rgb(16 18 24) !important;
+  background-image: none !important;
+  color: #fff !important;
+  border: 1px solid var(--color-blue) !important;
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--color-blue) 18%, transparent) !important;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button > span {
+  position: static;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs .venus-mode-border-flow {
+  position: absolute !important;
+  inset: 0;
+  z-index: 3;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:not(:hover):not(:focus-visible) .venus-mode-border-flow {
+  opacity: 0;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button > span {
+  border-radius: inherit;
+}
+/* Inactive actions keep the same font size; only weight changes on interaction. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false'] {
+  font-size: var(--text-sm);
+  font-weight: 400;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:is(:hover, :focus-visible) {
+  font-weight: 600;
+}
+
+/* Inactive hover uses a quiet neutral surface; the orbit belongs only to the selected action. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false'] .venus-mode-border-flow,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']::before,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']::after {
+  opacity: 0 !important;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action-tabs button[aria-selected='false']:is(:hover, :focus-visible) {
+  background: var(--color-dark-blue-active) !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  color: var(--color-white) !important;
+  box-shadow: none !important;
+}
+
+/* Let the page content grow to fill short viewports, keeping the footer at the bottom
+   while allowing long transaction forms to extend the page naturally. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative,
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative > .relative {
+  flex: 1 0 auto;
+}
+
+/* Medium bridges the former regular and semibold hero without resizing. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-title {
+  font-size: var(--text-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  color: var(--color-white);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+  text-wrap: balance;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-container > div {
+  gap: calc(var(--spacing) * 10);
+}
+@media (max-width: 767px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-market-title,
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-title {
+    font-size: var(--text-h6);
+  }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-container > div {
+    gap: calc(var(--spacing) * 6);
+  }
+}
+
+/* Reuse the existing popup surface; a restrained blur separates it from the page. */
+:root[data-glass-revision='lite-experiment-v3'] .venus-popup-panel.lite-e3-card {
+  background: color-mix(in srgb, var(--color-background-active) 88%, transparent);
+  border: 1px solid var(--color-dark-blue-hover);
+  backdrop-filter: blur(calc(var(--spacing) * 3));
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 3));
+}
+
+/* E3 wallet CTA reuses the existing header wallet's blue material verbatim. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .venus-connect-wallet-button {
+  background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+  color: white;
+  border-color: rgb(255 255 255 / 20%);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%) !important;
+}
+
+/* Persistent comparison: market and supply yield are visible before selection. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-comparison {
+  display: grid;
+  gap: calc(var(--spacing) * 3);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-options {
+  display: grid;
+  gap: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-market-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 3);
+  width: 100%;
+  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);
+  border: 1px solid var(--color-dark-blue-hover);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--color-white);
+  text-align: left;
+  cursor: pointer;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-market-option[aria-pressed='true'] {
+  border-color: var(--color-blue);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option-name {
+  display: flex;
+  gap: calc(var(--spacing) * 3);
+  align-items: center;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-indicator {
+  width: calc(var(--spacing) * 4);
+  height: calc(var(--spacing) * 4);
+  flex-shrink: 0;
+  border: 1px solid var(--color-light-grey);
+  border-radius: 50%;
+}
+:root[data-glass-revision='lite-experiment-v3'] [aria-pressed='true'] .lite-e3-market-indicator {
+  border: calc(var(--spacing)) solid var(--color-blue);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option-rate {
+  display: grid;
+  text-align: right;
+  flex-shrink: 0;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option-rate > span {
+  font-size: var(--text-xs);
+  color: var(--color-light-grey);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-comparison {
+  grid-template-columns: minmax(0, 1fr);
+  justify-content: stretch;
+}
+
+/* Compact, ordered selection before amount entry. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-context {
+  gap: calc(var(--spacing) * 3);
+  margin-bottom: calc(var(--spacing) * 4);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-market-option {
+  padding: calc(var(--spacing) * 3);
+  gap: calc(var(--spacing) * 2);
+  min-height: calc(var(--spacing) * 11);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option-name {
+  gap: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-container > div {
+  gap: calc(var(--spacing) * 6);
+}
+@media (max-width: 479px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (min-width: 768px) and (max-height: 800px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-card {
+    padding: calc(var(--spacing) * 5);
+  }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-container > div {
+    gap: calc(var(--spacing) * 4);
+  }
+}
+
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-funding-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-funding-source button {
+  padding-block: calc(var(--spacing) * 2);
+  cursor: pointer;
+}
+
+/* Use the existing 40/48/56px control scale consistently within E3.
+   Compact selectors and MAX: 40; primary action: 48; amount field: 56. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-asset-trigger,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-market-option {
+  height: calc(var(--spacing) * 10);
+  min-height: calc(var(--spacing) * 10);
+  padding: 0 calc(var(--spacing) * 3);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  box-sizing: border-box;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .inline-submit-dock .venus-connect-wallet-button,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .venus-connect-wallet-button,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card button[type='submit'] {
+  height: calc(var(--spacing) * 12);
+  min-height: calc(var(--spacing) * 12);
+  padding: 0 calc(var(--spacing) * 4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .venus-text-field {
+  height: calc(var(--spacing) * 14);
+  min-height: calc(var(--spacing) * 14);
+  border-radius: var(--radius-lg);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .lite-e3-market-option:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card .lite-loan-filter button {
+  height: calc(var(--spacing) * 10);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+}
+
+/* Account-dependent actions start with connection, not unknown position data. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-connect-state {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card .inline-submit-dock {
+  padding-top: calc(var(--spacing) * 4);
+}
+
+/* Reuse E2's approved title paint without changing E3's type scale or layout. */
+@media (forced-colors: none) {
+  :root[data-glass-revision='lite-experiment-v3']:not([data-liquidity-theme='light']) #root .lite-market-title {
+    background-image: linear-gradient(180deg, #d9edff 0%, #99c8ff 50%, #598eff 100%);
+    background-size: 100% 100%;
+    background-position: 0 0;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: none;
+  }
+}
+
+/* Restore the centered supporting sentence beneath the existing E3 title. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-market-heading > p {
+  margin-top: calc(var(--spacing) * 2);
+  margin-inline: auto;
+  text-align: center;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  text-wrap: balance;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-experiment .lite-market-container > div {
+  gap: calc(var(--spacing) * 8);
+}
+
+/* Selected markets reuse the same reduced-motion-aware ring as Pro. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-market-option {
+  position: relative;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-market-option > .venus-mode-border-flow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* E3 controls reuse the soft-glass highlight and blur from the approved
+   button material. Optical alpha values stay local; sizing tokens are unchanged. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card :is([data-select-trigger]:not(.venus-text-field *), .lite-e3-market-option) {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  isolation: isolate;
+  background: color-mix(in srgb, var(--color-dark-blue-active) 78%, transparent) !important;
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+}
+
+/* The nested inline token label otherwise contributes baseline space below
+   the icon, making the asset look higher than the centered chevron. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card [data-select-trigger] > span,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card [data-select-trigger] > span > .grow {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card [data-select-trigger] > span {
+  height: 100%;
+}
+
+/* Reveal the existing pointer-following soft light only during interaction. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total::before,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card :is([data-select-trigger]:not(.venus-text-field *), .lite-e3-market-option)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--glass-x, 50%) var(--glass-y, 50%), rgb(255 255 255 / 22%), transparent 70%);
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total:hover::before,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card :is([data-select-trigger]:not(.venus-text-field *), .lite-e3-market-option):not(:disabled):not([aria-disabled='true']):is(:hover, :focus-visible)::before {
+  opacity: .65;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total::before,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card :is([data-select-trigger]:not(.venus-text-field *), .lite-e3-market-option)::before { transition: none; }
+}
+
+/* Informational totals use the existing 8px frame and New dropdown's frosted
+   material recipe, not a new global palette or an interactive pill. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment-top-totals {
+  width: 100%;
+  max-width: 100%;
+  contain: inline-size;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 2);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-totals > .lite-e2-market-total {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: calc(var(--spacing) * 2);
+  row-gap: var(--spacing);
+  min-width: 0;
+  min-height: calc(var(--spacing) * 9);
+  padding: var(--spacing) calc(var(--spacing) * 3);
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: var(--radius-lg);
+
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e2-market-totals > .lite-e2-market-total {
+  background: linear-gradient(125deg, rgb(255 255 255 / 24%), transparent 65%), rgb(255 255 255 / 64%);
+  border-color: rgb(30 40 55 / 10%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 80%), 0 var(--spacing) calc(var(--spacing) * 2.5) rgb(30 55 85 / 7%);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-totals > .lite-e2-market-total {
+    background-color: rgb(20 24 31 / 96%);
+  }
+  :root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e2-market-totals > .lite-e2-market-total {
+    background-color: rgb(255 255 255 / 96%);
+  }
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total p {
+  margin: 0;
+  white-space: nowrap;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total p:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-light-grey);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-total-dot {
+  flex-shrink: 0;
+  width: calc(var(--spacing) * 1.5);
+  height: calc(var(--spacing) * 1.5);
+  border-radius: 50%;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-total-dot[data-total-kind='supplyUsd'] {
+  background: var(--color-green);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-total-dot[data-total-kind='liquidityUsd'] {
+  /* Decorative yellow stays yellow rather than Light's brown warning alias. */
+  background: rgb(var(--color-yellow-hover-rgb));
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total p:last-child {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  color: var(--e-light-text-primary, var(--color-white));
+}
+@media (max-width: 767px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-totals {
+    grid-template-columns: minmax(0, 1fr);
+    gap: calc(var(--spacing) * 2);
+  }
+}
+
+
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-market-hero {
+  width: max-content;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+/* E3 navigation floats directly over the shared sky; controls retain their materials. */
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-sky-layout {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-background-active);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-sky-layout #page-container {
+  background: transparent;
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .venus-navigation > .venus-header-row {
+  background: transparent !important;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Emphasize amounts, with a brief roll only in numeral places that changed. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e2-market-total p:last-child {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+.lite-e3-rolling-total { display: inline-flex; font-variant-numeric: tabular-nums; }
+.lite-e3-digit { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; }
+.lite-e3-digit > span { display: block; }
+.lite-e3-digit-out { position: absolute; inset: 0; animation: lite-e3-digit-out 600ms ease-in-out both; }
+.lite-e3-digit-in { animation: lite-e3-digit-in 600ms ease-in-out both; }
+@keyframes lite-e3-digit-out {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100%); opacity: 0; }
+}
+@keyframes lite-e3-digit-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lite-e3-digit-out { display: none !important; }
+  .lite-e3-digit-in { animation: none; }
+}
+
+/* Bring the E3 heading and action area up while retaining the existing rhythm. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-market-container {
+  padding-top: 0;
+  margin-top: calc(var(--spacing) * -2);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-market-container > div {
+  gap: calc(var(--spacing) * 6);
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .venus-popup-panel.lite-e3-card {
+  backdrop-filter: blur(calc(var(--spacing) * 2));
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 2));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 10%), 0 calc(var(--spacing) * 2) calc(var(--spacing) * 6) rgb(0 0 0 / 10%);
+}
+
+/* E3 light fixes: use existing light roles, and clip the title gradient to glyphs. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-market-title {
+  background-color: transparent;
+  background-image: linear-gradient(180deg, var(--e-light-heading-start), var(--e-light-heading-end));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-action-tabs button[aria-selected='true'] {
+  background: var(--e-light-surface-raised) !important;
+  color: var(--e-light-text-primary) !important;
+  --material-ink: var(--e-light-text-primary) !important;
+  --material-hover-ink: var(--e-light-text-primary) !important;
+  box-shadow: var(--e-light-shadow-control) !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-action-tabs button[aria-selected='true'] > span {
+  color: var(--e-light-text-primary) !important;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-popup-panel.lite-e3-card {
+  box-shadow: var(--e-light-shadow-panel);
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-navigation .venus-mode-switch {
+  background: var(--e-light-surface-raised) !important;
+  color: var(--e-light-text-primary) !important;
+}
+
+/* E3 Light galaxy. Geometry describes the decorative illustration,
+   while all colors reuse existing Light roles; no global tokens change. */
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost--e3.lite-ghost--light-ambient {
+  opacity: 1;
+  mask-image: none;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost--e3::before,
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost--e3::after {
+  content: none;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost__light-dust { opacity: .3; }
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost__meteors { display: none; }
+
+/* Anchor the hero near navigation; spacing adapts to viewport height, not panel height. */
+@media (min-width: 768px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container {
+    margin-top: 0;
+    padding-block: calc(var(--spacing) * 2);
+  }
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container > div {
+    flex: 0 0 auto;
+    width: 100%;
+    margin-block: 0;
+  }
+}
+
+/* On tall desktop screens, give the hero its own upper zone while keeping
+   tabs attached to the form. Shorter screens retain the compact composition. */
+@media (min-width: 1024px) and (min-height: 900px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container {
+    padding-top: calc(var(--spacing) * 2);
+  }
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container > div {
+    gap: calc(var(--spacing) * 6);
+  }
+}
+
+/* Token discovery planets: local illustration positions; sizes use the spacing scale. */
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planets {
+  position: fixed; inset: 0; pointer-events: none; z-index: 20;
+  color: var(--color-white);
+}
+.lite-token-planet { position: absolute; pointer-events: auto; }
+.lite-token-planet--1 { left: 12%; top: 43%; --planet-size: 24; }
+.lite-token-planet--2 { right: 12%; top: 28%; --planet-size: 20; }
+.lite-token-planet--3 { left: 23%; top: 72%; --planet-size: 16; }
+.lite-token-planet--4 { right: 21%; top: 68%; --planet-size: 18; }
+.lite-token-planet--5 { left: 6%; top: 19%; --planet-size: 12; }
+.lite-token-planet--6 { right: 6%; top: 82%; --planet-size: 14; }
+.lite-token-planet--7 { left: 32%; top: 86%; --planet-size: 10; }
+.lite-token-planet--8 { right: 29%; top: 13%; --planet-size: 11; }
+.lite-token-planet-orb {
+  position: relative; display: grid; place-items: center; border-radius: 50%;
+  width: calc(var(--spacing) * var(--planet-size)); height: calc(var(--spacing) * var(--planet-size));
+  background: var(--color-background-active); cursor: pointer;
+  box-shadow: 0 16px 32px rgb(28 65 102 / 18%);
+  animation: lite-token-float 12s ease-in-out infinite alternate;
+  transition: filter .25s, opacity .25s;
+}
+.lite-token-planet-orb img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.lite-token-planet-orb::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle at 28% 23%, rgb(255 255 255 / 48%), transparent 42%, rgb(13 34 64 / 34%) 95%);
+  box-shadow: inset 1px 2px 3px rgb(255 255 255 / 55%);
+}
+.lite-token-planet:nth-child(n+3) .lite-token-planet-orb { filter: blur(1px); opacity: .65; animation-delay: -4s; }
+.lite-token-planet:nth-child(n+5) .lite-token-planet-orb { filter: blur(2px); opacity: .4; animation-delay: -8s; }
+.lite-token-planet[data-open='true'] { z-index: 2; }
+.lite-token-planet[data-open='true'] .lite-token-planet-orb { filter: none; opacity: 1; animation-play-state: paused; outline: 2px solid var(--color-blue); outline-offset: 4px; }
+.lite-token-planet-detail {
+  position: absolute; top: 100%; left: 0; width: calc(var(--spacing) * 60);
+  padding: calc(var(--spacing) * 4); border-radius: var(--radius-lg);
+  background: var(--color-background-active); border: 1px solid var(--color-dark-blue-hover);
+  box-shadow: 0 12px 32px rgb(20 45 80 / 18%); display: grid; gap: calc(var(--spacing) * 2);
+  font-size: var(--text-sm);
+}
+.lite-token-planet:nth-child(even) .lite-token-planet-detail { left: auto; right: 0; }
+.lite-token-planet:nth-child(n+3) .lite-token-planet-detail { top: auto; bottom: 100%; }
+.lite-token-planet-detail button { display: flex; justify-content: space-between; gap: calc(var(--spacing) * 3); padding-block: calc(var(--spacing) * 2); text-align: left; border-bottom: 1px solid var(--color-dark-blue-hover); }
+.lite-token-planet-detail button:hover, .lite-token-planet-detail button:focus-visible { color: var(--color-blue); }
+.lite-token-planet-caption { color: var(--color-light-grey); font-size: var(--text-xs); }
+:root[data-liquidity-theme='light'] .lite-token-planets { color: var(--e-light-text-primary); }
+:root[data-liquidity-theme='light'] .lite-token-planet-detail { background: var(--e-light-surface-raised); border-color: var(--e-light-border-control); }
+:root[data-liquidity-theme='light'] .lite-token-planet-caption { color: var(--e-light-text-primary); }
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-ghost__light-galaxy { display: none; }
+@keyframes lite-token-float { from { transform: translateY(-6px); } to { transform: translateY(6px); } }
+@media (max-width: 1599px) { .lite-token-planet:nth-child(n+7) { display: none; } }
+@media (min-width: 768px) and (max-width: 1100px) {
+  .lite-token-planet:nth-child(odd) { left: 3%; }
+  .lite-token-planet:nth-child(even) { right: 3%; }
+  .lite-token-planet-orb { --planet-size: 12; }
+}
+@media (max-width: 767px) {
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planets { position: relative; display: flex; justify-content: center; gap: calc(var(--spacing) * 4); z-index: 5; }
+  .lite-token-planet { position: relative; inset: auto; }
+  .lite-token-planet-orb { --planet-size: 12; animation: none; }
+  .lite-token-planet .lite-token-planet-detail { position: fixed; top: auto; bottom: calc(var(--spacing) * 6); left: calc(var(--spacing) * 4); right: calc(var(--spacing) * 4); width: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .lite-token-planet-orb { animation: none; } }
+.lite-token-planet-detail .lite-token-planet-close {
+  position: absolute; top: var(--spacing); right: var(--spacing);
+  width: calc(var(--spacing) * 9); height: calc(var(--spacing) * 9);
+  display: grid; place-items: center; padding: 0; border: 0; font-size: var(--text-xl);
+}
+
+/* Near planets use textured spherical surfaces; token emblems stay secondary. */
+.lite-token-sphere { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; }
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb {
+  background: transparent;
+  box-shadow: -4px -3px 12px rgb(130 210 231 / 26%), 16px 24px 52px rgb(23 49 80 / 16%);
+}
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb img {
+  position: relative; width: 35%; height: 35%; opacity: .72;
+  mix-blend-mode: screen; transform: translate(-10%, -8%) rotate(-12deg) scaleX(.9);
+  filter: grayscale(1); z-index: 1;
+}
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb::after {
+  background: radial-gradient(circle at 30% 25%, rgb(222 250 255 / 12%), transparent 45%, rgb(9 25 53 / 24%));
+  box-shadow: inset 1px 1px 3px rgb(206 244 255 / 65%);
+}
+@media (min-width: 1600px) {
+  .lite-token-planet--1 { left: -1%; top: 49%; --planet-size: 56; }
+  .lite-token-planet--2 { right: 3%; top: 24%; --planet-size: 46; }
+  .lite-token-planet--3 { left: 24%; top: 73%; --planet-size: 24; }
+  .lite-token-planet--4 { right: 18%; top: 69%; --planet-size: 28; }
+  .lite-token-planet--5 { left: 16%; top: 23%; --planet-size: 20; }
+  .lite-token-planet--6 { right: 5%; top: 83%; --planet-size: 12; }
+  .lite-token-planet--7 { left: 35%; top: 88%; --planet-size: 8; }
+  .lite-token-planet--8 { right: 24%; top: 13%; --planet-size: 10; }
+  .lite-token-planet--1 .lite-token-planet-detail { left: calc(var(--spacing) * 8); }
+}
+@media (min-width: 1101px) and (max-width: 1599px) {
+  .lite-token-planet--1 { left: 6%; --planet-size: 36; }
+  .lite-token-planet--2 { right: 3%; --planet-size: 32; }
+  .lite-token-planet--3 { left: 12%; --planet-size: 20; }
+  .lite-token-planet--4 { right: 12%; --planet-size: 22; }
+}
+
+/* Smooth atmospheric planets; a high-contrast luminance emblem removes the
+   colored coin disk, then soft-light blends the mark into the lit surface. */
+.lite-token-sphere {
+  z-index: 0;
+  background: radial-gradient(circle at 28% 23%, var(--planet-light) 0%, var(--planet-mid) 39%, var(--planet-dark) 83%, var(--planet-mid) 100%);
+  box-shadow: inset 2px 2px 5px rgb(255 255 255 / 50%), inset -5px -6px 12px rgb(10 25 50 / 15%);
+}
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb { isolation: isolate; }
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb img {
+  width: 46%; height: 46%; opacity: .65;
+  filter: grayscale(1) brightness(.78) contrast(8);
+  mix-blend-mode: screen;
+  transform: perspective(180px) rotateY(-18deg) rotateZ(-10deg) translate(-5%, -5%);
+  mask-image: radial-gradient(ellipse, black 35%, rgb(0 0 0 / 65%) 70%, transparent 100%);
+}
+.lite-token-planet[data-token='sUSDe'] .lite-token-planet-orb img,
+.lite-token-planet[data-token='ETH'] .lite-token-planet-orb img {
+  filter: grayscale(1) invert(1) brightness(.78) contrast(8);
+}
+.lite-token-planet[data-planet-surface='true'] .lite-token-planet-orb::after { z-index: 2; }
+.lite-token-ring { display: none; pointer-events: none; }
+.lite-token-planet[data-ring='true'] .lite-token-ring {
+  display: block; position: absolute; width: 168%; height: 48%;
+  left: -34%; top: 26%; border-radius: 50%;
+  transform: rotate(-24deg);
+  border: calc(var(--spacing) * 1.5) solid rgb(159 186 208 / 45%);
+  box-shadow: 0 0 0 2px rgb(230 241 250 / 55%), inset 0 0 0 2px rgb(255 255 255 / 65%);
+}
+.lite-token-ring--back { z-index: -1; }
+.lite-token-planet[data-ring='true'] .lite-token-ring--front {
+  z-index: 3; clip-path: inset(50% -10% -15% -10%);
+}
+.lite-token-planet[data-token='DAI'] .lite-token-ring { border-color: rgb(196 172 129 / 45%); }
+@media (max-width: 767px) {
+  .lite-token-planet[data-ring='true'] .lite-token-ring { border-width: 2px; }
+}
+/* Gold token disks are brighter than blue/green: isolate their white glyphs
+   with a higher luminance threshold before blending onto the sphere. */
+.lite-token-planet:is([data-token='DAI'], [data-token='BTCB'], [data-token='WBNB'], [data-token='WBETH']) .lite-token-planet-orb img {
+  filter: grayscale(1) brightness(.56) contrast(18);
+}
+
+/* Defocused planetary backdrop. Only the active discovery target resolves;
+   thin orbital rings appear with interaction rather than permanent decoration. */
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb {
+  filter: blur(calc(var(--spacing) * 1.5));
+  opacity: .68;
+  transition: filter .4s ease, opacity .4s ease;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet:nth-child(n+5) .lite-token-planet-orb {
+  filter: blur(calc(var(--spacing) * 2));
+  opacity: .48;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] .lite-token-planet-orb {
+  filter: blur(0);
+  opacity: .95;
+  outline: none;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet-orb:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: calc(var(--spacing) * 2);
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-ring {
+  display: block; position: absolute; width: 168%; height: 48%;
+  left: -34%; top: 26%; border-radius: 50%;
+  border: 1px solid rgb(159 186 208 / 48%);
+  box-shadow: none;
+  opacity: 0; transform: rotate(-12deg) scale(.88);
+  transition: opacity .4s ease, transform .6s ease;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-ring--front {
+  z-index: 3; clip-path: inset(50% -10% -15% -10%);
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] .lite-token-ring {
+  opacity: .8; transform: rotate(-24deg) scale(1);
+}
+@media (max-width: 767px) {
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb {
+    filter: blur(calc(var(--spacing) * .5));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-ring,
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb { transition: none; }
+}
+
+/* Stagger near edge crops, mid-distance tokens and small satellites. */
+@media (min-width: 1600px) {
+  .lite-token-planet--1 { left: 8%; top: 49%; }
+  .lite-token-planet--2 { right: 8%; top: 72%; }
+  .lite-token-planet--3 { left: 23%; top: 75%; }
+  .lite-token-planet--4 { right: 20%; top: 38%; }
+  .lite-token-planet--5 { left: 17%; top: 26%; }
+  .lite-token-planet--6 { right: 12%; top: 19%; }
+  .lite-token-planet--7 { left: 33%; top: 86%; }
+  .lite-token-planet--8 { right: 29%; top: 81%; }
+  .lite-token-planet--2 .lite-token-planet-detail { top: auto; bottom: 100%; right: calc(var(--spacing) * 16); }
+}
+/* Move each complete target, including its details, so hovering never opens a gap. */
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet {
+  --drift-x: calc(var(--spacing) * 3);
+  --drift-y: calc(var(--spacing) * 2);
+  animation: lite-planet-orbit 32s ease-in-out infinite;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet:nth-child(even) {
+  --drift-x: calc(var(--spacing) * -3);
+  animation-duration: 39s; animation-delay: -11s;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet:nth-child(3n) {
+  --drift-y: calc(var(--spacing) * -2);
+  animation-duration: 28s; animation-delay: -19s;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet:nth-child(n+5) {
+  --drift-x: var(--spacing); --drift-y: calc(var(--spacing) * -1);
+  animation-duration: 45s; animation-delay: -23s;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] { animation-play-state: paused; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb {
+  animation: none; scale: 1;
+  transition: filter .4s ease, opacity .4s ease, scale .4s ease;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] .lite-token-planet-orb { scale: 1.06; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb img {
+  transition: transform .4s ease .08s, opacity .4s ease .08s;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] .lite-token-planet-orb img {
+  opacity: .95;
+  transform: perspective(180px) rotateY(-5deg) rotateZ(-3deg) scale(1.4);
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet[data-open='true'] .lite-token-ring { transition-delay: .15s; }
+@keyframes lite-planet-orbit {
+  0%, 100% { transform: translate(0, calc(var(--drift-y) * -1)); }
+  25% { transform: translate(var(--drift-x), 0); }
+  50% { transform: translate(0, var(--drift-y)); }
+  75% { transform: translate(calc(var(--drift-x) * -1), 0); }
+}
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb,
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-planet-orb img,
+  :root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet .lite-token-ring { transition: none; }
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet--4 { animation-duration: 35s; animation-delay: -7s; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet--6 { animation-delay: -9s; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet--7 { animation-delay: -31s; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet--8 { animation-delay: -16s; }
+
+/* Compact market comparison: one clear header, aligned rates, actionable rows. */
+.lite-token-planet-detail {
+  gap: 0;
+  padding: calc(var(--spacing) * 3);
+  width: calc(var(--spacing) * 64);
+}
+.lite-token-planet-title {
+  font-size: var(--text-base); font-weight: 600; line-height: 1.5;
+  padding: var(--spacing) calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+}
+.lite-token-planet-columns {
+  display: flex; justify-content: space-between;
+  padding: 0 calc(var(--spacing) * 2) var(--spacing);
+  padding-right: calc(var(--spacing) * 2);
+  color: var(--color-light-grey); font-size: var(--text-xs); line-height: 1.5;
+}
+.lite-token-planet-detail .lite-token-planet-market {
+  display: flex; justify-content: space-between; gap: calc(var(--spacing) * 3);
+  min-height: calc(var(--spacing) * 11); align-items: center;
+  padding: calc(var(--spacing) * 2); border: 0; border-radius: var(--radius-md);
+  font-size: var(--text-sm); font-weight: 400; line-height: 1.5;
+  transition: background-color .15s ease;
+}
+.lite-token-planet-rate { display: inline-flex; align-items: center; gap: calc(var(--spacing) * 3); flex-shrink: 0; }
+.lite-token-planet-rate strong { font-weight: 600; font-variant-numeric: tabular-nums; }
+.lite-token-planet-rate svg { color: var(--color-light-grey); }
+.lite-token-planet-detail .lite-token-planet-close { top: calc(var(--spacing) * 2); right: calc(var(--spacing) * 2); color: var(--color-light-grey); }
+:root[data-liquidity-theme='light'] .lite-token-planet-columns,
+:root[data-liquidity-theme='light'] .lite-token-planet-rate svg,
+:root[data-liquidity-theme='light'] .lite-token-planet-close { color: var(--color-light-grey); }
+
+
+/* E3 desktop keeps the hero anchored while action panels change height.
+   Constrain the page shell; only an unusually long form scrolls internally. */
+@media (min-width: 768px) {
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action),
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) .lite-markets {
+    overflow: hidden !important;
+    min-height: 0;
+  }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative,
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment-layout:has(.lite-e3-action) > .relative > .relative {
+    flex: 1 1 0%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container > div {
+    flex: 1 1 0%;
+    min-height: 0;
+  }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-experiment:has(.lite-e3-action) .lite-enter--markets,
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-action {
+    min-height: 0;
+  }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-action-tabs { flex-shrink: 0; }
+  :root[data-glass-revision='lite-experiment-v3'] .lite-e3-card {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+/* Short desktop windows need less hero whitespace before the full-size form. */
+@media (min-width: 768px) and (max-height: 899px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-experiment:has(.lite-e3-action) .lite-market-container > div {
+    gap: calc(var(--spacing) * 3);
+  }
+}
+@media (min-width: 768px) and (max-height: 899px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .venus-popup-panel.lite-e3-card {
+    padding: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .inline-submit-dock {
+    padding-top: 0;
+  }
+}
+
+/* E3-only typography trial: locally hosted Inter, no global font-token change. */
+@font-face {
+  font-family: 'E3 Inter'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('./fonts/inter-regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'E3 Inter'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('./fonts/inter-medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'E3 Inter'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('./fonts/inter-semibold.ttf') format('truetype');
+}
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action,
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-action :is(button, input, select) {
+  font-family: 'E3 Inter', sans-serif;
+}
+
+/* Preserve WBETH's dark ETH facets as a light, transparent planetary emblem. */
+.lite-token-planet[data-token='WBETH'] .lite-token-planet-orb img {
+  filter: none;
+  mask-image: none;
+}
+
+/* E3 airy-white study: neutral surfaces and a crisp blue CTA, scoped locally. */
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] .lite-e3-sky-layout,
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-experiment-layout,
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-ghost--e3 {
+  background: #fff !important;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] .lite-ghost--e3 :is(.lite-ghost__near-stars, .lite-ghost__meteors, .lite-ghost__light-dust) { display: none; }
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-popup-panel.lite-e3-card {
+  background: #fff !important;
+  border-color: rgb(0 0 0 / 8%) !important;
+  box-shadow: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 8) rgb(0 0 0 / 3%);
+  backdrop-filter: none;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-card :is(.lite-e3-asset-trigger, .lite-e3-market-option),
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-experiment-top-totals > * {
+  background: #fafafa !important;
+  border-color: rgb(0 0 0 / 10%);
+  box-shadow: none !important;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3'])[data-liquidity-theme='light'] .lite-token-sphere {
+  box-shadow: inset 2px 2px 5px rgb(255 255 255 / 50%);
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-connect-wallet-button,
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .inline-submit-dock .venus-connect-wallet-button {
+  background: #1460ff !important;
+  background-image: none !important;
+  border-color: #1460ff !important;
+  box-shadow: none !important;
+  color: #fff !important;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-connect-wallet-button:hover {
+  background: #084cdb !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-card, .venus-navigation) .venus-primary-action.venus-connect-wallet-button,
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-connect-wallet-button {
+  background: #1460ff !important;
+  border-color: #1460ff !important;
+  box-shadow: none !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-connect-wallet-button::before,
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-connect-wallet-button::after { display: none !important; }
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.venus-connect-wallet-button, .venus-demo-login) {
+  --e-light-action-fill: #1460ff;
+  --e-light-action-hover: #084cdb;
+  background: #1460ff !important;
+}
+
+/* Keep the approved vivid blue; restrained light and grain add frosted depth. */
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.venus-connect-wallet-button, .venus-demo-login) {
+  --e-light-action-fill: radial-gradient(ellipse at 45% 0%, rgb(255 255 255 / 17%), transparent 68%), linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+  --e-light-action-hover: radial-gradient(ellipse at 45% 0%, rgb(255 255 255 / 23%), transparent 68%), linear-gradient(115deg, #216bff, #347eff 48%, #1c62f5);
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-card, .venus-navigation) .venus-connect-wallet-button,
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-primary-action:is(.venus-connect-wallet-button, .venus-demo-login) {
+  background: var(--e-light-action-fill) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), inset 0 -1px 0 rgb(0 30 110 / 12%), 0 2px 5px rgb(20 96 255 / 12%) !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .venus-primary-action:is(.venus-connect-wallet-button, .venus-demo-login):hover {
+  background: var(--e-light-action-hover) !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] :is(#root, body) .venus-primary-action:not(.venus-multiselect-trigger, [data-select-trigger], [aria-haspopup], :disabled, [aria-disabled='true'])::after {
+  content: '';
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='white' filter='url(%23n)' d='M0 0h128v128H0z'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+/* Match the E3 hero to the approved vivid-blue action palette. */
+@media (forced-colors: none) {
+  :root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme] #root .lite-market-title {
+    background-color: transparent;
+    background-image: linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #1460ff;
+  }
+}
+
+/* Neutral-white secondary surfaces: no ice-blue tint or continuous sheen. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-asset-trigger, .lite-e2-market-total) {
+  --e-light-surface-raised: #fff;
+  --e-light-surface-subtle: #fafafa;
+  --e-light-shadow-control: none;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #fafafa !important;
+  border: 1px solid rgb(0 0 0 / 9%) !important;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 3%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-asset-trigger, .lite-e2-market-total)::before {
+  display: none !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-asset-trigger, .lite-e2-market-total)::after {
+  content: '';
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 25%, rgb(255 255 255 / 55%) 50%, transparent 75%) !important;
+  box-shadow: none !important;
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: none !important;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root :is(.lite-e3-asset-trigger, .lite-e2-market-total):hover::after {
+    animation: e3-neutral-sheen .7s ease-out !important;
+  }
+}
+@keyframes e3-neutral-sheen {
+  0% { opacity: 0; transform: translateX(-100%); }
+  25%, 65% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-asset-trigger {
+  --e-light-surface-control: #fafafa;
+  --e-light-surface-hover: #f5f5f5;
+  --e-light-border-control: rgb(0 0 0 / 9%);
+  --e-light-shadow-control: 0 1px 2px rgb(0 0 0 / 3%);
+}
+
+/* Both themes share the separate sphere and token emblem; light keeps softer shading. */
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3'])[data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb {
+  box-shadow: none;
+}
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3'])[data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb::after {
+  background: radial-gradient(circle at 65% 85%, rgb(255 255 255 / 28%), rgb(255 255 255 / 8%) 70%);
+}
+
+/* Amount inputs retain the shared E2 field and nested-button components.
+   Only flex containment is local; material, states and control sizing are inherited. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .venus-text-field > .grow {
+  min-width: 0;
+}
+
+/* Light-mode selection uses a steady blue keyline instead of luminous rings. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-card .lite-e3-market-option {
+  --e-light-shadow-control: none;
+  box-shadow: none !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-card .lite-e3-market-option[aria-pressed='true'] {
+  --e-light-border-control: var(--color-blue);
+  --e-light-surface-control: color-mix(in srgb, var(--color-blue) 5%, white);
+  border-color: var(--color-blue) !important;
+  background: var(--e-light-surface-control) !important;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-market-option > .venus-mode-border-flow {
+  display: none;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-card [data-emode-banner] :is(h2, p, button, button span, a, a span) {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+}
+
+/* One approved light-mode primary-action material, including linked actions
+   and portal dialogs. Disabled controls keep their existing disabled styling. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] {
+  --e-light-action-fill: radial-gradient(ellipse at 45% 0%, rgb(255 255 255 / 17%), transparent 68%), linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+  --e-light-action-hover: radial-gradient(ellipse at 45% 0%, rgb(255 255 255 / 23%), transparent 68%), linear-gradient(115deg, #216bff, #347eff 48%, #1c62f5);
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-primary-action, .venus-demo-login, [data-liquidity-hub-submit='true'][data-liquidity-hub-amount-valid='true']):not(.venus-multiselect-trigger, [data-select-trigger], [aria-haspopup], :disabled, [aria-disabled='true']) {
+  position: relative;
+  --material-fill: var(--e-light-action-fill) !important;
+  --material-hover: var(--e-light-action-hover) !important;
+  --material-shadow: inset 0 1px 0 rgb(255 255 255 / 30%), inset 0 -1px 0 rgb(0 30 110 / 12%), 0 2px 5px rgb(20 96 255 / 12%) !important;
+  background: var(--e-light-action-fill) !important;
+  border-color: rgb(255 255 255 / 30%) !important;
+  box-shadow: var(--material-shadow) !important;
+  color: #fff !important;
+}
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] :is(#root, body) .venus-primary-action:not(.venus-multiselect-trigger, [data-select-trigger], [aria-haspopup], :disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
+  background: var(--e-light-action-hover) !important;
+}
+
+/* Light account-detail separators recede into the white card. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-card hr {
+  border-color: rgb(0 0 0 / 5%) !important;
+}
+
+/* Account metrics belong to the outer popup, without a nested card surface. */
+:root[data-glass-study='lite-experiment'][data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] [role='dialog'][aria-label='Account'] :is(.venus-account-performance-row, .venus-account-performance-cells) {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* The frame clips its own radius; scrolling sits inside it with an inset rail. */
+:root[data-glass-revision='lite-experiment-v3'] #root .venus-popup-panel.lite-e3-card {
+  --e3-card-padding: calc(var(--spacing) * 6);
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing) !important;
+  overflow: hidden;
+  min-height: 0;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  border-radius: calc(var(--radius-xl) - var(--spacing));
+  padding: calc(var(--e3-card-padding) - var(--spacing));
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 22%) transparent;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-scroll::-webkit-scrollbar {
+  width: calc(var(--spacing) * 1.5);
+  background: transparent;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-scroll::-webkit-scrollbar-track {
+  margin-block: calc(var(--spacing) * 2);
+  background: transparent;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-card-scroll::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 22%);
+  border-radius: var(--radius-lg);
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] .lite-e3-card-scroll {
+  scrollbar-color: rgb(0 0 0 / 12%) transparent;
+}
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] .lite-e3-card-scroll::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 12%);
+}
+@media (max-width: 767px), (max-height: 899px) {
+  :root[data-glass-revision='lite-experiment-v3'] #root .venus-popup-panel.lite-e3-card {
+    --e3-card-padding: calc(var(--spacing) * 4);
+  }
+}
+
+/* Embedded asset selection uses the existing input's left adornment slot. */
+:root[data-glass-revision='lite-experiment-v3'] #root .lite-e3-card .venus-text-field .lite-e3-inline-asset-trigger {
+  height: calc(var(--spacing) * 10) !important;
+  min-height: calc(var(--spacing) * 10) !important;
+  padding-inline: calc(var(--spacing) * 2);
+  width: auto;
+  min-width: calc(var(--spacing) * 26);
+  gap: calc(var(--spacing) * 2);
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-context:empty { display: none; }
+
+/* Discovery shows rates; a single action opens the asset form for market choice. */
+.lite-token-planet-detail .lite-token-planet-earn {
+  justify-content: center;
+  text-align: center;
+  margin-top: calc(var(--spacing) * 3);
+  width: 100%;
+  min-height: calc(var(--spacing) * 10);
+}
+
+/* Portalled discovery cards share the form typography and keep upper planets'
+   details below their orb, safely away from the browser's top edge. */
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet-detail,
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-token-planet-detail button {
+  font-family: 'E3 Inter', sans-serif;
+}
+@media (min-width: 768px) {
+  .lite-token-planet.lite-token-planet--5 .lite-token-planet-detail {
+    top: 100%;
+    bottom: auto;
+  }
+}
+
+@media (min-width: 1600px) {
+  .lite-token-planet.lite-token-planet--6 .lite-token-planet-detail {
+    top: 100%;
+    bottom: auto;
+  }
+}
+
+/* Compare yields in the menu without widening the token trigger. */
+.venus-select-panel:has(.lite-e3-asset-options) { width: min(calc(var(--spacing) * 88), calc(100vw - var(--spacing) * 8)); }
+.lite-e3-asset-menu-head, .lite-e3-asset-option-content { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 4); width: 100%; }
+.lite-e3-asset-menu-head { font-size: var(--text-xs); padding-right: calc(var(--spacing) * 8); }
+.lite-e3-asset-options [data-select-option] { position: relative; padding-right: calc(var(--spacing) * 10); font-weight: var(--font-weight-medium); }
+.lite-e3-asset-options [data-select-option] > svg { position: absolute; right: calc(var(--spacing) * 3); margin: 0; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .venus-select-panel:has(.lite-collateral-options) { width: min(calc(var(--spacing) * 100), calc(100vw - var(--spacing) * 8)); min-width: 0; }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-collateral-row { grid-template-columns: minmax(0, 1fr) calc(var(--spacing) * 18) calc(var(--spacing) * 18); }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .lite-collateral-options [data-select-option] { min-height: calc(var(--spacing) * 12); font-weight: var(--font-weight-medium); }
+:root:is([data-glass-revision='lite-experiment-v2'], [data-glass-revision='lite-experiment-v3']) .venus-select-panel:has(.lite-collateral-options, .lite-e3-asset-options) { scrollbar-width: thin; scrollbar-color: rgb(255 255 255 / 22%) transparent; }
+:root[data-liquidity-theme='light'] .venus-select-panel:has(.lite-collateral-options, .lite-e3-asset-options) { scrollbar-color: rgb(0 0 0 / 12%) transparent; }
+.lite-e3-asset-options [data-select-option] { padding-right: calc(var(--spacing) * 10) !important; }
+.lite-e3-asset-options [data-select-option] > svg { right: calc(var(--spacing) * 3) !important; }
+.lite-e3-asset-option-content > :last-child { flex-shrink: 0; }
+
+/* Selected market controls share the same border motion in Light and Dark. */
+:root[data-glass-revision='lite-experiment-v3'][data-liquidity-theme='light'] #root .lite-e3-market-option[aria-pressed='true'] > .venus-mode-border-flow {
+  display: block;
+}
+:root[data-glass-revision='lite-experiment-v3'] .lite-e3-market-option-rate strong {
+  font-weight: var(--font-weight-semibold);
+}

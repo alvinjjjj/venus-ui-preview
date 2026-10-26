@@ -21,6 +21,8 @@ import nvdab from 'assets/img/spoke/nvdab.png';
 import skhyb from 'assets/img/spoke/skhyb.png';
 import type { LiteAsset } from './data';
 import { BorrowSourceModal } from './BorrowSourceModal';
+import { CollateralPicker } from './CollateralPicker';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 
 type Collateral = { symbol: string; iconSrc?: string };
 export type BorrowSource = {
@@ -85,16 +87,25 @@ export function BorrowSources({
   rows,
   onBack,
   experimental = false,
+  mobile = false,
   modeSwitch,
 }: {
   asset: Asset;
   rows: LiteAsset[];
   onBack: () => void;
   experimental?: boolean;
+  mobile?: boolean;
   modeSwitch?: React.ReactNode;
 }) {
+  const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
   const [search, setSearch] = useState('');
   const [openedSource, setOpenedSource] = useState<BorrowSource>();
+  const [pickerSource, setPickerSource] = useState<BorrowSource>();
+  const [initialCollateral, setInitialCollateral] = useState<string>();
+  const openSource = (source: BorrowSource, collateral?: string) => {
+    setInitialCollateral(collateral);
+    setOpenedSource(source);
+  };
   const [collateralFilter, setCollateralFilter] = useState('');
   const token = asset.vToken.underlyingToken;
   const coreCollateral = rows
@@ -153,18 +164,36 @@ export function BorrowSources({
   const columns: TableColumn<SortableBorrowSource>[] = [
     {
       key: 'yield',
-      label: 'Yield',
+      label: mobile ? 'Pool' : 'Yield',
       selectOptionLabel: 'Yield',
       sortRows: (a, b, direction) => a.name.localeCompare(b.name) * (direction === 'asc' ? 1 : -1),
       renderCell: source => (
+        <div className={isE2 ? 'lite-e2-source-name' : undefined}>
         <button
           type="button"
-          onClick={() => setOpenedSource(source)}
-          aria-haspopup="dialog"
+          onClick={() => openSource(source)}
+          aria-haspopup={mobile ? undefined : 'dialog'}
           className="font-normal hover:text-blue cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
         >
           {source.name}
         </button>
+        {isE2 && source.apy !== undefined && <span className="lite-e2-preview-source-label">Preview · Not tradable</span>}
+        {mobile && <button
+          type="button"
+          className="lite-mobile-collateral-trigger"
+          aria-label={`View ${source.name} collaterals`}
+          aria-haspopup="dialog"
+          onClick={event => { event.stopPropagation(); setPickerSource(source); }}
+        >
+          <span>Collateral</span>
+          <span className="inline-flex items-center -space-x-1">
+            {source.collateral.slice(0, 3).map(item => item.iconSrc
+              ? <img key={item.symbol} src={item.iconSrc} alt={item.symbol} className="size-5 rounded-full" />
+              : <span key={item.symbol}>{item.symbol}</span>)}
+          </span>
+          {source.collateral.length > 3 && <span>+{source.collateral.length - 3}</span>}
+        </button>}
+        </div>
       ),
     },
     {
@@ -174,12 +203,16 @@ export function BorrowSources({
       align: 'right',
       sortRows: (a, b, direction) =>
         (a.sortApy.comparedTo(b.sortApy) ?? 0) * (direction === 'asc' ? 1 : -1),
-      renderCell: source =>
-        source.apy === undefined ? (
-          <AssetApy asset={asset} type="borrow" />
+      renderCell: source => (
+        <div>
+        {source.apy === undefined ? (
+          <AssetApy asset={asset} type="borrow" className={isE2 ? 'lite-e2-source-apy lite-borrow-apy' : undefined} />
         ) : (
-          <span className="tabular-nums">{source.apy}%</span>
-        ),
+          <span className={isE2 ? 'lite-e2-source-apy tabular-nums' : 'tabular-nums'}>{source.apy}%</span>
+        )}
+        {mobile && <p className="lite-mobile-secondary">{formatCentsToReadableValue({ value: source.sortLiquidity })} liquidity</p>}
+        </div>
+      ),
     },
     {
       key: 'liquidity',
@@ -236,16 +269,29 @@ export function BorrowSources({
       renderCell: source => renderAmount(source, 'borrowed'),
     },
   ];
+  if (mobile && openedSource) {
+    return <BorrowSourceModal
+      inline
+      asset={asset}
+      source={openedSource}
+      rows={rows}
+      initialCollateralSymbol={initialCollateral}
+      onBackAssets={onBack}
+      onClose={() => setOpenedSource(undefined)}
+    />;
+  }
   return (
     <>
       <Table
+        key={mobile ? 'mobile' : 'desktop'}
+        className={mobile ? 'lite-mobile-table lite-mobile-source-table' : undefined}
         data={filtered}
-        columns={columns}
-        initialOrder={{ orderBy: columns[4], orderDirection: 'desc' }}
+        columns={mobile ? columns.slice(0, 2) : columns}
+        initialOrder={{ orderBy: columns[mobile ? 1 : 4], orderDirection: 'desc' }}
         rowKeyExtractor={source => source.name}
-        rowOnClick={(_, source) => setOpenedSource(source)}
+        rowOnClick={(_, source) => openSource(source)}
         tableLayout="auto"
-        breakpoint="md"
+        breakpoint={mobile ? undefined : 'md'}
         hideCardDelimiter
         placeholder="No markets match these filters."
         header={
@@ -253,6 +299,7 @@ export function BorrowSources({
             <button
               type="button"
               onClick={onBack}
+              aria-label={`Back to Borrow assets from ${token.symbol}`}
               className="inline-flex items-center gap-2 text-sm text-light-grey hover:text-white cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
             >
               <Icon name="chevronLeft" className="size-4 text-inherit" />
@@ -291,6 +338,12 @@ export function BorrowSources({
           </div>
         }
       />
+      {pickerSource && <CollateralPicker
+        source={pickerSource}
+        rows={rows}
+        onClose={() => setPickerSource(undefined)}
+        onSelect={choice => { openSource(pickerSource, choice.symbol); setPickerSource(undefined); }}
+      />}
       {openedSource && (
         <BorrowSourceModal
           asset={asset}

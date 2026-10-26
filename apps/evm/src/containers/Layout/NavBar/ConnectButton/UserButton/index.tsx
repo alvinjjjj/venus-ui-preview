@@ -45,13 +45,24 @@ export const UserButton: React.FC<UserButtonProps> = ({
         )}
       >
         {isPrime ? (
-          <><img className="venus-prime-account-original h-4" src={primeLogoSrc} alt={t('primeButton.primeLogoAlt')} /><PrimeLogo className="venus-prime-account-token h-4 w-auto" role="img" aria-label={t('primeButton.primeLogoAlt')} /></>
+          <>
+            <img
+              className="venus-prime-account-original h-4"
+              src={primeLogoSrc}
+              alt={t('primeButton.primeLogoAlt')}
+            />
+            <PrimeLogo
+              className="venus-prime-account-token h-4 w-auto"
+              role="img"
+              aria-label={t('primeButton.primeLogoAlt')}
+            />
+          </>
         ) : (
           <Icon name="user" className="h-4 text-light-grey mb-1" />
         )}
 
         <Username
-          className="max-w-30 sm:max-w-full"
+          className="venus-user-address max-w-30 sm:max-w-full"
           showProvider={false}
           showTooltip={false}
           address={address}

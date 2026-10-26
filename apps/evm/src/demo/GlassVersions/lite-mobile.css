@@ -1,0 +1,276 @@
+/* Final Lite phone flow: asset -> source -> inline form. Existing theme,
+   spacing, type and radius tokens are shared with the desktop components. */
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-layout {
+    overflow-y: auto !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-layout > .relative,
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-layout > .relative > .relative {
+    height: auto;
+    min-height: 0;
+    flex: 1 0 auto;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets.lite-experiment {
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-width: 0;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-token-planets {
+    display: none;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: 0;
+    padding: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-container > div {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-hero {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    align-self: stretch;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-e2-market-totals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-e2-market-total {
+    align-content: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root [data-mobile-detail='true'] :is(.lite-market-hero, .lite-experiment-top-totals) {
+    display: none;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-market-stage, .lite-e2-market-stage > section, .lite-experiment-tabs, .lite-experiment-tabs > div, .lite-experiment-earn) {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-experiment-scroll, .lite-inline-sources) {
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-tabs > :last-child {
+    height: auto;
+    max-height: none !important;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-market-toolbar, .lite-borrow-source-header) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: calc(var(--spacing) * 3);
+    width: 100%;
+    padding: calc(var(--spacing) * 3);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-controls {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    gap: calc(var(--spacing) * 2);
+    width: 100%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-borrow-source-header > button {
+    align-self: flex-start;
+    min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-controls > * {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mode-pills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    gap: 0;
+    padding: var(--spacing);
+    align-self: stretch;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mode-pills > button {
+    width: 100%;
+    min-width: 0;
+    height: calc(var(--spacing) * 11);
+    padding-block: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-mode-pills > button, .lite-experiment-controls button, .lite-mobile-table th button) {
+    min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-scroll > .lite-mobile-table {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table table {
+    width: 100%;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(thead, tbody) {
+    display: table-row-group;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table thead {
+    display: table-header-group;
+    position: static;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table tr {
+    display: table-row;
+    height: auto;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(th, td) {
+    display: table-cell;
+    width: 58%;
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+    font-size: var(--text-base);
+    vertical-align: middle;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(th, td):last-child {
+    width: 42%;
+    text-align: right;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(th, td):last-child > :is(button, div) {
+    justify-content: flex-end;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table td button {
+    min-height: calc(var(--spacing) * 11);
+    max-width: 100%;
+    text-align: left;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-earn-apy {
+    align-items: flex-end;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-base-apy {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-secondary {
+    color: var(--color-grey);
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    margin-top: var(--spacing);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-collateral-trigger {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing);
+    font-size: var(--text-xs);
+    color: var(--color-grey);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: calc(var(--spacing) * 3);
+    overflow: visible;
+    background: var(--color-cards);
+    border: 1px solid var(--color-dark-blue-hover);
+    border-radius: var(--radius-lg);
+    scroll-margin-top: calc(var(--spacing) * 24);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-borrow-sources:has(.lite-mobile-borrow-form) {
+    background: transparent;
+    border: 0;
+    box-shadow: none !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-path {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing);
+    height: auto;
+    min-height: calc(var(--spacing) * 11);
+    padding: 0;
+    margin-bottom: calc(var(--spacing) * 4);
+    font-size: var(--text-sm);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-path button {
+    min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-body {
+    display: block;
+    flex: 0 0 auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-form {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market :is(input, button) {
+    font-size: var(--text-base);
+    min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-button-variant='quaternary'] {
+    min-width: 0;
+    padding-inline: calc(var(--spacing) * 2);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market .inline-submit-dock {
+    position: static;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding-top: calc(var(--spacing) * 4);
+    background: transparent;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market .lite-single-market-tabs {
+    position: static;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-header-actions,
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-connected-wallet {
+    height: calc(var(--spacing) * 11);
+  }
+}
+
+/* Only the collateral chooser is a modal in the phone market flow. */
+.lite-mobile-collateral-table :is(th, td) {
+  padding: calc(var(--spacing) * 2) var(--spacing);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-grey) 20%, transparent);
+  font-size: var(--text-sm);
+}
+.lite-mobile-collateral-table th {
+  color: var(--color-grey);
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-normal);
+}
+.lite-mobile-collateral-table :is(th, td):first-child {
+  text-align: left;
+}
+.lite-mobile-collateral-table button {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+  min-height: calc(var(--spacing) * 11);
+  cursor: pointer;
+}
+.lite-mobile-collateral-table button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: var(--spacing);
+}

@@ -41,7 +41,7 @@ export const ConnectWallet: React.FC<ConnectWalletProps> = ({
           {!!message && <NoticeInfo className="mb-8" description={message} />}
 
           <Button
-            className="w-full"
+            className="w-full venus-connect-wallet-button"
             onClick={handleClick}
             variant={buttonVariant}
             size={buttonSize}

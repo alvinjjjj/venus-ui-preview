@@ -71,7 +71,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
   const dashboardMenuItem = useDashboardMenuItem();
 
   return (
-    <nav className="venus-navigation relative z-50 isolate">
+    <nav className="venus-navigation relative z-50 isolate" data-interface-mode={mode}>
       <div
         className={cn(
           'venus-header-row group/navbar bg-background-active h-20 pr-5 flex items-center justify-between',

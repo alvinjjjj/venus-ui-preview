@@ -8,7 +8,7 @@
  *  - elements inside the header (`.venus-navigation`), and
  *  - buttons, button groups (segmented controls such as 30D / 6M / 1Y), toggles, progress /
  *    health bars and the Settings theme switch, anywhere outside the Lite E market pages and
- *    popups.
+ *    popups, plus the explicitly opted-in E3 action tabs.
  * The logo, the Pro/Lite label, the Lite/Pro switch and the header row (height, background) keep
  * E's own design, as do the Lite E market pages and transaction popups.
  */
@@ -33,7 +33,7 @@ const SCOPE = `:is(.venus-navigation *, ${BUTTONS})`;
 // Popups keep E's own controls (segmented Supply/Withdraw, toggles, health bar), except the
 // buttons inside an amount field (token selector, MAX / SAFE MAX), which get New's glass + hover light.
 const KEEP_E =
-  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *, .lite-markets *):where(:not(.venus-popup-panel *), .venus-popup-panel .venus-text-field *)';
+  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *):where(:not(.lite-markets *), .lite-e3-action-tabs *):where(:not(.venus-popup-panel *), .venus-popup-panel .venus-text-field *)';
 
 const NEW_ATTRS: Record<string, string> = {
   glassVersion: 'v6',
@@ -218,7 +218,9 @@ export const mountEHeaderMirror = () => {
   // Route chunks load their CSS lazily; rebuild when new stylesheets arrive (HMR included).
   const observer = new MutationObserver(mutations => {
     // Ignore the mirror's own writes; anything else in <head> may be a new or updated sheet.
-    if (mutations.some(mutation => mutation.target !== style && mutation.target.parentNode !== style)) {
+    if (
+      mutations.some(mutation => mutation.target !== style && mutation.target.parentNode !== style)
+    ) {
       refresh();
     }
   });

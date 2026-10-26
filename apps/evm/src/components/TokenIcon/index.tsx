@@ -1,7 +1,11 @@
+import { createContext, useContext } from 'react';
 import { chains } from '@venusprotocol/chains';
 import { cn } from '@venusprotocol/ui';
 
 import type { Token } from 'types';
+
+// Optional presentation override; token identity and transaction data stay unchanged.
+export const TokenIconPresentation = createContext<(token: Token) => Token>(token => token);
 
 export interface TokenIconProps {
   token: Token;
@@ -17,6 +21,8 @@ export const TokenIcon: React.FC<TokenIconProps> = ({
   size = 'md',
 }) => {
   const chain = chains[token.chainId];
+  const presentToken = useContext(TokenIconPresentation);
+  const displayToken = presentToken(token);
 
   return (
     <div
@@ -31,7 +37,7 @@ export const TokenIcon: React.FC<TokenIconProps> = ({
         className,
       )}
     >
-      <img src={token.iconSrc} alt={token.symbol} className="w-full" />
+      <img src={displayToken.iconSrc} alt={token.symbol} className="w-full" />
 
       {displayChain && (
         <img
