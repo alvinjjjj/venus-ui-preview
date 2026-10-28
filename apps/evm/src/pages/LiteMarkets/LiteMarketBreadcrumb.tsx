@@ -1,5 +1,5 @@
-import type { Ref } from 'react';
 import { Icon, TokenIcon } from 'components';
+import type { Ref } from 'react';
 import type { Token } from 'types';
 import './market-breadcrumb.css';
 
@@ -21,12 +21,13 @@ export function LiteMarketBreadcrumb({
   marketName,
   backButtonRef,
 }: LiteMarketBreadcrumbProps) {
-  const isMarket = !!marketName && !!onBackToSources;
-  const backLabel = isMarket
-    ? mode === 'Earn'
-      ? 'Back to Earn sources'
-      : `Back to ${token.symbol} borrowing markets`
-    : `Back to ${mode} assets from ${token.symbol}`;
+  const isMarket = !!marketName;
+  const backLabel =
+    isMarket && onBackToSources
+      ? mode === 'Earn'
+        ? 'Back to Earn sources'
+        : `Back to ${token.symbol} borrowing markets`
+      : `Back to ${mode} assets from ${token.symbol}`;
   const tokenLabel = (
     <>
       <span aria-hidden="true" className="inline-flex">
@@ -47,17 +48,20 @@ export function LiteMarketBreadcrumb({
         type="button"
         className="lite-market-breadcrumb-back"
         aria-label={backLabel}
-        onClick={isMarket ? onBackToSources : onBackToAssets}
+        onClick={isMarket && onBackToSources ? onBackToSources : onBackToAssets}
       >
         <Icon name="chevronLeft" className="size-4" />
       </button>
+      {/* biome-ignore lint/a11y/noRedundantRoles: Preserve Safari list semantics when CSS removes markers. */}
       <ol className="lite-market-breadcrumb-items" role="list">
         <li>
-          <button type="button" onClick={onBackToAssets}>{mode}</button>
+          <button type="button" onClick={onBackToAssets}>
+            {mode}
+          </button>
         </li>
         <li>
           <span aria-hidden="true">/</span>
-          {isMarket ? (
+          {isMarket && onBackToSources ? (
             <button
               type="button"
               className="lite-market-breadcrumb-token"
@@ -67,7 +71,10 @@ export function LiteMarketBreadcrumb({
               {tokenLabel}
             </button>
           ) : (
-            <span className="lite-market-breadcrumb-token" aria-current="page">
+            <span
+              className="lite-market-breadcrumb-token"
+              aria-current={isMarket ? undefined : 'page'}
+            >
               {tokenLabel}
             </span>
           )}
@@ -75,7 +82,9 @@ export function LiteMarketBreadcrumb({
         {isMarket && (
           <li>
             <span aria-hidden="true">/</span>
-            <span className="lite-market-breadcrumb-current" aria-current="page">{marketName}</span>
+            <span className="lite-market-breadcrumb-current" aria-current="page">
+              {marketName}
+            </span>
           </li>
         )}
       </ol>

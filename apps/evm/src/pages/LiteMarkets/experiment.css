@@ -228,7 +228,7 @@
 .lite-experiment .lite-experiment-scroll,
 .lite-experiment .lite-inline-sources { border-top-left-radius: calc(var(--spacing) * 2); }
 .lite-mode-pills > button > :first-child { margin-bottom: 0; justify-content: center; }
-.lite-mode-pills > button > :last-child:not(:first-child) { display: none; }
+.lite-mode-pills:not([data-venus-button-group]) > button > :last-child:not(:first-child) { display: none; }
 .lite-mode-pills > button:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .lite-mode-pills::before { transition: none; } }
 .lite-experiment-tabs > :last-child { margin-top: 0; }

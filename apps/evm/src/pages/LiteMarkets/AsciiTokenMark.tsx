@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useReducedMotion } from 'motion/react';
-import { asciiInteractionStepMs, getAsciiInteractionGlyph } from './ascii-interaction';
+import { asciiInteractionFrameMs, drawAsciiInteractionGlyph } from './ascii-interaction';
 
 /** Sample the actual token artwork so its distinctive glyph stays recognizable. */
 export function AsciiTokenMark({ src, symbol, color, highlight, glyphScale = 1, active = false, replayToken = 0 }: {
@@ -21,7 +21,7 @@ export function AsciiTokenMark({ src, symbol, color, highlight, glyphScale = 1, 
     const start = performance.now();
     const tick = (time: number) => {
       const elapsed = time - start;
-      if (time - last >= asciiInteractionStepMs) { drawRef.current?.(elapsed); last = time; }
+      if (time - last >= asciiInteractionFrameMs) { drawRef.current?.(elapsed); last = time; }
       frame = requestAnimationFrame(tick);
     };
     const sync = () => {
@@ -80,7 +80,7 @@ export function AsciiTokenMark({ src, symbol, color, highlight, glyphScale = 1, 
           ctx.clearRect(0, 0, size, size);
           glyphs.forEach((glyph, index) => {
             ctx.globalAlpha = .85 + .15 * glyph.strength;
-            ctx.fillText(getAsciiInteractionGlyph(glyph.char, index, elapsed), glyph.x, glyph.y);
+            drawAsciiInteractionGlyph(ctx, glyph.char, index, elapsed, glyph.x, glyph.y);
           });
           ctx.globalAlpha = 1;
         };

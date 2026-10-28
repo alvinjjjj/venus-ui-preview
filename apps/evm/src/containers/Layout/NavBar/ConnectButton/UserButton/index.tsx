@@ -5,12 +5,15 @@ import PrimeLogo from 'assets/img/primeLogo.svg?react';
 import { Icon, Username } from 'components';
 import { useTranslation } from 'libs/translations';
 import type { Address } from 'viem';
+import expandSrc from '../../assets/expand.svg';
+import userSrc from '../../assets/user.svg';
 import vipLogoSrc from './vipLogo.svg';
 
 export interface UserButtonProps extends Pick<ButtonProps, 'onClick' | 'disabled' | 'className'> {
   address: Address;
   isPrime: boolean;
   isVip: boolean;
+  figmaHeader?: boolean;
 }
 
 export const UserButton: React.FC<UserButtonProps> = ({
@@ -19,6 +22,7 @@ export const UserButton: React.FC<UserButtonProps> = ({
   isVip,
   disabled,
   className,
+  figmaHeader = false,
   ...otherProps
 }) => {
   const { t } = useTranslation();
@@ -57,6 +61,8 @@ export const UserButton: React.FC<UserButtonProps> = ({
               aria-label={t('primeButton.primeLogoAlt')}
             />
           </>
+        ) : figmaHeader ? (
+          <img className="venus-header-account-icon" src={userSrc} alt="" aria-hidden="true" />
         ) : (
           <Icon name="user" className="h-4 text-light-grey mb-1" />
         )}
@@ -71,7 +77,13 @@ export const UserButton: React.FC<UserButtonProps> = ({
 
         {isVip && <img src={vipLogoSrc} alt={t('connectButton.vipLogoAlt')} className="size-4.5" />}
 
-        {!isVip && !disabled && <Icon name="expand" className="text-light-grey" />}
+        {!isVip &&
+          !disabled &&
+          (figmaHeader ? (
+            <img className="venus-header-account-icon" src={expandSrc} alt="" aria-hidden="true" />
+          ) : (
+            <Icon name="expand" className="text-light-grey" />
+          ))}
       </div>
     </ButtonWrapper>
   );

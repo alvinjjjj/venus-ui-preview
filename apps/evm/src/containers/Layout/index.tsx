@@ -43,6 +43,7 @@ export const Layout: React.FC = () => {
   }, [mode]);
   const showStardust = supportsModes && pathname.replace(/\/$/, '') !== routes.aboutUs.path;
   const fullBleedSky = showStardust && (isE3 || (isFinal && isLite));
+  const quietDashboard = isFinal && isLite && pathname.replace(/\/$/, '') === routes.dashboard.path;
 
   const isCloseToBottomState = useStore(state => state.isCloseToBottom);
   const setIsCloseToBottom = useStore(state => state.setIsCloseToBottom);
@@ -94,8 +95,21 @@ export const Layout: React.FC = () => {
 
   return (
     <>
-      <div className={cn("h-dvh flex flex-col", isE3 && showStardust && "lite-e3-sky-layout", isFinal && isLite && fullBleedSky && "lite-full-bleed-sky")}>
-        {fullBleedSky && <GhostBackground shared layeredLines={!isE3 && fixedLite} />}
+      <div
+        className={cn(
+          'h-dvh flex flex-col',
+          isE3 && showStardust && 'lite-e3-sky-layout',
+          isFinal && isLite && fullBleedSky && 'lite-full-bleed-sky',
+          quietDashboard && 'lite-dashboard-layout',
+        )}
+      >
+        {fullBleedSky && (
+          <GhostBackground
+            shared
+            layeredLines={!isE3 && fixedLite}
+            starDensity={quietDashboard ? 1 / 3 : 1}
+          />
+        )}
         <NavBar className="shrink-0" />
 
         <div

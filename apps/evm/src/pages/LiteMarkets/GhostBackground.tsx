@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { useIsMdDown } from 'hooks/responsive';
 import { useGlassPreview } from 'demo/GlassVersions/store';
@@ -73,7 +73,15 @@ const lightGalaxy = stillStars.slice(0, 1600).map((star, index) => {
   };
 });
 
-export function GhostBackground({ shared = false, layeredLines = false }: { shared?: boolean; layeredLines?: boolean }) {
+export function GhostBackground({
+  shared = false,
+  layeredLines = false,
+  starDensity = 1,
+}: {
+  shared?: boolean;
+  layeredLines?: boolean;
+  starDensity?: number;
+}) {
   const mode = useGlassPreview(state => state.mode);
   const original = mode !== 'explorer';
   const isE2 = mode === 'lite-experiment-v2' || mode === 'lite-experiment-v2-legacy';
@@ -82,6 +90,19 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
   const lightAmbient = isLiteExperimentMode(mode) && light && (layeredLines || isE3);
   const reducedMotion = useReducedMotion();
   const compact = useIsMdDown();
+  const density = Math.max(0, Math.min(1, starDensity));
+  const visibleStars = useMemo(
+    () => stillStars.filter((_, index) =>
+      Math.floor((index + 1) * density) > Math.floor(index * density)),
+    [density],
+  );
+  const baseTuning = isE2 ? e2Stars : original ? originalStars : stars;
+  const starTuning = useMemo(
+    () => density === 1
+      ? baseTuning
+      : { ...baseTuning, stars: Math.round(baseTuning.stars * density) },
+    [baseTuning, density],
+  );
   const still = original ? (
     <svg
       className="lite-ghost__still"
@@ -89,7 +110,7 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
     >
-      {stillStars.map((star, index) => (
+      {visibleStars.map((star, index) => (
         <circle
           key={index}
           cx={star.x}
@@ -113,6 +134,7 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
         shared ? ' lite-ghost--shared' : ''
       }${lightAmbient ? ' lite-ghost--light-ambient' : ''}${isE3 ? ' lite-ghost--e3' : ''}${isE2 ? ' lite-ghost--e2-horizon' : ''}`}
       aria-hidden="true"
+      data-star-density={density}
     >
       {layeredLines && !isE3 && (!isE2 || lightAmbient) && !reducedMotion && !compact && (
         <div className="lite-ghost__hero-field">
@@ -147,7 +169,7 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
             <FlowField
               key={original ? 'original-stars' : 'ambient'}
               settings={original ? originalFlow : flow}
-              starTuning={isE2 ? e2Stars : original ? originalStars : stars}
+              starTuning={starTuning}
               variant="depth-pulse"
               interactive={false}
             />

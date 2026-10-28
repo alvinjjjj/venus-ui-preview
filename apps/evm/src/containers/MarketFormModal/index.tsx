@@ -13,6 +13,7 @@ export interface MarketFormModalProps {
   onClose: ModalProps['handleClose'];
   earnOnly?: boolean;
   borrowOnly?: boolean;
+  marketName?: string;
 }
 
 export const MarketFormModal: React.FC<MarketFormModalProps> = ({
@@ -22,6 +23,7 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
   onClose,
   earnOnly,
   borrowOnly,
+  marketName,
 }) => {
   const [userChainSettings] = useUserChainSettings();
 
@@ -48,6 +50,7 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
             />
           )}
           {asset.vToken.underlyingToken.symbol}
+          {marketName && ` / ${marketName}`}
         </span>
       }
       handleClose={onClose}

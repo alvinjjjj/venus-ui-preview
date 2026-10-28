@@ -110,6 +110,7 @@ export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({ ...other
     <>
       <NavButtonWrapper
         data-testid={TEST_IDS.claimRewardOpenModalButton}
+        data-claim-rewards-button="true"
         onClick={handleOpenModal}
         {...otherProps}
       >

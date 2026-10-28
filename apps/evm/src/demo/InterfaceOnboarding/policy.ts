@@ -56,6 +56,8 @@ export const getAutomaticIntroduction = ({
   if (!directEntry || transition === 'introduction-switch') return null;
   if (transition === 'introduction-preview' || transition === 'lite-to-pro') return null;
   if (pathname === '/' && mode === 'lite') return 'pro';
+  // An explicit Lite Dashboard is an account page, not an external Pro arrival.
+  if (pathname === routes.dashboard.path && mode === 'lite') return null;
   return isProPage(pathname) ? 'lite' : null;
 };
 

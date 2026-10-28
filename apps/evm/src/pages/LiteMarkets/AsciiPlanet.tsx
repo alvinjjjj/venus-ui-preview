@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
-import { getAsciiInteractionGlyph } from './ascii-interaction';
+import { asciiInteractionFrameMs, drawAsciiInteractionGlyph } from './ascii-interaction';
 import './ascii-planet.css';
 
 export type AsciiPlanetSurface = 'waves' | 'diagonal' | 'horizon' | 'rim' | 'ribbon';
@@ -121,7 +121,8 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
       const scrambling = !reduced && interaction.current === 1;
       const elapsed = scrambling ? performance.now() - gestureStart.current : Number.POSITIVE_INFINITY;
       if (canvas.dataset.scrambling !== String(scrambling)) canvas.dataset.scrambling = String(scrambling);
-      const glyph = (original: string, index: number) => getAsciiInteractionGlyph(original, index, elapsed);
+      const glyph = (original: string, index: number, x: number, y: number) =>
+        drawAsciiInteractionGlyph(ctx, original, index, elapsed, x, y);
       ctx.clearRect(0, 0, size, size);
       ctx.font = `${9 * glyphScale}px monospace`;
       ctx.textAlign = 'center';
@@ -134,7 +135,7 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
           const y = Math.sin(a) * 43;
           if ((Math.sin(a) > 0) !== front) continue;
           ctx.globalAlpha = (light ? .55 : .7) + interaction.current * .15;
-          ctx.fillText(glyph(i % 5 === 0 ? '+' : '.', i + 2000), 180 + x * .94 + y * .34, 180 - x * .34 + y * .94);
+          glyph(i % 5 === 0 ? '+' : '.', i + 2000, 180 + x * .94 + y * .34, 180 - x * .34 + y * .94);
         }
       };
       ring(false);
@@ -159,7 +160,7 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
           ctx.globalAlpha = surface === 'waves'
             ? (light ? .38 : .44) + density * .65
             : .18 + density * .82;
-          ctx.fillText(glyph(chars[Math.min(7, Math.floor(density * 8))], glyphIndex++), 180 + x, 180 + y);
+          glyph(chars[Math.min(7, Math.floor(density * 8))], glyphIndex++, 180 + x, 180 + y);
         }
       }
       ctx.fillStyle = light ? color : darkColor;
@@ -172,14 +173,15 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
           const y = Math.sin(a) * 43;
           if (Math.sin(a) < 0 && Math.abs(x) < 115) continue;
           ctx.globalAlpha = (1 - tail / 4) * (.65 + interaction.current * .3);
-          ctx.fillText(glyph(tail === 0 ? '+' : '.', star * 4 + tail + 3000), 180 + x * .94 + y * .34, 180 - x * .34 + y * .94);
+          glyph(tail === 0 ? '+' : '.', star * 4 + tail + 3000, 180 + x * .94 + y * .34, 180 - x * .34 + y * .94);
         }
       }
       ctx.globalAlpha = 1;
     };
     const tick = (time: number) => {
-      if (time - last >= 50) {
-        phase += .008 + (surface === 'waves' ? interaction.current * .005 : 0);
+      if (time - last >= (interaction.current === 1 ? asciiInteractionFrameMs : 50)) {
+        const delta = Math.min((time - last) / 1000, .1);
+        phase += delta * (.16 + (surface === 'waves' ? interaction.current * .1 : 0));
         draw();
         last = time;
       }
@@ -187,6 +189,7 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
     };
     const sync = () => {
       cancelAnimationFrame(frame);
+      last = performance.now();
       if (visible && !document.hidden && !reduced) frame = requestAnimationFrame(tick);
     };
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); });

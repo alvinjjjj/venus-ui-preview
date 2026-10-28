@@ -4,7 +4,7 @@ import { useDemo } from 'demo/state';
 import { useAccountAddress } from 'libs/wallet';
 import { AccountModal } from './AccountModal';
 import { UserButton } from './UserButton';
-export const ConnectButton = () => {
+export const ConnectButton = ({ figmaHeader = false }: { figmaHeader?: boolean }) => {
   const { accountAddress } = useAccountAddress();
   const { profile, setLoginOpen } = useDemo();
   const openModal = useStore(state => state.openModal);
@@ -15,6 +15,7 @@ export const ConnectButton = () => {
       <div className="flex items-center gap-2">
         <UserButton
           className="venus-connected-wallet"
+          figmaHeader={figmaHeader}
           address={accountAddress}
           isPrime={profile === 'prime'}
           isVip={false}
@@ -37,7 +38,7 @@ export const ConnectButton = () => {
       className="venus-demo-login h-10 px-3 sm:h-12"
       onClick={() => setLoginOpen(true)}
     >
-      Connect Wallet
+      {figmaHeader ? 'Connect wallet' : 'Connect Wallet'}
     </Button>
   );
 };

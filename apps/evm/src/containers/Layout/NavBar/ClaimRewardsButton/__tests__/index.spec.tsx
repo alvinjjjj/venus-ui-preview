@@ -11,6 +11,18 @@ import { ClaimRewardsButton } from '..';
 import TEST_IDS from '../../../testIds';
 import { fakePendingRewardGroups } from '../__testUtils__/fakeData';
 
+beforeAll(() => {
+  vi.stubGlobal(
+    'ResizeObserver',
+    class {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  );
+});
+afterAll(() => vi.unstubAllGlobals());
+
 describe('ClaimRewardsButton', () => {
   beforeEach(() => {
     (getPendingRewards as Mock).mockImplementation(() => ({

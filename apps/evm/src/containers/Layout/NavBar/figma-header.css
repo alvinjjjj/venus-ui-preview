@@ -1,0 +1,232 @@
+/* Final Header maps Figma 1:21034 onto the existing navigation and materials.
+   Component-local values come from header/height (64), Pro Lite (55 × 48),
+   B2R/B2S (14/21), and the exported brand assets. Other previews stay intact. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] {
+  --venus-header-height: calc(var(--spacing) * 16);
+  --venus-header-control-height: calc(var(--spacing) * 12);
+  --venus-header-gutter: calc(var(--spacing) * 4);
+  --venus-header-gap: calc(var(--spacing) * 2);
+  /* Fixed component width and CSS-equivalent backdrop blur from Figma. */
+  --venus-header-mode-width: 55px;
+  --venus-header-blur: 9.45px;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row {
+  height: var(--venus-header-height);
+  min-height: var(--venus-header-height);
+  padding: 0 var(--venus-header-gutter);
+  gap: var(--venus-header-gap);
+  backdrop-filter: blur(var(--venus-header-blur));
+  -webkit-backdrop-filter: blur(var(--venus-header-blur));
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='lite'] .venus-header-row {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-leading {
+  min-width: 0;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-logo {
+  height: var(--venus-header-control-height);
+  padding: var(--venus-header-gap) 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-header-brand, .venus-header-brand-mark) {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: var(--venus-header-gap);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-brand img {
+  display: block;
+  flex-shrink: 0;
+  max-width: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-brand .venus-header-brand-wordmark {
+  display: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-interface-mode-label {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-actions {
+  height: var(--venus-header-control-height);
+  gap: var(--venus-header-gap);
+  flex-shrink: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-connected-wallet, .venus-demo-login, .venus-mode-switch) {
+  height: var(--venus-header-control-height);
+  min-height: var(--venus-header-control-height);
+  flex-shrink: 0;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mode-switch {
+  width: var(--venus-header-mode-width);
+  min-width: var(--venus-header-mode-width);
+  padding-inline: 0;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-normal);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet > div {
+  padding-inline: calc(var(--spacing) * 3);
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-user-address {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-semibold);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-account-icon {
+  display: block;
+  flex-shrink: 0;
+  max-width: none;
+}
+
+/* The 375px Pro layout keeps both mode switching and wallet access. Network
+   selection is available in the mobile menu instead of squeezing the Key. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-chain {
+  display: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-menu {
+  width: var(--venus-header-control-height);
+  height: var(--venus-header-control-height);
+  min-width: var(--venus-header-control-height);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation {
+  top: var(--venus-header-height);
+}
+
+/* Mobile Header 1112:4172: 36px controls, 41px Lite entry, 24px menu glyph.
+   Keep the desktop 48px material and the current action order intact. */
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] {
+    --venus-header-control-height: calc(var(--spacing) * 9);
+    --venus-header-mode-width: 41px;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-menu > svg:not(.button-bevel-outline) {
+    width: calc(var(--spacing) * 6);
+    height: calc(var(--spacing) * 6);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-header-actions, .venus-header-actions > div:has(> .venus-connected-wallet), .venus-connected-wallet) {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-connected-wallet, .venus-connected-wallet > div) {
+    max-width: 100%;
+    min-width: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-user-address {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Same icy material as the Figma Light switch; keep the existing pointer
+   reflection and travelling border layers on top of these resting values. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] {
+  --lite-neutral-fill: linear-gradient(133.781deg, rgb(255 255 255 / 86%) 5.363%, rgb(255 255 255 / 30%) 35.45%, rgb(183 196 213 / 26%) 73.742%, rgb(255 255 255 / 38%) 96.535%), rgb(237 242 248 / 78%);
+  --lite-neutral-highlight: rgb(255 255 255 / 95%);
+  --lite-neutral-lowlight: rgb(183 196 213 / 35%);
+  --lite-neutral-elevation: 0 2px 4px rgb(31 53 83 / 6%);
+  --lite-neutral-shadow: inset 0 1px 4px var(--lite-neutral-highlight), inset 0 -1px 4px var(--lite-neutral-lowlight), var(--lite-neutral-elevation);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] .venus-mode-switch {
+  background: var(--lite-neutral-fill) !important;
+  color: var(--e-light-text-primary) !important;
+  border: 1px solid var(--color-blue) !important;
+  box-shadow: var(--lite-neutral-shadow) !important;
+  backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(130%);
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(130%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] :is(.venus-header-brand-wordmark, .venus-header-account-icon) {
+  /* Figma's monochrome assets follow text/primary/default in Light mode. */
+  filter: brightness(0) saturate(100%);
+}
+
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-brand-mark,
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='lite'] .venus-header-brand {
+    gap: calc(var(--spacing) * 2.5);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-brand .venus-header-brand-wordmark {
+    display: block;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-chain {
+    display: flex;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-chain [data-select-trigger] {
+    height: var(--venus-header-control-height);
+    padding-inline: calc(var(--spacing) * 3) !important;
+    gap: calc(var(--spacing) * 2.5);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-chain img {
+    width: calc(var(--spacing) * 5);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-links {
+    margin-left: calc(var(--spacing) * 3);
+    gap: var(--spacing);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row [data-header-navigation] {
+    /* The legacy material mirror also sets padding; geometry belongs to Figma. */
+    padding: calc(var(--spacing) * 4) calc(var(--spacing) * 3) !important;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+}
+
+/* Figma's 1024 Pro frame omits the Lite switch. Preserve that existing entry
+   using the next tighter spacing step until the full desktop frame fits. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row [data-header-navigation] {
+    padding-inline: var(--venus-header-gap) !important;
+  }
+}
+
+/* Below the smallest design frame, preserve control hit areas and let the
+   existing address ellipsis absorb the reduced width. */
+@media (max-width: 374px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro'] .venus-interface-mode-label {
+    display: none;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro'] .venus-user-address {
+    max-width: calc(var(--spacing) * 13);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (forced-colors: active) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row {
+    background: Canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

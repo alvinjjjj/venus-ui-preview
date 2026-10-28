@@ -6,6 +6,7 @@ import { Delimiter, Icon } from 'components';
 import { PAGE_CONTAINER_ID } from 'constants/layout';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import venusLogoLightSrc from 'demo/LiquidityLightPreview/venusLogoLight.svg';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
@@ -18,10 +19,12 @@ import TEST_IDS from '../testIds';
 import { ChainSelect } from './ChainSelect';
 import { ClaimRewardsButton } from './ClaimRewardsButton';
 import { ConnectButton } from './ConnectButton';
+import { HeaderBrand } from './HeaderBrand';
 import { MenuItem } from './MenuItem';
 import { NavButtonWrapper } from './NavButtonWrapper';
 import { Settings } from './Settings';
 import { SettingsButton } from './SettingsButton';
+import './figma-header.css';
 import './interface-mode.css';
 import { useDashboardMenuItem, useMenuItems } from './useMenuItems';
 
@@ -32,6 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
   const navigate = useNavigate();
   const { search } = useLocation();
   const isLightPreview = useLiquidityLightPreview();
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { supportsModes: original, isNew, mode, isLite } = useInterfaceMode();
   const ModeButton = isNew ? ButtonWrapper : 'button';
   const { accountAddress } = useAccountAddress();
@@ -71,7 +75,11 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
   const dashboardMenuItem = useDashboardMenuItem();
 
   return (
-    <nav className="venus-navigation relative z-50 isolate" data-interface-mode={mode}>
+    <nav
+      className="venus-navigation relative z-50 isolate"
+      data-interface-mode={mode}
+      data-figma-header={isFinal || undefined}
+    >
       <div
         className={cn(
           'venus-header-row group/navbar bg-background-active h-20 pr-5 flex items-center justify-between',
@@ -92,16 +100,25 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
             to={routes.landing.path}
             onClick={closeMobileMenu}
           >
-            <img src={venusLogoSrc} alt={t('layout.menu.venusLogoAlt')} className="venus-logo-symbol h-8 sm:hidden" />
-
-            <img
-              src={isLightPreview ? venusLogoLightSrc : venusLogoWithTextSrc}
-              alt={t('layout.menu.venusLogoAlt')}
-              className="venus-logo-wordmark h-8 hidden sm:block"
-            />
+            {isFinal ? (
+              <HeaderBrand mode={mode} />
+            ) : (
+              <>
+                <img
+                  src={venusLogoSrc}
+                  alt={t('layout.menu.venusLogoAlt')}
+                  className="venus-logo-symbol h-8 sm:hidden"
+                />
+                <img
+                  src={isLightPreview ? venusLogoLightSrc : venusLogoWithTextSrc}
+                  alt={t('layout.menu.venusLogoAlt')}
+                  className="venus-logo-wordmark h-8 hidden sm:block"
+                />
+              </>
+            )}
           </Link>
 
-          {original && (
+          {original && !isFinal && (
             <span className="venus-interface-mode-label ml-2 text-sm">
               {mode === 'lite' ? 'Lite' : 'Pro'}
             </span>
@@ -127,6 +144,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
           className={cn(
             'venus-header-actions flex items-center gap-x-3 h-9 sm:h-12',
             original &&
+              !isFinal &&
               'gap-x-2 sm:gap-x-3 [&_.venus-connected-wallet_svg]:max-sm:hidden [&_.venus-connected-wallet>div]:max-sm:px-2',
           )}
           data-testid={TEST_IDS.navBarActions}
@@ -142,10 +160,12 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
           <ClaimRewardsButton className="h-full hidden sm:flex" data-rewards-button="true" />
 
           {!isLite && (
-            <ChainSelect buttonClassName="h-10 px-3 py-0 bg-dark-blue border-dark-blue-disabled/50 hover:bg-dark-blue-hover hover:border-dark-blue-disabled/50 hover:no-underline active:bg-dark-blue-hover sm:h-12" />
+            <div className="venus-header-chain">
+              <ChainSelect buttonClassName="h-10 px-3 py-0 bg-dark-blue border-dark-blue-disabled/50 hover:bg-dark-blue-hover hover:border-dark-blue-disabled/50 hover:no-underline active:bg-dark-blue-hover sm:h-12" />
+            </div>
           )}
 
-          <ConnectButton />
+          <ConnectButton figmaHeader={isFinal} />
 
           {original && (
             <div
@@ -190,7 +210,9 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
 
           {!isLite && (
             <NavButtonWrapper
-              className="size-10 px-0 sm:size-12 lg:hidden"
+              variant={isFinal ? 'secondary' : undefined}
+              material={isFinal ? 'glass' : undefined}
+              className="venus-header-menu size-10 px-0 sm:size-12 lg:hidden"
               onClick={toggleMobileMenu}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
@@ -222,6 +244,13 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
             <MenuItem key={item.label} item={item} onClick={closeMobileMenu} />
           ))}
         </div>
+
+        {isFinal && isMobileMenuOpen && (
+          <div className="venus-mobile-chain mb-6 sm:hidden">
+            <p className="mb-2 text-sm text-light-grey">{t('layout.chainSelect.label')}</p>
+            <ChainSelect buttonClassName="h-12 px-3" />
+          </div>
+        )}
 
         <Delimiter className="mb-6" />
 

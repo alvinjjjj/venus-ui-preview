@@ -58,6 +58,40 @@ describe.each(['v1', 'v5', 'lite-experiment', 'lite-experiment-v2', 'lite-experi
       expect(useInterfaceModeStore.getState().mode).toBe('lite');
     });
 
+    it.each([
+      ['/dashboard?chainId=56&interface=lite', 'lite'],
+      ['/dashboard?chainId=56&interface=lite&txType=borrow&page=2', 'lite'],
+      ['/dashboard?chainId=56&interface=pro', 'pro'],
+      ['/dashboard?chainId=56', 'pro'],
+      ['/dashboard?interface=invalid', 'pro'],
+      ['/liquidity-hubs?interface=lite', 'pro'],
+    ] as const)('retains the correct dashboard surface for %s', (path, expected) => {
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => <MemoryRouter initialEntries={[path]}>{children}</MemoryRouter>,
+      });
+      expect(result.current.mode).toBe(expected);
+      expect(result.current.isLite).toBe(expected === 'lite');
+    });
+
+    it('honors explicit navigation state over a carried dashboard query', () => {
+      const { result } = renderHook(() => useInterfaceMode(), {
+        wrapper: ({ children }) => (
+          <MemoryRouter
+            initialEntries={[
+              {
+                pathname: '/dashboard',
+                search: '?interface=lite',
+                state: { interfaceMode: 'pro' },
+              },
+            ]}
+          >
+            {children}
+          </MemoryRouter>
+        ),
+      });
+      expect(result.current.mode).toBe('pro');
+    });
+
     it('honors a guest choosing Pro without treating them as connected', () => {
       wallet.accountAddress = undefined;
       const { result } = renderHook(() => useInterfaceMode(), {

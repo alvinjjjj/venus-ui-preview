@@ -1,7 +1,7 @@
 import { PromotedTokenFire } from './PromotedTokenFire';
 import { LiteMarketAction } from './LiteMarketAction';
 import BigNumber from 'bignumber.js';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useGetPool, useGetLiquidityHubs } from 'clients/api';
 import {
   Apy,
@@ -9,7 +9,6 @@ import {
   Icon,
   Tabs,
   Page,
-  Table,
   type TableColumn,
   TextField,
   Tooltip,
@@ -42,6 +41,7 @@ import { MarketTotals } from './MarketTotals';
 import { MarketModeSwitch } from './MarketModeSwitch';
 import { LiteMarketBreadcrumb } from './LiteMarketBreadcrumb';
 import { LiteMarketAmount } from './LiteMarketAmount';
+import { LiteMarketTable } from './LiteMarketTable';
 import { useStore as useLayoutStore } from 'containers/Layout/store';
 import { SafetyExplorer } from '../Landing/SafetyExplorer';
 import { CommunityExplorer } from '../Landing/CommunityExplorer';
@@ -196,7 +196,13 @@ function AssetSources({
 }: { row: LiteAsset; onBack: () => void; inline?: boolean; framed?: boolean; mobile?: boolean; modeSwitch?: React.ReactNode }) {
   const { corePoolComptrollerContractAddress } = useChain();
   const [userChainSettings] = useUserChainSettings();
-  const [openedMarket, setOpenedMarket] = useState<LiteMarket>();
+  const isFinalSources = useGlassPreview(state => state.mode === 'lite-experiment-v2');
+  const singleMarket = isFinalSources && row.markets.length === 1 ? row.markets[0] : undefined;
+  const [openedMarket, setOpenedMarket] = useState<LiteMarket | undefined>(singleMarket);
+  const closeMarket = useCallback(() => {
+    if (singleMarket) onBack();
+    else setOpenedMarket(undefined);
+  }, [singleMarket, onBack]);
   const mobileFormRef = useRef<HTMLElement>(null);
   useEffect(() => {
     if (mobile && openedMarket) {
@@ -204,15 +210,14 @@ function AssetSources({
     }
   }, [mobile, openedMarket]);
   const isE2Sources = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
-  const isFinalSources = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   useEffect(() => {
     if (!openedMarket || inline) return;
     const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpenedMarket(undefined);
+      if (event.key === 'Escape') closeMarket();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [openedMarket, inline]);
+  }, [openedMarket, inline, closeMarket]);
   const columns: TableColumn<LiteMarket>[] = [
     {
       key: 'yield',
@@ -298,7 +303,7 @@ function AssetSources({
             mode="Earn"
             token={row.token}
             onBackToAssets={onBack}
-            onBackToSources={() => setOpenedMarket(undefined)}
+            onBackToSources={singleMarket ? undefined : closeMarket}
             marketName={isFinalSources && openedMarket.asset ? 'Core Pool' : openedMarket.name}
           />
         ) : (
@@ -309,7 +314,7 @@ function AssetSources({
           <span aria-hidden="true">/</span>
           <button
             type="button"
-            onClick={() => setOpenedMarket(undefined)}
+            onClick={closeMarket}
             aria-label={`Back to ${row.token.symbol} Earn markets`}
             className="inline-flex items-center gap-2"
           >
@@ -326,7 +331,7 @@ function AssetSources({
               openedMarket.asset.isGated && !userChainSettings.doNotShowGatedAssetModal ? (
                 <GatedAssetAcknowledgementModal
                   inline
-                  onReject={() => setOpenedMarket(undefined)}
+                  onReject={closeMarket}
                 />
               ) : (
                 <MarketForm
@@ -336,7 +341,7 @@ function AssetSources({
                   poolComptrollerAddress={corePoolComptrollerContractAddress}
                   initialActiveTabId="supply"
                   earnOnly
-                  onSubmitSuccess={() => setOpenedMarket(undefined)}
+                  onSubmitSuccess={closeMarket}
                 />
               )
             ) : openedMarket.hub ? (
@@ -345,7 +350,7 @@ function AssetSources({
                 actionTabsVariant={mobile ? 'secondary' : undefined}
                 vhToken={openedMarket.hub.vhToken}
                 initialActiveTabId="supply"
-                onSubmitSuccess={() => setOpenedMarket(undefined)}
+                onSubmitSuccess={closeMarket}
               />
             ) : null}
           </div>
@@ -356,7 +361,7 @@ function AssetSources({
 
   return (
     <>
-      <Table
+      <LiteMarketTable
         className={inline || framed ? `lite-inline-sources${isE2Sources ? ' lite-e2-earn-sources' : ''}${mobile ? ' lite-mobile-table' : ''}` : undefined}
         data={row.markets}
         columns={mobile ? columns.slice(0, 2) : columns}
@@ -395,7 +400,8 @@ function AssetSources({
           poolComptrollerAddress={corePoolComptrollerContractAddress}
           initialActiveTabId="supply"
           earnOnly
-          onClose={() => setOpenedMarket(undefined)}
+          marketName={isFinalSources ? 'Core Pool' : undefined}
+          onClose={closeMarket}
         />
       )}
       {openedMarket?.hub && (
@@ -407,7 +413,7 @@ function AssetSources({
               {row.token.symbol} / {openedMarket.name}
             </span>
           }
-          handleClose={() => setOpenedMarket(undefined)}
+          handleClose={closeMarket}
         />
       )}
     </>
@@ -588,6 +594,7 @@ export default function LiteMarkets() {
                       <>
                         {active ? (
                           <AssetSources
+                            key={active.key}
                             row={active}
                             framed={experimental}
                             mobile={mobile}
@@ -606,7 +613,7 @@ export default function LiteMarkets() {
                               }
                               tabIndex={experimental ? 0 : undefined}
                             >
-                              <Table
+                              <LiteMarketTable
                                 data={ready ? filtered : []}
                                 className={mobile ? 'lite-mobile-table' : undefined}
                                 columns={mobile ? columns.slice(0, 2) : columns}

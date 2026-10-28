@@ -1,3 +1,4 @@
+import { cn } from '@venusprotocol/ui';
 import { ApyBreakdown, Button, Delimiter, Tabs, TokenTextField } from 'components';
 import LiquidityHubAccessor from 'containers/LiquidityHubAccessor';
 import { useDemo } from 'demo/state';
@@ -43,13 +44,14 @@ const RealLiquidityHubForm = ({
     <Tabs
       hideHeader={supplyOnly}
       variant={actionTabsVariant ?? (compactEarn || inlineHeader ? 'primary' : 'secondary')}
-      className={
+      className={cn(
+        'venus-liquidity-hub-tabs',
         compactEarn
           ? 'lite-compact-market-tabs'
           : inlineHeader
             ? 'lite-single-market-tabs'
-            : undefined
-      }
+            : undefined,
+      )}
       headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
       initialActiveTabId={initialActiveTabId}
       navType={navType}
@@ -101,13 +103,14 @@ const PreviewLiquidityHubForm = ({
         <Tabs
       hideHeader={supplyOnly}
           variant={actionTabsVariant ?? (compactEarn || inlineHeader ? 'primary' : 'secondary')}
-          className={
+          className={cn(
+            'venus-liquidity-hub-tabs',
             compactEarn
               ? 'lite-compact-market-tabs'
               : inlineHeader
                 ? 'lite-single-market-tabs'
-                : undefined
-          }
+                : undefined,
+          )}
           headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
           initialActiveTabId={initialActiveTabId}
           navType={navType}

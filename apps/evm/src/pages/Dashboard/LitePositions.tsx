@@ -1,23 +1,25 @@
-import { useState, type ReactNode } from 'react';
 import BigNumber from 'bignumber.js';
-import { isDemoAddress, useDemo } from 'demo/state';
-import { useGlassPreview } from 'demo/GlassVersions/store';
-import { getCombinedApy } from 'utilities';
-import { cn, Spinner } from 'components';
+import { Select, Spinner, cn } from 'components';
 import { routes } from 'constants/routing';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { isDemoAddress, useDemo } from 'demo/state';
 import { useAccountAddress } from 'libs/wallet';
+import { type ReactNode, useState } from 'react';
 import type { LiquidityHub, Pool } from 'types';
+import { getCombinedApy } from 'utilities';
+import { BStockPositions } from './BStockPositions';
 import { Hubs } from './Hubs';
 import { Positions } from './Markets/Positions';
 import { Placeholder } from './Placeholder';
-import { BStockPositions } from './BStockPositions';
 
 export function LitePositions({
   corePool,
+  previewInteractions,
   liquidityHubs,
   isHubsLoading,
 }: {
   corePool?: Pool;
+  previewInteractions?: boolean;
   liquidityHubs: LiquidityHub[];
   isHubsLoading: boolean;
 }) {
@@ -27,6 +29,7 @@ export function LitePositions({
   // New and E: the market chips use New's glass button material (blue glass when selected,
   // grey glass otherwise), like the 30D / 6M / 1Y group. O keeps its flat chips.
   const glassChips = useGlassPreview(state => state.mode !== 'v1');
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const hasCorePositions =
     accountAddress &&
     corePool?.assets.some(
@@ -41,7 +44,7 @@ export function LitePositions({
       label: 'Venus Core',
       content:
         hasCorePositions && corePool ? (
-          <Positions pools={[corePool]} />
+          <Positions pools={[corePool]} previewInteractions={previewInteractions} />
         ) : (
           <Placeholder
             iconName="venus"
@@ -101,39 +104,59 @@ export function LitePositions({
   const active = choices.find(choice => choice.id === selected) ?? choices[0];
   return (
     <section aria-label="Positions" className="space-y-8">
-      {choices.length > 0 && (
-        <div className="flex flex-wrap gap-3" role="group" aria-label="Position market">
-          {choices.map(choice => (
-            <button
-              key={choice.id}
-              type="button"
-              aria-pressed={active?.id === choice.id}
-              onClick={() => setSelected(choice.id)}
-              {...(glassChips
-                ? {
-                    'data-venus-button-material': 'glass',
-                    'data-venus-button-variant': 'secondary',
-                    'data-venus-button-size': 'md',
-                    ...(active?.id === choice.id ? { 'data-venus-button-active': 'true' } : {}),
-                  }
-                : {})}
-              className={cn(
-                'rounded-lg px-6 py-3 text-sm font-normal cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-blue focus-visible:outline-offset-2',
-                glassChips
-                  ? cn(
-                      'relative border',
-                      active?.id === choice.id ? 'text-white font-semibold' : 'text-light-grey hover:text-white',
-                    )
-                  : active?.id === choice.id
-                    ? 'bg-blue text-white font-semibold'
-                    : 'bg-dark-blue text-light-grey hover:text-white',
-              )}
-            >
-              {choice.label}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className={cn('space-y-8', isFinal && 'dashboard-position-picker')}>
+        <h2 className="text-lg font-semibold">Positions</h2>
+        {isFinal && (
+          <div className="sm:hidden">
+            <Select
+              name="position-market"
+              value={active.id}
+              onChange={value => setSelected(String(value))}
+              options={choices.map(({ id, label }) => ({ value: id, label }))}
+              menuTitle="Positions"
+            />
+          </div>
+        )}
+        {choices.length > 0 && (
+          <div
+            className={cn('flex flex-wrap gap-3', isFinal && 'hidden sm:flex')}
+            role="group"
+            aria-label="Position market"
+          >
+            {choices.map(choice => (
+              <button
+                key={choice.id}
+                type="button"
+                aria-pressed={active?.id === choice.id}
+                onClick={() => setSelected(choice.id)}
+                {...(glassChips
+                  ? {
+                      'data-venus-button-material': 'glass',
+                      'data-venus-button-variant': 'secondary',
+                      'data-venus-button-size': 'md',
+                      ...(active?.id === choice.id ? { 'data-venus-button-active': 'true' } : {}),
+                    }
+                  : {})}
+                className={cn(
+                  'rounded-lg px-6 py-3 text-sm font-normal cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-blue focus-visible:outline-offset-2',
+                  glassChips
+                    ? cn(
+                        'relative border',
+                        active?.id === choice.id
+                          ? 'text-white font-semibold'
+                          : 'text-light-grey hover:text-white',
+                      )
+                    : active?.id === choice.id
+                      ? 'bg-blue text-white font-semibold'
+                      : 'bg-dark-blue text-light-grey hover:text-white',
+                )}
+              >
+                {choice.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
       {active?.content}
     </section>
   );

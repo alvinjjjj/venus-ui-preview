@@ -233,6 +233,7 @@
     align-items: flex-end;
     gap: 0;
     font-variant-numeric: tabular-nums;
+    width: 100%;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-source-apy-value {
     display: flex;
@@ -241,14 +242,22 @@
     height: auto;
     min-height: 0;
     flex: 0 0 auto;
+    width: 100%;
   }
-  /* The source page shows rates only. Keep the ordinary rate before Prime
-     while retaining the copper chip's existing 44px tap target. */
+  /* Ordinary APY and Prime share a line when the actual column has room.
+     Wrap naturally on narrower phones; keep the chip's 44px tap target. */
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-source-apy-rates {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0 calc(var(--spacing) * 2);
+    width: 100%;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-source-apy-rates > * {
+    flex-shrink: 0;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(.lite-base-apy, .lite-e2-source-apy, [data-apy-badge-text='prime']) {
     font-size: var(--text-base);
@@ -260,34 +269,7 @@
     --lite-prime-hit-height: calc(var(--spacing) * 11);
     --lite-prime-ring-inset: calc(var(--spacing) * 1.5) 0;
   }
-  /* Reuse the full Venus wordmark. The leading group can shrink at narrow
-     phone widths while Wallet and Pro retain their existing hit areas. */
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-row {
-    /* Requested proportional phone gutter; keep it local to Final Lite. */
-    padding-inline: 5%;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-leading {
-    flex: 0 1 auto;
-    min-width: 0;
-    margin-inline-end: calc(var(--spacing) * 2);
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-logo {
-    flex: 0 1 auto;
-    min-width: 0;
-    padding-inline: 0;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-logo-symbol {
-    display: none;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-logo-wordmark {
-    display: block;
-    width: calc(var(--spacing) * 28);
-    max-width: 100%;
-    height: auto;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] :is(.venus-interface-mode-label, .venus-header-actions) {
-    flex-shrink: 0;
-  }
+  /* Final's shared responsive Header follows its Figma component. */
   /* Optical alignment for the round token against Proxima Nova's cap height;
      reuse the existing quarter-spacing (1px) rather than shifting the label. */
   :root[data-glass-revision='lite-experiment-v2'] #root .lite-breadcrumb-token-icon {
@@ -465,10 +447,6 @@
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market .lite-single-market-tabs {
     position: static;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-header-actions,
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-connected-wallet {
-    height: calc(var(--spacing) * 11);
   }
 }
 

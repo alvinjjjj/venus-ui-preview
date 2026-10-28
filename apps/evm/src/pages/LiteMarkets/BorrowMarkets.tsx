@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import {
   AssetApy,
   MultiSelect,
-  Table,
   type TableColumn,
   TextField,
   TokenIcon,
@@ -17,6 +16,7 @@ import type { LiteAsset } from './data';
 import { BorrowSources } from './BorrowSources';
 import { LiteMarketAction } from './LiteMarketAction';
 import { LiteMarketAmount } from './LiteMarketAmount';
+import { LiteMarketTable } from './LiteMarketTable';
 import './borrow-filter.css';
 
 const borrowApy = (asset: Asset) =>
@@ -144,7 +144,7 @@ export function BorrowMarkets({
       {active ? (
         <BorrowSources mobile={mobile} experimental={experimental} asset={active} rows={rows} onBack={() => setSelected(undefined)} />
       ) : (
-        <Table
+        <LiteMarketTable
           data={ready ? filtered : []}
           key={mobile ? 'mobile' : 'desktop'}
           className={mobile ? 'lite-mobile-table' : undefined}

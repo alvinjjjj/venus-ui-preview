@@ -34,7 +34,15 @@ it.each(['/account', '/account/positions', '/pool/0x123', '/staking/xvs'])(
 
 it.each([
   ['external Pro', '/liquidity-hubs', 'pro', undefined, true, 'lite'],
-  ['external guest Pro', '/dashboard', 'lite', undefined, true, 'lite'],
+  ['external guest Pro', '/dashboard', 'pro', undefined, true, 'lite'],
+  [
+    'explicit Lite Dashboard has no arrival invitation',
+    '/dashboard',
+    'lite',
+    undefined,
+    true,
+    null,
+  ],
   [
     'Lite to Pro is not an arrival invitation',
     '/liquidity-hubs',

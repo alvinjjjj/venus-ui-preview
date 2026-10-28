@@ -4,7 +4,6 @@ import {
   AssetApy,
   Icon,
   Select,
-  Table,
   type TableColumn,
   TextField,
   TokenIcon,
@@ -22,6 +21,7 @@ import skhyb from 'assets/img/spoke/skhyb.png';
 import type { LiteAsset } from './data';
 import { BorrowSourceModal } from './BorrowSourceModal';
 import { CollateralPicker } from './CollateralPicker';
+import { LiteMarketTable } from './LiteMarketTable';
 import { LiteMarketBreadcrumb } from './LiteMarketBreadcrumb';
 import { LiteMarketAmount } from './LiteMarketAmount';
 import { useGlassPreview } from 'demo/GlassVersions/store';
@@ -293,7 +293,7 @@ export function BorrowSources({
   }
   return (
     <>
-      <Table
+      <LiteMarketTable
         key={mobile ? 'mobile' : 'desktop'}
         className={mobile ? `lite-mobile-table lite-mobile-source-table${showMobileCollateralColumn ? ' lite-mobile-borrow-source-table' : ''}` : undefined}
         data={filtered}

@@ -1,0 +1,77 @@
+/* Final's asset lists and source lists share this recipe. Keep the existing
+   four/five-column grids, sorting and responsive column choices at callsites. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(thead, thead tr) {
+  height: calc(var(--spacing) * 10);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] th {
+  padding-block: 0;
+  vertical-align: middle;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(.lite-source-apy, .lite-source-apy-value) {
+  line-height: inherit;
+}
+
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(th, td) {
+    padding-inline: calc(var(--spacing) * 6);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] th {
+    display: flex;
+    align-items: center;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] th.text-right {
+    justify-content: flex-end;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(th, td):nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  /* Inline button baselines added a descender below the icon/name group,
+     moving it above the row center. A flex cell removes that extra line box. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] tbody td:first-child {
+    display: flex;
+    align-items: center;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] tbody td:first-child > button {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] tbody tr {
+    height: calc(var(--spacing) * 15);
+    min-height: calc(var(--spacing) * 15);
+    align-items: center;
+  }
+}
+
+/* Rates remain semibold; token amounts and fiat values retain their shared
+   LiteMarketAmount recipe. Multi-rate Prime rows can grow naturally on phones. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(.lite-base-apy, .lite-e2-source-apy, .lite-borrow-apy) {
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] :is(th, td) {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    vertical-align: middle;
+  }
+
+  /* Source names do not include the asset icon/name group. Share the two
+     columns equally so ordinary + Prime APY can use the available phone width. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table].lite-e2-earn-sources :is(th, td) {
+    width: 50%;
+  }
+}

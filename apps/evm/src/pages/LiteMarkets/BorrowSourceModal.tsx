@@ -295,6 +295,7 @@ export function BorrowSourceModal({
     <>
       {isE2 && !isFinal && isPreview && <p className="lite-e2-preview-source-label mb-4">Preview market · Transactions unavailable</p>}
       <Tabs
+        className={isFinal ? 'lite-borrow-action-tabs space-y-3' : undefined}
         headerClassName={experimental ? 'lite-borrow-popup-tabs' : undefined}
         variant="secondary"
         activeTabId={activeTab}

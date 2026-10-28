@@ -106,14 +106,14 @@ it('matches E3 soft-glass totals and number emphasis without opting into its rol
   expect(css).not.toContain('lite-e3-digit-in');
 });
 
-it('makes the E2 horizon distinct from E3 without new animation loops or Light sky changes', () => {
+it('keeps the E2 starfield free of ambient washes without changing the Light sky', () => {
   const horizon = css.slice(
-    css.indexOf('/* E2 horizon study:'),
+    css.indexOf('/* E2 keeps the starfield'),
     css.indexOf('/* E2 planet discovery:'),
   );
   expect(horizon).toContain('.lite-ghost--e2-horizon:not(.lite-ghost--light-ambient)');
-  expect(horizon).toContain('radial-gradient(ellipse 58% 34% at 8% 104%');
-  expect(horizon).toContain('bottom: -70%;');
+  expect(horizon).toContain('content: none;');
+  expect(horizon).not.toContain('radial-gradient');
   expect(horizon).toContain('@media (forced-colors: active)');
   expect(horizon).not.toContain('animation:');
   expect(horizon).not.toContain('.lite-ghost--e3');

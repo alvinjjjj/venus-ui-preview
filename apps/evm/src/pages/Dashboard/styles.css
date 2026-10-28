@@ -46,6 +46,64 @@
   background-color: transparent;
 }
 
+/* Final Lite keeps a single 24px rhythm from the overview through Positions.
+   Reuse the existing spacing scale without changing Pro or earlier previews. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview > .grid {
+  align-items: start;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview .venus-account-performance-row {
+  height: auto;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview .venus-account-performance-cells {
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 6);
+  overflow: visible;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Positions'] {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 6);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Positions'] > * {
+  margin-block: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Position market'] {
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-picker {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-picker > * {
+  margin-block: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-health-summary {
+  margin-bottom: calc(var(--spacing) * 6);
+}
+
+/* Hub holdings use the same 24px inset and internal gap as the overview. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card {
+  padding: calc(var(--spacing) * 6);
+  gap: calc(var(--spacing) * 6);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card > .flex {
+  gap: calc(var(--spacing) * 6);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard > section[aria-labelledby='lite-transactions-title'] {
+  margin-top: calc(var(--spacing) * 6);
+}
+
 /* Match Lite Markets' token amount / fiat value hierarchy using existing tokens. */
 #root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='primary'] {
   font-size: var(--text-base);

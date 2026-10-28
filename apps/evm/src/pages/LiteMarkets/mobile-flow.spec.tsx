@@ -116,6 +116,29 @@ it('uses two-column Earn tables and opens the existing hub form inline with work
   expect(table().getByRole('button', { name: 'Compare USDT markets' })).toBeVisible();
 });
 
+it('opens a single Earn source directly and returns to assets without a source-list detour', () => {
+  const singleSource = rows.find(row => row.markets.length === 1 && row.markets[0].asset);
+  if (!singleSource) throw new Error('A Core-only Earn asset fixture is required');
+  (useGetLiquidityHubs as Mock).mockReturnValue({ data: { liquidityHubs: [] }, isLoading: false });
+
+  renderComponent(<LiteMarkets />);
+  fireEvent.click(table().getByRole('button', {
+    name: `Compare ${singleSource.token.symbol} markets`,
+  }));
+
+  expect(screen.getByTestId('real-market-form')).toBeVisible();
+  expect(screen.queryByRole('table')).toBeNull();
+  const navigation = screen.getByRole('navigation', { name: 'Earn navigation' });
+  expect(within(navigation).getByText('Core Pool')).toHaveAttribute('aria-current', 'page');
+  fireEvent.click(within(navigation).getByRole('button', {
+    name: `Back to Earn assets from ${singleSource.token.symbol}`,
+  }));
+  expect(screen.queryByTestId('real-market-form')).toBeNull();
+  expect(table().getByRole('button', {
+    name: `Compare ${singleSource.token.symbol} markets`,
+  })).toBeVisible();
+});
+
 it('opens Core loans inline and returns through the source and asset steps', () => {
   openBorrowSources();
   const headers = table().getAllByRole('columnheader');

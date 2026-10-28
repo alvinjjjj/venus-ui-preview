@@ -1,27 +1,29 @@
-/* Final form segments: a single component recipe for Supply/Withdraw,
-   Borrow/Repay and Wallet/Collateral, including body-portaled dialogs.
+/* Final segments share a material recipe, with distinct full-width form and
+   compact date layouts. Supply/Withdraw, Borrow/Repay and Wallet/Collateral
+   use the large Figma switch; the dashboard period selector stays compact.
    These component-local aliases reuse the existing palette/material recipes;
    they are the roles to map to Figma modes, not new global design tokens. */
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] {
-  --segment-track-fill: var(--color-dark-blue);
-  --segment-track-edge: color-mix(in srgb, var(--color-white) 12%, transparent);
-  --segment-track-shadow: inset 0 1px 1px rgb(255 255 255 / 9%);
-  --segment-text: var(--color-grey);
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group][data-venus-button-group][data-venus-button-group] {
+  --segment-track-fill: #1e2431;
+  --segment-track-edge: #30354a;
+  --segment-track-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%);
+  --segment-text: #aab3ca;
   --segment-hover-fill: color-mix(in srgb, var(--color-white) 6%, transparent);
   --segment-selected-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
   --segment-selected-hover: radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6);
   --segment-selected-text: #fff;
-  --segment-selected-edge: rgb(255 255 255 / 20%);
+  --segment-selected-edge: #0d88e0;
   --segment-selected-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), 0 2px 4px rgb(0 0 0 / 16%);
   background: var(--segment-track-fill) !important;
   border: 1px solid var(--segment-track-edge) !important;
-  border-radius: var(--radius-lg);
-  padding: var(--spacing);
-  gap: 0;
+  border-radius: 8px !important;
+  padding: 3px !important; /* + 1px border = Figma 4px inside-stroke padding, 41px total */
+  gap: 0 !important;
+  width: fit-content !important;
   box-shadow: var(--segment-track-shadow) !important;
 }
 
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] {
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) [data-venus-button-group][data-venus-button-group][data-venus-button-group] {
   --segment-track-fill: var(--e-light-surface-subtle);
   --segment-track-edge: var(--e-light-border-subtle);
   --segment-track-shadow: inset 0 1px 2px rgb(31 53 83 / 7%);
@@ -36,7 +38,7 @@
 
 /* Selection and interaction are separate axes. A hovered inactive segment
    stays neutral; a focused segment keeps its current selection styling. */
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
   --segment-fill: transparent;
   --segment-ink: var(--segment-text);
   --segment-edge: transparent;
@@ -48,42 +50,202 @@
   --material-edge: var(--segment-edge) !important;
   --material-shadow: var(--segment-shadow) !important;
   --material-hover-shadow: var(--segment-shadow) !important;
-  flex: 1 1 0%;
+  flex: 0 0 auto;
   min-width: 0;
+  height: 33px !important;
+  min-height: 33px !important;
+  padding: 6px 12px !important;
+  font-size: 14px !important;
   border: 1px solid var(--segment-edge) !important;
-  border-radius: calc(var(--radius-lg) - var(--spacing) / 2) !important;
+  border-radius: 8px !important;
   background: var(--segment-fill) !important;
   color: var(--segment-ink) !important;
   box-shadow: var(--segment-shadow) !important;
-  font-weight: var(--font-weight-normal);
+  font-weight: 400;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   transform: none !important;
   transition: background-color 160ms ease-out, color 160ms ease-out, box-shadow 160ms ease-out !important;
 }
 
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true'] {
+/* Figma 3945:996: 53px track, 45px segments and 4px inset including stroke.
+   Follow ButtonGroup's existing fullWidth intent rather than inferring size
+   from labels or routes. Compact date selectors retain their 41/33px recipe. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group][data-venus-button-group][data-venus-button-group][data-venus-button-group-layout='full'] {
+  width: 100% !important;
+}
+
+/* The icon-only Theme switch uses the same compact track and selection
+   material. Keep its existing icons centered without text-button padding. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group].venus-theme-switch > button[data-venus-button-variant][aria-pressed] {
+  height: calc(var(--spacing) * 10) !important;
+  min-height: calc(var(--spacing) * 10) !important;
+  padding: 0 !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group].venus-theme-switch > button[data-venus-button-variant][aria-pressed]:focus-visible {
+  outline: 2px solid var(--color-blue) !important;
+  outline-offset: -2px !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group].venus-theme-switch > button[data-venus-button-variant][aria-pressed='true']:focus-visible {
+  outline-color: var(--segment-selected-text) !important;
+}
+
+/* Account settings and actions use the existing 12px action-stack rhythm.
+   The address and account overview keep their surrounding section spacing. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings {
+  row-gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-settings {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-settings > * {
+  margin-block: 0;
+  min-height: calc(var(--spacing) * 12);
+}
+
+/* Settings labels share a semantic text role in either theme. Keep Language
+   and its selected value inline whenever their actual content fits. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-settings .venus-settings-label {
+  color: var(--color-light-grey);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-language-setting {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-language-select {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group][data-venus-button-group-layout='full'] > button[data-venus-button-variant][aria-pressed] {
+  flex: 1 1 0%;
+  height: calc(var(--spacing) * 11 + 1px) !important;
+  min-height: calc(var(--spacing) * 11 + 1px) !important;
+  padding: 0 calc(var(--spacing) * 3) !important;
+}
+
+/* Earn/Borrow is the same ButtonGroup material in its existing toolbar size:
+   170x36 desktop and full-width with 44px segments on mobile. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group][data-venus-button-group][data-venus-button-group].lite-mode-pills {
+  width: max-content !important;
+  padding: var(--spacing) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group].lite-mode-pills > button[data-venus-button-variant][aria-pressed] {
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
+/* The market toolbar switches to its mobile layout below md (768px),
+   including tablets between 640px and 767px. Match that same breakpoint. */
+@media (width < 768px) {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group][data-venus-button-group][data-venus-button-group].lite-mode-pills {
+    width: 100% !important;
+  }
+
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group].lite-mode-pills > button[data-venus-button-variant][aria-pressed] {
+    height: calc(var(--spacing) * 11) !important;
+    min-height: calc(var(--spacing) * 11) !important;
+  }
+}
+
+/* Keep the outer Collateral/Loan tabs close to their inner action switch.
+   space-y-3 owns the desktop gap; gap owns the mobile flex layout. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-borrow-action-tabs {
+  gap: calc(var(--spacing) * 3) !important;
+}
+
+/* Hub forms have two levels: equal Supply/Withdraw tabs above the funding
+   switch. Remove the shared navigation gap so each indicator spans half. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-liquidity-hub-tabs[data-venus-tabs-variant='secondary'] {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-liquidity-hub-tabs[data-venus-tabs-variant='secondary'] > * {
+  margin-block: 0 !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-liquidity-hub-tabs > [data-venus-tabs-header] > [data-venus-tabs-list] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-liquidity-hub-tabs > [data-venus-tabs-header] > [data-venus-tabs-list] > button {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+}
+
+/* The portaled account reward action is blue in both themes. Its icon uses
+   the existing on-accent role instead of the default yellow reward color. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-popup-panel [data-claim-rewards-button] svg {
+  color: var(--e-light-text-on-accent, #fff) !important;
+}
+
+/* The action switch gets the same 12px rhythm below it as above it.
+   Core, Hub and preview forms share this Tabs/ButtonGroup structure, including
+   portaled dialogs. Only the switch-to-content spacing changes here. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-tabs-variant='primary']:has(> [data-venus-button-group-layout='full']) {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-tabs-variant='primary']:has(> [data-venus-button-group-layout='full']) > * {
+  margin-block: 0 !important;
+}
+
+/* Guest Supply and Withdraw use different form wrappers. Let the shared
+   submit dock own one 24px APY-to-action gap instead of stacking space-y. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) :has(+ .inline-submit-dock .venus-connect-wallet-button) {
+  margin-bottom: 0 !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) .inline-submit-dock:has(.venus-connect-wallet-button) {
+  margin-block: 0 !important;
+  padding-top: calc(var(--spacing) * 6) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true'] {
   --segment-fill: var(--segment-selected-fill);
   --segment-ink: var(--segment-selected-text);
   --segment-edge: var(--segment-selected-edge);
   --segment-shadow: var(--segment-selected-shadow);
+  font-weight: 600 !important;
 }
 
 @media (hover: hover) {
-  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='false']:not(:disabled):not([aria-disabled='true']):hover {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='false']:not(:disabled):not([aria-disabled='true']):hover {
     --segment-fill: var(--segment-hover-fill);
   }
-  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true']:not(:disabled):not([aria-disabled='true']):hover {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true']:not(:disabled):not([aria-disabled='true']):hover {
     --segment-fill: var(--segment-selected-hover);
   }
 }
 
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:focus-visible {
-  outline: 2px solid var(--color-blue) !important;
-  outline-offset: calc(var(--spacing) / 2) !important;
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
 }
 
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:is(:disabled, [aria-disabled='true']) {
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:is(:disabled, [aria-disabled='true']) {
   --segment-fill: transparent;
   --segment-ink: var(--segment-text);
   --segment-edge: transparent;
@@ -93,14 +255,14 @@
 
 /* The track owns the material. Standalone bevels, pointer spotlights and
    perimeter traces would make an inactive segment look independently raised. */
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after,
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] .button-bevel-outline {
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after,
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] .button-bevel-outline {
   display: none !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
     transition: none !important;
   }
 }
@@ -109,14 +271,88 @@
    gradient, text and edge in one paint instead of tweening the shared Button's
    transition-all through mismatched intermediate states. E2 and Final share
    this interaction fix; keyboard focus indicators retain their own styling. */
-:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
   transition: none !important;
   animation: none !important;
   transform: none !important;
   -webkit-tap-highlight-color: transparent;
 }
-:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
-:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after {
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after {
   transition: none !important;
   animation: none !important;
+}
+
+/* Final Lite Dark: dashboard cards (Positions, Supplied/Borrowed, Transactions)
+   use the same dark frosted fill as the Markets list card, so the starfield
+   no longer shows through. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']):has(.venus-navigation[data-interface-mode='lite']) #root :is(.venus-glass-card.border, .venus-glass-card.block.p-0, .dashboard-transactions-list):not(.lite-experiment-scroll *, .venus-popup-panel *, .lite-markets *) {
+  background-color: rgb(0 0 0 / 10%) !important;
+  backdrop-filter: blur(50px) !important;
+  -webkit-backdrop-filter: blur(50px) !important;
+}
+
+/* Final Lite Light uses the existing cool-white panel role. The dark tint is
+   not a shared glass color: each Figma mode supplies its own surface. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard :is(.venus-glass-card.border, .venus-glass-card.block.p-0, .dashboard-transactions-list) {
+  background: color-mix(in srgb, var(--e-light-surface-panel) 92%, transparent) !important;
+  border-color: var(--e-light-border-subtle) !important;
+  /* Reuse Final's short downward frame shadow rather than stacking elevations. */
+  box-shadow: 0 var(--spacing) calc(var(--spacing) * 3) calc(var(--spacing) * -1) rgb(31 53 83 / 10%) !important;
+  backdrop-filter: blur(50px) !important;
+  -webkit-backdrop-filter: blur(50px) !important;
+}
+
+/* Overview and summary groups stay on the canvas; the data tables and holding
+   cards carry their own material. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard :is(.glass-dashboard-overview, .glass-dashboard-tabs, .venus-account-performance-cells, .dashboard-health-summary .venus-glass-card, .venus-glass-card.border-0:not(.dashboard-position-table, .dashboard-transactions-list, .block.p-0)) {
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard :is(.glass-dashboard-overview, .glass-dashboard-tabs, .venus-account-performance-cells, .dashboard-health-summary .venus-glass-card)::after {
+  content: none !important;
+}
+
+/* Position choices use the same neutral control role as Light filters, with
+   blue reserved for the selected market. No separate white raised buttons. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard [aria-label='Position market'] > button[aria-pressed='false'] {
+  --material-fill: var(--e-light-surface-control) !important;
+  --material-hover: var(--e-light-surface-subtle) !important;
+  --material-edge: var(--e-light-border-subtle) !important;
+  --material-shadow: none !important;
+  --material-hover-shadow: none !important;
+  background: var(--e-light-surface-control) !important;
+  border-color: var(--e-light-border-subtle) !important;
+  box-shadow: none !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard [aria-label='Position market'] > button[aria-pressed='false']:hover {
+  background: var(--e-light-surface-subtle) !important;
+  border-color: var(--e-light-border-control) !important;
+}
+
+/* Keep the selected appearance while giving keyboard users a clear focus
+   indicator. Pointer selection does not add another permanent border. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) [data-venus-button-group][data-venus-button-group] > button[data-venus-button-variant][aria-pressed]:focus-visible {
+  outline: 2px solid var(--e-light-border-focus) !important;
+  outline-offset: -2px !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) [data-venus-button-group][data-venus-button-group] > button[data-venus-button-variant][aria-pressed='true']:focus-visible {
+  outline-color: var(--e-light-text-on-accent) !important;
+  outline-offset: calc(var(--spacing) * -1) !important;
+}
+
+/* Mobile already renders individual asset and transaction cards. Their list
+   wrapper stays on the canvas instead of adding a second frosted sheet. */
+@media (width < 640px) {
+  :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-dashboard :is(.venus-glass-card.block.p-0.border-0:not(.dashboard-position-table), .dashboard-transactions-list) {
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }

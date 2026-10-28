@@ -10,10 +10,11 @@ export const LanguageSetting: React.FC = () => {
   const { t, i18n, language } = useTranslation();
 
   return (
-    <div className="flex flex-col gap-y-3 lg:flex-row lg:justify-between lg:items-center lg:gap-y-0">
-      <p>{t('layout.menu.settings.language.label')}</p>
+    <div className="venus-language-setting flex flex-col gap-y-3 lg:flex-row lg:justify-between lg:items-center lg:gap-y-0">
+      <p className="venus-settings-label">{t('layout.menu.settings.language.label')}</p>
 
       <Select
+        className="venus-language-select"
         value={language.bcp47Tag}
         onChange={tag => i18n.changeLanguage(tag as string)}
         options={selectOptions}

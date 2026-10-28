@@ -111,32 +111,14 @@
   }
 }
 
-/* E2 horizon study: static illustration geometry / optical alpha values, not
-   shared UI tokens. Reuse E3's sky depth with cyan light low on the horizon,
-   rather than copying its purple side nebulae and meteors. No extra renderer. */
+/* E2 keeps the starfield without ambient blue or green washes. Light's
+   separately authored sky and the individual token planets stay intact. */
 :root[data-glass-revision='lite-experiment-v2'] .lite-ghost--e2-horizon:not(.lite-ghost--light-ambient) {
   opacity: .75;
 }
-:root[data-glass-revision='lite-experiment-v2'] .lite-ghost--e2-horizon:not(.lite-ghost--light-ambient)::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 58% 34% at 8% 104%, rgb(44 145 160 / 30%), transparent 78%),
-    radial-gradient(ellipse 40% 42% at 100% 14%, rgb(73 123 183 / 19%), transparent 82%),
-    radial-gradient(ellipse 65% 22% at 54% 115%, rgb(108 182 215 / 14%), transparent 82%);
-}
+:root[data-glass-revision='lite-experiment-v2'] .lite-ghost--e2-horizon:not(.lite-ghost--light-ambient)::before,
 :root[data-glass-revision='lite-experiment-v2'] .lite-ghost--e2-horizon:not(.lite-ghost--light-ambient)::after {
-  content: '';
-  position: absolute;
-  left: -18%;
-  bottom: -70%;
-  width: 136%;
-  height: 104%;
-  border-radius: 50%;
-  border: 1px solid rgb(149 214 234 / 14%);
-  background: radial-gradient(ellipse 50% 24% at 50% 0%, rgb(73 150 174 / 10%), transparent 85%);
-  box-shadow: 0 -24px 90px -36px rgb(70 160 182 / 18%);
+  content: none;
 }
 @media (max-width: 767px) {
   :root[data-glass-revision='lite-experiment-v2'] .lite-ghost--e2-horizon::before,
@@ -903,8 +885,8 @@
   }
 }
 
-/* Final Earn and Borrow share four data tracks; sources keep Collateral
-   where needed while using the same content inset and numeric alignment. */
+/* Final Earn and Borrow share four data tracks. All numeric columns use
+   right alignment, including ordinary and Prime APY. */
 @media (min-width: 768px) {
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-e2-borrow-list tr {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -912,11 +894,11 @@
   :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td) {
     padding-inline: calc(var(--spacing) * 6);
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):is(:nth-child(2), :nth-child(3)) {
-    text-align: center;
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):nth-child(2) {
+    text-align: right;
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):is(:nth-child(2), :nth-child(3)) > :is(button, div) {
-    justify-content: center;
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):nth-child(2) > :is(button, div) {
+    justify-content: flex-end;
   }
   :root[data-glass-variant='lite-experiment-v2-legacy'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources) tr {
     grid-template-columns: repeat(4, minmax(0, 1fr)) calc(var(--spacing) * 26);
@@ -927,13 +909,13 @@
 }
 
 @media (min-width: 768px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):is(:nth-child(2), :nth-child(3)) {
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) :is(th, td):nth-child(2) {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list .lite-earn-apy, .lite-borrow-apy) {
-    justify-content: center !important;
+    justify-content: flex-end !important;
     align-items: center;
   }
 }

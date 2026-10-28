@@ -11,18 +11,7 @@
   --lite-neutral-shadow: inset 0 1px 0 var(--lite-neutral-highlight), inset 0 -1px 0 var(--lite-neutral-lowlight), var(--lite-neutral-elevation);
 }
 
-/* Keep the approved wallet typography and responsive header alignment. */
-:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) #root .venus-connected-wallet .venus-user-address {
-  font-weight: var(--font-weight-medium) !important;
-}
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-actions {
-  height: calc(var(--spacing) * 10);
-}
-@media (min-width: 640px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-actions {
-    height: calc(var(--spacing) * 12);
-  }
-}
+/* Header geometry and account typography are owned by figma-header.css. */
 
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-connected-wallet:not([data-prime-account='true']), .venus-mode-switch, [data-rewards-button], .lite-e2-market-total) {
   --material-fill: var(--lite-neutral-fill) !important;

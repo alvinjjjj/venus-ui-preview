@@ -59,18 +59,21 @@ export const Dashboard: React.FC = () => {
     accountAddress,
   });
   const pool = getPoolData?.pool;
-  const isNewMode = useGlassPreview(state => isNewDesignMode(state.mode));
+  const isPreviewMode = useGlassPreview(
+    state => isNewDesignMode(state.mode) || (isLite && state.mode === 'lite-experiment-v2'),
+  );
+  const isFinalLite = useGlassPreview(state => isLite && state.mode === 'lite-experiment-v2');
   const isDemoLoggedIn = useDemo(state => state.loggedIn);
   const previewPool = useMemo(
     () =>
       pool &&
       chainId === ChainId.BSC_MAINNET &&
-      isNewMode &&
+      isPreviewMode &&
       isDemoLoggedIn &&
       isDemoAddress(accountAddress)
         ? getNewPreviewPool(pool)
         : undefined,
-    [pool, chainId, isNewMode, isDemoLoggedIn, accountAddress],
+    [pool, chainId, isPreviewMode, isDemoLoggedIn, accountAddress],
   );
 
   const { data: getVaultsData, isLoading: isGetVaultsLoading } = useGetVaults({
@@ -136,6 +139,15 @@ export const Dashboard: React.FC = () => {
     return <Spinner />;
   }
 
+  const accountOverview = (
+    <AccountOverview
+      className="venus-glass-card glass-dashboard-overview w-full"
+      accountAddress={accountAddress}
+      previewPool={previewPool}
+      splitLayout={isLite}
+    />
+  );
+
   return (
     <Page>
       <div className={`dashboard-page contents${isLite ? ' lite-dashboard' : ''}`}>
@@ -145,13 +157,12 @@ export const Dashboard: React.FC = () => {
           </div>
         )}
 
-        <div className={isLite ? 'space-y-12 mb-24' : 'space-y-12 mb-12'}>
-          <AccountOverview
-            className="venus-glass-card glass-dashboard-overview w-full"
-            accountAddress={accountAddress}
-            previewPool={previewPool}
-            splitLayout={isLite}
-          />
+        <div
+          className={
+            isFinalLite ? 'space-y-6 mb-6' : isLite ? 'space-y-12 mb-24' : 'space-y-12 mb-12'
+          }
+        >
+          {accountOverview}
 
           <Guide />
         </div>
@@ -159,7 +170,8 @@ export const Dashboard: React.FC = () => {
         <div className="venus-glass-card glass-dashboard-tabs">
           {isLite ? (
             <LitePositions
-              corePool={pool}
+              corePool={previewPool ?? pool}
+              previewInteractions={!!previewPool}
               liquidityHubs={liquidityHubs}
               isHubsLoading={isGetLiquidityHubsLoading}
             />

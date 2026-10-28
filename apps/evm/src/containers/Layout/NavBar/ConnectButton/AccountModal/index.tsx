@@ -1,8 +1,8 @@
 import { Button, ButtonWrapper } from '@venusprotocol/ui';
-import { useDemo } from 'demo/state';
-import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
+import { useDemo } from 'demo/state';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { createPortal } from 'react-dom';
 import type { Address } from 'viem';
 
@@ -73,28 +73,35 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
 
             <AccountOverview accountAddress={address} showGraph={false} />
 
-            <Settings />
-            <div className="flex flex-col gap-y-3">
-              {isVip && <VipTelegramGroupButton />}
+            <div className="venus-account-settings flex flex-col gap-y-6">
+              <Settings />
+              <div className="flex flex-col gap-y-3">
+                {isVip && <VipTelegramGroupButton />}
 
-              {isLite && (
-                <ButtonWrapper variant="primary" className="w-full" asChild>
-                  <Link to={routes.dashboard.path} onClick={onClose} noStyle>
-                    View Dashboard
-                  </Link>
-                </ButtonWrapper>
-              )}
+                {isLite && (
+                  <ButtonWrapper variant="primary" className="w-full" asChild>
+                    <Link
+                      to={{ pathname: routes.dashboard.path, search: '?interface=lite' }}
+                      state={{ interfaceMode: 'lite' }}
+                      onClick={onClose}
+                      noStyle
+                    >
+                      View Dashboard
+                    </Link>
+                  </ButtonWrapper>
+                )}
 
-              {/* When running in Safe Wallet app, user's wallet should be kept connected at all time */}
-              {!config.isSafeApp && (
-                <Button variant="secondary" onClick={handleDisconnect} className="w-full">
-                  <div className="flex items-center gap-x-2">
-                    <Icon name="connect" className="size-5 text-inherit transition-colors" />
+                {/* When running in Safe Wallet app, user's wallet should be kept connected at all time */}
+                {!config.isSafeApp && (
+                  <Button variant="secondary" onClick={handleDisconnect} className="w-full">
+                    <div className="flex items-center gap-x-2">
+                      <Icon name="connect" className="size-5 text-inherit transition-colors" />
 
-                    <span>Disconnect</span>
-                  </div>
-                </Button>
-              )}
+                      <span>Disconnect</span>
+                    </div>
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </div>

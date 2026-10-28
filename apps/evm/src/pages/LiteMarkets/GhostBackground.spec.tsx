@@ -24,7 +24,7 @@ vi.mock('../Landing/LandingMockup/FlowFieldThree', () => ({
   }: {
     ambientLight?: boolean;
     settings: { lines: number };
-    starTuning?: { warmth: number; brightness: number };
+    starTuning?: { warmth: number; brightness: number; stars: number };
   }) => (
     <div
       data-testid="flow"
@@ -32,6 +32,7 @@ vi.mock('../Landing/LandingMockup/FlowFieldThree', () => ({
       data-lines={settings.lines}
       data-star-warmth={starTuning?.warmth}
       data-star-brightness={starTuning?.brightness}
+      data-star-count={starTuning?.stars}
     />
   ),
 }));
@@ -127,4 +128,18 @@ it('keeps E3 near stars and meteors without opting it into the E2 horizon', () =
 it('does not opt a non-layered preview into the E Light background', () => {
   const { container } = render(<GhostBackground shared />);
   expect(container.querySelector('.lite-ghost--light-ambient')).toBeNull();
+});
+
+it('reduces only the requested compact sky to one third and restores the full sky afterward', () => {
+  Object.assign(preview, { mode: 'lite-experiment-v2', light: false, compact: true });
+  const { container, rerender } = render(<GhostBackground shared starDensity={1 / 3} />);
+  expect(container.querySelectorAll('.lite-ghost__still circle')).toHaveLength(733);
+  rerender(<GhostBackground shared />);
+  expect(container.querySelectorAll('.lite-ghost__still circle')).toHaveLength(2200);
+});
+
+it('applies the same sparse density to the desktop renderer', async () => {
+  Object.assign(preview, { mode: 'lite-experiment-v2', light: false });
+  const { getByTestId } = render(<GhostBackground shared starDensity={1 / 3} />);
+  await waitFor(() => expect(getByTestId('flow')).toHaveAttribute('data-star-count', '733'));
 });

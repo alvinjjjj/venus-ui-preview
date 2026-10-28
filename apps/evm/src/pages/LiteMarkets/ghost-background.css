@@ -38,6 +38,31 @@
   background: transparent;
 }
 
+/* Resolve the Dashboard canvas from the committed route, including its loading
+   state. This stylesheet belongs to Layout, so the summary never first paints
+   with a legacy card fill while the lazy Dashboard stylesheet is loading. */
+#root .lite-dashboard-layout {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-background-active);
+}
+
+#root .lite-dashboard-layout #page-container {
+  background: transparent;
+}
+
+#root .lite-dashboard-layout :is(.glass-dashboard-overview, .glass-dashboard-tabs, .venus-account-performance-cells) {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+#root .lite-dashboard-layout :is(.glass-dashboard-overview, .glass-dashboard-tabs, .venus-account-performance-cells)::after {
+  content: none !important;
+}
+
 /* Let the shared sky continue behind Safety, Community and both footer variants.
    About Us has no original-stardust-layout class; card surfaces stay intact. */
 .original-stardust-layout .venus-safety,

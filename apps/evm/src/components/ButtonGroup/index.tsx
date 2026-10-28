@@ -33,6 +33,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
   return (
     <div
       data-venus-button-group="true"
+      data-venus-button-group-layout={fullWidth ? 'full' : 'compact'}
       role={ariaLabel ? 'group' : undefined}
       aria-label={ariaLabel}
       className={cn(
@@ -46,7 +47,7 @@ export const ButtonGroup: React.FC<ButtonGroupProps> = ({
     >
       {buttonLabels.map((label, index) => (
         <SecondaryButton
-          key={`button-group-button-${label}`}
+          key={`button-group-button-${index}`}
           onClick={e => handleButtonClick(e, index)}
           className={cn(
             'flex-1 border-transparent hover:border-transparent hover:text-white active:bg-blue active:border-blue',
