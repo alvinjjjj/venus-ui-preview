@@ -1,0 +1,85 @@
+/* Sources and forms share the same geometry. Their existing card/toolbar
+   owns the outer inset; the breadcrumb adds no second layer of padding. */
+.lite-market-breadcrumb {
+  display: flex;
+  align-items: flex-start;
+  flex: 0 0 auto;
+  gap: var(--spacing);
+  width: 100%;
+  min-width: 0;
+  min-height: calc(var(--spacing) * 11);
+  margin: 0;
+  padding: 0;
+  color: var(--color-light-grey);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: var(--font-weight-normal);
+}
+.lite-market-breadcrumb[data-market-depth='form'] {
+  margin-bottom: calc(var(--spacing) * 4);
+}
+.lite-market-breadcrumb button {
+  display: inline-flex;
+  align-items: center;
+  min-height: calc(var(--spacing) * 11);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.lite-market-breadcrumb button:hover {
+  color: var(--color-white);
+}
+.lite-market-breadcrumb button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: calc(var(--spacing) / 2);
+}
+.lite-market-breadcrumb .lite-market-breadcrumb-back {
+  position: relative;
+  justify-content: center;
+  flex: 0 0 calc(var(--spacing) * 6);
+  width: calc(var(--spacing) * 6);
+  height: calc(var(--spacing) * 11);
+}
+/* Match the compact desktop arrow/text spacing. Extend the phone hit area
+   into the empty leading inset, away from the adjacent breadcrumb link. */
+.lite-market-breadcrumb-back::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: calc(var(--spacing) * 11);
+}
+.lite-market-breadcrumb-items {
+  display: flex;
+  flex: 1 1 0%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--spacing);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lite-market-breadcrumb-items > li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing);
+  min-height: calc(var(--spacing) * 11);
+  min-width: 0;
+  max-width: 100%;
+}
+.lite-market-breadcrumb .lite-market-breadcrumb-token {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing);
+  min-width: 0;
+}
+.lite-market-breadcrumb-current {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

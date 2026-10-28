@@ -15,6 +15,11 @@ import Withdraw from '..';
 import { fakeAsset, fakePool, fakeVTokenBalanceMantissa } from '../__testUtils__/fakeData';
 import TEST_IDS from '../testIds';
 
+// Exercise the existing Pro withdrawal behavior without loading demo stores.
+vi.mock('demo/useInterfaceMode', () => ({
+  useInterfaceMode: () => ({ isLite: false }),
+}));
+
 const testCases = [
   [
     'user borrow limit',

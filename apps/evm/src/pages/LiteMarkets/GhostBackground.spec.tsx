@@ -90,14 +90,14 @@ it.each([
   }
 });
 
-it('gives Final the E2 horizon with shared E3 meteors', async () => {
-  preview.mode = 'lite-experiment-v2';
+it.each(['lite-experiment-v2', 'lite-experiment-v2-legacy'])('gives %s the approved quiet E2 horizon', async mode => {
+  preview.mode = mode;
   preview.light = false;
   const { container, getByTestId } = render(<GhostBackground shared layeredLines />);
   expect(container.querySelector('.lite-ghost--e2-horizon')).not.toBeNull();
   expect(container.querySelector('.lite-ghost--e3')).toBeNull();
   expect(container.querySelector('.lite-ghost__hero-field')).toBeNull();
-  expect(container.querySelectorAll('.lite-ghost__meteor')).toHaveLength(3);
+  expect(container.querySelectorAll('.lite-ghost__meteor')).toHaveLength(0);
   await waitFor(() => expect(getByTestId('flow')).toBeVisible());
   expect(getByTestId('flow')).toHaveAttribute('data-lines', '0');
   expect(getByTestId('flow')).toHaveAttribute('data-star-warmth', '0.02');

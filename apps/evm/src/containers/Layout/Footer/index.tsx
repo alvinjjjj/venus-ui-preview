@@ -135,7 +135,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       <div className="flex flex-none items-center">
         {socialLinks.map(socialLink => (
           <a
-            className="bg-lightGrey hover:bg-blue active:bg-darkBlue ml-4 flex h-6 w-6 items-center justify-center rounded-sm transition-colors first-of-type:ml-0"
+            className="venus-footer-social-link bg-lightGrey hover:bg-blue active:bg-darkBlue ml-4 flex h-6 w-6 items-center justify-center rounded-sm transition-colors first-of-type:ml-0"
             href={socialLink.href}
             key={socialLink.href}
             target="_blank"

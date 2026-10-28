@@ -171,7 +171,7 @@ export function GhostBackground({ shared = false, layeredLines = false }: { shar
           </defs>
         </svg>
       )}
-      {(isE3 || isE2) && !reducedMotion && (
+      {isE3 && !reducedMotion && (
         <div className="lite-ghost__meteors">
           <span className="lite-ghost__meteor" />
           <span className="lite-ghost__meteor" />

@@ -104,3 +104,19 @@
     transition: none !important;
   }
 }
+
+/* A segment is a selected state, not a standalone button press. Update its
+   gradient, text and edge in one paint instead of tweening the shared Button's
+   transition-all through mismatched intermediate states. E2 and Final share
+   this interaction fix; keyboard focus indicators retain their own styling. */
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed] {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::before,
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.venus-popup-panel, .lite-inline-market) [data-venus-button-group] > button[data-venus-button-variant][aria-pressed]::after {
+  transition: none !important;
+  animation: none !important;
+}

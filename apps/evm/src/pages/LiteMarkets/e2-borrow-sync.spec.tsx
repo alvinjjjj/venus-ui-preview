@@ -81,7 +81,7 @@ it('opens source selection from the asset without submitting a loan', () => {
   expect(headers).toHaveLength(5);
   expect(headers[3]).toHaveTextContent('Collateral');
   expect(headers[4]).toHaveTextContent('Total Borrow');
-  expect(screen.getAllByText('Preview · Not tradable').length).toBeGreaterThan(0);
+  expect(screen.queryByText('Preview · Not tradable')).toBeNull();
   expect(MarketForm).not.toHaveBeenCalled();
 });
 
@@ -106,12 +106,12 @@ it('retains real Core Borrow and Collateral form routing and adds only a scoped 
   expect(screen.queryByRole('dialog')).toBeNull();
 });
 
-it('keeps preview Borrow / Repay / Collateral disabled and clearly non-tradable', () => {
+it('keeps preview Borrow / Repay / Collateral disabled after removing Final preview captions', () => {
   renderComponent(<BorrowHarness />);
   fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
   fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'bStock index' }));
   const dialog = screen.getByRole('dialog');
-  expect(within(dialog).getByText('Preview market · Transactions unavailable')).toBeVisible();
+  expect(within(dialog).queryByText('Preview market · Transactions unavailable')).toBeNull();
   expect(
     within(dialog)
       .getAllByRole('button', { name: 'Borrow' })
@@ -136,6 +136,7 @@ it('preserves the earlier E2 action column under Before', () => {
   expect(within(table).getByRole('button', { name: 'Borrow USDC' })).toHaveAttribute('data-promoted', 'true');
   fireEvent.click(within(table).getByRole('button', { name: 'Borrow USDT' }));
   expect(screen.getByRole('button', { name: 'Back to Borrow assets from USDT' })).toBeVisible();
+  expect(screen.getAllByText('Preview · Not tradable').length).toBeGreaterThan(0);
 });
 
 it.each(['lite-experiment', 'lite-experiment-v3', 'v1', 'v5'])(

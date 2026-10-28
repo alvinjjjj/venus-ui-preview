@@ -40,6 +40,8 @@ import { isVisibleLiteAsset } from './visibility';
 import { BorrowMarkets } from './BorrowMarkets';
 import { MarketTotals } from './MarketTotals';
 import { MarketModeSwitch } from './MarketModeSwitch';
+import { LiteMarketBreadcrumb } from './LiteMarketBreadcrumb';
+import { LiteMarketAmount } from './LiteMarketAmount';
 import { useStore as useLayoutStore } from 'containers/Layout/store';
 import { SafetyExplorer } from '../Landing/SafetyExplorer';
 import { CommunityExplorer } from '../Landing/CommunityExplorer';
@@ -49,6 +51,7 @@ import './experiment.css';
 import { useGlassPreview } from 'demo/GlassVersions/store';
 import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
 import { formatEarnApyRange, matchesEarnCategories } from './experiment';
+import getCombinedApy from 'utilities/getCombinedApy';
 
 function MarketApy({ market }: { market: LiteMarket }) {
   if (market.asset) return <AssetApy asset={market.asset} type="supply" />;
@@ -70,8 +73,12 @@ const amount = (value: BigNumber, token: LiteAsset['token']) =>
   formatTokensToReadableValue({ value, token, addSymbol: false });
 const highestApyMarket = (row: LiteAsset) =>
   row.markets.reduce((best, market) => (market.apy.gt(best.apy) ? market : best));
+const hasUsdtCoreMarket = (row: LiteAsset) => row.markets.some(
+  market => market.asset?.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255',
+);
 
-function BestMarketApy({ row, plain = false }: { row: LiteAsset; plain?: boolean }) {
+function BestMarketApy({ row, plain = false, primeOnly = false }: { row: LiteAsset; plain?: boolean; primeOnly?: boolean }) {
+  if (primeOnly) return <EarnPrimeEntry row={row} />;
   const best = highestApyMarket(row);
   // Keep the highest market's APY, but do not lose a different market's Prime offer.
   // The badge uses that Core market's total, never Hub APY plus Core rewards.
@@ -99,10 +106,7 @@ function BestMarketApy({ row, plain = false }: { row: LiteAsset; plain?: boolean
     .sort((a, b) => b.apy.comparedTo(a.apy) ?? 0);
   const prime = primeOptions[0];
   // User-provided screenshot reference; display only, never used in market calculations.
-  const hasUsdtCore = row.markets.some(
-    market =>
-      market.asset?.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255',
-  );
+  const hasUsdtCore = hasUsdtCoreMarket(row);
   return (
     <div className="flex justify-end items-center gap-1 flex-wrap">
       {plain && !bestHasPrime ? <span className="lite-base-apy tabular-nums font-semibold">{best.apy.isFinite() ? `${best.apy.toFixed(2)}%` : '—'}</span> : <MarketApy market={best} />}
@@ -155,10 +159,7 @@ function EarnPrimeEntry({ row }: { row: LiteAsset }) {
     })
     .sort((a, b) => b.apy.comparedTo(a.apy) ?? 0);
   const prime = options[0];
-  const hasUsdtCore = row.markets.some(
-    market =>
-      market.asset?.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255',
-  );
+  const hasUsdtCore = hasUsdtCoreMarket(row);
   if (prime) {
     return (
       <span aria-label="Prime APY on Venus Core" title="Prime APY on Venus Core">
@@ -203,6 +204,7 @@ function AssetSources({
     }
   }, [mobile, openedMarket]);
   const isE2Sources = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
+  const isFinalSources = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   useEffect(() => {
     if (!openedMarket || inline) return;
     const handleKey = (event: KeyboardEvent) => {
@@ -233,12 +235,35 @@ function AssetSources({
       label: 'APY',
       selectOptionLabel: 'APY',
       align: 'right',
-      renderCell: market => (
-        <div>
-          <BestMarketApy row={{ ...row, markets: [market] }} plain={isE2Sources} />
-          {mobile && <p className="lite-mobile-secondary">{usd(market.supplyUsd)} TVL</p>}
-        </div>
-      ),
+      renderCell: market => {
+        const sourceRow = { ...row, markets: [market] };
+        const showPrimeComparison = mobile && (hasUsdtCoreMarket(sourceRow) || market.asset?.supplyTokenDistributions.some(
+          distribution => distribution.isActive && (distribution.type === 'prime' || distribution.type === 'primeSimulation'),
+        ));
+        const ordinaryApy = showPrimeComparison && market.asset
+          ? getCombinedApy({
+              type: 'supply',
+              baseApyPercentage: market.asset.supplyApyPercentage,
+              tokenDistributions: market.asset.supplyTokenDistributions.filter(
+                distribution => distribution.type !== 'prime' && distribution.type !== 'primeSimulation',
+              ),
+            }).totalApyPercentage
+          : market.apy;
+        return (
+          <div className="lite-source-apy">
+            <div className="lite-source-apy-value">
+              {showPrimeComparison ? (
+                <div className="lite-source-apy-rates">
+                  <span className="lite-base-apy tabular-nums font-semibold">{ordinaryApy.isFinite() ? `${ordinaryApy.toFixed(2)}%` : '—'}</span>
+                  <EarnPrimeEntry row={sourceRow} />
+                </div>
+              ) : (
+                <BestMarketApy row={sourceRow} plain={isE2Sources} />
+              )}
+            </div>
+          </div>
+        );
+      },
       sortRows: (a, b, direction) =>
         (a.apy.comparedTo(b.apy) ?? 0) * (direction === 'desc' ? -1 : 1),
     },
@@ -252,13 +277,11 @@ function AssetSources({
           b[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'],
         ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (market: LiteMarket) => (
-        <div className="tabular-nums">
-          <span className="lite-amount">{amount(market[field], row.token)}</span>
-          <span className="lite-amount-symbol"> {row.token.symbol}</span>
-          <p className="text-light-grey">
-            {usd(market[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'])}
-          </p>
-        </div>
+        <LiteMarketAmount
+          value={amount(market[field], row.token)}
+          usdValue={usd(market[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'])}
+          symbol={row.token.symbol}
+        />
       ),
     })),
   ];
@@ -267,19 +290,19 @@ function AssetSources({
     return (
       <section
         ref={mobileFormRef}
-        className="lite-inline-market"
+        className={`lite-inline-market${mobile && isFinalSources ? ' venus-form-surface' : ''}`}
         aria-label={`${row.token.symbol} ${openedMarket.name} form`}
       >
+        {mobile ? (
+          <LiteMarketBreadcrumb
+            mode="Earn"
+            token={row.token}
+            onBackToAssets={onBack}
+            onBackToSources={() => setOpenedMarket(undefined)}
+            marketName={isFinalSources && openedMarket.asset ? 'Core Pool' : openedMarket.name}
+          />
+        ) : (
         <nav aria-label="Earn navigation" className="lite-inline-market-path">
-          {mobile && (
-            <button
-              type="button"
-              aria-label="Back to Earn sources"
-              onClick={() => setOpenedMarket(undefined)}
-            >
-              <Icon name="chevronLeft" className="size-5" />
-            </button>
-          )}
           <button type="button" onClick={onBack}>
             Earn
           </button>
@@ -290,12 +313,13 @@ function AssetSources({
             aria-label={`Back to ${row.token.symbol} Earn markets`}
             className="inline-flex items-center gap-2"
           >
-            <TokenIcon token={row.token} size="md" className="size-4" />
+            <TokenIcon token={row.token} size="md" className="lite-breadcrumb-token-icon size-4" />
             {row.token.symbol}
           </button>
           <span aria-hidden="true">/</span>
-          <span aria-current="page">{openedMarket.name}</span>
+          <span aria-current="page">{isFinalSources && openedMarket.asset ? 'Core Pool' : openedMarket.name}</span>
         </nav>
+        )}
         <div className="lite-inline-market-body" key={openedMarket.id}>
           <div className="lite-inline-market-form">
             {openedMarket.asset ? (
@@ -307,6 +331,7 @@ function AssetSources({
               ) : (
                 <MarketForm
                   inlineHeader={!mobile}
+                  actionTabsVariant={mobile ? 'secondary' : undefined}
                   vToken={openedMarket.asset.vToken}
                   poolComptrollerAddress={corePoolComptrollerContractAddress}
                   initialActiveTabId="supply"
@@ -317,6 +342,7 @@ function AssetSources({
             ) : openedMarket.hub ? (
               <LiquidityHubForm
                 inlineHeader={!mobile}
+                actionTabsVariant={mobile ? 'secondary' : undefined}
                 vhToken={openedMarket.hub.vhToken}
                 initialActiveTabId="supply"
                 onSubmitSuccess={() => setOpenedMarket(undefined)}
@@ -342,6 +368,9 @@ function AssetSources({
         hideCardDelimiter
         header={
           <div className={framed ? 'lite-market-toolbar' : undefined}>
+          {mobile ? (
+            <LiteMarketBreadcrumb mode="Earn" token={row.token} onBackToAssets={onBack} />
+          ) : (
           <button
             type="button"
             onClick={onBack}
@@ -351,10 +380,11 @@ function AssetSources({
             <Icon name="chevronLeft" className="size-4 text-inherit" />
             <span>Earn /</span>
             <span className="inline-flex items-center gap-1">
-              <TokenIcon token={row.token} size="md" className="size-4 shrink-0" />
+              <TokenIcon token={row.token} size="md" className="lite-breadcrumb-token-icon size-4 shrink-0" />
               <span>{row.token.symbol}</span>
             </span>
           </button>
+          )}
           {modeSwitch}
           </div>
         }
@@ -461,7 +491,7 @@ export default function LiteMarkets() {
       renderCell: row =>
         experimental ? (
           <div className="lite-earn-apy flex justify-end items-center gap-2 whitespace-nowrap">
-            {(mobile || !(isE2 && !isLegacyE2 && row.markets.some(market => market.asset?.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255'))) && <span
+            {!(isE2 && !isLegacyE2 && hasUsdtCoreMarket(row)) && <span
               className="lite-base-apy tabular-nums"
               title="Current APY across the selected markets; excludes conditional Prime simulations."
             >
@@ -487,15 +517,12 @@ export default function LiteMarkets() {
           b[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'],
         ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (row: LiteAsset) => (
-        <div className="tabular-nums">
-          <span className={field === 'liquidity' ? 'lite-amount lite-liquidity-amount' : 'lite-amount'}>
-            {amount(row[field], row.token)}
-          </span>
-          <span className="lite-amount-symbol"> {row.token.symbol}</span>
-          <p className="text-light-grey">
-            {usd(row[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'])}
-          </p>
-        </div>
+        <LiteMarketAmount
+          value={amount(row[field], row.token)}
+          usdValue={usd(row[field === 'supply' ? 'supplyUsd' : 'liquidityUsd'])}
+          symbol={row.token.symbol}
+          liquidity={field === 'liquidity'}
+        />
       ),
     })),
     ...(isLegacyE2 ? [{
@@ -622,10 +649,10 @@ export default function LiteMarkets() {
                                         options={categoryOptions}
                                         value={categories}
                                         onChange={setCategories}
-                                        placeholder="All Categories"
+                                        placeholder={mobile ? 'Filter' : 'All Categories'}
                                         title="Category"
                                         resetLabel="Reset"
-                                        renderCount={count => `${count} categories`}
+                                        renderCount={count => mobile ? `Filter (${count})` : `${count} categories`}
                                         className="sm:w-52 shrink-0"
                                       />
                                     )}

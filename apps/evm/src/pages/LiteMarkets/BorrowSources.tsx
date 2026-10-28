@@ -22,6 +22,8 @@ import skhyb from 'assets/img/spoke/skhyb.png';
 import type { LiteAsset } from './data';
 import { BorrowSourceModal } from './BorrowSourceModal';
 import { CollateralPicker } from './CollateralPicker';
+import { LiteMarketBreadcrumb } from './LiteMarketBreadcrumb';
+import { LiteMarketAmount } from './LiteMarketAmount';
 import { useGlassPreview } from 'demo/GlassVersions/store';
 
 type Collateral = { symbol: string; iconSrc?: string };
@@ -98,6 +100,8 @@ export function BorrowSources({
   modeSwitch?: React.ReactNode;
 }) {
   const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
+  const showMobileCollateralColumn = mobile && isFinal;
   const [search, setSearch] = useState('');
   const [openedSource, setOpenedSource] = useState<BorrowSource>();
   const [pickerSource, setPickerSource] = useState<BorrowSource>();
@@ -154,13 +158,30 @@ export function BorrowSources({
           : asset.borrowBalanceCents
         : value.multipliedBy(asset.tokenPriceCents);
     return (
-      <div className="tabular-nums">
-        <span className="lite-amount">{formatTokensToReadableValue({ value, token, addSymbol: false })}</span>
-        <span className="lite-amount-symbol"> {token.symbol}</span>
-        <p className="text-light-grey">{formatCentsToReadableValue({ value: cents })}</p>
-      </div>
+      <LiteMarketAmount
+        value={formatTokensToReadableValue({ value, token, addSymbol: false })}
+        usdValue={formatCentsToReadableValue({ value: cents })}
+        symbol={token.symbol}
+      />
     );
   };
+  const renderCollateralButton = (source: BorrowSource, showLabel = false) => (
+    <button
+      type="button"
+      className="lite-mobile-collateral-trigger"
+      aria-label={`View ${source.name} collaterals`}
+      aria-haspopup="dialog"
+      onClick={event => { event.stopPropagation(); setPickerSource(source); }}
+    >
+      {showLabel && <span>Collateral</span>}
+      <span className="inline-flex items-center -space-x-1">
+        {source.collateral.slice(0, 3).map(item => item.iconSrc
+          ? <img key={item.symbol} src={item.iconSrc} alt={item.symbol} className="size-5 rounded-full" />
+          : <span key={item.symbol}>{item.symbol}</span>)}
+      </span>
+      {source.collateral.length > 3 && <span>+{source.collateral.length - 3}</span>}
+    </button>
+  );
   const columns: TableColumn<SortableBorrowSource>[] = [
     {
       key: 'yield',
@@ -173,26 +194,15 @@ export function BorrowSources({
           type="button"
           onClick={() => openSource(source)}
           aria-haspopup={mobile ? undefined : 'dialog'}
+          aria-label={mobile ? source.name : undefined}
+          aria-description={mobile && isE2 && source.apy !== undefined ? 'Preview market. Transactions unavailable.' : undefined}
           className="font-normal hover:text-blue cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
         >
-          {source.name}
+          {mobile ? <span>{source.name}</span> : source.name}
+          {mobile && isE2 && !isFinal && source.apy !== undefined && <span className="lite-e2-preview-source-label">Preview · Not tradable</span>}
         </button>
-        {isE2 && source.apy !== undefined && <span className="lite-e2-preview-source-label">Preview · Not tradable</span>}
-        {mobile && <button
-          type="button"
-          className="lite-mobile-collateral-trigger"
-          aria-label={`View ${source.name} collaterals`}
-          aria-haspopup="dialog"
-          onClick={event => { event.stopPropagation(); setPickerSource(source); }}
-        >
-          <span>Collateral</span>
-          <span className="inline-flex items-center -space-x-1">
-            {source.collateral.slice(0, 3).map(item => item.iconSrc
-              ? <img key={item.symbol} src={item.iconSrc} alt={item.symbol} className="size-5 rounded-full" />
-              : <span key={item.symbol}>{item.symbol}</span>)}
-          </span>
-          {source.collateral.length > 3 && <span>+{source.collateral.length - 3}</span>}
-        </button>}
+        {!mobile && isE2 && !isFinal && source.apy !== undefined && <span className="lite-e2-preview-source-label">Preview · Not tradable</span>}
+        {mobile && !showMobileCollateralColumn && renderCollateralButton(source, true)}
         </div>
       ),
     },
@@ -204,13 +214,14 @@ export function BorrowSources({
       sortRows: (a, b, direction) =>
         (a.sortApy.comparedTo(b.sortApy) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: source => (
-        <div>
+        <div className="lite-source-apy">
+        <div className="lite-source-apy-value">
         {source.apy === undefined ? (
           <AssetApy asset={asset} type="borrow" className={isE2 ? 'lite-e2-source-apy lite-borrow-apy' : undefined} />
         ) : (
           <span className={isE2 ? 'lite-e2-source-apy tabular-nums' : 'tabular-nums'}>{source.apy}%</span>
         )}
-        {mobile && <p className="lite-mobile-secondary">{formatCentsToReadableValue({ value: source.sortLiquidity })} liquidity</p>}
+        </div>
         </div>
       ),
     },
@@ -227,11 +238,11 @@ export function BorrowSources({
       key: 'collateral',
       label: 'Collateral',
       selectOptionLabel: 'Collateral',
-      align: 'right',
+      align: showMobileCollateralColumn ? 'center' : 'right',
       sortRows: (a, b, direction) =>
         (a.collateral.length - b.collateral.length || a.name.localeCompare(b.name)) *
         (direction === 'asc' ? 1 : -1),
-      renderCell: source => (
+      renderCell: source => showMobileCollateralColumn ? renderCollateralButton(source) : (
         <div className="flex justify-end items-center gap-1">
           <div className="flex items-center -space-x-2">
             {source.collateral.slice(0, 3).map(item => (
@@ -284,9 +295,9 @@ export function BorrowSources({
     <>
       <Table
         key={mobile ? 'mobile' : 'desktop'}
-        className={mobile ? 'lite-mobile-table lite-mobile-source-table' : undefined}
+        className={mobile ? `lite-mobile-table lite-mobile-source-table${showMobileCollateralColumn ? ' lite-mobile-borrow-source-table' : ''}` : undefined}
         data={filtered}
-        columns={mobile ? columns.slice(0, 2) : columns}
+        columns={showMobileCollateralColumn ? [columns[0], columns[3], columns[1]] : mobile ? columns.slice(0, 2) : columns}
         initialOrder={{ orderBy: columns[mobile ? 1 : 4], orderDirection: 'desc' }}
         rowKeyExtractor={source => source.name}
         rowOnClick={(_, source) => openSource(source)}
@@ -296,6 +307,9 @@ export function BorrowSources({
         placeholder="No markets match these filters."
         header={
           <div className={experimental ? 'lite-borrow-source-header' : 'space-y-5'}>
+            {mobile ? (
+              <LiteMarketBreadcrumb mode="Borrow" token={token} onBackToAssets={onBack} />
+            ) : (
             <button
               type="button"
               onClick={onBack}
@@ -304,9 +318,10 @@ export function BorrowSources({
             >
               <Icon name="chevronLeft" className="size-4 text-inherit" />
               <span>Borrow /</span>
-              <TokenIcon token={token} size="md" className="size-4" />
+              <TokenIcon token={token} size="md" className="lite-breadcrumb-token-icon size-4" />
               {token.symbol}
             </button>
+            )}
             <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
                 aria-label="Search borrowing markets"
@@ -326,7 +341,10 @@ export function BorrowSources({
                 value={collateralFilter}
                 onChange={value => setCollateralFilter(String(value))}
                 options={[
-                  { value: '', label: 'All collaterals' },
+                  {
+                    value: '',
+                    label: ({ isRenderedInButton }) => mobile && isRenderedInButton ? 'Filter' : 'All collaterals',
+                  },
                   ...collateralOptions.map(item => ({
                     value: item.symbol,
                     label: <CollateralLabel item={item} />,

@@ -31,6 +31,7 @@ export const Layout: React.FC = () => {
   const { pathname } = useLocation();
   const { isLite, supportsModes, mode } = useInterfaceMode();
   const isE3 = useGlassPreview(state => state.mode === 'lite-experiment-v3');
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const isExperiment = useGlassPreview(state => isLiteExperimentMode(state.mode));
   const fixedLite = isExperiment && isLite && (pathname === '/' || pathname === '');
   // Preserve the committed selection for ordinary links without mode state.
@@ -41,6 +42,7 @@ export const Layout: React.FC = () => {
     }
   }, [mode]);
   const showStardust = supportsModes && pathname.replace(/\/$/, '') !== routes.aboutUs.path;
+  const fullBleedSky = showStardust && (isE3 || (isFinal && isLite));
 
   const isCloseToBottomState = useStore(state => state.isCloseToBottom);
   const setIsCloseToBottom = useStore(state => state.setIsCloseToBottom);
@@ -92,8 +94,8 @@ export const Layout: React.FC = () => {
 
   return (
     <>
-      <div className={cn("h-dvh flex flex-col", isE3 && showStardust && "lite-e3-sky-layout")}>
-        {isE3 && showStardust && <GhostBackground shared />}
+      <div className={cn("h-dvh flex flex-col", isE3 && showStardust && "lite-e3-sky-layout", isFinal && isLite && fullBleedSky && "lite-full-bleed-sky")}>
+        {fullBleedSky && <GhostBackground shared layeredLines={!isE3 && fixedLite} />}
         <NavBar className="shrink-0" />
 
         <div
@@ -106,7 +108,7 @@ export const Layout: React.FC = () => {
           id={PAGE_CONTAINER_ID}
           onScroll={handleScroll}
         >
-          {showStardust && !isE3 && <GhostBackground shared layeredLines={fixedLite} />}
+          {showStardust && !fullBleedSky && <GhostBackground shared layeredLines={fixedLite} />}
           <Header />
 
           <div className={cn('relative flex grow flex-col', isLite && 'shrink-0')}>

@@ -1,0 +1,59 @@
+/* Final Lite form roles, shared by Core, Hub and borrowing flows at every
+   viewport/theme. Reuse the existing spacing scale; no global tokens change.
+   These local roles map to Figma form/field-gap and form/metric-row. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) {
+  --lite-form-field-gap: calc(var(--spacing) * 4);
+  --lite-form-metric-row: calc(var(--spacing) * 6);
+  --lite-form-hit-height: calc(var(--spacing) * 11);
+}
+
+/* Withdraw keeps its existing wrapper and behavior, but consumes the same
+   input-to-balance gap as Wallet balance in Supply and Hub forms. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) [data-withdraw-details] {
+  margin-top: var(--lite-form-field-gap);
+}
+
+/* Data rows remain compact and centered, including preview-only Hub rows.
+   Multi-line values can still grow naturally; labels and typography remain
+   owned by the existing LabeledInlineContent component. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) :is([data-labeled-inline-content], [data-lite-balance-row]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--lite-form-metric-row);
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) [data-labeled-inline-content] > :first-child {
+  margin-block: 0;
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) [data-labeled-inline-value] {
+  align-items: center;
+}
+
+/* The APY header uses the same visual row as Supply/Borrow balance. Its
+   transparent hit area extends into the existing surrounding whitespace,
+   so touch usability does not add another layer of visible row padding. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) :is([data-apy-breakdown='accordion'] > button, [data-form-balance-action]) {
+  position: relative;
+  isolation: isolate;
+  height: auto;
+  min-height: var(--lite-form-metric-row);
+  padding-block: 0;
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) [data-form-balance-action] {
+  font: inherit;
+}
+/* The parent stack already supplies the 16px field gap. Do not add a second
+   gap inside the submit dock after Daily earnings or the final risk row. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) .inline-submit-dock {
+  margin-block-start: 0;
+  padding-block-start: 0;
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-inline-market, .venus-popup-panel:has(form)) :is([data-apy-breakdown='accordion'] > button, [data-form-balance-action])::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  z-index: -1;
+  height: var(--lite-form-hit-height);
+  translate: 0 -50%;
+}

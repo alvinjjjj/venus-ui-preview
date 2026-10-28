@@ -24,7 +24,7 @@ it('keeps remounted Earn/Borrow list surfaces solid instead of replaying a card 
 
 it('quiets only E transactional form dividers in both themes', () => {
   const rule = css.match(
-    /(:root\[data-glass-study='lite-experiment'\] :is\(\.venus-popup-panel, \.lite-inline-market\) form hr) \{([^}]+)\}/,
+    /(:root\[data-glass-study='lite-experiment'\] :is\(\.venus-popup-panel, \.venus-form-surface, \.lite-inline-market\) form hr) \{([^}]+)\}/,
   );
   expect(rule).not.toBeNull();
   expect(rule?.[1]).not.toContain('data-liquidity-theme');

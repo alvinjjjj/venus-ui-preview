@@ -38,6 +38,23 @@
     max-width: 100%;
     align-self: stretch;
   }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-heading {
+    width: 100%;
+    text-align: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-title {
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--text-h7);
+    line-height: var(--text-3xl--line-height);
+    text-wrap: balance;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-market-heading > .lite-e2-hero-subtitle {
+    margin-top: calc(var(--spacing) * 2);
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    text-wrap: balance;
+  }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-e2-market-totals {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -77,9 +94,26 @@
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-controls {
     display: grid;
     flex: 0 0 auto;
-    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    grid-template-columns: minmax(0, 1fr) calc(var(--spacing) * 24);
     gap: calc(var(--spacing) * 2);
     width: 100%;
+  }
+  /* One short gap before the 44px sortable header; remove the desktop
+     header wrapper's extra margin without changing other Table consumers. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table > div:has(> :is(.lite-market-toolbar, .lite-borrow-source-header)) {
+    margin-bottom: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-market-toolbar, .lite-borrow-source-header) {
+    padding-bottom: calc(var(--spacing) * 2);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-controls .venus-text-field {
+    height: calc(var(--spacing) * 11);
+    min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-experiment-controls :is(.venus-text-field input, .venus-multiselect-trigger span, [data-select-trigger] span) {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-weight: var(--font-weight-normal);
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-borrow-source-header > button {
     align-self: flex-start;
@@ -138,12 +172,28 @@
     display: table-row;
     height: auto;
   }
+  /* Real table cells paint the same inset fill as the desktop row overlay.
+     A touch screen gets press feedback; pointer previews also support hover. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table tbody tr {
+    background: transparent !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table tbody tr:is(:active, :has(:focus-visible)) > td {
+    background: var(--lite-row-feedback-fill) center / 100% calc(100% - var(--spacing) * 2) no-repeat !important;
+  }
+  @media (hover: hover) {
+    :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table tbody tr:hover > td {
+      background: var(--lite-row-feedback-fill) center / 100% calc(100% - var(--spacing) * 2) no-repeat !important;
+    }
+  }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(th, td) {
     display: table-cell;
     width: 58%;
     padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
     font-size: var(--text-base);
     vertical-align: middle;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table th {
+    padding-block: 0;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(th, td):last-child {
     width: 42%;
@@ -157,18 +207,97 @@
     max-width: 100%;
     text-align: left;
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-earn-apy {
-    align-items: flex-end;
+  /* Center each source cell within its row, including multi-line Prime
+     rates and source choices with collateral details. */
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-sources, .lite-e2-borrow-sources) .lite-mobile-table tbody td,
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table.lite-e2-earn-sources tbody td {
+    vertical-align: middle;
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-base-apy {
-    font-size: var(--text-base);
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table.lite-e2-earn-sources tbody td:first-child > button,
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-e2-borrow-sources .lite-e2-source-name > button:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding-top: 0;
     line-height: var(--text-base--line-height);
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-secondary {
-    color: var(--color-grey);
-    font-size: var(--text-xs);
-    line-height: var(--text-xs--line-height);
-    margin-top: var(--spacing);
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-earn-apy {
+    flex-direction: row;
+    align-items: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-source-apy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table .lite-source-apy-value {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+  }
+  /* The source page shows rates only. Keep the ordinary rate before Prime
+     while retaining the copper chip's existing 44px tap target. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-source-apy-rates {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table :is(.lite-base-apy, .lite-e2-source-apy, [data-apy-badge-text='prime']) {
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    font-weight: var(--font-weight-bold);
+  }
+  /* Keep the compact copper chip inside a 44px phone tap target. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-table [data-apy-badge='prime'] {
+    --lite-prime-hit-height: calc(var(--spacing) * 11);
+    --lite-prime-ring-inset: calc(var(--spacing) * 1.5) 0;
+  }
+  /* Reuse the full Venus wordmark. The leading group can shrink at narrow
+     phone widths while Wallet and Pro retain their existing hit areas. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-row {
+    /* Requested proportional phone gutter; keep it local to Final Lite. */
+    padding-inline: 5%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-leading {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-inline-end: calc(var(--spacing) * 2);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-header-logo {
+    flex: 0 1 auto;
+    min-width: 0;
+    padding-inline: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-logo-symbol {
+    display: none;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] .venus-logo-wordmark {
+    display: block;
+    width: calc(var(--spacing) * 28);
+    max-width: 100%;
+    height: auto;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-interface-mode='lite'] :is(.venus-interface-mode-label, .venus-header-actions) {
+    flex-shrink: 0;
+  }
+  /* Optical alignment for the round token against Proxima Nova's cap height;
+     reuse the existing quarter-spacing (1px) rather than shifting the label. */
+  :root[data-glass-revision='lite-experiment-v2'] #root .lite-breadcrumb-token-icon {
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    translate: 0 calc(var(--spacing) / -4);
+  }
+  :root[data-glass-revision='lite-experiment-v2'] #root .lite-breadcrumb-token-icon > img {
+    display: block;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-collateral-trigger {
     display: flex;
@@ -177,6 +306,29 @@
     gap: var(--spacing);
     font-size: var(--text-xs);
     color: var(--color-grey);
+  }
+  /* Borrow source phones use Pool / Collateral / APY. Reserve a single-line
+     rate track and center the token group beneath its own column heading. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-borrow-source-table :is(th, td):first-child {
+    width: 40%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-borrow-source-table :is(th, td):nth-child(2) {
+    width: 36%;
+    padding-inline: var(--spacing);
+    text-align: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-borrow-source-table :is(th, td):last-child {
+    width: 24%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-borrow-source-table .lite-mobile-collateral-trigger {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: center;
+    text-align: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-mobile-borrow-source-table .lite-e2-source-name > button {
+    white-space: normal;
+    overflow-wrap: break-word;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market {
     flex: 0 0 auto;
@@ -187,8 +339,9 @@
     max-height: none;
     padding: calc(var(--spacing) * 3);
     overflow: visible;
-    background: var(--color-cards);
-    border: 1px solid var(--color-dark-blue-hover);
+    /* The shared venus-form-surface material owns fill, tint and blur. */
+    border-width: 1px;
+    border-style: solid;
     border-radius: var(--radius-lg);
     scroll-margin-top: calc(var(--spacing) * 24);
   }
@@ -210,6 +363,14 @@
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-path button {
     min-height: calc(var(--spacing) * 11);
+    font-size: var(--text-sm);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-path > button:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--spacing) * 11);
+    flex-shrink: 0;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-body {
     display: block;
@@ -224,9 +385,71 @@
     max-width: 100%;
     margin: 0;
   }
-  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market :is(input, button) {
+  /* Use the existing 16px field rhythm between tab groups and their content.
+     Anchor the selected bar and track to the same edge instead of allowing
+     the shared button's line box to leave a gap under its indicator. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tabs-variant] {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tabs-variant] > * {
+    margin-block: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tabs-header] > [data-venus-tabs-list] {
+    align-items: stretch;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tabs-list] > button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-block: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tab-label] {
+    margin-bottom: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tab-indicator] {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-tabs-header] > hr {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 0;
+    margin: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market-body :is(input:not([type='checkbox'], [type='radio'], [type='hidden']), button) {
     font-size: var(--text-base);
     min-height: calc(var(--spacing) * 11);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-button-group] > button {
+    height: calc(var(--spacing) * 11);
+    padding-block: 0;
+    line-height: var(--text-base--line-height);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market :is(.inline-submit-dock > button, .venus-connect-wallet-button) {
+    height: calc(var(--spacing) * 12);
+    padding-block: 0;
+  }
+  /* Reuse the approved blue segment material for form actions, including
+     the guest Connect wallet action which lives outside InlineSubmit. */
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .lite-inline-market :is(.inline-submit-dock [data-venus-button-variant='primary'], .venus-connect-wallet-button):not(:disabled):not([aria-disabled='true']) {
+    --material-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6);
+    --material-hover: radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6);
+    background: var(--material-fill) !important;
+    color: var(--color-white) !important;
+    border-color: color-mix(in srgb, var(--color-white) 20%, transparent) !important;
+    box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), 0 2px 4px rgb(0 0 0 / 16%) !important;
+  }
+  @media (hover: hover) {
+    :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .lite-inline-market :is(.inline-submit-dock [data-venus-button-variant='primary'], .venus-connect-wallet-button):not(:disabled):not([aria-disabled='true']):hover {
+      background: var(--material-hover) !important;
+    }
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-inline-market [data-venus-button-variant='quaternary'] {
     min-width: 0;
@@ -246,6 +469,55 @@
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-header-actions,
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-connected-wallet {
     height: calc(var(--spacing) * 11);
+  }
+}
+
+/* Reuse the Prime component's copper mask-ring recipe for Final readouts.
+   Logo, single value and tooltip stay the same across asset/source tables. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime'] {
+  --prime-ring: linear-gradient(110deg, rgb(155 104 80 / 55%), rgb(242 216 196 / 95%) 45%, rgb(167 115 89 / 55%));
+  position: relative;
+  min-height: var(--lite-prime-hit-height, calc(var(--spacing) * 7));
+  padding: 0 calc(var(--spacing) * 1.5);
+  height: auto;
+  font-size: inherit;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime'] {
+  --prime-ring: linear-gradient(110deg, rgb(126 82 60 / 75%), rgb(216 180 155 / 95%) 45%, rgb(130 87 63 / 75%));
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime']:is(:hover, :focus-visible, :active) {
+  --prime-ring: linear-gradient(110deg, rgb(155 104 80 / 80%), rgb(242 216 196 / 95%) 45%, rgb(167 115 89 / 80%));
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime']:is(:hover, :focus-visible, :active) {
+  --prime-ring: linear-gradient(110deg, rgb(126 82 60 / 90%), rgb(216 180 155 / 95%) 45%, rgb(130 87 63 / 90%));
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge-text='prime'] {
+  font-size: inherit;
+  font-weight: var(--font-weight-bold);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime']::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute;
+  inset: var(--lite-prime-ring-inset, 0);
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--prime-ring);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime'] > .button-bevel-outline,
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime']::after {
+  display: none !important;
+}
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets :is(.lite-earn-apy, .lite-source-apy) [data-apy-badge='prime'] {
+    font-size: var(--text-sm);
   }
 }
 
@@ -273,4 +545,17 @@
 .lite-mobile-collateral-table button:focus-visible {
   outline: 2px solid var(--color-blue);
   outline-offset: var(--spacing);
+}
+
+/* Final Lite lists use separators between rows, with no trailing rule after
+   the final item. Keep the table header and the surrounding card border. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) :is(.lite-markets, .venus-popup-panel) :is(tbody tr:last-child, tbody tr:last-child > td) {
+  border-bottom-width: 0;
+}
+
+/* Scroll the title with the popup content instead of painting a transparent
+   sticky header over Search. Relative positioning still anchors Close/Back. */
+:root[data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-popup-panel .venus-popup-header {
+  position: relative;
+  top: auto;
 }

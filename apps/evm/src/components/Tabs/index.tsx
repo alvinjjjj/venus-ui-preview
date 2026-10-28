@@ -51,7 +51,7 @@ export const Tabs = ({
   };
 
   return (
-    <div className={cn('space-y-6', className)}>
+    <div data-venus-tabs-variant={variant} className={cn('space-y-6', className)}>
       {hideHeader ? null : variant === 'primary' ? (
         <ButtonGroup
           buttonLabels={tabs.map(({ title }) => title)}
@@ -62,8 +62,9 @@ export const Tabs = ({
           fullWidth
         />
       ) : (
-        <div className="relative">
+        <div className="relative" data-venus-tabs-header={variant}>
           <div
+            data-venus-tabs-list="true"
             className={cn(
               'flex text-sm gap-x-4 sm:gap-x-6',
               variant === 'tertiary' && 'text-md sm:text-lg',
@@ -83,6 +84,7 @@ export const Tabs = ({
                 )}
               >
                 <div
+                  data-venus-tab-label="true"
                   className={cn(
                     'mb-2 flex  font-semibold whitespace-nowrap transition-colors text-inherit',
                     activeOnlySemibold && activeTab.id !== tab.id && 'font-normal',
@@ -93,6 +95,7 @@ export const Tabs = ({
                 </div>
 
                 <div
+                  data-venus-tab-indicator="true"
                   className={cn(
                     'w-full h-[3px] rounded-t-[2px]',
                     activeTab.id === tab.id ? 'bg-blue' : 'bg-transparent',

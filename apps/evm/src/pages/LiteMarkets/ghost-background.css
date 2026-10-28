@@ -27,6 +27,17 @@
   isolation: isolate;
 }
 
+/* Final Lite owns one shared sky above the page scroller so the transparent
+   navigation and content reveal the same backdrop without another renderer. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-full-bleed-sky {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-background-active);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-full-bleed-sky :is(#page-container, .venus-navigation, .venus-header-row) {
+  background: transparent;
+}
+
 /* Let the shared sky continue behind Safety, Community and both footer variants.
    About Us has no original-stardust-layout class; card surfaces stay intact. */
 .original-stardust-layout .venus-safety,

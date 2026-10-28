@@ -1,0 +1,14 @@
+/* Final's existing Total Supply/Borrow type recipe, shared across all four
+   tables. Keep each column's alignment and every comparison variant intact. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-amount] {
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--text-sm--line-height);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-amount] > :is(.lite-amount, p) {
+  display: block;
+  margin-block: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}

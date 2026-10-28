@@ -938,19 +938,24 @@
   }
 }
 
+/* One component-local feedback fill for desktop hover and phone press/hover.
+   These aliases reuse the approved row recipe; shared palette tokens stay intact. */
+:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets {
+  --lite-row-feedback-fill: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 5%, transparent), color-mix(in srgb, var(--color-white) 4%, transparent));
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-markets {
+  --lite-row-feedback-fill: linear-gradient(180deg, color-mix(in srgb, var(--e-light-text-primary) 6%, transparent), color-mix(in srgb, var(--e-light-text-primary) 7%, transparent));
+}
+
 /* Final row hover: full-width, restrained gloss; original experiments stay intact. */
 @media (min-width: 768px) {
   :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) tbody tr::before {
     inset: var(--spacing) 0;
     border-radius: 0;
-    background: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 5%, transparent), color-mix(in srgb, var(--color-white) 4%, transparent));
+    background: var(--lite-row-feedback-fill);
     box-shadow: none;
     opacity: 0;
     transition: opacity 150ms ease;
-  }
-  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) tbody tr::before {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--e-light-text-primary) 6%, transparent), color-mix(in srgb, var(--e-light-text-primary) 7%, transparent));
-    box-shadow: none;
   }
   :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) tbody tr:is(:hover, :focus-within)::before {
     opacity: 1;
@@ -961,6 +966,31 @@
 }
 @media (prefers-reduced-motion: reduce) {
   :root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-e2-earn-list, .lite-e2-earn-sources, .lite-e2-borrow-list, .lite-e2-borrow-sources) tbody tr::before { transition: none; }
+}
+
+/* Final asset/source names share one emphasis state, including portaled
+   collateral choices. Only the name consumes this local weight alias;
+   rates, balances and preview/risk labels keep their existing hierarchy. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.lite-e2-asset-list, .lite-e2-earn-sources, .lite-e2-borrow-sources, .lite-mobile-collateral-table) tbody tr,
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-collateral-options [data-select-option] {
+  --lite-row-name-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.lite-e2-asset-list, .lite-e2-earn-sources, .lite-e2-borrow-sources, .lite-mobile-collateral-table) tbody tr > td:first-child button:not(.lite-mobile-collateral-trigger),
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-collateral-options [data-select-option] .lite-collateral-row > :first-child {
+  font-weight: var(--lite-row-name-weight);
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.lite-e2-asset-list, .lite-e2-earn-sources, .lite-e2-borrow-sources) tbody tr > td:first-child button [data-token-symbol] {
+  font-weight: inherit;
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.lite-e2-asset-list, .lite-e2-earn-sources, .lite-e2-borrow-sources, .lite-mobile-collateral-table) tbody tr:is(:active, :has(:focus-visible)),
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-collateral-options [data-select-option]:is(:active, :focus-visible) {
+  --lite-row-name-weight: var(--font-weight-bold);
+}
+@media (hover: hover) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.lite-e2-asset-list, .lite-e2-earn-sources, .lite-e2-borrow-sources, .lite-mobile-collateral-table) tbody tr:hover,
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-collateral-options [data-select-option]:hover {
+    --lite-row-name-weight: var(--font-weight-bold);
+  }
 }
 
 /* One 60px desktop row rhythm for Final assets and source choices. */
@@ -978,4 +1008,13 @@
 }
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-experiment :is(.lite-experiment-scroll, .lite-inline-sources, .lite-inline-market) {
   box-shadow: 0 var(--spacing) calc(var(--spacing) * 3) calc(var(--spacing) * -1) rgb(31 53 83 / 10%) !important;
+}
+
+/* Token menus reuse the approved short frame shadow in Final and E2.
+   Scope this to Lite: the shared token picker also appears inside Pro. */
+:root[data-glass-revision='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .token-list-dropdown {
+  box-shadow: 0 var(--spacing) calc(var(--spacing) * 3) calc(var(--spacing) * -1) rgb(0 0 0 / 18%);
+}
+:root[data-glass-revision='lite-experiment-v2'][data-liquidity-theme='light']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .token-list-dropdown {
+  box-shadow: 0 var(--spacing) calc(var(--spacing) * 3) calc(var(--spacing) * -1) rgb(31 53 83 / 10%);
 }

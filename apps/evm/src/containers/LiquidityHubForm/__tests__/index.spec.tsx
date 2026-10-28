@@ -57,6 +57,15 @@ const expectWithdrawFormToBeRendered = () => {
   ).toHaveLength(2);
 };
 
+beforeAll(() => {
+  vi.stubGlobal('ResizeObserver', class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  });
+});
+afterAll(() => vi.unstubAllGlobals());
+
 describe('LiquidityHubForm', () => {
   const mockUseGetBalanceOf = useGetBalanceOf as Mock;
   const mockUseGetPool = useGetPool as Mock;
@@ -130,6 +139,15 @@ describe('LiquidityHubForm', () => {
     });
 
     expectWithdrawFormToBeRendered();
+  });
+
+  it('keeps Supply and Withdraw navigation working with the mobile segmented actions', () => {
+    renderLiquidityHubForm({ actionTabsVariant: 'primary' });
+    const withdrawTab = screen.getByRole('button', { name: en.liquidityHubForm.withdrawTabTitle });
+    expect(withdrawTab.closest('[data-venus-button-group]')).not.toBeNull();
+    fireEvent.click(withdrawTab);
+    expectWithdrawFormToBeRendered();
+    expect(withdrawTab).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('uses search params for tab state when navType is searchParam', async () => {

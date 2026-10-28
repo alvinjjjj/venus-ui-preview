@@ -85,7 +85,7 @@ export const ApyBreakdown: React.FC<ApyBreakdownProps> = ({ items = [], renderTy
 
   if (renderType === 'block') {
     return (
-      <div className="space-y-2">
+      <div data-apy-breakdown="block" className="space-y-2">
         {rowsDom}
 
         <LabeledInlineContent tooltip={tooltip} label={label}>
@@ -97,6 +97,7 @@ export const ApyBreakdown: React.FC<ApyBreakdownProps> = ({ items = [], renderTy
 
   return (
     <Accordion
+      data-apy-breakdown="accordion"
       title={
         <div className="flex items-center gap-x-2">
           <p className="text-b1r">{label}</p>

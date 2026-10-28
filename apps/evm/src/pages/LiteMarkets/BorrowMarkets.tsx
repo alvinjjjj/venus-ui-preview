@@ -16,6 +16,7 @@ import { useGlassPreview } from 'demo/GlassVersions/store';
 import type { LiteAsset } from './data';
 import { BorrowSources } from './BorrowSources';
 import { LiteMarketAction } from './LiteMarketAction';
+import { LiteMarketAmount } from './LiteMarketAmount';
 import './borrow-filter.css';
 
 const borrowApy = (asset: Asset) =>
@@ -103,21 +104,18 @@ export function BorrowMarkets({
           b[field === 'borrow' ? 'borrowBalanceCents' : 'liquidityCents'],
         ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (asset: Asset) => (
-        <div className="tabular-nums">
-          <span className={field === 'liquidity' ? 'lite-amount lite-liquidity-amount' : 'lite-amount'}>
-            {formatTokensToReadableValue({
-              value: field === 'borrow' ? asset.borrowBalanceTokens : asset.cashTokens,
-              token: asset.vToken.underlyingToken,
-              addSymbol: false,
-            })}
-          </span>
-          <span className="lite-amount-symbol"> {asset.vToken.underlyingToken.symbol}</span>
-          <p className="text-light-grey">
-            {formatCentsToReadableValue({
-              value: field === 'borrow' ? asset.borrowBalanceCents : asset.liquidityCents,
-            })}
-          </p>
-        </div>
+        <LiteMarketAmount
+          value={formatTokensToReadableValue({
+            value: field === 'borrow' ? asset.borrowBalanceTokens : asset.cashTokens,
+            token: asset.vToken.underlyingToken,
+            addSymbol: false,
+          })}
+          usdValue={formatCentsToReadableValue({
+            value: field === 'borrow' ? asset.borrowBalanceCents : asset.liquidityCents,
+          })}
+          symbol={asset.vToken.underlyingToken.symbol}
+          liquidity={field === 'liquidity'}
+        />
       ),
     })),
     ...(isLegacyE2 ? [{
@@ -181,10 +179,10 @@ export function BorrowMarkets({
               />
               <MultiSelect
                 className="lite-loan-filter w-full sm:w-60 shrink-0"
-                placeholder="All loan assets"
+                placeholder={mobile ? 'Filter' : 'All loan assets'}
                 title="Loan assets"
                 resetLabel="All loan assets"
-                renderCount={count => `${count} loan assets`}
+                renderCount={count => mobile ? `Filter (${count})` : `${count} loan assets`}
                 value={tokenFilter}
                 onChange={setTokenFilter}
                 options={[

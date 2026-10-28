@@ -31,6 +31,7 @@ export interface MarketFormProps {
   borrowOnly?: boolean;
   compactEarn?: boolean;
   inlineHeader?: boolean;
+  actionTabsVariant?: 'primary' | 'secondary';
 }
 
 export const MarketForm: React.FC<MarketFormProps> = ({
@@ -43,6 +44,7 @@ export const MarketForm: React.FC<MarketFormProps> = ({
   borrowOnly = false,
   compactEarn = false,
   inlineHeader = false,
+  actionTabsVariant,
   collateralSelector,
   supplyAssetSelector,
   supplyMarketDetails,
@@ -183,7 +185,7 @@ export const MarketForm: React.FC<MarketFormProps> = ({
       }
       initialActiveTabId={initialActiveTabId}
       navType={navType}
-      variant={earnOnly || borrowOnly ? 'primary' : 'secondary'}
+      variant={actionTabsVariant ?? (earnOnly || borrowOnly ? 'primary' : 'secondary')}
       buttonClassName={earnOnly || borrowOnly ? 'font-normal' : undefined}
     />
   );

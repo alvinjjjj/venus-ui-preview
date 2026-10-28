@@ -16,6 +16,7 @@ export interface LiquidityHubFormProps {
   walletFirst?: boolean;
   compactEarn?: boolean;
   inlineHeader?: boolean;
+  actionTabsVariant?: 'primary' | 'secondary';
   vhToken: VhToken;
   initialActiveTabId?: string;
   onSubmitSuccess?: () => void;
@@ -35,12 +36,13 @@ const RealLiquidityHubForm = ({
   inlineHeader = false,
   supplyOnly = false,
   walletFirst = false,
+  actionTabsVariant,
 }: LiquidityHubFormProps) => {
   const { t } = useTranslation();
   return (
     <Tabs
       hideHeader={supplyOnly}
-      variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
+      variant={actionTabsVariant ?? (compactEarn || inlineHeader ? 'primary' : 'secondary')}
       className={
         compactEarn
           ? 'lite-compact-market-tabs'
@@ -87,6 +89,7 @@ const PreviewLiquidityHubForm = ({
   compactEarn = false,
   inlineHeader = false,
   supplyOnly = false,
+  actionTabsVariant,
 }: LiquidityHubFormProps) => {
   const { loggedIn, setLoginOpen } = useDemo();
   const [amount, setAmount] = useState('');
@@ -97,7 +100,7 @@ const PreviewLiquidityHubForm = ({
       {({ liquidityHub }) => (
         <Tabs
       hideHeader={supplyOnly}
-          variant={compactEarn || inlineHeader ? 'primary' : 'secondary'}
+          variant={actionTabsVariant ?? (compactEarn || inlineHeader ? 'primary' : 'secondary')}
           className={
             compactEarn
               ? 'lite-compact-market-tabs'
@@ -155,7 +158,7 @@ const PreviewLiquidityHubForm = ({
                   />
                   {loggedIn && (
                     <>
-                      <p className="text-light-grey text-b1r">
+                      <p data-lite-balance-row="true" className="text-light-grey text-b1r">
                         <span>{action === 'supply' ? 'Wallet balance' : 'Supplied balance'}</span>{' '}
                         <span>
                           {balance.toLocaleString()} {vhToken.underlyingToken.symbol}

@@ -3,6 +3,8 @@ import { Modal, TextField, TokenIcon } from 'components';
 import type { Asset } from 'types';
 import type { BorrowSource } from './BorrowSources';
 import type { LiteAsset } from './data';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { getPreviewCollateral } from './preview-data';
 
 export interface CollateralChoice {
   symbol: string;
@@ -38,6 +40,7 @@ export function CollateralPicker({
   onClose: () => void;
   onSelect: (choice: CollateralChoice) => void;
 }) {
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const [search, setSearch] = useState('');
   const choices = getSourceCollateral(source, rows).filter(choice =>
     choice.symbol.toLowerCase().includes(search.trim().toLowerCase()),
@@ -58,7 +61,7 @@ export function CollateralPicker({
         value={search}
         onChange={event => setSearch(event.target.value)}
       />
-      {source.apy !== undefined && (
+      {!isFinal && source.apy !== undefined && (
         <p className="lite-e2-preview-source-label my-3">
           Preview market · Transactions unavailable
         </p>
@@ -74,7 +77,9 @@ export function CollateralPicker({
           </tr>
         </thead>
         <tbody>
-          {choices.map(choice => (
+          {choices.map(choice => {
+            const fixture = isFinal && source.apy !== undefined ? getPreviewCollateral(choice.symbol) : undefined;
+            return (
             <tr key={choice.symbol} onClick={() => onSelect(choice)}>
               <td>
                 <button
@@ -93,11 +98,12 @@ export function CollateralPicker({
                   <span>{choice.symbol}</span>
                 </button>
               </td>
-              <td>{percent(choice.asset ? choice.asset.collateralFactor * 100 : undefined)}</td>
-              <td>{percent(choice.asset?.liquidationThresholdPercentage)}</td>
-              <td>{percent(choice.asset?.liquidationPenaltyPercentage)}</td>
+              <td>{percent(choice.asset ? choice.asset.collateralFactor * 100 : fixture?.maxLtvPercentage)}</td>
+              <td>{percent(choice.asset?.liquidationThresholdPercentage ?? fixture?.liquidationThresholdPercentage)}</td>
+              <td>{percent(choice.asset?.liquidationPenaltyPercentage ?? fixture?.liquidationPenaltyPercentage)}</td>
             </tr>
-          ))}
+            );
+          })}
           {choices.length === 0 && (
             <tr>
               <td colSpan={4} className="py-6 text-center text-light-grey">

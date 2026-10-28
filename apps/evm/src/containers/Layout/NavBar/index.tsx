@@ -92,12 +92,12 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
             to={routes.landing.path}
             onClick={closeMobileMenu}
           >
-            <img src={venusLogoSrc} alt={t('layout.menu.venusLogoAlt')} className="h-8 sm:hidden" />
+            <img src={venusLogoSrc} alt={t('layout.menu.venusLogoAlt')} className="venus-logo-symbol h-8 sm:hidden" />
 
             <img
               src={isLightPreview ? venusLogoLightSrc : venusLogoWithTextSrc}
               alt={t('layout.menu.venusLogoAlt')}
-              className="h-8 hidden sm:block"
+              className="venus-logo-wordmark h-8 hidden sm:block"
             />
           </Link>
 
