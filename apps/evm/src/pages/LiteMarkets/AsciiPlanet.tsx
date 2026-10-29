@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'motion/react';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
-import { asciiInteractionFrameMs, drawAsciiInteractionGlyph } from './ascii-interaction';
+import { asciiInteractionFrameMs, asciiInteractionStepMs, drawAsciiInteractionGlyph } from './ascii-interaction';
 import './ascii-planet.css';
 
 export type AsciiPlanetSurface = 'waves' | 'diagonal' | 'horizon' | 'rim' | 'ribbon';
@@ -117,6 +117,45 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
         default: return Math.min(1, shade * .92 + z * .08);
       }
     };
+    // Final's rim lighting is fixed. Cache that exact glyph layer at the
+    // same backing resolution; only the ring/particles move between frames.
+    const bodyCanvas = document.createElement('canvas');
+    bodyCanvas.width = canvas.width;
+    bodyCanvas.height = canvas.height;
+    const bodyContext = surface === 'rim' ? bodyCanvas.getContext('2d') : null;
+    if (bodyContext) {
+      bodyContext.scale(dpr, dpr);
+      bodyContext.font = `${9 * glyphScale}px monospace`;
+      bodyContext.textAlign = 'center';
+      bodyContext.textBaseline = 'middle';
+      bodyContext.fillStyle = surfaceGradient ?? (light ? color : darkColor);
+    }
+    let bodyStep: number | undefined;
+    const drawBody = (target: CanvasRenderingContext2D, elapsed: number) => {
+      // Center the character grid so both sides have the same curved outline.
+      const stepY = 7 * glyphScale;
+      const stepX = 6 * glyphScale;
+      let glyphIndex = 0;
+      for (let y = -Math.floor(119 / stepY) * stepY; y <= 119; y += stepY) {
+        for (let x = -Math.floor(119 / stepX) * stepX; x <= 119; x += stepX) {
+          const nx = x / 120;
+          const ny = y / 120;
+          const radius = nx * nx + ny * ny;
+          if (radius > 1) continue;
+          const z = Math.sqrt(1 - radius);
+          const longitude = Math.atan2(nx, z);
+          const latitude = Math.asin(ny);
+          const shade = Math.max(0, -.45 * nx - .4 * ny + .75 * z);
+          const density = surface === 'waves'
+            ? Math.min(1, shade * .7 + (.5 + .5 * Math.sin((longitude + phase) * 9 + Math.sin(latitude * 7) * 2)) * .3)
+            : surfaceDensity(nx, ny, z, shade);
+          target.globalAlpha = surface === 'waves'
+            ? (light ? .38 : .44) + density * .65
+            : .18 + density * .82;
+          drawAsciiInteractionGlyph(target, chars[Math.min(7, Math.floor(density * 8))], glyphIndex++, elapsed, 180 + x, 180 + y);
+        }
+      }
+    };
     const draw = () => {
       const scrambling = !reduced && interaction.current === 1;
       const elapsed = scrambling ? performance.now() - gestureStart.current : Number.POSITIVE_INFINITY;
@@ -140,29 +179,16 @@ export function AsciiPlanet({ color, highlight, shadow = color, active, surface 
       };
       ring(false);
       ctx.fillStyle = surfaceGradient ?? (light ? color : darkColor);
-      // Center the character grid so both sides have the same curved outline.
-      const stepY = 7 * glyphScale;
-      const stepX = 6 * glyphScale;
-      let glyphIndex = 0;
-      for (let y = -Math.floor(119 / stepY) * stepY; y <= 119; y += stepY) {
-        for (let x = -Math.floor(119 / stepX) * stepX; x <= 119; x += stepX) {
-          const nx = x / 120;
-          const ny = y / 120;
-          const radius = nx * nx + ny * ny;
-          if (radius > 1) continue;
-          const z = Math.sqrt(1 - radius);
-          const longitude = Math.atan2(nx, z);
-          const latitude = Math.asin(ny);
-          const shade = Math.max(0, -.45 * nx - .4 * ny + .75 * z);
-          const density = surface === 'waves'
-            ? Math.min(1, shade * .7 + (.5 + .5 * Math.sin((longitude + phase) * 9 + Math.sin(latitude * 7) * 2)) * .3)
-            : surfaceDensity(nx, ny, z, shade);
-          ctx.globalAlpha = surface === 'waves'
-            ? (light ? .38 : .44) + density * .65
-            : .18 + density * .82;
-          glyph(chars[Math.min(7, Math.floor(density * 8))], glyphIndex++, 180 + x, 180 + y);
+      if (bodyContext) {
+        const step = Number.isFinite(elapsed) ? Math.floor(elapsed / asciiInteractionStepMs) : -1;
+        if (step !== bodyStep) {
+          bodyContext.clearRect(0, 0, size, size);
+          drawBody(bodyContext, elapsed);
+          bodyStep = step;
         }
-      }
+        ctx.globalAlpha = 1;
+        ctx.drawImage(bodyCanvas, 0, 0, size, size);
+      } else drawBody(ctx, elapsed);
       ctx.fillStyle = light ? color : darkColor;
       ring(true);
       // A few bright particles share the orbital plane, with a short fading wake.

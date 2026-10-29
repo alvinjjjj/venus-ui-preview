@@ -43,8 +43,31 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
+});
+
+it('lets Final sleep between five-second updates and cancels pending work while hidden', () => {
+  vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+  vi.spyOn(performance, 'now').mockReturnValue(0);
+  vi.spyOn(Math, 'random').mockReturnValue(0.12345678);
+  const { container, unmount } = render(<SimulatedMarketTotal valueCents={new BigNumber('165979577668')} field="supplyUsd" updateIntervalMs={5000} animateDigits sleepBetweenUpdates />);
+  act(() => visible([{ isIntersecting: true }]));
+  advance(0);
+  expect(frames.size).toBe(0);
+  act(() => vi.advanceTimersByTime(4999));
+  expect(frames.size).toBe(0);
+  act(() => vi.advanceTimersByTime(1));
+  expect(frames.size).toBe(1);
+  advance(5000);
+  expect(container.querySelector('.sr-only')).toHaveTextContent('$1,612,345,678');
+  hidden = true;
+  act(() => document.dispatchEvent(new Event('visibilitychange')));
+  expect(vi.getTimerCount()).toBe(0);
+  expect(frames.size).toBe(0);
+  unmount();
+  expect(vi.getTimerCount()).toBe(0);
 });
 
 const advance = (time: number) =>

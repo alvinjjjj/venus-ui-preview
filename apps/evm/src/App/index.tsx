@@ -8,6 +8,7 @@ import { AnalyticProvider } from 'libs/analytics';
 import { ErrorBoundary } from 'libs/errors';
 import { Web3Wrapper } from 'libs/wallet';
 import { HashRouter } from 'react-router';
+import { TelegramMascot } from 'containers/Layout/TelegramMascot';
 import { MuiThemeProvider } from './MuiThemeProvider';
 import AppRoutes from './Routes';
 const App = () => (
@@ -19,6 +20,7 @@ const App = () => (
           <Web3Wrapper>
             <AnalyticProvider>
               <AppRoutes />
+              <TelegramMascot />
               <InterfaceOnboarding />
               <DemoLogin />
               <DemoActionNotice />

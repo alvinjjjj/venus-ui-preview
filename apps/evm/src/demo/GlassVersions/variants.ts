@@ -18,10 +18,9 @@ export const currentVersions: PreviewVersion[] = [
 ];
 
 export const beforeVersions: PreviewVersion[] = [
-  { id: 'lite-experiment-v2-legacy', label: 'E2', description: 'E2 original experiment' },
-  { id: 'lite-experiment', label: 'E', description: 'Lite experiment' },
-  { id: 'lite-experiment-v3', label: 'E3', description: 'Lite experiment 3' },
   { id: 'v1', label: 'O', description: 'Original' },
+  { id: 'lite-experiment-v2-legacy', label: 'E2', description: 'E2 original experiment' },
+  { id: 'lite-experiment-v3', label: 'E3', description: 'Lite experiment 3' },
 ];
 
 export const previewVersions = [...currentVersions, ...beforeVersions];
@@ -36,6 +35,6 @@ export const getPreviewStudy = (mode: GlassPreviewMode) =>
 
 export const resolveSavedPreviewMode = (saved: string | null): GlassPreviewMode => {
   if (saved === 'o2') return 'v1';
-  if (saved === 'v5' || saved === 'explorer' || saved === 'v3' || saved === 'v6') return 'lite-experiment-v2';
+  if (saved === 'lite-experiment' || saved === 'v5' || saved === 'explorer' || saved === 'v3' || saved === 'v6') return 'lite-experiment-v2';
   return previewVersions.some(version => version.id === saved) ? (saved as GlassPreviewMode) : 'v1';
 };

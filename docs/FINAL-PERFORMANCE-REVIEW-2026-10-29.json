@@ -1,0 +1,255 @@
+{
+  "date": "2026-10-29",
+  "scope": "Final rendering performance; requested mobile footer and mascot adjustments",
+  "measurement": {
+    "method": "8 second foreground samples of requestAnimationFrame callback execution and Canvas 2D draw calls in the same local in-app browser",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "theme": "dark",
+    "interpretation": "Animation JavaScript time is a workload proxy, not operating-system CPU utilization. Samples include the existing WebGL background.",
+    "samples": {
+      "before-idle": {
+        "seconds": 8.00110000000149,
+        "animationCpuMsPerSecond": 77.91428679560939,
+        "callbacksPerSecond": 1300.5711714636816,
+        "textDrawsPerSecond": 156728.44983811807,
+        "imageDrawsPerSecond": 0,
+        "viewport": [
+          1920,
+          1080
+        ],
+        "mode": "lite-experiment-v2",
+        "theme": "dark"
+      },
+      "after-idle": {
+        "seconds": 8.000800000004471,
+        "animationCpuMsPerSecond": 38.921107932770866,
+        "callbacksPerSecond": 628.4371562840204,
+        "textDrawsPerSecond": 20537.946205367985,
+        "imageDrawsPerSecond": 129.98700129979738,
+        "viewport": [
+          1920,
+          1080
+        ],
+        "mode": "lite-experiment-v2",
+        "theme": "dark"
+      },
+      "before-active": {
+        "seconds": 8.001,
+        "animationCpuMsPerSecond": 93.10086238642751,
+        "callbacksPerSecond": 870.2662167229097,
+        "textDrawsPerSecond": 157018.74765654295,
+        "imageDrawsPerSecond": 0,
+        "viewport": [
+          1920,
+          1080
+        ],
+        "mode": "lite-experiment-v2",
+        "theme": "dark"
+      },
+      "after-active": {
+        "seconds": 8.002200000002981,
+        "animationCpuMsPerSecond": 84.22683763452028,
+        "callbacksPerSecond": 657.9440653817749,
+        "textDrawsPerSecond": 28296.468471159886,
+        "imageDrawsPerSecond": 137.587163529978,
+        "viewport": [
+          1920,
+          1080
+        ],
+        "mode": "lite-experiment-v2",
+        "theme": "dark"
+      }
+    }
+  },
+  "changes": [
+    {
+      "area": "Final ASCII planet",
+      "result": "Reuse the same-resolution rim glyph layer between frames. Refresh on each original 160 ms digit step; retain ring phase, particles, 30 fps hover sampling, 20 fps idle budget and CSS blur."
+    },
+    {
+      "area": "Final token emblems",
+      "result": "Skip identical digit redraws between the original 160 ms digit changes."
+    },
+    {
+      "area": "Final mobile",
+      "result": "Do not mount planet canvases already hidden by the existing mobile design."
+    },
+    {
+      "area": "Final totals",
+      "result": "Sleep between existing five-second updates, pause on hidden/offscreen/reduced-motion states and release pending timers on unmount."
+    },
+    {
+      "area": "Mobile footer",
+      "beforeGapPx": 76,
+      "afterGapPx": 24,
+      "result": "Remove the invisible scroll-to-top control from document flow and reduce footer top padding. Preserve 3 + 2 links and centered socials."
+    },
+    {
+      "area": "Mobile mascot",
+      "beforeWidthPx": 56,
+      "afterWidthPx": 84,
+      "result": "50 percent larger at 375 px; lift near the footer so links remain clear. Desktop dimensions retained."
+    }
+  ],
+  "visual_comparison": {
+    "dark": {
+      "theme": "dark",
+      "results": [
+        {
+          "maxCompositeDelta": 2,
+          "token": "USDT",
+          "changedChannels": 511,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.0003742283950617284
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "USDC",
+          "changedChannels": 499,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.0003578317901234568
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "BTCB",
+          "changedChannels": 509,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.0003737461419753086
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "WBNB",
+          "changedChannels": 504,
+          "maxChannelDelta": 7,
+          "meanChannelDelta": 0.0003669945987654321
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "U",
+          "changedChannels": 491,
+          "maxChannelDelta": 7,
+          "meanChannelDelta": 0.00034384645061728397
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "XVS",
+          "changedChannels": 521,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.0003940007716049383
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "USD1",
+          "changedChannels": 531,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.00040123456790123454
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "ETH",
+          "changedChannels": 497,
+          "maxChannelDelta": 8,
+          "meanChannelDelta": 0.0003481867283950617
+        }
+      ]
+    },
+    "light": {
+      "theme": "light",
+      "results": [
+        {
+          "maxCompositeDelta": 3,
+          "token": "USDT",
+          "changedChannels": 598,
+          "maxChannelDelta": 16,
+          "meanChannelDelta": 0.0004557291666666667
+        },
+        {
+          "maxCompositeDelta": 2,
+          "token": "USDC",
+          "changedChannels": 606,
+          "maxChannelDelta": 12,
+          "meanChannelDelta": 0.0004803240740740741
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "BTCB",
+          "changedChannels": 648,
+          "maxChannelDelta": 16,
+          "meanChannelDelta": 0.0005102237654320988
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "WBNB",
+          "changedChannels": 669,
+          "maxChannelDelta": 16,
+          "meanChannelDelta": 0.0005242091049382716
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "U",
+          "changedChannels": 624,
+          "maxChannelDelta": 13,
+          "meanChannelDelta": 0.00047116126543209877
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "XVS",
+          "changedChannels": 660,
+          "maxChannelDelta": 15,
+          "meanChannelDelta": 0.0005111882716049383
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "USD1",
+          "changedChannels": 630,
+          "maxChannelDelta": 12,
+          "meanChannelDelta": 0.0004755015432098765
+        },
+        {
+          "maxCompositeDelta": 3,
+          "token": "ETH",
+          "changedChannels": 611,
+          "maxChannelDelta": 16,
+          "meanChannelDelta": 0.00046440972222222223
+        }
+      ]
+    }
+  },
+  "review": [
+    {
+      "area": "Canvas lifecycle",
+      "status": "Verified viewport and document-visibility pausing, reduced-motion static state and cleanup via tests."
+    },
+    {
+      "area": "WebGL stars",
+      "status": "Retained the existing visuals and existing visibility/reduced-motion budget; did not change density, pixel ratio or cadence."
+    },
+    {
+      "area": "CSS effects",
+      "status": "Retained glows, gradients, blur, special Pro border and interaction styles."
+    },
+    {
+      "area": "Data and transaction flows",
+      "status": "No financial, APY or transaction logic changed by this optimization. Previously authorized filters and UI refinements included in the release."
+    },
+    {
+      "area": "Accessibility",
+      "status": "Kept labels and keyboard controls; hidden scroll-to-top control no longer receives keyboard focus."
+    },
+    {
+      "area": "Memory tradeoff",
+      "status": "Desktop uses one same-resolution offscreen rim buffer per planet; mobile skips the hidden canvases. Buffers are released with effect cleanup."
+    }
+  ],
+  "checks": {
+    "relatedTests": 220,
+    "testFiles": 26,
+    "result": "219 passed in the broad run; one pre-existing shadow assertion was scoped to the intended frame rules and passed in a 31-test confirmation run.",
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "temporaryProbes": "removed from source and build inputs"
+  }
+}

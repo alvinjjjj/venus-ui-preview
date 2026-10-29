@@ -31,12 +31,12 @@ const FloatingPresence = ({ children, animated, position, className, onEscape }:
   return <div className="fixed z-100001" style={{ ...position, pointerEvents: present ? 'auto' : 'none' }} inert={!present}>
     <motion.div
       className={className}
-      style={{ maxHeight: position.maxHeight, overflowY: 'auto' }}
+      style={{ maxHeight: position.maxHeight, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
       initial={animated ? { opacity: 0, y: -4 } : false}
       animate={{ opacity: 1, y: 0, transition: { duration: animated ? .22 : 0, ease: 'easeOut' } }}
       exit={{ opacity: 0, y: animated ? -2 : 0, transition: { duration: animated ? .14 : 0, ease: 'easeOut' } }}
       onKeyDown={event => { if (event.key === 'Escape') onEscape(); }}
-    >{children}</motion.div>
+    ><div className="venus-dropdown-scroll-area min-h-0 overflow-y-auto">{children}</div></motion.div>
   </div>;
 };
 
@@ -76,8 +76,9 @@ export const Dropdown = ({
     maxHeight: 320,
     transform: 'none',
   });
+  const isMdOrUp = useBreakpointUp('md');
   useLayoutEffect(() => {
-    if (!isDropdownOpen || triggerOnHover) return;
+    if (!isDropdownOpen || triggerOnHover || !isMdOrUp) return;
     const update = () => {
       const rect = anchorRef.current?.getBoundingClientRect();
       if (!rect) return;
@@ -87,7 +88,7 @@ export const Dropdown = ({
       const above = rect.top - 16;
       const height = Math.min(320, Math.max(below, above));
       const top = below >= Math.min(240, above) ? rect.bottom + 8 : rect.top - 8;
-      setPosition({
+      const nextPosition = {
         top,
         left: Math.max(
           16,
@@ -99,15 +100,26 @@ export const Dropdown = ({
         width,
         maxHeight: height,
         transform: below >= Math.min(240, above) ? 'none' : 'translateY(-100%)',
-      });
+      };
+      setPosition(current =>
+        current.top === nextPosition.top &&
+        current.left === nextPosition.left &&
+        current.width === nextPosition.width &&
+        current.maxHeight === nextPosition.maxHeight &&
+        current.transform === nextPosition.transform
+          ? current
+          : nextPosition,
+      );
     };
     update();
     window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, [isDropdownOpen, triggerOnHover, menuPosition, matchTriggerWidth]);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
+  }, [isDropdownOpen, triggerOnHover, menuPosition, matchTriggerWidth, optionsDom, isMdOrUp]);
   const handleToggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
-  const isMdOrUp = useBreakpointUp('md');
 
   return (
     <>

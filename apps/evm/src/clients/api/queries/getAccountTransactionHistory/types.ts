@@ -72,8 +72,11 @@ export interface GetAccountTransactionHistoryInput {
   liquidityHubs: LiquidityHub[];
   positionAccountAddress?: Address;
   contractAddress?: Address;
+  /** Local preview source selections: contract addresses, or "trade". */
+  sourceFilters?: string[];
   types: readonly TxType[];
   page?: number;
+  pageSize?: number;
 }
 
 export type GetAccountTransactionHistoryOutput = {

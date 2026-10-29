@@ -11,7 +11,7 @@ vi.unmock('zustand');
 
 it('keeps current E revisions separate from the preserved older designs', () => {
   expect(currentVersions.map(version => version.label)).toEqual(['Final']);
-  expect(beforeVersions.map(version => version.label)).toEqual(['E2', 'E', 'E3', 'O']);
+  expect(beforeVersions.map(version => version.label)).toEqual(['O', 'E2', 'E3']);
 });
 
 it.each(['lite-experiment', 'lite-experiment-v2', 'lite-experiment-v3'] as const)(
@@ -30,7 +30,7 @@ it.each(['v1', 'v5', 'explorer'] as const)('does not opt %s into the E layout', 
 });
 
 it.each([
-  ['lite-experiment', 'lite-experiment'],
+  ['lite-experiment', 'lite-experiment-v2'],
   ['lite-experiment-v2', 'lite-experiment-v2'],
   ['lite-experiment-v3', 'lite-experiment-v3'],
   ['v1', 'v1'],
@@ -45,7 +45,7 @@ it.each([
   expect(resolveSavedPreviewMode(saved)).toBe(expected);
 });
 
-it('stores all E revisions distinctly while retaining legacy Explorer normalization', () => {
+it('stores retained revisions distinctly and redirects retired E/Explorer to Final', () => {
   const previous = useGlassPreview.getState().mode;
   try {
     useGlassPreview.getState().setMode('lite-experiment-v3');
@@ -53,7 +53,7 @@ it('stores all E revisions distinctly while retaining legacy Explorer normalizat
     useGlassPreview.getState().setMode('lite-experiment-v2');
     expect(useGlassPreview.getState().mode).toBe('lite-experiment-v2');
     useGlassPreview.getState().setMode('lite-experiment');
-    expect(useGlassPreview.getState().mode).toBe('lite-experiment');
+    expect(useGlassPreview.getState().mode).toBe('lite-experiment-v2');
     useGlassPreview.getState().setMode('explorer');
     expect(useGlassPreview.getState().mode).toBe('lite-experiment-v2');
   } finally {

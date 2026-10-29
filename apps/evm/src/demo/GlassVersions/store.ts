@@ -41,5 +41,5 @@ export const useGlassPreview = create<{
   setMode: (mode: GlassPreviewMode) => void;
 }>(set => ({
   mode: getInitialMode(),
-  setMode: mode => set({ mode: mode === 'explorer' || mode === 'v5' ? 'lite-experiment-v2' : mode }),
+  setMode: mode => set({ mode: mode === 'lite-experiment' || mode === 'explorer' || mode === 'v5' ? 'lite-experiment-v2' : mode }),
 }));

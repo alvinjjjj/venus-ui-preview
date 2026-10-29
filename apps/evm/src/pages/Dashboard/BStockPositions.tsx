@@ -16,6 +16,8 @@ type Position = {
   limit?: string;
 };
 
+export const bStockPreviewHealthFactor = 4.2;
+
 // Display-only fixtures: no market links, collateral mutations or transaction forms.
 export function BStockPositions({
   variant,
@@ -82,7 +84,7 @@ export function BStockPositions({
     ? {
         ...corePool,
         vai: undefined,
-        userHealthFactor: 4.2,
+        userHealthFactor: bStockPreviewHealthFactor,
         userSupplyBalanceCents: new BigNumber(70000),
         userBorrowBalanceCents: new BigNumber(10000),
         userBorrowBalanceProtectedCents: new BigNumber(10000),

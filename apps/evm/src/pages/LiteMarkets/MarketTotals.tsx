@@ -5,10 +5,12 @@ import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
 import { SimulatedMarketTotal } from './SimulatedMarketTotal';
 import { aggregateLiteAssets } from './data';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 
 /** Shared protocol totals for the Lite home and Pro Hub, using the same query cache. */
 export const MarketTotals = ({ variant = 'default', supplyUpdateIntervalMs }: { variant?: 'default' | 'inline'; supplyUpdateIntervalMs?: number }) => {
   const inline = variant === 'inline';
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { accountAddress } = useAccountAddress();
   const { corePoolComptrollerContractAddress } = useChain();
   const poolQuery = useGetPool({
@@ -51,6 +53,7 @@ export const MarketTotals = ({ variant = 'default', supplyUpdateIntervalMs }: { 
                   decimalPlaces={0}
                   animateDigits={supplyUpdateIntervalMs !== undefined}
                   updateIntervalMs={supplyUpdateIntervalMs}
+                  sleepBetweenUpdates={isFinal}
                 />
               ) : (
                 formatCentsToReadableValue({

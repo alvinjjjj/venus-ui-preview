@@ -10,6 +10,10 @@ const preview = vi.hoisted(() => ({ mode: 'lite-experiment-v2' }));
 vi.mock('demo/GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
 }));
+vi.mock('hooks/responsive', async importOriginal => ({
+  ...(await importOriginal<typeof import('hooks/responsive')>()),
+  useBreakpointUp: () => true,
+}));
 vi.mock('containers/MarketForm', () => ({
   MarketForm: vi.fn((props: { borrowOnly?: boolean; earnOnly?: boolean }) => (
     <div data-testid="market-form">
@@ -36,6 +40,7 @@ function BorrowHarness({ ready = true, loading = false }: { ready?: boolean; loa
       ready={ready}
       loading={loading}
       experimental
+      categoryFilter={null}
       selected={selected}
       onSelect={setSelected}
     />
@@ -83,6 +88,47 @@ it('opens source selection from the asset without submitting a loan', () => {
   expect(headers[4]).toHaveTextContent('Total Borrow');
   expect(screen.queryByText('Preview · Not tradable')).toBeNull();
   expect(MarketForm).not.toHaveBeenCalled();
+});
+
+it('combines collateral selections, supports deselection and resets to all sources', () => {
+  renderComponent(<BorrowHarness />);
+  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.click(screen.getByRole('button', { name: 'All collaterals' }));
+  const menu = within(document.querySelector('.venus-multiselect-panel') as HTMLElement);
+  const table = within(screen.getByRole('table'));
+
+  fireEvent.click(menu.getByRole('button', { name: 'USDT', pressed: false }));
+  expect(table.getByRole('button', { name: 'Venus Core' })).toBeVisible();
+  expect(table.queryByRole('button', { name: 'bStock index' })).toBeNull();
+
+  fireEvent.click(menu.getByRole('button', { name: 'QQQB', pressed: false }));
+  expect(screen.getByRole('button', { name: '2 collaterals' })).toHaveAttribute('aria-expanded', 'true');
+  expect(table.getByRole('button', { name: 'Venus Core' })).toBeVisible();
+  expect(table.getByRole('button', { name: 'bStock index' })).toBeVisible();
+  expect(table.queryByRole('button', { name: 'bStock growth' })).toBeNull();
+
+  fireEvent.click(menu.getByRole('button', { name: 'USDT', pressed: true }));
+  expect(table.queryByRole('button', { name: 'Venus Core' })).toBeNull();
+  expect(table.getByRole('button', { name: 'bStock index' })).toBeVisible();
+  fireEvent.click(menu.getByRole('button', { name: 'All collaterals' }));
+  expect(table.getAllByRole('row')).toHaveLength(6);
+  expect(menu.getByRole('button', { name: 'QQQB' })).toHaveAttribute('aria-pressed', 'false');
+});
+
+it('keeps market search active while filtering by multiple collaterals', () => {
+  renderComponent(<BorrowHarness />);
+  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.change(screen.getByRole('textbox', { name: 'Search borrowing markets' }), {
+    target: { value: 'index' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'All collaterals' }));
+  const menu = within(document.querySelector('.venus-multiselect-panel') as HTMLElement);
+  fireEvent.click(menu.getByRole('button', { name: 'USDT' }));
+  expect(screen.queryByRole('table')).toBeNull();
+  fireEvent.click(menu.getByRole('button', { name: 'QQQB' }));
+  expect(within(screen.getByRole('table')).getByRole('button', { name: 'bStock index' })).toBeVisible();
+  fireEvent.click(menu.getByRole('button', { name: 'All collaterals' }));
+  expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(2);
 });
 
 it('retains real Core Borrow and Collateral form routing and adds only a scoped visual hook', () => {
@@ -158,7 +204,7 @@ it('preserves the unavailable and empty result states without fake actions', () 
   expect(screen.queryByRole('button', { name: 'Borrow USDT' })).toBeNull();
   unmount();
   renderComponent(<BorrowHarness />);
-  fireEvent.change(screen.getByRole('textbox', { name: 'Search loan assets' }), {
+  fireEvent.change(screen.getByRole('textbox', { name: 'Search assets' }), {
     target: { value: 'not-a-token' },
   });
   expect(screen.getByText('No borrowable assets found.')).toBeVisible();

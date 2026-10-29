@@ -76,7 +76,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     },
   ];
 
-  const footerLinks: LinkConfig[] = [
+  const footerLinkGroups: LinkConfig[][] = [[
     {
       label: t('footer.links.documentation'),
       href: VENUS_DOC_URL,
@@ -89,6 +89,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       label: 'About',
       to: routes.aboutUs.path,
     },
+  ], [
     {
       label: t('footer.links.privacyPolicy'),
       to: routes.privacyPolicy.path,
@@ -97,7 +98,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       label: t('footer.links.termsOfUse'),
       to: routes.termsOfUse.path,
     },
-  ];
+  ]];
 
   // Product pages use the original compact link/social bar. Keep the large
   // brand footer on the About presentation only; do not delete that component.
@@ -114,25 +115,29 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     <footer
       ref={ref}
       className={cn(
-        'venus-compact-footer bg-background-active mt-10 p-5 space-y-4 sm:flex sm:flex-wrap sm:gap-4 sm:justify-between sm:items-center sm:space-y-0 md:px-6 xl:px-10',
+        'venus-compact-footer bg-background-active mt-10 px-5 pb-5 pt-2 flex flex-col items-center gap-4 md:flex-row md:flex-wrap md:justify-between md:p-5 md:px-6 xl:px-10',
         isLite && 'mt-0 mb-0 w-full shrink-0 border-0',
         // Leave the existing preview launcher's slot clear of the GitHub link.
-        supportsModes && 'sm:pr-20 xl:pr-20',
+        supportsModes && 'md:pr-20 xl:pr-20',
       )}
     >
-      <nav className="flex items-center gap-4 flex-wrap" aria-label="Footer">
-        {footerLinks.map(footerLink => {
-          const { label, ...restProps } = footerLink;
+      <nav className="flex flex-col items-center gap-4 md:flex-row md:flex-wrap" aria-label="Footer">
+        {footerLinkGroups.map(links => (
+          <div className="flex items-center justify-center gap-4" key={links[0].label}>
+            {links.map(footerLink => {
+              const { label, ...restProps } = footerLink;
 
-          return (
-            <Link className="text-grey text-sm" key={label} {...restProps}>
-              {label}
-            </Link>
-          );
-        })}
+              return (
+                <Link className="text-grey text-sm" key={label} {...restProps}>
+                  {label}
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
-      <div className="flex flex-none items-center">
+      <div className="flex flex-none items-center justify-center">
         {socialLinks.map(socialLink => (
           <a
             className="venus-footer-social-link bg-lightGrey hover:bg-blue active:bg-darkBlue ml-4 flex h-6 w-6 items-center justify-center rounded-sm transition-colors first-of-type:ml-0"

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import {
   AssetApy,
   Icon,
-  Select,
+  MultiSelect,
   type TableColumn,
   TextField,
   TokenIcon,
@@ -110,7 +110,7 @@ export function BorrowSources({
     setInitialCollateral(collateral);
     setOpenedSource(source);
   };
-  const [collateralFilter, setCollateralFilter] = useState('');
+  const [collateralFilter, setCollateralFilter] = useState<string[]>([]);
   const token = asset.vToken.underlyingToken;
   const coreCollateral = rows
     .filter(row => row.markets.some(m => m.asset && m.asset.collateralFactor > 0))
@@ -142,7 +142,7 @@ export function BorrowSources({
   const filtered = sortableSources.filter(
     source =>
       source.name.toLowerCase().includes(search.trim().toLowerCase()) &&
-      (!collateralFilter || source.collateral.some(c => c.symbol === collateralFilter)),
+      (collateralFilter.length === 0 || source.collateral.some(c => collateralFilter.includes(c.symbol))),
   );
   const renderAmount = (source: BorrowSource, field: 'liquidity' | 'borrowed') => {
     const value =
@@ -333,23 +333,18 @@ export function BorrowSources({
                 onChange={event => setSearch(event.target.value)}
                 className="sm:max-w-75"
               />
-              <Select
+              <MultiSelect
                 className="lite-loan-filter w-full sm:w-60 shrink-0"
-                buttonClassName="rounded-lg h-12"
-                dropdownClassName="lite-loan-options"
-                optionClassName="px-4 h-12 font-normal"
+                placeholder={mobile ? 'Filter' : 'All collaterals'}
+                title="Collaterals"
+                resetLabel="All collaterals"
+                renderCount={count => mobile ? `Filter (${count})` : `${count} collaterals`}
                 value={collateralFilter}
-                onChange={value => setCollateralFilter(String(value))}
-                options={[
-                  {
-                    value: '',
-                    label: ({ isRenderedInButton }) => mobile && isRenderedInButton ? 'Filter' : 'All collaterals',
-                  },
-                  ...collateralOptions.map(item => ({
-                    value: item.symbol,
-                    label: <CollateralLabel item={item} />,
-                  })),
-                ]}
+                onChange={setCollateralFilter}
+                options={collateralOptions.map(item => ({
+                  value: item.symbol,
+                  label: <CollateralLabel item={item} />,
+                }))}
               />
             </div>
             {modeSwitch}

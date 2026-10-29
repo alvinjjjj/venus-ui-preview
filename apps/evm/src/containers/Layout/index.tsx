@@ -112,6 +112,7 @@ export const Layout: React.FC = () => {
         )}
         <NavBar className="shrink-0" />
 
+
         <div
           className={cn(
             'flex flex-col grow overflow-x-hidden',

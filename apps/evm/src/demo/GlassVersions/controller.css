@@ -8,6 +8,7 @@
 .preview-collection-tab[aria-selected='true'] { font-weight: var(--font-weight-semibold); text-decoration: underline; text-underline-offset: var(--spacing); }
 .preview-dpad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: calc(var(--spacing) * 11); gap: var(--spacing); justify-content: center; margin: 4px 0 12px; }
 .preview-dpad--before { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.preview-dpad--before:has(> .preview-version) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .preview-current { grid-column: 1 / -1; text-align: center; font-size: 11px; opacity: .6; }
 .preview-motion { border-top: 1px solid rgb(140 150 170 / 24%); padding: 8px 0; }
 .preview-controller:has(.preview-motion-panel) { width: 260px; }

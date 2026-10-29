@@ -49,6 +49,15 @@
     vertical-align: middle;
   }
 
+  /* Source labels need their full text width even when hover makes them bold. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table].lite-e2-earn-sources tr {
+    grid-template-columns: minmax(max-content, 1fr) repeat(3, minmax(0, 1fr));
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table].lite-e2-earn-sources tbody td:first-child > button {
+    white-space: nowrap;
+  }
+
   :root[data-glass-variant='lite-experiment-v2'] #root .lite-markets [data-lite-market-table] tbody tr {
     height: calc(var(--spacing) * 15);
     min-height: calc(var(--spacing) * 15);

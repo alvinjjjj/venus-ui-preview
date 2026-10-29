@@ -463,6 +463,18 @@ export default function LiteMarkets() {
     .map(item => ({ value: item.tag, label: item.label }));
   if (!categoryOptions.some(item => item.value === 'others'))
     categoryOptions.push({ value: 'others', label: 'Others' });
+  const categoryFilter = (
+    <MultiSelect
+      options={categoryOptions}
+      value={categories}
+      onChange={setCategories}
+      placeholder={mobile ? 'Filter' : 'All categories'}
+      title="Category"
+      resetLabel="Reset"
+      renderCount={count => mobile ? `Filter (${count})` : `${count} categories`}
+      className="sm:w-52 shrink-0"
+    />
+  );
   const active = rows.find(row => row.key === selected);
   const filtered = rows.filter(
     row =>
@@ -651,18 +663,7 @@ export default function LiteMarkets() {
                                       onChange={event => setSearch(event.target.value)}
                                       className="sm:max-w-75"
                                     />
-                                    {experimental && (
-                                      <MultiSelect
-                                        options={categoryOptions}
-                                        value={categories}
-                                        onChange={setCategories}
-                                        placeholder={mobile ? 'Filter' : 'All Categories'}
-                                        title="Category"
-                                        resetLabel="Reset"
-                                        renderCount={count => mobile ? `Filter (${count})` : `${count} categories`}
-                                        className="sm:w-52 shrink-0"
-                                      />
-                                    )}
+                                    {experimental && categoryFilter}
                                   </div>
                                   </div>
                                 }
@@ -680,11 +681,13 @@ export default function LiteMarkets() {
                       <BorrowMarkets
                         mobile={mobile}
                         modeSwitch={modeSwitch}
+                        categoryFilter={categoryFilter}
                         experimental={experimental}
                         selected={selectedBorrow}
                         onSelect={setSelectedBorrow}
                         rows={rows.filter(row =>
-                          isVisibleLiteAsset(row, poolQuery.data?.pool.eModeGroups ?? []),
+                          isVisibleLiteAsset(row, poolQuery.data?.pool.eModeGroups ?? []) &&
+                          matchesEarnCategories(row, categories),
                         )}
                         loading={poolQuery.isLoading}
                         ready={!!poolQuery.data?.pool}

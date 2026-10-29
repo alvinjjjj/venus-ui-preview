@@ -65,6 +65,7 @@ export const Repay: React.FC<RepayProps> = ({
           <span className="text-sm font-normal text-light-grey">Repay from</span>
           <Select
             aria-label="Repay from"
+            menuPosition="right"
             className="lite-loan-filter w-40"
             buttonClassName="h-10 rounded-lg font-normal"
             dropdownClassName="lite-loan-options"

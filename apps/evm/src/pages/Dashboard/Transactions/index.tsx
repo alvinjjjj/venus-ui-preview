@@ -1,5 +1,6 @@
 import { useGetAccountTransactionHistory, useGetLiquidityHubs, useGetPools } from 'clients/api';
 import {
+  MultiSelect,
   Pagination,
   Select,
   type SelectOption,
@@ -15,8 +16,9 @@ import { useTranslation } from 'libs/translations';
 import { useAccountAddress, useChainId } from 'libs/wallet';
 import { useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import { ChainId, type Token } from 'types';
+import { ChainId, type Token, type TxType } from 'types';
 import { getTransactionName } from 'utilities';
+import { matchesTransactionFilters } from 'utilities/matchesTransactionFilters';
 import { isAddress } from 'viem';
 import { getNewPreviewTransactions } from './getNewPreviewTransactions';
 
@@ -45,40 +47,55 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
   const txTypeStr = searchParams.get(TX_TYPE_PARAM_KEY) ?? ALL_OPTION_VALUE;
   const txType = TX_TYPES.find(type => type === txTypeStr);
   const selectedTxType = txType ?? ALL_OPTION_VALUE;
-  const selectedTransactionTypes = txType ? [txType] : TX_TYPES;
+  const selectedTxTypes = allowDemoPreview
+    ? [...new Set(searchParams.getAll(TX_TYPE_PARAM_KEY))].filter((type): type is TxType =>
+        TX_TYPES.some(supportedType => supportedType === type),
+      )
+    : txType
+      ? [txType]
+      : [];
+  const selectedTransactionTypes = selectedTxTypes.length > 0 ? selectedTxTypes : TX_TYPES;
 
   const selectedContractAddress = searchParams.get(CONTRACT_ADDRESS_PARAM_KEY) ?? ALL_OPTION_VALUE;
+  const selectedSources = allowDemoPreview
+    ? [...new Set(searchParams.getAll(CONTRACT_ADDRESS_PARAM_KEY))].filter(
+        source => isAddress(source) || source === 'trade',
+      )
+    : selectedContractAddress === ALL_OPTION_VALUE
+      ? []
+      : [selectedContractAddress];
 
-  const setTxType = (newTxType: string) =>
-    setSearchParams(currentSearchParams => ({
-      ...Object.fromEntries(currentSearchParams),
-      [TX_TYPE_PARAM_KEY]: newTxType,
-      // Reset page
-      [PAGE_PARAM_KEY]: String(FIRST_PAGE),
-    }));
+  const setFilter = (key: string, values: string[]) =>
+    setSearchParams(currentSearchParams => {
+      const next = new URLSearchParams(currentSearchParams);
+      next.delete(key);
+      if (values.length === 0) next.set(key, ALL_OPTION_VALUE);
+      else values.forEach(value => next.append(key, value));
+      next.set(PAGE_PARAM_KEY, String(FIRST_PAGE));
+      return next;
+    });
+
+  const setTxType = (newTxType: string) => setFilter(TX_TYPE_PARAM_KEY, [newTxType]);
 
   const setSelectedContractAddress = (newContractAddress: string) =>
-    setSearchParams(currentSearchParams => ({
-      ...Object.fromEntries(currentSearchParams),
-      [CONTRACT_ADDRESS_PARAM_KEY]: newContractAddress,
-      // Reset page
-      [PAGE_PARAM_KEY]: String(FIRST_PAGE),
-    }));
+    setFilter(CONTRACT_ADDRESS_PARAM_KEY, [newContractAddress]);
 
   const setPage = (newPage: string) =>
-    setSearchParams(currentSearchParams => ({
-      ...Object.fromEntries(currentSearchParams),
-      [PAGE_PARAM_KEY]: newPage,
-    }));
+    setSearchParams(currentSearchParams => {
+      const next = new URLSearchParams(currentSearchParams);
+      next.set(PAGE_PARAM_KEY, newPage);
+      return next;
+    });
 
   // Fall back to the first page when the page param is present but invalid (e.g. 0 or negative)
   useEffect(() => {
     if (pageStr !== null && !isValidPage) {
       setSearchParams(
-        currentSearchParams => ({
-          ...Object.fromEntries(currentSearchParams),
-          [PAGE_PARAM_KEY]: String(FIRST_PAGE),
-        }),
+        currentSearchParams => {
+          const next = new URLSearchParams(currentSearchParams);
+          next.set(PAGE_PARAM_KEY, String(FIRST_PAGE));
+          return next;
+        },
         { replace: true },
       );
     }
@@ -140,6 +157,11 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
         page,
         contractAddress: isAddress(selectedContractAddress) ? selectedContractAddress : undefined,
         types: selectedTransactionTypes,
+        ...(allowDemoPreview && {
+          sourceFilters: selectedSources,
+          page: page - FIRST_PAGE,
+          pageSize: ITEMS_PER_PAGE_COUNT,
+        }),
       },
       {
         enabled: !!accountAddress && isTransactionHistoryFeatureEnabled && !isNewPreview,
@@ -217,11 +239,32 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
       });
     }
 
-    return [allOption, ...otherOptions];
+    return [allOption, ...new Map(otherOptions.map(option => [option.value, option])).values()];
   }, [t, poolData, liquidityHubs, isLiquidityHubFeatureEnabled, isNewPreview]);
 
   // Reset contract address filter if the value in the URL is incorrect
   useEffect(() => {
+    // Keep URL selections until the available sources have loaded.
+    if (allowDemoPreview) {
+      if (!poolData) return;
+      const values = searchParams.getAll(CONTRACT_ADDRESS_PARAM_KEY);
+      const validValues = values.filter(value =>
+        sourceSelectOptions.some(option => option.value === value),
+      );
+      if (validValues.length !== values.length) {
+        setSearchParams(
+          current => {
+            const next = new URLSearchParams(current);
+            next.delete(CONTRACT_ADDRESS_PARAM_KEY);
+            validValues.forEach(value => next.append(CONTRACT_ADDRESS_PARAM_KEY, value));
+            next.set(PAGE_PARAM_KEY, String(FIRST_PAGE));
+            return next;
+          },
+          { replace: true },
+        );
+      }
+      return;
+    }
     if (!sourceSelectOptions.find(option => option.value === selectedContractAddress)) {
       setSearchParams(currentSearchParams => {
         currentSearchParams.delete(CONTRACT_ADDRESS_PARAM_KEY);
@@ -229,7 +272,14 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
         return Object.fromEntries(currentSearchParams);
       });
     }
-  }, [selectedContractAddress, sourceSelectOptions, setSearchParams]);
+  }, [
+    allowDemoPreview,
+    poolData,
+    searchParams,
+    selectedContractAddress,
+    sourceSelectOptions,
+    setSearchParams,
+  ]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const previewTransactions = useMemo(
@@ -239,17 +289,9 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
         : [],
     [isNewPreview, accountAddress, poolData],
   );
-  const filteredPreviewTransactions = previewTransactions.filter(transaction => {
-    const matchesType =
-      selectedTxType === ALL_OPTION_VALUE || transaction.txType === selectedTxType;
-    const matchesSource =
-      selectedContractAddress === ALL_OPTION_VALUE ||
-      (selectedContractAddress === 'trade'
-        ? 'cycleId' in transaction
-        : transaction.contractAddress.toLowerCase() === selectedContractAddress.toLowerCase());
-
-    return matchesType && matchesSource;
-  });
+  const filteredPreviewTransactions = previewTransactions.filter(transaction =>
+    matchesTransactionFilters(transaction, { types: selectedTxTypes, sources: selectedSources }),
+  );
   const transactions = isNewPreview
     ? filteredPreviewTransactions.slice(
         (page - FIRST_PAGE) * ITEMS_PER_PAGE_COUNT,
@@ -271,45 +313,82 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
               : 'flex flex-row gap-3 md:gap-4'
           }
         >
-          <Select
-            className={
-              allowDemoPreview ? 'lite-transaction-filter w-full sm:w-60' : 'flex-1 md:flex-none'
-            }
-            size="small"
-            variant="tertiary"
-            placeLabelToLeft
-            options={txTypeSelectOptions}
-            optionClassName="px-3 h-10 scrollbar-track-cards"
-            dropdownClassName={
-              allowDemoPreview
-                ? 'lite-transaction-options'
-                : 'overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey'
-            }
-            buttonClassName="min-w-1/2 sm:min-w-45"
-            value={selectedTxType}
-            onChange={newValue => setTxType(newValue.toString())}
-          />
+          {allowDemoPreview ? (
+            <>
+              <MultiSelect
+                className="lite-transaction-filter w-full sm:w-60"
+                menuClassName="lite-transaction-multiselect"
+                size="small"
+                placeholder={t('account.transactions.selects.txType.all')}
+                title="Transactions"
+                resetLabel="Reset"
+                renderCount={count => `${count} transaction types`}
+                value={selectedTxTypes}
+                onChange={values => setFilter(TX_TYPE_PARAM_KEY, values)}
+                options={txTypeSelectOptions
+                  .filter(option => option.value !== ALL_OPTION_VALUE)
+                  .map(option => ({
+                    value: option.value,
+                    label:
+                      typeof option.label === 'function'
+                        ? option.label({ isRenderedInButton: false })
+                        : option.label,
+                  }))}
+              />
+              <MultiSelect
+                className="lite-transaction-filter w-full sm:w-60"
+                menuClassName="lite-transaction-multiselect"
+                size="small"
+                placeholder={t('account.transactions.selects.source.all')}
+                title="Sources"
+                resetLabel="Reset"
+                renderCount={count => `${count} sources`}
+                value={selectedSources}
+                onChange={values => setFilter(CONTRACT_ADDRESS_PARAM_KEY, values)}
+                options={sourceSelectOptions
+                  .filter(option => option.value !== ALL_OPTION_VALUE)
+                  .map(option => ({
+                    value: option.value,
+                    label:
+                      typeof option.label === 'function'
+                        ? option.label({ isRenderedInButton: false })
+                        : option.label,
+                  }))}
+              />
+            </>
+          ) : (
+            <>
+              <Select
+                className="flex-1 md:flex-none"
+                size="small"
+                variant="tertiary"
+                placeLabelToLeft
+                options={txTypeSelectOptions}
+                optionClassName="px-3 h-10 scrollbar-track-cards"
+                dropdownClassName="overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey"
+                buttonClassName="min-w-1/2 sm:min-w-45"
+                value={selectedTxType}
+                onChange={newValue => setTxType(newValue.toString())}
+              />
 
-          <Select
-            className={
-              allowDemoPreview ? 'lite-transaction-filter w-full sm:w-60' : 'flex-1 md:flex-none'
-            }
-            size="small"
-            variant="tertiary"
-            placeLabelToLeft
-            options={sourceSelectOptions}
-            optionClassName="px-3 h-10 scrollbar-track-cards"
-            dropdownClassName={
-              allowDemoPreview
-                ? 'lite-transaction-options'
-                : isNewMode
-                  ? 'dashboard-source-options'
-                  : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
-            }
-            buttonClassName="m-w-1/2 sm:min-w-45"
-            value={selectedContractAddress}
-            onChange={newValue => setSelectedContractAddress(newValue.toString())}
-          />
+              <Select
+                className="flex-1 md:flex-none"
+                size="small"
+                variant="tertiary"
+                placeLabelToLeft
+                options={sourceSelectOptions}
+                optionClassName="px-3 h-10 scrollbar-track-cards"
+                dropdownClassName={
+                  isNewMode
+                    ? 'dashboard-source-options'
+                    : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
+                }
+                buttonClassName="m-w-1/2 sm:min-w-45"
+                value={selectedContractAddress}
+                onChange={newValue => setSelectedContractAddress(newValue.toString())}
+              />
+            </>
+          )}
         </div>
       )}
 

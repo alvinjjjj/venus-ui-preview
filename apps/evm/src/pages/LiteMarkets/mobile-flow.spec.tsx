@@ -12,12 +12,13 @@ import { getSourceCollateral } from './CollateralPicker';
 import { aggregateLiteAssets } from './data';
 
 const preview = vi.hoisted(() => ({ mode: 'lite-experiment-v2' }));
+const viewport = vi.hoisted(() => ({ desktop: false }));
 vi.mock('demo/GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
 }));
 vi.mock('hooks/responsive', async importOriginal => ({
   ...(await importOriginal<typeof import('hooks/responsive')>()),
-  useBreakpointUp: () => false,
+  useBreakpointUp: () => viewport.desktop,
 }));
 vi.mock('./GhostBackground', () => ({ GhostBackground: () => null }));
 vi.mock('./TokenPlanets', () => ({ TokenPlanets: () => null }));
@@ -52,6 +53,7 @@ beforeAll(() => {
 afterAll(() => vi.unstubAllGlobals());
 beforeEach(() => {
   vi.clearAllMocks();
+  viewport.desktop = false;
   (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
   (useGetPool as Mock).mockReturnValue({ data: { pool }, isLoading: false });
   (useGetLiquidityHubs as Mock).mockReturnValue({ data: { liquidityHubs }, isLoading: false });
@@ -64,6 +66,52 @@ const openBorrowSources = () => {
   expect(table().getAllByRole('columnheader')).toHaveLength(2);
   fireEvent.click(table().getByRole('button', { name: 'Compare USDT borrowing' }));
 };
+
+it.each([false, true])('shares category multi-selection between Earn and Borrow (desktop: %s)', desktop => {
+  viewport.desktop = desktop;
+  const categorizedPool = {
+    ...pool,
+    assets: pool.assets.map(asset => ({
+      ...asset,
+      category: undefined,
+      marketCategory: ['USDT', 'USDC'].includes(asset.vToken.underlyingToken.symbol)
+        ? { tag: 'stablecoins', label: 'Stablecoins', order: 1 }
+        : undefined,
+    })),
+  };
+  (useGetPool as Mock).mockReturnValue({ data: { pool: categorizedPool }, isLoading: false });
+  renderComponent(<LiteMarkets />);
+  const allCategories = desktop ? 'All categories' : 'Filter';
+  const getMenu = () => within(desktop
+    ? document.querySelector('.venus-multiselect-panel') as HTMLElement
+    : screen.getByRole('dialog'));
+  const closeMenu = (label: string) => fireEvent.click(desktop
+    ? screen.getByRole('button', { name: label, expanded: true })
+    : getMenu().getByRole('button', { name: 'Close' }));
+  fireEvent.click(screen.getByRole('button', { name: allCategories }));
+  let menu = getMenu();
+  expect(menu.queryByRole('button', { name: 'USDT' })).toBeNull();
+  fireEvent.click(menu.getByRole('button', { name: 'Stablecoins', pressed: false }));
+  expect(table().getByRole('button', { name: 'Compare USDT markets' })).toBeVisible();
+  expect(table().queryByRole('button', { name: 'Compare XVS markets' })).toBeNull();
+  closeMenu('Stablecoins');
+
+  fireEvent.click(screen.getByRole('button', { name: /^Borrow$/ }));
+  expect(screen.getByRole('button', { name: 'Stablecoins', expanded: false })).toBeVisible();
+  expect(table().getByRole('button', { name: 'Compare USDT borrowing' })).toBeVisible();
+  expect(table().queryByRole('button', { name: 'Compare XVS borrowing' })).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'Stablecoins', expanded: false }));
+  menu = getMenu();
+  expect(menu.getByRole('button', { name: 'Stablecoins' })).toHaveAttribute('aria-pressed', 'true');
+  fireEvent.click(menu.getByRole('button', { name: 'Others', pressed: false }));
+  expect(table().getByRole('button', { name: 'Compare XVS borrowing' })).toBeVisible();
+  expect(screen.getByRole('button', { name: desktop ? '2 categories' : 'Filter (2)' })).toBeVisible();
+  fireEvent.click(menu.getByRole('button', { name: 'Reset' }));
+  closeMenu(allCategories);
+  fireEvent.click(screen.getByRole('button', { name: /^Earn$/ }));
+  expect(screen.getByRole('button', { name: allCategories, expanded: false })).toBeVisible();
+  expect(table().getByRole('button', { name: 'Compare XVS markets' })).toBeVisible();
+});
 
 it('keeps the asset entry Prime-only and compares ordinary and Prime APY inside its sources', () => {
   const primePool = {

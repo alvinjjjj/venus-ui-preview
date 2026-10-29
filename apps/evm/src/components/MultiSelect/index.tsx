@@ -17,6 +17,8 @@ export interface MultiSelectProps {
   title: React.ReactNode;
   resetLabel: React.ReactNode;
   className?: string;
+  menuClassName?: string;
+  size?: 'small' | 'medium';
 }
 
 export const MultiSelect: React.FC<MultiSelectProps> = ({
@@ -28,6 +30,8 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
   title,
   resetLabel,
   className,
+  menuClassName,
+  size = 'medium',
 }) => {
   const toggle = (optionValue: string) =>
     onChange(
@@ -48,7 +52,10 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
       matchTriggerWidth
       // Clip the options to the menu's rounded corners, so the hover highlight of the last
       // option does not bleed past the border
-      menuClassName="venus-multiselect-panel bg-background border-blue overflow-hidden"
+      menuClassName={cn(
+        'venus-multiselect-panel bg-background border-blue overflow-hidden',
+        menuClassName,
+      )}
       optionsDom={() => (
         <div className="min-w-full">
           <div className="venus-multiselect-title flex min-h-12 items-center justify-between gap-3 px-4 py-3">
@@ -90,7 +97,8 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
           onClick={handleToggleDropdown}
           contentClassName="text-b1s w-full justify-center"
           className={cn(
-            'venus-multiselect-trigger border-dark-blue-hover hover:border-light-grey active:bg-dark-blue relative h-12 w-full rounded-lg bg-transparent px-4 hover:bg-transparent',
+            'venus-multiselect-trigger border-dark-blue-hover hover:border-light-grey active:bg-dark-blue relative w-full rounded-lg bg-transparent px-4 hover:bg-transparent',
+            size === 'small' ? 'h-10' : 'h-12',
             isDropdownOpen && 'bg-dark-blue-active border-blue',
             value.length > 0 && 'border-blue',
           )}

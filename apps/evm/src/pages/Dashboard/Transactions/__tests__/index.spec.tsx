@@ -34,6 +34,17 @@ vi.mock('clients/api', async () => {
 });
 
 describe('Transactions', () => {
+  beforeAll(() => {
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
+  });
+  afterAll(() => vi.unstubAllGlobals());
   beforeEach(() => {
     vi.clearAllMocks();
 

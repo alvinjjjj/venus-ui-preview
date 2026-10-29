@@ -1,9 +1,16 @@
 import { readFileSync } from 'node:fs';
+import { parse } from 'postcss';
 
 const css = readFileSync('src/demo/GlassVersions/e2.css', 'utf8');
-const finalShadow = css.slice(css.indexOf('/* Final market frame:'));
 const selector =
   '#root .lite-experiment :is(.lite-experiment-scroll, .lite-inline-sources, .lite-inline-market)';
+// Inspect only the market-frame rules, rather than unrelated token-menu
+// shadows appended after them in the same stylesheet.
+const frameRules: string[] = [];
+parse(css).walkRules(rule => {
+  if (rule.selector.includes(selector)) frameRules.push(rule.toString());
+});
+const finalShadow = frameRules.slice(-2).join('\n');
 
 it('adds one short downward shadow to the Final main frame in each theme', () => {
   const shadows = [...finalShadow.matchAll(/box-shadow:\s*([^;]+);/g)].map(([, value]) => value);

@@ -100,7 +100,7 @@ it.each(['lite-experiment-v2', 'lite-experiment-v3'] as const)(
   },
 );
 
-it.each(['lite-experiment', 'v1'] as const)(
+it.each(['v1'] as const)(
   'does not opt other %s totals into the new pointer binding',
   revision => {
     useGlassPreview.getState().setMode(revision);
@@ -169,6 +169,8 @@ it('opens Test without changing the selected version or URL and returns to Final
   expect(screen.getByRole('button', { name: 'Lite experiment 3' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Original' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'E2 original experiment' })).toBeVisible();
+  expect(screen.queryByRole('button', { name: 'Lite experiment' })).toBeNull();
+  expect(screen.getByRole('group', { name: 'Previous styles' }).querySelectorAll('.preview-version')).toHaveLength(3);
   expect(useGlassPreview.getState().mode).toBe('lite-experiment-v2');
   expect(screen.getByTestId('location').textContent).toBe(before);
 
@@ -194,9 +196,9 @@ it.each([
   expect(mountEHeaderMirror).toHaveBeenCalledTimes(1);
 
   fireEvent.click(screen.getByRole('tab', { name: 'Test' }));
-  fireEvent.click(screen.getByRole('button', { name: 'Lite experiment' }));
-  expect(localStorage.getItem('venus-glass-version')).toBe('lite-experiment');
-  expect(document.documentElement.dataset.glassRevision).toBe('lite-experiment');
+  fireEvent.click(screen.getByRole('button', { name: 'E2 original experiment' }));
+  expect(localStorage.getItem('venus-glass-version')).toBe('lite-experiment-v2-legacy');
+  expect(document.documentElement.dataset.glassRevision).toBe('lite-experiment-v2');
   unmount();
   expect(document.documentElement.dataset.glassRevision).toBeUndefined();
 });
@@ -205,19 +207,19 @@ it.each([
   ['/?chainId=56&asset=USDT', 'lite'],
   ['/markets/0x123?chainId=56&tab=markets', 'pro'],
 ] as const)(
-  'compares E / E2 / E3 at %s without resetting the page or route state',
+  'compares E2 / E3 at %s without resetting the page or route state',
   (path, mode) => {
     renderController(path, { interfaceMode: mode });
     const before = screen.getByTestId('location').textContent;
     fireEvent.click(screen.getByRole('tab', { name: 'Test' }));
-    for (const name of ['E2 original experiment', 'Lite experiment 3', 'Lite experiment']) {
+    for (const name of ['E2 original experiment', 'Lite experiment 3']) {
       fireEvent.click(screen.getByRole('button', { name }));
       expect(screen.getByTestId('location').textContent).toBe(before);
     }
   },
 );
 
-it.each(['Lite experiment', 'E2 original experiment', 'Lite experiment 3'])(
+it.each(['E2 original experiment', 'Lite experiment 3'])(
   'keeps the original Lite entry behavior when selecting %s from Before',
   name => {
     useGlassPreview.getState().setMode('v1');

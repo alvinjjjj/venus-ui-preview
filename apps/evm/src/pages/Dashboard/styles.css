@@ -1,6 +1,8 @@
 /* Lite shares the Markets page surface without changing Pro or global tokens. */
 .lite-transaction-filter [data-select-trigger],
 .lite-transaction-filter [data-select-trigger] > span,
+.lite-transaction-filter .venus-multiselect-trigger,
+.lite-transaction-filter .venus-multiselect-trigger > span,
 .lite-transaction-options [data-select-option],
 .lite-transaction-options [data-token-symbol] {
   font-weight: 400;
@@ -90,10 +92,29 @@
   margin-bottom: calc(var(--spacing) * 6);
 }
 
-/* Hub holdings use the same 24px inset and internal gap as the overview. */
+/* Trial a compact 12px inset for Lite Hub holdings, using the existing spacing scale. */
 :root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card {
-  padding: calc(var(--spacing) * 6);
+  padding: calc(var(--spacing) * 3);
   gap: calc(var(--spacing) * 6);
+}
+
+/* Long transaction/source names wrap inside the shared multiselect panel. */
+.lite-transaction-multiselect .venus-multiselect-option {
+  height: auto;
+  min-height: calc(var(--spacing) * 10);
+  gap: calc(var(--spacing) * 3);
+}
+
+.lite-transaction-multiselect .venus-multiselect-option > span:first-child {
+  min-width: 0;
+  flex: 1;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.lite-transaction-multiselect :is(.venus-multiselect-option p, [data-token-symbol]) {
+  white-space: normal;
+  font-weight: 400;
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card > .flex {

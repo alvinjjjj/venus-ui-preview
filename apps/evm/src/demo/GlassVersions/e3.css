@@ -810,6 +810,17 @@
   transform: perspective(180px) rotateY(-18deg) rotateZ(-10deg) translate(-5%, -5%);
   mask-image: radial-gradient(ellipse, black 35%, rgb(0 0 0 / 65%) 70%, transparent 100%);
 }
+/* The supplied white Venus mark preserves all strokes without thresholding
+   the blue/turquoise token artwork or clipping its corners. */
+.lite-token-planet[data-planet-renderer='gradient'][data-token='XVS'] .lite-token-planet-orb img {
+  filter: none;
+  mask-image: none;
+  border-radius: 0;
+}
+/* E2 uses the existing one-eighth illustration reduction, centered on the orb. */
+:root[data-glass-variant='lite-experiment-v2-legacy'] .lite-token-planet[data-token='XVS'] .lite-token-original-mark {
+  scale: .875;
+}
 .lite-token-planet[data-token='sUSDe'] .lite-token-planet-orb img,
 .lite-token-planet[data-token='ETH'] .lite-token-planet-orb img {
   filter: grayscale(1) invert(1) brightness(.78) contrast(8);

@@ -7,10 +7,28 @@ import { useAccountAddress } from 'libs/wallet';
 import { type ReactNode, useState } from 'react';
 import type { LiquidityHub, Pool } from 'types';
 import { getCombinedApy } from 'utilities';
-import { BStockPositions } from './BStockPositions';
+import { BStockPositions, bStockPreviewHealthFactor } from './BStockPositions';
 import { Hubs } from './Hubs';
 import { Positions } from './Markets/Positions';
 import { Placeholder } from './Placeholder';
+import { PositionHealthIndicator } from './PositionHealthIndicator';
+
+type PositionChoice = { id: string; label: string; content: ReactNode; healthFactor?: number };
+
+function PositionChoiceLabel({
+  choice,
+  showHealth,
+}: { choice: PositionChoice; showHealth: boolean }) {
+  const factor = choice.healthFactor;
+  return (
+    <span className="inline-flex items-center gap-3">
+      <span>{choice.label}</span>
+      {showHealth && factor !== undefined && Number.isFinite(factor) && factor >= 0 && (
+        <PositionHealthIndicator factor={factor} />
+      )}
+    </span>
+  );
+}
 
 export function LitePositions({
   corePool,
@@ -38,10 +56,14 @@ export function LitePositions({
         asset.userBorrowBalanceTokens.gt(0) ||
         asset.isCollateralOfUser,
     );
-  const choices: { id: string; label: string; content: ReactNode }[] = [
+  const choices: PositionChoice[] = [
     {
       id: 'venus-core',
       label: 'Venus Core',
+      healthFactor:
+        accountAddress && corePool?.userBorrowBalanceCents?.gt(0)
+          ? corePool.userHealthFactor
+          : undefined,
       content:
         hasCorePositions && corePool ? (
           <Positions pools={[corePool]} previewInteractions={previewInteractions} />
@@ -88,6 +110,10 @@ export function LitePositions({
     choices.push({
       id: `bstock-${variant}`,
       label: `bStock ${variant}`,
+      healthFactor:
+        demoLoggedIn && isDemoAddress(accountAddress) && corePool
+          ? bStockPreviewHealthFactor
+          : undefined,
       content:
         demoLoggedIn && isDemoAddress(accountAddress) ? (
           <BStockPositions variant={variant} corePool={corePool} />
@@ -112,7 +138,15 @@ export function LitePositions({
               name="position-market"
               value={active.id}
               onChange={value => setSelected(String(value))}
-              options={choices.map(({ id, label }) => ({ value: id, label }))}
+              options={choices.map(choice => ({
+                value: choice.id,
+                label: ({ isRenderedInButton }) => (
+                  <PositionChoiceLabel
+                    choice={choice}
+                    showHealth={!isRenderedInButton && choice.id !== active.id}
+                  />
+                ),
+              }))}
               menuTitle="Positions"
             />
           </div>
@@ -151,7 +185,7 @@ export function LitePositions({
                       : 'bg-dark-blue text-light-grey hover:text-white',
                 )}
               >
-                {choice.label}
+                <PositionChoiceLabel choice={choice} showHealth={active.id !== choice.id} />
               </button>
             ))}
           </div>

@@ -31,12 +31,14 @@ export const SimulatedMarketTotal = ({
   updateIntervalMs,
   animateDigits = false,
   decimalPlaces = animateDigits ? 0 : 2,
+  sleepBetweenUpdates = false,
 }: {
   valueCents: BigNumber;
   field: 'supplyUsd' | 'liquidityUsd';
   updateIntervalMs?: number;
   animateDigits?: boolean;
   decimalPlaces?: 0 | 2;
+  sleepBetweenUpdates?: boolean;
 }) => {
   const node = useRef<HTMLSpanElement>(null);
   const [offsetCents, setOffsetCents] = useState(0);
@@ -47,11 +49,20 @@ export const SimulatedMarketTotal = ({
     const hasObserver = typeof IntersectionObserver === 'function';
     let visible = !hasObserver;
     let frame: number | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     let previousTime: number | undefined;
     let elapsed = 0;
     let lastRandomStep = 0;
     const positiveBase = new BigNumber(baseKey).isGreaterThan(0);
     const running = () => !!media && !media.matches && visible && !document.hidden && positiveBase;
+    const schedule = () => {
+      if (sleepBetweenUpdates && updateIntervalMs && updateIntervalMs > 0) {
+        timer = setTimeout(() => {
+          timer = undefined;
+          if (running()) frame = requestAnimationFrame(tick);
+        }, updateIntervalMs - elapsed % updateIntervalMs);
+      } else frame = requestAnimationFrame(tick);
+    };
     const tick = (time: number) => {
       frame = undefined;
       if (!running()) return;
@@ -64,7 +75,7 @@ export const SimulatedMarketTotal = ({
           const randomRemainder = Math.floor(Math.random() * 100000000) * 100;
           setOffsetCents(randomRemainder - new BigNumber(baseKey).modulo(E3_BAND_CENTS).toNumber());
         }
-        frame = requestAnimationFrame(tick);
+        schedule();
         return;
       }
       const segment = Math.floor(elapsed / CYCLE_MS) % PREVIEW_OFFSETS.length;
@@ -79,13 +90,16 @@ export const SimulatedMarketTotal = ({
     };
     const sync = () => {
       if (running()) {
-        if (frame === undefined) {
+        if (frame === undefined && timer === undefined) {
           previousTime = undefined;
           frame = requestAnimationFrame(tick);
         }
       } else {
         if (frame !== undefined) cancelAnimationFrame(frame);
+        if (timer !== undefined) clearTimeout(timer);
+        if (sleepBetweenUpdates && previousTime !== undefined) elapsed += performance.now() - previousTime;
         frame = undefined;
+        timer = undefined;
         previousTime = undefined;
         if (media?.matches) {
           elapsed = 0;
@@ -107,11 +121,12 @@ export const SimulatedMarketTotal = ({
     sync();
     return () => {
       if (frame !== undefined) cancelAnimationFrame(frame);
+      if (timer !== undefined) clearTimeout(timer);
       observer?.disconnect();
       document.removeEventListener('visibilitychange', sync);
       media?.removeEventListener('change', sync);
     };
-  }, [baseKey, field, updateIntervalMs]);
+  }, [baseKey, field, updateIntervalMs, sleepBetweenUpdates]);
 
   const displayCents = BigNumber.maximum(0, valueCents.plus(offsetCents));
   // Display precision is independent of motion; underlying cents remain intact.

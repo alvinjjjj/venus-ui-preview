@@ -1,13 +1,13 @@
-/* Approved ASCII sky shared by Final and Test E2; other experiments stay intact. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb {
+/* Final keeps the approved ASCII sky; Test E2 and E3 share gradient planets. */
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb {
   filter: none !important;
   opacity: .85;
   box-shadow: none;
   background: transparent;
   overflow: visible;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb::after,
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-ring { display: none; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb::after,
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-ring { display: none; }
 .lite-ascii-planet {
   position: absolute;
   width: 150%;
@@ -17,7 +17,7 @@
   top: -25%;
   pointer-events: none;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb img {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb img {
   width: 28%; height: 28%;
   filter: none;
   mix-blend-mode: normal;
@@ -25,12 +25,13 @@
   transform: none;
   opacity: .95;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-open='true'] .lite-token-planet-orb { opacity: 1; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-open='true'] .lite-token-planet-orb { opacity: 1; }
 /* Approved foreground placement: shift the artwork up without moving its APY card. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='USDT'] .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='USDT'] .lite-token-planet-orb {
   translate: 0 calc(var(--spacing) * -4);
 }
 @media (max-width: 767px) {
+  /* Preserve E2's mobile list flow; discovery planets stay on the desktop sky. */
   :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planets { display: none; }
 }
 /* Artwork proportions: larger than the old badge to preserve glyph legibility. */
@@ -41,117 +42,119 @@
   z-index: 1;
   pointer-events: none;
 }
+/* Illustration-only refinement: one eighth smaller, with the same center. */
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet:is([data-token='USD1'], [data-token='XVS']) .lite-ascii-token-mark {
+  scale: .875;
+}
 /* E2 satellite legibility: preserve the two large foreground planets. */
 @media (min-width: 1101px) {
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='BTCB'] { --planet-size: 25; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='WBNB'] { --planet-size: 32; --ascii-depth: .75; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='WBETH'] { --planet-size: 16; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='ETH'] { --planet-size: 12; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='BTCB'] { --planet-size: 25; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet:is([data-token='WBNB'], [data-token='BNB']) { --planet-size: 24; --ascii-depth: .75; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='WBETH'] { --planet-size: 16; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='ETH'] { --planet-size: 12; }
 }
-/* The BNB emblem, not just its sphere, needs to carry the asset identity. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='WBNB'] .lite-ascii-token-mark {
-  width: 80%; height: 80%; left: 10%; top: 10%;
-}
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet-detail {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet-detail {
   padding: calc(var(--spacing) * 2);
   max-width: calc(100vw - var(--spacing) * 8);
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet-title {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet-title {
   font-size: var(--text-sm);
   padding-bottom: calc(var(--spacing) * 2);
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet-detail .lite-token-planet-market {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet-detail .lite-token-planet-market {
   min-height: calc(var(--spacing) * 9);
   padding-block: var(--spacing);
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet-detail .lite-token-planet-earn {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet-detail .lite-token-planet-earn {
   margin-top: calc(var(--spacing) * 2);
 }
 /* One six-second breath per planet, followed by a quiet hand-off. Eight slots
    share one timeline; a partial viewport simply leaves some slots quiet. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet {
   animation: none;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb {
   animation: ascii-planet-breathe 48s ease-in-out infinite;
   animation-delay: calc(var(--ascii-breath-slot, 0) * 6s);
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--2 { --ascii-breath-slot: 4; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--3 { --ascii-breath-slot: 2; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--4 { --ascii-breath-slot: 6; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--5 { --ascii-breath-slot: 1; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--6 { --ascii-breath-slot: 5; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--7 { --ascii-breath-slot: 3; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--8 { --ascii-breath-slot: 7; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--2 { --ascii-breath-slot: 4; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--3 { --ascii-breath-slot: 2; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--4 { --ascii-breath-slot: 6; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--5 { --ascii-breath-slot: 1; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--6 { --ascii-breath-slot: 5; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--7 { --ascii-breath-slot: 3; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--8 { --ascii-breath-slot: 7; }
 @keyframes ascii-planet-breathe {
   0%, 12.5%, 100% { transform: scale(1); }
   6.25% { transform: scale(1.045); }
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planets:has([data-open='true']) .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planets:has([data-open='true']) .lite-token-planet-orb {
   animation-play-state: paused;
 }
 @media (prefers-reduced-motion: reduce) {
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb { animation: none; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb { animation: none; }
 }
 /* Per-planet depth follows Final's soft-focus treatment, tuned for characters. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet .lite-token-planet-orb {
   filter: blur(calc(var(--spacing) * var(--ascii-depth, .75))) !important;
   opacity: .82;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--1 { --ascii-depth: .75; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--2 { --ascii-depth: .75; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--3 { --ascii-depth: 1; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--4 { --ascii-depth: .625; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--5 { --ascii-depth: 1.25; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--6 { --ascii-depth: .75; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--7 { --ascii-depth: 1.75; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--8 { --ascii-depth: 1.125; }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-open='true'] .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--1 { --ascii-depth: .75; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--2 { --ascii-depth: .75; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--3 { --ascii-depth: 1; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--4 { --ascii-depth: .625; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--5 { --ascii-depth: 1.25; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--6 { --ascii-depth: .75; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--7 { --ascii-depth: 1.75; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--8 { --ascii-depth: 1.125; }
+:root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-open='true'] .lite-token-planet-orb {
   filter: blur(0) contrast(1.18) !important;
   opacity: 1;
 }
 /* 1440-class displays: two staggered side columns clear the 768px market card. */
 @media (min-width: 1101px) and (max-width: 1599px) {
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--1 { left: 5%; top: 43%; --planet-size: 36; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--2 { right: 7%; top: 68%; --planet-size: 32; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--3 { left: 8%; top: 78%; --planet-size: 20; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--4 { right: 4%; top: 40%; --planet-size: 22; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--5 { left: 13%; top: 21%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--6 { right: 11%; top: 17%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet[data-token='WBNB'] {
-    --planet-size: 32;
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--1 { left: 5%; top: 43%; --planet-size: 36; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--2 { right: 7%; top: 68%; --planet-size: 32; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--3 { left: 8%; top: 78%; --planet-size: 20; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--4 { right: 4%; top: 40%; --planet-size: 22; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--5 { left: 13%; top: 21%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--6 { right: 11%; top: 17%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='BNB'] {
+    --planet-size: 24;
     --ascii-depth: .75;
   }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planet:is([data-token='USDT'], [data-token='USDC']) {
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planet:is([data-token='USDT'], [data-token='USDC']) {
     --ascii-depth: .75;
   }
   /* Keep the three foreground hues readable on the pale sky, while the small
      satellites retain their softer depth. No extra light layers or shadows. */
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planet:is([data-token='USDT'], [data-token='USDC'], [data-token='WBNB']) .lite-token-planet-orb {
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planet:is([data-token='USDT'], [data-token='USDC'], [data-token='BNB']) .lite-token-planet-orb {
     opacity: .9;
   }
 }
 /* Wider screens keep the same staggered composition, rather than a token stack. */
 @media (min-width: 1600px) {
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--1 { left: 8%; top: 46%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--2 { right: 8%; top: 66%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--3 { left: 20%; top: 73%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--4 { right: 6%; top: 40%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--5 { left: 18%; top: 25%; }
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']) .lite-token-planet--6 { right: 19%; top: 18%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--1 { left: 8%; top: 46%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--2 { right: 8%; top: 66%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--3 { left: 20%; top: 73%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--4 { right: 6%; top: 40%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--5 { left: 18%; top: 25%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet--6 { right: 19%; top: 18%; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='ETH'] { left: 7%; top: 80%; --planet-size: 20; --ascii-depth: 1; }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-token-planet[data-token='USD1'] { right: 7%; top: 14%; --planet-size: 20; --ascii-depth: .75; }
 }
 /* Light E2: deliberate focus-in, softer return to the depth plane. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb {
   transition: filter .6s ease-out, opacity .6s ease-out, scale .6s ease-out;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planet[data-open='true'] .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planet[data-open='true'] .lite-token-planet-orb {
   transition-duration: .3s;
 }
 /* Static side illumination uses the existing primary color, leaving the market
    reading area neutral. No animated gradients or additional render loop. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planets::before {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planets::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -161,16 +164,16 @@
     radial-gradient(ellipse 24% 38% at 94% 66%, color-mix(in srgb, var(--color-blue) 6%, transparent), transparent 100%);
 }
 @media (prefers-reduced-motion: reduce) {
-  :root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2'])[data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb { transition: none; }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .lite-token-planet .lite-token-planet-orb { transition: none; }
 }
 /* Dark E2 keeps the original sky; only the foreground illustration gains color. */
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']):not([data-liquidity-theme='light']) .lite-token-planet .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .lite-token-planet .lite-token-planet-orb {
   filter: blur(calc(var(--spacing) * var(--ascii-depth, .75))) saturate(1.2) !important;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']):not([data-liquidity-theme='light']) .lite-token-planet:nth-child(-n+2) .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .lite-token-planet:nth-child(-n+2) .lite-token-planet-orb {
   opacity: .96;
 }
-:root:is([data-glass-variant='lite-experiment-v2-legacy'], [data-glass-variant='lite-experiment-v2']):not([data-liquidity-theme='light']) .lite-token-planet[data-open='true'] .lite-token-planet-orb {
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .lite-token-planet[data-open='true'] .lite-token-planet-orb {
   filter: blur(0) saturate(1.25) contrast(1.18) !important;
   opacity: 1;
 }

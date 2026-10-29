@@ -1,5 +1,6 @@
 import { transactions as mockData } from '__mocks__/models/transactions';
 import type { TxType } from 'types';
+import { matchesTransactionFilters } from 'utilities/matchesTransactionFilters';
 import type {
   GetAccountTransactionHistoryInput,
   GetAccountTransactionHistoryOutput,
@@ -31,9 +32,11 @@ export const TX_TYPE_TO_API_FILTER: Record<TxType, number> = {
 export const getAccountTransactionHistory = async ({
   types,
   page = 0,
+  sourceFilters,
+  pageSize = 10,
 }: GetAccountTransactionHistoryInput): Promise<GetAccountTransactionHistoryOutput> => {
   const data = (mockData.transactions as GetAccountTransactionHistoryOutput['transactions']).filter(
-    tx => !types.length || types.includes(tx.txType),
+    tx => matchesTransactionFilters(tx, { types, sources: sourceFilters }),
   );
-  return { transactions: data.slice(page * 10, (page + 1) * 10), count: data.length };
+  return { transactions: data.slice(page * pageSize, (page + 1) * pageSize), count: data.length };
 };

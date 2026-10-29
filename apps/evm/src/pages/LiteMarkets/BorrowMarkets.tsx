@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
   AssetApy,
-  MultiSelect,
   type TableColumn,
   TextField,
-  TokenIcon,
   TokenIconWithSymbol,
 } from 'components';
 import { PAGE_CONTAINER_ID } from 'constants/layout';
@@ -33,6 +31,7 @@ export function BorrowMarkets({
   experimental = false,
   mobile = false,
   modeSwitch,
+  categoryFilter,
   selected,
   onSelect: setSelected,
 }: {
@@ -42,13 +41,13 @@ export function BorrowMarkets({
   experimental?: boolean;
   mobile?: boolean;
   modeSwitch?: React.ReactNode;
+  categoryFilter: React.ReactNode;
   selected?: string;
   onSelect: (address: string | undefined) => void;
 }) {
   const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
   const isLegacyE2 = useGlassPreview(state => state.mode === 'lite-experiment-v2-legacy');
   const [search, setSearch] = useState('');
-  const [tokenFilter, setTokenFilter] = useState<string[]>([]);
   useEffect(() => {
     if (selected) document.getElementById(PAGE_CONTAINER_ID)?.scrollTo({ top: 0 });
   }, [selected]);
@@ -61,9 +60,7 @@ export function BorrowMarkets({
   );
   const active = assets.find(asset => asset.vToken.address === selected);
   const filtered = assets.filter(
-    asset =>
-      (tokenFilter.length === 0 || tokenFilter.includes(asset.vToken.address)) &&
-      asset.vToken.underlyingToken.symbol.toLowerCase().includes(search.trim().toLowerCase()),
+    asset => asset.vToken.underlyingToken.symbol.toLowerCase().includes(search.trim().toLowerCase()),
   );
 
   const columns: TableColumn<Asset>[] = [
@@ -168,7 +165,7 @@ export function BorrowMarkets({
             {modeSwitch}
             <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
-                aria-label="Search loan assets"
+                aria-label="Search assets"
                 placeholder="Search asset"
                 size="sm"
                 inputContainerClassName="venus-market-search-surface"
@@ -177,26 +174,7 @@ export function BorrowMarkets({
                 onChange={event => setSearch(event.target.value)}
                 className="sm:max-w-75"
               />
-              <MultiSelect
-                className="lite-loan-filter w-full sm:w-60 shrink-0"
-                placeholder={mobile ? 'Filter' : 'All loan assets'}
-                title="Loan assets"
-                resetLabel="All loan assets"
-                renderCount={count => mobile ? `Filter (${count})` : `${count} loan assets`}
-                value={tokenFilter}
-                onChange={setTokenFilter}
-                options={[
-                  ...assets.map(asset => ({
-                    label: (
-                      <span className="inline-flex items-center gap-2 font-normal">
-                        <TokenIcon token={asset.vToken.underlyingToken} size="md" />
-                        {asset.vToken.underlyingToken.symbol}
-                      </span>
-                    ),
-                    value: asset.vToken.address,
-                  })),
-                ]}
-              />
+              {categoryFilter}
             </div>
             </div>
           }

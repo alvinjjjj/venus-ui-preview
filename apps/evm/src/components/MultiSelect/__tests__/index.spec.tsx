@@ -46,12 +46,13 @@ describe('MultiSelect', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'All options' }));
 
-    // An open dropdown renders its options in both the desktop menu and the mobile modal;
-    // the desktop menu comes first, and is the element the accent border is passed to
+    // Keep the scrollable options inside the framed surface, so the scrollbar cannot
+    // cover its border or rounded corners.
     const menu = screen.getAllByText('Last option')[0].closest('.border-blue');
 
     expect(menu).toHaveClass('overflow-hidden');
     expect(menu).not.toHaveClass('overflow-visible');
+    expect(menu?.querySelector('.venus-dropdown-scroll-area')).toHaveClass('overflow-y-auto');
   });
 
   it('exposes selected options and clears both selection feedback and the trigger on reset', () => {
@@ -80,5 +81,48 @@ describe('MultiSelect', () => {
       'data-multiselect-has-value',
       'false',
     );
+  });
+
+  it('keeps the floating menu attached when filtering changes the layout or the page scrolls', () => {
+    const ControlledSelect = () => {
+      const [value, setValue] = useState<string[]>([]);
+      return (
+        <MultiSelect
+          options={options}
+          value={value}
+          onChange={setValue}
+          placeholder="All options"
+          renderCount={count => `${count} options`}
+          title="Select options"
+          resetLabel="Reset"
+        />
+      );
+    };
+    renderComponent(<ControlledSelect />);
+    const trigger = screen.getByRole('button', { name: 'All options' });
+    const anchor = trigger.parentElement;
+    if (!anchor) throw new Error('Dropdown anchor is required');
+    let top = 100;
+    const rectSpy = vi.spyOn(anchor, 'getBoundingClientRect').mockImplementation(() => ({
+      x: 300,
+      y: top,
+      left: 300,
+      right: 540,
+      top,
+      bottom: top + 40,
+      width: 240,
+      height: 40,
+      toJSON: () => ({}),
+    }));
+    fireEvent.click(trigger);
+    const floatingMenu = document.querySelector('.venus-multiselect-panel')?.parentElement;
+    expect(floatingMenu).toHaveStyle({ top: '148px', left: '300px' });
+    top = 150;
+    fireEvent.click(screen.getByRole('button', { name: 'First option', pressed: false }));
+    expect(floatingMenu).toHaveStyle({ top: '198px' });
+    top = 200;
+    fireEvent.scroll(window);
+    expect(floatingMenu).toHaveStyle({ top: '248px' });
+    rectSpy.mockRestore();
   });
 });

@@ -3,22 +3,32 @@ import { useGlassPreview } from 'demo/GlassVersions/store';
 import { Button } from '@venusprotocol/ui';
 import { createPortal } from 'react-dom';
 import { useIsMdDown } from 'hooks/responsive';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { AsciiTokenMark } from './AsciiTokenMark';
 import { AsciiPlanet } from './AsciiPlanet';
 import { palettes, PlanetSurface } from './PlanetSurface';
 import wbethPlanetMark from './wbeth-planet-mark.svg';
+import usd1PlanetMark from './usd1-planet-mark.svg';
+import venusPlanetMark from '../Landing/LandingMockup/assets/venus-mark-white.svg';
 import type { LiteAsset } from './data';
 import { getPlanetPopupPosition } from './planet-popup-position';
 
-const preferred = ['USDT', 'USDC', 'sUSDe', 'DAI', 'BTCB', 'WBNB', 'ETH', 'WBETH'];
+// Keep the foreground pair in slots 1/2. Match the existing 1600px
+// illustration breakpoint rather than changing the shared UI breakpoints.
+const desktopSymbols = ['USDT', 'USDC', 'U', 'XVS', 'BTCB', 'WBNB', 'ETH', 'USD1'];
+const compactDesktopSymbols = ['USDT', 'USDC', 'U', 'XVS', 'BTCB', 'BNB'];
+const getPlanetMark = ({ token }: LiteAsset) => token.symbol === 'USD1'
+  ? usd1PlanetMark
+  : token.symbol === 'WBETH' ? wbethPlanetMark : token.iconSrc;
 
 /** Discovery shortcuts use the same asset/market data as the transaction form. */
 export function TokenPlanets({ rows, onSelect }: {
   rows: LiteAsset[];
   onSelect: (row: LiteAsset, marketId: string) => void;
 }) {
-  const ascii = useGlassPreview(state => state.mode === 'lite-experiment-v2-legacy' || state.mode === 'lite-experiment-v2');
+  const ascii = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const compact = useIsMdDown();
+  const wideDesktop = useMediaQuery('(min-width: 1600px)');
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const [open, setOpen] = useState<string>();
   const [replay, setReplay] = useState({ key: '', count: 0 });
@@ -57,15 +67,23 @@ export function TokenPlanets({ rows, onSelect }: {
     orb.addEventListener('transitionend', update);
     window.addEventListener('resize', update);
     return () => { observer.disconnect(); orb.removeEventListener('transitionend', update); window.removeEventListener('resize', update); };
-  }, [open, ascii]);
-  const assets = [...rows].sort((a, b) => {
-    const rank = (symbol: string) => preferred.includes(symbol) ? preferred.indexOf(symbol) : preferred.length;
-    return rank(a.token.symbol) - rank(b.token.symbol);
+  }, [open, ascii, wideDesktop]);
+  const bySymbol = new Map(rows.map(row => [row.token.symbol, row]));
+  const symbols = wideDesktop ? desktopSymbols : compactDesktopSymbols;
+  const assets = symbols.flatMap(symbol => {
+    const row = bySymbol.get(symbol);
+    return row ? [row] : [];
   }).slice(0, compact ? 4 : 8);
+  useEffect(() => {
+    if (open && ((compact && ascii) || !assets.some(row => row.key === open))) {
+      setOpen(undefined);
+      setPopupPosition(undefined);
+    }
+  }, [assets, open, compact, ascii]);
   const content = (
     <aside className="lite-token-planets" aria-label="Explore Earn APYs">
       {assets.map((row, index) => (
-        <div key={row.key} ref={node => { planetRefs.current[row.key] = node; }} className={`lite-token-planet lite-token-planet--${index + 1}`} data-open={open === row.key} data-planet-surface="true" data-token={row.token.symbol} data-ring={row.token.symbol === 'USDC' || row.token.symbol === 'DAI'}
+        <div key={row.key} ref={node => { planetRefs.current[row.key] = node; }} className={`lite-token-planet lite-token-planet--${index + 1}`} data-open={open === row.key} data-planet-surface="true" data-planet-renderer={ascii ? 'ascii' : 'gradient'} data-token={row.token.symbol} data-ring={row.token.symbol === 'USDC' || row.token.symbol === 'DAI'}
           onMouseEnter={() => { cancelClose(); setOpen(row.key); }}
           onMouseLeave={() => { closeTimer.current = setTimeout(() => setOpen(undefined), 150); }}
           onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setOpen(undefined); }}
@@ -75,7 +93,7 @@ export function TokenPlanets({ rows, onSelect }: {
             onFocus={() => { cancelClose(); setOpen(row.key); }} onClick={() => { cancelClose(); setOpen(row.key); setReplay(previous => ({ key: row.key, count: previous.count + 1 })); }}>
             <span className="lite-token-ring lite-token-ring--back" aria-hidden="true" />
             {ascii ? <AsciiPlanet color={(palettes[row.token.symbol] ?? palettes.USDC)[1]} highlight={(palettes[row.token.symbol] ?? palettes.USDC)[0]} shadow={(palettes[row.token.symbol] ?? palettes.USDC)[2]} active={open === row.key} replayToken={replay.key === row.key ? replay.count : 0} surface="rim" glyphScale={1.1} /> : <PlanetSurface symbol={row.token.symbol} />}
-            {ascii ? <AsciiTokenMark src={row.token.symbol === 'WBETH' ? wbethPlanetMark : row.token.iconSrc} symbol={row.token.symbol} color={(palettes[row.token.symbol] ?? palettes.USDC)[2]} highlight={(palettes[row.token.symbol] ?? palettes.USDC)[0]} glyphScale={1.1} active={open === row.key} replayToken={replay.key === row.key ? replay.count : 0} /> : <img className="lite-token-original-mark" src={row.token.symbol === 'WBETH' ? wbethPlanetMark : row.token.iconSrc} alt={row.token.symbol} />}
+            {ascii ? <AsciiTokenMark src={getPlanetMark(row)} symbol={row.token.symbol} color={(palettes[row.token.symbol] ?? palettes.USDC)[2]} highlight={(palettes[row.token.symbol] ?? palettes.USDC)[0]} glyphScale={1.1} active={open === row.key} replayToken={replay.key === row.key ? replay.count : 0} /> : <img className="lite-token-original-mark" src={row.token.symbol === 'XVS' ? venusPlanetMark : getPlanetMark(row)} alt={row.token.symbol} />}
             <span className="lite-token-ring lite-token-ring--front" aria-hidden="true" />
           </button>
           {open === row.key && <div id={`planet-${index}`} className="lite-token-planet-detail" role="dialog" aria-label={`${row.token.symbol} supply APY`} style={ascii ? popupPosition : undefined}>
@@ -98,5 +116,7 @@ export function TokenPlanets({ rows, onSelect }: {
       ))}
     </aside>
   );
-  return compact ? content : createPortal(content, document.body);
+  // Final already hides these illustrations on phones. Avoid mounting their
+  // canvases and sampling token artwork for that invisible presentation.
+  return compact && ascii ? null : compact ? content : createPortal(content, document.body);
 }

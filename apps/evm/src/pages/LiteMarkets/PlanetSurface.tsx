@@ -8,6 +8,10 @@ export const palettes: Record<string, [string, string, string]> = {
   DAI: ['#fff0ba', '#d9aa52', '#76522f'],
   BTCB: ['#ffe3bb', '#d99b58', '#754235'],
   WBNB: ['#fff2bc', '#d4b44b', '#665432'],
+  BNB: ['#fff2bc', '#d4b44b', '#665432'],
+  U: ['#f5efd2', '#b6ad83', '#575a5f'],
+  XVS: ['#b7edff', '#477ed0', '#173764'],
+  USD1: ['#fff0bd', '#b98b32', '#5d4326'],
   ETH: ['#e0defa', '#9398ce', '#393858'],
   WBETH: ['#f8e4c2', '#b79c68', '#575273'],
 };
