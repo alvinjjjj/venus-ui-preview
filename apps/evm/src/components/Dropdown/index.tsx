@@ -35,7 +35,12 @@ const FloatingPresence = ({ children, animated, position, className, onEscape }:
       initial={animated ? { opacity: 0, y: -4 } : false}
       animate={{ opacity: 1, y: 0, transition: { duration: animated ? .22 : 0, ease: 'easeOut' } }}
       exit={{ opacity: 0, y: animated ? -2 : 0, transition: { duration: animated ? .14 : 0, ease: 'easeOut' } }}
-      onKeyDown={event => { if (event.key === 'Escape') onEscape(); }}
+      onKeyDown={event => {
+        if (event.key === 'Escape') {
+          event.stopPropagation();
+          onEscape();
+        }
+      }}
     ><div className="venus-dropdown-scroll-area min-h-0 overflow-y-auto">{children}</div></motion.div>
   </div>;
 };
@@ -69,6 +74,7 @@ export const Dropdown = ({
   const animateMenu = !reduceMotion &&
     typeof document !== 'undefined' && ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '');
   const anchorRef = useRef<HTMLDivElement>(null);
+  const [headerInset, setHeaderInset] = useState<number>();
   const [position, setPosition] = useState({
     top: 0,
     left: 0,
@@ -78,11 +84,41 @@ export const Dropdown = ({
   });
   const isMdOrUp = useBreakpointUp('md');
   useLayoutEffect(() => {
+    const anchor = anchorRef.current;
+    const header = anchor?.closest<HTMLElement>('.venus-header-row');
+    if (
+      !isDropdownOpen || !triggerOnHover || !isMdOrUp || !anchor ||
+      !header?.closest('[data-figma-header]') ||
+      document.documentElement.dataset.glassVariant !== 'lite-experiment-v2'
+    ) {
+      setHeaderInset(undefined);
+      return;
+    }
+
+    // Bridge the space below differently sized triggers to one header baseline.
+    // The shared header CSS adds the approved gap between that baseline and the panel.
+    const update = () => {
+      setHeaderInset(Math.max(0, header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().bottom));
+    };
+    update();
+    window.addEventListener('resize', update);
+    window.addEventListener('scroll', update, true);
+    return () => {
+      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', update, true);
+    };
+  }, [isDropdownOpen, triggerOnHover, isMdOrUp]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Option changes can resize the trigger, so remeasure after rendering them.
+  useLayoutEffect(() => {
     if (!isDropdownOpen || triggerOnHover || !isMdOrUp) return;
     const update = () => {
       const rect = anchorRef.current?.getBoundingClientRect();
       if (!rect) return;
-      const useTriggerWidth = matchTriggerWidth && ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '');
+      const useTriggerWidth = matchTriggerWidth && (
+        ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '') ||
+        document.documentElement.dataset.glassVariant === 'lite-experiment-v2'
+      );
       const width = Math.min(useTriggerWidth ? rect.width : Math.max(rect.width, 240), window.innerWidth - 32);
       const below = window.innerHeight - rect.bottom - 16;
       const above = rect.top - 16;
@@ -139,7 +175,8 @@ export const Dropdown = ({
         <div
           ref={anchorRef}
           onKeyDown={event => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && isDropdownOpen) {
+              event.stopPropagation();
               setIsDropdownOpen(false);
               event.currentTarget.querySelector<HTMLButtonElement>('button')?.focus();
             }
@@ -164,6 +201,7 @@ export const Dropdown = ({
             <NavigationPresence animated={animateMenu}>
               <div
                 className={cn('pt-2 absolute min-w-full', menuPosition === 'right' && 'right-0')}
+                style={headerInset === undefined ? undefined : { paddingTop: headerInset }}
               >
                 <motion.div
                   variants={{

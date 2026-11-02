@@ -1,10 +1,11 @@
+import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import babel from '@rolldown/plugin-babel';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, searchForWorkspaceRoot } from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 
@@ -31,6 +32,16 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: './',
+    server: {
+      fs: {
+        allow: [
+          searchForWorkspaceRoot(process.cwd()),
+          // Local workspace dependencies may be symlinked from another checkout.
+          // Serve the existing UI fonts without widening access to that checkout.
+          realpathSync(fileURLToPath(new URL('../../node_modules/@venusprotocol/ui/src/fonts', import.meta.url))),
+        ],
+      },
+    },
     plugins: [
       react({
         jsxImportSource: '@emotion/react',

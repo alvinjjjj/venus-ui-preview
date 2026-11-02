@@ -1,6 +1,7 @@
 import { Button, ButtonWrapper } from '@venusprotocol/ui';
 import { routes } from 'constants/routing';
 import { Link } from 'containers/Link';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useDemo } from 'demo/state';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { createPortal } from 'react-dom';
@@ -26,6 +27,7 @@ export interface AccountModalProps {
 export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPrime, onClose }) => {
   const { logout } = useDemo();
   const { isLite, setMode } = useInterfaceMode();
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const handleDisconnect = () => {
     logout();
     setMode('lite');
@@ -37,9 +39,9 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
     <>
       <BodyBackdrop onClick={onClose} className="venus-popup-backdrop" />
 
-      <div className="fixed top-20 left-4 right-4 z-99999 sm:left-auto sm:right-6">
+      <div className="venus-account-popover fixed top-20 left-4 right-4 z-99999 sm:left-auto sm:right-6">
         <div role="dialog" aria-label="Account" aria-modal="true">
-          <div className="venus-popup-panel w-full max-h-[calc(100dvh-6rem)] bg-background-active p-6 flex flex-col gap-y-6 overflow-auto sm:w-123 rounded-lg border border-blue">
+          <div className="venus-account-panel venus-popup-panel w-full max-h-[calc(100dvh-6rem)] bg-background-active p-6 flex flex-col gap-y-6 overflow-auto sm:w-123 rounded-lg border border-blue">
             <div className="flex flex-col gap-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-x-3">
@@ -79,7 +81,12 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
                 {isVip && <VipTelegramGroupButton />}
 
                 {isLite && (
-                  <ButtonWrapper variant="primary" className="w-full" asChild>
+                  <ButtonWrapper
+                    variant={isFinal ? 'secondary' : 'primary'}
+                    material={isFinal ? 'glass' : undefined}
+                    className="venus-account-action w-full"
+                    asChild
+                  >
                     <Link
                       to={{ pathname: routes.dashboard.path, search: '?interface=lite' }}
                       state={{ interfaceMode: 'lite' }}
@@ -93,7 +100,11 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
 
                 {/* When running in Safe Wallet app, user's wallet should be kept connected at all time */}
                 {!config.isSafeApp && (
-                  <Button variant="secondary" onClick={handleDisconnect} className="w-full">
+                  <Button
+                    variant="secondary"
+                    onClick={handleDisconnect}
+                    className="venus-account-action w-full"
+                  >
                     <div className="flex items-center gap-x-2">
                       <Icon name="connect" className="size-5 text-inherit transition-colors" />
 

@@ -1,7 +1,9 @@
 import { cn } from '@venusprotocol/ui';
+import BigNumber from 'bignumber.js';
 import { ApyBreakdown, Button, Delimiter, Tabs, TokenTextField } from 'components';
 import LiquidityHubAccessor from 'containers/LiquidityHubAccessor';
 import { useDemo } from 'demo/state';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import type { TabNavType } from 'hooks/useTabs';
 import { useState } from 'react';
 import type { VhToken } from 'types';
@@ -9,6 +11,7 @@ import { EarnDetails } from 'containers/MarketForm/EarnDetails';
 import { InlineSubmit } from 'containers/MarketForm/InlineSubmit';
 import { isLocalPreview } from 'demo/isLocalPreview';
 import { useTranslation } from 'libs/translations';
+import { calculateCollateralWithdrawLimits } from 'utilities';
 import { SupplyTabs } from './SupplyTabs';
 import { WithdrawForm } from './WithdrawForm';
 
@@ -25,7 +28,9 @@ export interface LiquidityHubFormProps {
 }
 
 export const LiquidityHubForm = (props: LiquidityHubFormProps) =>
-  isLocalPreview ? <RealLiquidityHubForm {...props} /> : <PreviewLiquidityHubForm {...props} />;
+  isLocalPreview ? <RealLiquidityHubForm {...props} /> : (
+    <PreviewLiquidityHubForm key={`${props.vhToken.chainId}:${props.vhToken.address.toLowerCase()}`} {...props} />
+  );
 
 /** Upstream Venus form (real balances, approvals and transactions). Local dev server only. */
 const RealLiquidityHubForm = ({
@@ -91,17 +96,30 @@ const PreviewLiquidityHubForm = ({
   compactEarn = false,
   inlineHeader = false,
   supplyOnly = false,
+  walletFirst = false,
   actionTabsVariant,
 }: LiquidityHubFormProps) => {
   const { loggedIn, setLoginOpen } = useDemo();
+  const { isLite } = useInterfaceMode();
+  const { t } = useTranslation();
+  const showFundingSources = isLite && !walletFirst;
   const [amount, setAmount] = useState('');
   const [supplied, setSupplied] = useState(500);
   const [message, setMessage] = useState('');
+  const [balanceChanges, setBalanceChanges] = useState(() => ({
+    wallet: new BigNumber(0),
+    collateral: new BigNumber(0),
+    supplied: new BigNumber(0),
+  }));
+  const clearAmount = () => {
+    setAmount('');
+    setMessage('');
+  };
   return (
     <LiquidityHubAccessor vhToken={vhToken}>
       {({ liquidityHub }) => (
         <Tabs
-      hideHeader={supplyOnly}
+          hideHeader={supplyOnly}
           variant={actionTabsVariant ?? (compactEarn || inlineHeader ? 'primary' : 'secondary')}
           className={cn(
             'venus-liquidity-hub-tabs',
@@ -114,15 +132,43 @@ const PreviewLiquidityHubForm = ({
           headerClassName={compactEarn || inlineHeader ? 'lite-compact-market-switch' : undefined}
           initialActiveTabId={initialActiveTabId}
           navType={navType}
+          onTabChange={clearAmount}
           tabs={['supply', 'withdraw'].map(action => {
-            const balance = action === 'supply' ? 2500 - supplied : supplied;
-            const valid =
-              Number.isFinite(Number(amount)) && Number(amount) > 0 && Number(amount) <= balance;
-            return {
-              id: action,
-              title: action === 'supply' ? 'Supply' : 'Withdraw',
-              content: (
+            const suppliedBalance = showFundingSources
+              ? (liquidityHub.userSupplyBalanceTokens ?? new BigNumber(0)).plus(balanceChanges.supplied)
+              : new BigNumber(supplied);
+            const renderForm = (
+              source: 'wallet' | 'collateral' = 'wallet',
+              collateralLimit = new BigNumber(0),
+              safeCollateralLimit = collateralLimit,
+            ) => {
+              const sourceBalance = source === 'collateral'
+                ? collateralLimit.plus(balanceChanges.collateral)
+                : (liquidityHub.userWalletBalanceTokens ?? new BigNumber(0)).plus(balanceChanges.wallet);
+              const sourceLimit = action === 'withdraw'
+                ? BigNumber.min(
+                    suppliedBalance,
+                    liquidityHub.userWithdrawCapTokens?.plus(balanceChanges.supplied) ?? suppliedBalance,
+                    liquidityHub.withdrawCapTokens,
+                    liquidityHub.liquidityTokens.plus(balanceChanges.supplied),
+                  )
+                : BigNumber.min(
+                    sourceBalance,
+                    liquidityHub.userSupplyCapTokens?.minus(balanceChanges.supplied) ?? Number.POSITIVE_INFINITY,
+                  );
+              const balance = BigNumber.max(0, showFundingSources
+                ? sourceLimit
+                : new BigNumber(action === 'supply' ? 2500 - supplied : supplied),
+              ).dp(vhToken.underlyingToken.decimals, BigNumber.ROUND_DOWN);
+              const maxAmount = source === 'collateral'
+                ? BigNumber.max(0, BigNumber.min(balance, safeCollateralLimit.plus(balanceChanges.collateral)))
+                    .dp(vhToken.underlyingToken.decimals, BigNumber.ROUND_DOWN)
+                : balance;
+              const amountTokens = new BigNumber(amount);
+              const valid = amountTokens.isFinite() && amountTokens.gt(0) && amountTokens.lte(balance);
+              return (
                 <form
+                  data-hub-funding-source={action === 'supply' ? source : undefined}
                   className={
                     compactEarn ? 'lite-hub-grid' : inlineHeader ? 'lite-simple-hub' : 'space-y-4'
                   }
@@ -133,7 +179,16 @@ const PreviewLiquidityHubForm = ({
                       return;
                     }
                     if (!valid) return;
-                    setSupplied(value => value + Number(amount) * (action === 'supply' ? 1 : -1));
+                    if (showFundingSources) {
+                      const change = action === 'supply' ? amountTokens : amountTokens.negated();
+                      setBalanceChanges(previous => ({
+                        ...previous,
+                        [source]: previous[source].minus(change),
+                        supplied: previous.supplied.plus(change),
+                      }));
+                    } else {
+                      setSupplied(value => value + Number(amount) * (action === 'supply' ? 1 : -1));
+                    }
                     setMessage(
                       `${
                         action === 'supply' ? 'Supply' : 'Withdraw'
@@ -151,7 +206,16 @@ const PreviewLiquidityHubForm = ({
                       setMessage('');
                     }}
                     disabled={!loggedIn}
-                    rightMaxButton={{ label: 'MAX', onClick: () => setAmount(String(balance)) }}
+                    rightMaxButton={{
+                      label: source === 'collateral'
+                        ? t('liquidityHubForm.rightSafeMaxButtonLabel')
+                        : t('liquidityHubForm.rightMaxButtonLabel'),
+                      onClick: () => {
+                        setAmount(maxAmount.toFixed());
+                        setMessage('');
+                      },
+                      disabled: !loggedIn || maxAmount.lte(0),
+                    }}
                     hasError={!!amount && !valid}
                     description={
                       !!amount && !valid
@@ -162,9 +226,9 @@ const PreviewLiquidityHubForm = ({
                   {loggedIn && (
                     <>
                       <p data-lite-balance-row="true" className="text-light-grey text-b1r">
-                        <span>{action === 'supply' ? 'Wallet balance' : 'Supplied balance'}</span>{' '}
+                        <span>{action === 'withdraw' ? 'Supplied balance' : source === 'collateral' ? 'Available collateral' : 'Wallet balance'}</span>{' '}
                         <span>
-                          {balance.toLocaleString()} {vhToken.underlyingToken.symbol}
+                          {balance.toFormat()} {vhToken.underlyingToken.symbol}
                         </span>
                       </p>
                       {!inlineHeader && <Delimiter />}
@@ -188,7 +252,7 @@ const PreviewLiquidityHubForm = ({
                       position={
                         loggedIn ? (
                           <p>
-                            Supplied balance: {supplied.toLocaleString()}{' '}
+                            Supplied balance: {suppliedBalance.toFormat()}{' '}
                             {vhToken.underlyingToken.symbol}
                           </p>
                         ) : (
@@ -210,6 +274,11 @@ const PreviewLiquidityHubForm = ({
                       renderType={inlineHeader ? 'accordion' : 'block'}
                     />
                   )}
+                  {showFundingSources && (
+                    <p className="text-light-grey text-b1r">
+                      Preview only. No transaction will be sent.
+                    </p>
+                  )}
                   <InlineSubmit>
                     <Button
                       type="submit"
@@ -227,7 +296,27 @@ const PreviewLiquidityHubForm = ({
                     )}
                   </InlineSubmit>
                 </form>
-              ),
+              );
+            };
+            return {
+              id: action,
+              title: action === 'supply'
+                ? t('liquidityHubForm.supplyTabTitle')
+                : t('liquidityHubForm.withdrawTabTitle'),
+              content: action === 'supply' && showFundingSources ? (
+                <SupplyTabs
+                  liquidityHub={liquidityHub}
+                  onSourceChange={clearAmount}
+                  renderWalletForm={() => renderForm()}
+                  renderCollateralForm={({ corePoolAsset, corePool }) => {
+                    const { limitTokens, safeLimitTokens } = calculateCollateralWithdrawLimits({
+                      asset: corePoolAsset,
+                      pool: corePool,
+                    });
+                    return renderForm('collateral', limitTokens, safeLimitTokens);
+                  }}
+                />
+              ) : renderForm(),
             };
           })}
         />

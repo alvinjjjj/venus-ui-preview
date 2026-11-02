@@ -2,6 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { useLocation } from 'react-router';
 import type { Mock } from 'vitest';
 
+import { PAGE_CONTAINER_ID } from 'constants/layout';
 import { useStore } from 'containers/Layout/store';
 import { useInterfaceModeStore } from 'demo/useInterfaceMode';
 import { useAccountAddress } from 'libs/wallet';
@@ -109,3 +110,66 @@ describe.each(['v1', 'v5', 'lite-experiment', 'lite-experiment-v2', 'lite-experi
     });
   },
 );
+
+describe('Final Pro scroll glass', () => {
+  beforeEach(() => {
+    preview.mode = 'lite-experiment-v2';
+    (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
+    useInterfaceModeStore.getState().setMode('pro');
+    useStore.setState({ openModal: undefined });
+  });
+
+  it('tracks the app scroll container and clears the glass when returning to the top', () => {
+    renderComponent(
+      <>
+        <NavBar />
+        <div id={PAGE_CONTAINER_ID} data-testid="page-scroll" />
+      </>,
+      {
+        routerInitialEntries: ['/markets/0x123?chainId=56'],
+        routePath: '*',
+      },
+    );
+    const header = screen.getByRole('navigation');
+    const page = screen.getByTestId('page-scroll');
+    expect(header).toHaveAttribute('data-header-scrolled', 'false');
+    fireEvent.scroll(window);
+    expect(header).toHaveAttribute('data-header-scrolled', 'false');
+    fireEvent.scroll(page, { target: { scrollTop: 96 } });
+    expect(header).toHaveAttribute('data-header-scrolled', 'true');
+    fireEvent.scroll(page, { target: { scrollTop: 0 } });
+    expect(header).toHaveAttribute('data-header-scrolled', 'false');
+  });
+
+  it('reads a restored scroll offset on mount', () => {
+    const page = document.createElement('div');
+    page.id = PAGE_CONTAINER_ID;
+    page.scrollTop = 96;
+    document.body.appendChild(page);
+    try {
+      renderComponent(<NavBar />, {
+        routerInitialEntries: ['/liquidity-hubs?chainId=56'],
+        routePath: '*',
+      });
+      expect(screen.getByRole('navigation')).toHaveAttribute('data-header-scrolled', 'true');
+    } finally {
+      page.remove();
+    }
+  });
+
+  it('keeps Lite transparent even when its page has scrolled', () => {
+    useInterfaceModeStore.getState().setMode('lite');
+    renderComponent(
+      <>
+        <NavBar />
+        <div id={PAGE_CONTAINER_ID} data-testid="page-scroll" />
+      </>,
+      {
+        routerInitialEntries: ['/?chainId=56'],
+        routePath: '*',
+      },
+    );
+    fireEvent.scroll(screen.getByTestId('page-scroll'), { target: { scrollTop: 96 } });
+    expect(screen.getByRole('navigation')).not.toHaveAttribute('data-header-scrolled');
+  });
+});

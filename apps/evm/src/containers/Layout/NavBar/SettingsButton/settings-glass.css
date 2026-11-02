@@ -1,4 +1,79 @@
 /* Shared Settings controls follow the active popup material. */
+/* Language uses the trigger width, including when the shared Select material
+   has a wider default minimum for asset menus. */
+:root .venus-dropdown-surface.venus-settings-language-menu {
+  min-width: 0;
+}
+
+/* Final Settings must paint the same on a direct Pro entry and after visiting
+   Lite. Reuse the approved popup and neutral-control recipes here, rather than
+   relying on LiteMarkets/experiment.css being loaded by another route. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings-modal {
+  background: rgb(25 30 40 / 75%);
+  border-color: rgb(255 255 255 / 10%);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%), 0 24px 64px rgb(0 0 0 / 28%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings-modal {
+  background: rgb(250 250 248 / 85%);
+  border-color: rgb(30 40 55 / 9%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), 0 24px 64px rgb(30 40 55 / 14%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings-modal > .venus-popup-header {
+  background: transparent;
+  border-radius: inherit;
+  justify-content: flex-start;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings-modal > .venus-popup-header h2 {
+  padding-left: 0;
+  padding-right: calc(var(--spacing) * 8);
+  text-align: left;
+  justify-content: flex-start;
+}
+
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) :is(#root, body) .venus-settings .venus-language-select [data-select-trigger] {
+  background: rgb(255 255 255 / 7%) !important;
+  color: var(--color-white) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%) !important;
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings-modal {
+    background: rgb(25 30 40);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings-modal {
+    background: var(--e-light-surface-panel);
+  }
+}
+
+/* Keep Final's fullscreen blur on its own composited layer. The animated
+   starfield and scroll-header glass underneath must not drop its backdrop
+   texture during repaint. These values match the existing popup backdrop,
+   but load with Settings rather than depending on a prior Lite route visit. */
+:root[data-glass-variant='lite-experiment-v2'] .venus-settings-backdrop {
+  background: rgb(0 0 0 / 18%);
+  backdrop-filter: blur(var(--spacing));
+  -webkit-backdrop-filter: blur(var(--spacing));
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-settings-backdrop {
+  background: rgb(35 53 80 / 12%);
+}
+
 :root:is([data-glass-version='v3'], [data-glass-version='v6']) .venus-settings [role='group'] {
   background: rgb(255 255 255 / 4%);
   border-color: rgb(255 255 255 / 8%);

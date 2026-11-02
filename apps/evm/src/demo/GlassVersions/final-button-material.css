@@ -1,0 +1,160 @@
+/* Final / Appearance New. Material-only mapping from Figma Button 3966:47236,
+   Secondary 3966:47297 and Dropdown 1:4509. Geometry stays with each component.
+   The named layer owns important material declarations ahead of the legacy
+   unlayered preview overrides; archived O / E2 / E3 remain unaffected.
+   Figma's background-blur radius 24 exports as CSS blur(12px). */
+@layer final-button-material {
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *) {
+    --final-button-fill: rgb(255 255 255 / 7%);
+    --final-button-ink: #aab3ca; /* text/secondary/default, Dark */
+    --final-button-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+    --final-button-blur: blur(12px);
+    --final-button-edge: transparent;
+    background: var(--final-button-fill) !important;
+    color: var(--final-button-ink) !important;
+    border-color: var(--final-button-edge) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--final-button-shadow) !important;
+    backdrop-filter: var(--final-button-blur) !important;
+    -webkit-backdrop-filter: var(--final-button-blur) !important;
+    -webkit-text-fill-color: currentColor !important;
+    text-shadow: none !important;
+    filter: none !important;
+    /* No transform/size transition: prevent text and layout from jumping. */
+    transition: color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] [data-venus-button-variant] {
+    --final-button-fill: rgb(255 255 255 / 55%) !important;
+    --final-button-ink: #4b5563 !important; /* text/secondary/default, Light */
+    --final-button-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%), 0 2px 6px rgb(30 55 85 / 7%) !important;
+  }
+
+  /* Dropdowns share the plate, with the primary label role. Account Language
+     deliberately uses the same secondary ink as its Theme/Language labels. */
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-select-trigger], .venus-multiselect-trigger) {
+    --final-button-ink: #fff !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is([data-select-trigger], .venus-multiselect-trigger) {
+    --final-button-ink: #101218 !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] .venus-language-select [data-select-trigger] {
+    --final-button-ink: var(--account-secondary-ink, var(--color-light-grey)) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-active='true']) {
+    --final-button-fill: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+    --final-button-ink: #fff !important;
+    --final-button-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%) !important;
+    --final-button-blur: none !important;
+  }
+
+  /* Open/selected filters retain the neutral plate and their blue edge. */
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-select-trigger], .venus-multiselect-trigger):is([aria-expanded='true'], [data-multiselect-has-value='true']) {
+    --final-button-edge: var(--color-blue) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is([data-select-trigger], .venus-multiselect-trigger)[aria-expanded='true'] {
+    --final-button-fill: rgb(255 255 255 / 64%) !important;
+  }
+
+  /* Segments reuse the same blue plate in both themes; unselected segments
+     stay transparent inside their existing track, with no extra blur layer. */
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-group] > button[aria-pressed='true'] {
+    background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+    color: #fff !important;
+    box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%) !important;
+  }
+
+  /* Foreground wrappers must follow their semantic button, not legacy Light
+     utility overrides. SVGs inherit too (including the neutral Rewards gift). */
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action) > span:not(.venus-mode-border-flow),
+  :root[data-glass-variant='lite-experiment-v2'] [data-claim-rewards-button] svg {
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action)::before,
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action)::after,
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action) > .button-bevel-outline {
+    display: none !important;
+  }
+
+  /* Figma's stroke-free Tab paints its inset shadows at the outer silhouette.
+     A CSS inset shadow on our bordered Button instead starts 1px inside it,
+     leaving a bright strip outside the bottom shade. Retain that existing
+     layout border, but paint the neutral plate's effects on a borderless
+     overlay spanning the full border box (like Figma's exported overlay).
+     Blue selected controls and special identity buttons keep their recipe. */
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-venus-button-variant]:not([data-venus-button-variant='primary']), [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='text'], [data-venus-button-active='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']) {
+    position: relative;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-venus-button-variant]:not([data-venus-button-variant='primary']), [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='text'], [data-venus-button-active='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true'])::after {
+    content: '' !important;
+    display: block !important;
+    position: absolute;
+    inset: -1px; /* the shared Button's existing 1px layout border */
+    z-index: 0;
+    pointer-events: none;
+    border: 0;
+    border-radius: inherit;
+    background: none !important;
+    box-shadow: var(--final-button-shadow) !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* An open/filtered dropdown has a visible stroke. Keep the reflection
+     inside that stroke so it cannot wash out the blue selection edge. */
+  :root[data-glass-variant='lite-experiment-v2'] :is([data-select-trigger], .venus-multiselect-trigger):is([aria-expanded='true'], [data-multiselect-has-value='true'])::after {
+    inset: 0 !important;
+    border-radius: calc(var(--radius-lg) - 1px) !important;
+  }
+
+  @media (hover: hover) {
+    :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='primary'], [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-select-trigger], .venus-multiselect-trigger, .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover {
+      --final-button-ink: var(--color-blue) !important;
+    }
+
+    :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger, .venus-mode-switch):not(:disabled):not([aria-disabled='true']):hover {
+      --final-button-fill: radial-gradient(ellipse at center, rgb(255 255 255 / 14.3%), transparent 70%), radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6) !important;
+    }
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-select-trigger], .venus-multiselect-trigger, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):active {
+    --final-button-fill: radial-gradient(ellipse at center, rgb(255 255 255 / 22%), transparent 70%), radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6) !important;
+    --final-button-ink: #fff !important;
+    --final-button-shadow: inset 0 1px 1px rgb(255 255 255 / 40%), 0 2px 5px rgb(0 0 0 / 8%) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):focus-visible {
+    outline: 2px solid var(--color-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Keep unavailable actions quiet and distinct in either theme. Read-only
+     wallet identity is excluded; its full-contrast Figma display stays intact. */
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action):is(:disabled, [aria-disabled='true']) {
+    background: var(--color-dark-grey-disabled) !important;
+    color: var(--color-light-grey) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action):is(:disabled, [aria-disabled='true']) {
+    background: var(--e-light-surface-disabled) !important;
+    color: var(--e-light-text-muted) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not(.venus-mode-switch, .lite-e2-market-action) {
+      transition: none !important;
+    }
+  }
+}

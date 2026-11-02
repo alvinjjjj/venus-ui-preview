@@ -1,0 +1,237 @@
+/* Final RWD references: 768_Open (2783:11096), 640_Open (2783:11114),
+   390_Open (2783:11132). All geometry uses the existing spacing/type tokens. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation {
+  --venus-menu-gutter: calc(var(--spacing) * 5);
+  --venus-menu-shadow-space: calc(var(--spacing) * 5);
+  --venus-menu-fill: rgb(20 24 31 / 58%);
+  --venus-menu-edge: rgb(255 255 255 / 12%);
+  --venus-menu-sheen: rgb(255 255 255 / 8%);
+  --venus-menu-inset: rgb(255 255 255 / 14%);
+  --venus-menu-drop: rgb(0 0 0 / 18%);
+  --venus-menu-hover: rgb(255 255 255 / 6%);
+  --color-white: rgb(var(--color-white-rgb));
+  --color-light-grey: rgb(var(--color-light-grey-rgb));
+  padding: calc(var(--spacing) * 6) var(--venus-menu-gutter);
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  background: linear-gradient(rgb(24 26 32 / 50%), rgb(24 26 32 / 50%)), url('/images/venus-menu-stars.png') center top / cover, var(--color-background-active);
+}
+
+/* The Light Figma examples retain a Dark raster behind Light text. Use the
+   established Light canvas so the responsive components remain readable. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation {
+  --venus-menu-fill: rgb(255 255 255 / 64%);
+  --venus-menu-edge: rgb(30 40 55 / 10%);
+  --venus-menu-sheen: rgb(255 255 255 / 24%);
+  --venus-menu-inset: rgb(255 255 255 / 80%);
+  --venus-menu-drop: rgb(30 40 55 / 12%);
+  --venus-menu-hover: #f3f4f6;
+  background: var(--e-light-surface-canvas);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-content {
+  width: 100%;
+  max-width: calc(var(--spacing) * 83.75); /* Figma's 335px mobile content column. */
+  margin-inline: auto;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-heading {
+  margin-bottom: calc(var(--spacing) * 3);
+  color: var(--color-white);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 6);
+  padding-block: calc(var(--spacing) * 5);
+  margin: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation :is(.venus-mobile-menu-trigger, .venus-mobile-menu-link) {
+  min-height: calc(var(--spacing) * 6);
+  padding: 0;
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-trigger[aria-expanded='true'] {
+  color: var(--color-white);
+  font-weight: var(--font-weight-semibold);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-trigger > svg {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+}
+
+/* Preserve the accordion while giving its card shadow room inside the clip. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-submenu {
+  padding: calc(var(--spacing) * 3) var(--venus-menu-shadow-space) calc(var(--spacing) * 8);
+  margin-inline: calc(-1 * var(--venus-menu-shadow-space));
+  margin-bottom: calc(var(--spacing) * -8);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation.venus-responsive-navigation .venus-inline-product-menu {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: calc(var(--spacing) * 2);
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(125deg, var(--venus-menu-sheen), transparent 65%), var(--venus-menu-fill);
+  backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(120%);
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(120%);
+  /* Figma's inside stroke does not consume the card's content width/height. */
+  box-shadow: inset 0 0 0 1px var(--venus-menu-edge), inset 0 1px 0 var(--venus-menu-inset), 0 calc(var(--spacing) * 3) calc(var(--spacing) * 8) var(--venus-menu-drop);
+  animation: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation.venus-responsive-navigation .venus-inline-submenu > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--spacing) * 3);
+}
+
+/* Rows share the same hover/focus contract, including the Others list. The
+   important fill beats the legacy header material mirror in this scope. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu [data-submenu-variant] {
+  min-width: 0;
+  margin: 0;
+  padding: calc(var(--spacing) * 2);
+  border-radius: var(--radius-lg);
+  background: transparent !important;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: background-color 160ms ease-out, box-shadow 160ms ease-out;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant] .venus-submenu-copy {
+  min-width: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='secondary'] .venus-submenu-copy {
+  max-width: calc(var(--spacing) * 52); /* 208px text column in every product variant. */
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='secondary'] .venus-submenu-heading > p {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu:has([data-submenu-variant='primary']) > div {
+  gap: var(--spacing);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu [data-submenu-variant='primary'] {
+  padding: calc(var(--spacing) * 3);
+  border-radius: calc(var(--spacing) * 2.5); /* Figma Others row: 10px. */
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary'] .venus-submenu-icon {
+  width: calc(var(--spacing) * 9);
+  height: calc(var(--spacing) * 9);
+  background: rgb(255 255 255 / 7%) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary'] .venus-submenu-heading > p {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-normal);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary'] .venus-submenu-icon svg {
+  color: var(--color-light-grey) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant]:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+  background: var(--venus-menu-hover) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:focus-visible .venus-submenu-icon {
+  background: color-mix(in srgb, var(--color-blue) 14%, transparent) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:focus-visible .venus-submenu-icon svg {
+  color: var(--color-blue) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:focus-visible .venus-submenu-heading > p {
+  color: var(--color-white);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant]:hover {
+    background: var(--venus-menu-hover) !important;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), inset 0 0 0 1px rgb(255 255 255 / 4%);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:hover .venus-submenu-icon {
+    background: color-mix(in srgb, var(--color-blue) 14%, transparent) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:hover .venus-submenu-icon svg {
+    color: var(--color-blue) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation [data-submenu-variant='primary']:hover .venus-submenu-heading > p {
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation.venus-responsive-navigation .venus-inline-product-menu:has([data-earn-motion='core']) {
+    padding: calc(var(--spacing) * 3); /* Mobile Borrow variant has a 12px inset. */
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation {
+    --venus-menu-gutter: calc(var(--spacing) * 8);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-mobile-menu-content {
+    max-width: none;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation.venus-responsive-navigation .venus-inline-product-menu .venus-inline-submenu > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation {
+    --venus-menu-gutter: calc(var(--spacing) * 10);
+  }
+}
+
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-actions [data-rewards-button] {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-mobile-menu-open='true']::before {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu [data-submenu-variant] {
+    transition: none;
+  }
+}

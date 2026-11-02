@@ -2,7 +2,7 @@ import { type CSSProperties, useEffect, useLayoutEffect, useRef, useState } from
 import { useGlassPreview } from 'demo/GlassVersions/store';
 import { Button } from '@venusprotocol/ui';
 import { createPortal } from 'react-dom';
-import { useIsMdDown } from 'hooks/responsive';
+import { useIsLgDown } from 'hooks/responsive';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AsciiTokenMark } from './AsciiTokenMark';
 import { AsciiPlanet } from './AsciiPlanet';
@@ -27,7 +27,7 @@ export function TokenPlanets({ rows, onSelect }: {
   onSelect: (row: LiteAsset, marketId: string) => void;
 }) {
   const ascii = useGlassPreview(state => state.mode === 'lite-experiment-v2');
-  const compact = useIsMdDown();
+  const hidePlanets = useIsLgDown();
   const wideDesktop = useMediaQuery('(min-width: 1600px)');
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const [open, setOpen] = useState<string>();
@@ -37,6 +37,7 @@ export function TokenPlanets({ rows, onSelect }: {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const cancelClose = () => clearTimeout(closeTimer.current);
   useEffect(() => () => clearTimeout(closeTimer.current), []);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Reposition after the breakpoint changes the planet layout.
   useLayoutEffect(() => {
     if (!open || !ascii) return;
     const planet = planetRefs.current[open];
@@ -73,13 +74,13 @@ export function TokenPlanets({ rows, onSelect }: {
   const assets = symbols.flatMap(symbol => {
     const row = bySymbol.get(symbol);
     return row ? [row] : [];
-  }).slice(0, compact ? 4 : 8);
+  });
   useEffect(() => {
-    if (open && ((compact && ascii) || !assets.some(row => row.key === open))) {
+    if (open && (hidePlanets || !assets.some(row => row.key === open))) {
       setOpen(undefined);
       setPopupPosition(undefined);
     }
-  }, [assets, open, compact, ascii]);
+  }, [assets, open, hidePlanets]);
   const content = (
     <aside className="lite-token-planets" aria-label="Explore Earn APYs">
       {assets.map((row, index) => (
@@ -116,7 +117,7 @@ export function TokenPlanets({ rows, onSelect }: {
       ))}
     </aside>
   );
-  // Final already hides these illustrations on phones. Avoid mounting their
-  // canvases and sampling token artwork for that invisible presentation.
-  return compact && ascii ? null : compact ? content : createPortal(content, document.body);
+  // Discovery planets are desktop-only in Final, E2 and E3. Below the shared
+  // 1024px breakpoint, skip both the artwork and its animation work.
+  return hidePlanets ? null : createPortal(content, document.body);
 }

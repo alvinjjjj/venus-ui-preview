@@ -11,8 +11,9 @@ import venusLogoLightSrc from 'demo/LiquidityLightPreview/venusLogoLight.svg';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useTranslation } from 'libs/translations';
+import { useBreakpointUp } from 'hooks/responsive';
 import { useAccountAddress } from 'libs/wallet';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useStore } from '../store';
 import TEST_IDS from '../testIds';
@@ -25,6 +26,8 @@ import { NavButtonWrapper } from './NavButtonWrapper';
 import { Settings } from './Settings';
 import { SettingsButton } from './SettingsButton';
 import './figma-header.css';
+import './account-material.css';
+import './responsive-navigation.css';
 import './interface-mode.css';
 import { useDashboardMenuItem, useMenuItems } from './useMenuItems';
 
@@ -41,6 +44,30 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
   const { accountAddress } = useAccountAddress();
   const openModal = useStore(state => state.openModal);
   const isMobileMenuOpen = openModal === 'mobileMenu';
+  const isDesktop = useBreakpointUp('lg');
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
+
+  useLayoutEffect(() => {
+    const pageContainer = document.getElementById(PAGE_CONTAINER_ID);
+    if (!isFinal || isLite || !pageContainer) {
+      setIsHeaderScrolled(false);
+      return;
+    }
+
+    // The app scrolls this container, not window. Only update React when the
+    // top/scrolled state changes, rather than rendering on every scroll frame.
+    let scrolled = pageContainer.scrollTop > 0;
+    setIsHeaderScrolled(scrolled);
+    const handleScroll = () => {
+      const nextScrolled = pageContainer.scrollTop > 0;
+      if (nextScrolled !== scrolled) {
+        scrolled = nextScrolled;
+        setIsHeaderScrolled(scrolled);
+      }
+    };
+    pageContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => pageContainer.removeEventListener('scroll', handleScroll);
+  }, [isFinal, isLite]);
 
   const isUserConnected = !!accountAddress;
 
@@ -56,10 +83,12 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
 
   useEffect(() => {
     const pageContainerDom = document.getElementById(PAGE_CONTAINER_ID);
+    const previousInert = pageContainerDom?.inert ?? false;
 
     if (isMobileMenuOpen) {
       pageContainerDom?.classList.add('overflow-hidden');
       document.body.classList.add('overflow-hidden');
+      if (isFinal && pageContainerDom) pageContainerDom.inert = true;
     } else {
       pageContainerDom?.classList.remove('overflow-hidden');
       document.body.classList.remove('overflow-hidden');
@@ -68,8 +97,26 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
     return () => {
       pageContainerDom?.classList.remove('overflow-hidden');
       document.body.classList.remove('overflow-hidden');
+      if (isFinal && pageContainerDom) pageContainerDom.inert = previousInert;
     };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, isFinal]);
+
+  useEffect(() => {
+    if (!isFinal || !isMobileMenuOpen) return;
+    if (isDesktop) {
+      useStore.setState({ openModal: undefined });
+      return;
+    }
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return;
+      // Let a nested chain/language picker handle its own Escape first.
+      if (event.target instanceof Element && event.target.closest('[role="dialog"], [data-dropdown-open="true"]')) return;
+      useStore.setState({ openModal: undefined });
+      document.querySelector<HTMLButtonElement>('.venus-header-menu')?.focus();
+    };
+    window.addEventListener('keydown', onEscape);
+    return () => window.removeEventListener('keydown', onEscape);
+  }, [isFinal, isMobileMenuOpen, isDesktop]);
 
   const menuItems = useMenuItems();
   const dashboardMenuItem = useDashboardMenuItem();
@@ -79,6 +126,8 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
       className="venus-navigation relative z-50 isolate"
       data-interface-mode={mode}
       data-figma-header={isFinal || undefined}
+      data-header-scrolled={isFinal && !isLite ? isHeaderScrolled : undefined}
+      data-mobile-menu-open={isFinal && isMobileMenuOpen ? true : undefined}
     >
       <div
         className={cn(
@@ -224,7 +273,12 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
             </NavButtonWrapper>
           )}
 
-          {!isLite && !isUserConnected && <SettingsButton className="h-full px-0 hidden lg:flex" />}
+          {!isLite && !isUserConnected && (
+            <SettingsButton
+              variant={isFinal ? 'secondary' : undefined}
+              className="h-full px-0 hidden lg:flex"
+            />
+          )}
         </div>
       </div>
 
@@ -233,15 +287,17 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
         className={cn(
           !isLite && isMobileMenuOpen ? 'fixed' : 'hidden',
           'venus-mobile-navigation top-20 bottom-0 left-0 right-0 z-40 p-5 bg-background overflow-y-auto lg:hidden',
+          isFinal && 'venus-responsive-navigation',
         )}
       >
-        <div className="flex items-center justify-between mb-5">
+        <div className={isFinal ? 'venus-mobile-menu-content' : undefined}>
+        <div className="venus-mobile-menu-heading flex items-center justify-between mb-5">
           <p>{t('layout.menu.label')}</p>
         </div>
 
-        <div className="mb-2">
+        <div className="venus-mobile-menu-list mb-2">
           {[dashboardMenuItem, ...menuItems].map(item => (
-            <MenuItem key={item.label} item={item} onClick={closeMobileMenu} />
+            <MenuItem key={item.label} item={item} onClick={closeMobileMenu} responsive={isFinal} />
           ))}
         </div>
 
@@ -255,6 +311,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
         <Delimiter className="mb-6" />
 
         <Settings />
+        </div>
       </div>
     </nav>
   );

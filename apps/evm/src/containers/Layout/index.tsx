@@ -42,7 +42,7 @@ export const Layout: React.FC = () => {
     }
   }, [mode]);
   const showStardust = supportsModes && pathname.replace(/\/$/, '') !== routes.aboutUs.path;
-  const fullBleedSky = showStardust && (isE3 || (isFinal && isLite));
+  const fullBleedSky = showStardust && (isE3 || isFinal);
   const quietDashboard = isFinal && isLite && pathname.replace(/\/$/, '') === routes.dashboard.path;
 
   const isCloseToBottomState = useStore(state => state.isCloseToBottom);
@@ -99,7 +99,7 @@ export const Layout: React.FC = () => {
         className={cn(
           'h-dvh flex flex-col',
           isE3 && showStardust && 'lite-e3-sky-layout',
-          isFinal && isLite && fullBleedSky && 'lite-full-bleed-sky',
+          isFinal && fullBleedSky && 'lite-full-bleed-sky',
           quietDashboard && 'lite-dashboard-layout',
         )}
       >

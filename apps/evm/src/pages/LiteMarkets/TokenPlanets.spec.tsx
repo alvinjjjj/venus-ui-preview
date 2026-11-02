@@ -7,7 +7,7 @@ import venusPlanetMark from '../Landing/LandingMockup/assets/venus-mark-white.sv
 
 const viewport = vi.hoisted(() => ({ wide: true, compact: false, mode: 'lite-experiment-v2' }));
 vi.mock('@mui/material/useMediaQuery', () => ({ default: () => viewport.wide }));
-vi.mock('hooks/responsive', () => ({ useIsMdDown: () => viewport.compact }));
+vi.mock('hooks/responsive', () => ({ useIsLgDown: () => viewport.compact }));
 vi.mock('demo/GlassVersions/store', () => ({
   useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(viewport),
 }));
@@ -124,12 +124,27 @@ it('preserves Final ASCII rendering and its existing token artwork', () => {
   expect(screen.getByRole('img', { name: 'XVS' })).toHaveAttribute('src', base.token.iconSrc);
 });
 
-it('does not mount invisible Final canvases on mobile and restores them on desktop', () => {
+it.each(['lite-experiment-v2', 'lite-experiment-v2-legacy', 'lite-experiment-v3'])('does not mount planets below 1024px and restores them on desktop in %s', mode => {
+  viewport.mode = mode;
   viewport.compact = true;
   const { rerender } = renderComponent(<TokenPlanets rows={rows} onSelect={vi.fn()} />);
   expect(screen.queryByLabelText('Explore Earn APYs')).toBeNull();
   expect(screen.queryAllByTestId('ascii-planet')).toHaveLength(0);
+  expect(document.querySelectorAll('.lite-token-sphere')).toHaveLength(0);
   viewport.compact = false;
   rerender(<TokenPlanets rows={rows} onSelect={vi.fn()} />);
-  expect(screen.getAllByTestId('ascii-planet')).toHaveLength(8);
+  expect(visibleTokens()).toHaveLength(8);
+});
+
+it.each(['lite-experiment-v2', 'lite-experiment-v2-legacy', 'lite-experiment-v3'])('closes the open popup when resized below 1024px in %s', mode => {
+  viewport.mode = mode;
+  const { rerender } = renderComponent(<TokenPlanets rows={rows} onSelect={vi.fn()} />);
+  fireEvent.click(screen.getByRole('button', { name: 'View USDT supply APY' }));
+  expect(screen.getByRole('dialog', { name: 'USDT supply APY' })).toBeVisible();
+  viewport.compact = true;
+  rerender(<TokenPlanets rows={rows} onSelect={vi.fn()} />);
+  expect(screen.queryByRole('dialog')).toBeNull();
+  viewport.compact = false;
+  rerender(<TokenPlanets rows={rows} onSelect={vi.fn()} />);
+  expect(screen.queryByRole('dialog')).toBeNull();
 });

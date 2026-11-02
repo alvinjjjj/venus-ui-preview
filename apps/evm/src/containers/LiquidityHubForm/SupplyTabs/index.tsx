@@ -8,16 +8,26 @@ import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import type { LiquidityHub } from 'types';
 import { areTokensEqual, calculateCollateralWithdrawLimits } from 'utilities';
-import { SupplyWithCollateralForm } from './SupplyWithCollateralForm';
+import { SupplyWithCollateralForm, type SupplyWithCollateralFormProps } from './SupplyWithCollateralForm';
 import { SupplyWithWalletForm } from './SupplyWithWalletForm';
 
 export interface SupplyTabsProps {
   liquidityHub: LiquidityHub;
   walletFirst?: boolean;
   onSubmitSuccess?: () => void;
+  renderWalletForm?: () => React.ReactNode;
+  renderCollateralForm?: (props: SupplyWithCollateralFormProps) => React.ReactNode;
+  onSourceChange?: () => void;
 }
 
-export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSuccess, walletFirst = false }) => {
+export const SupplyTabs: React.FC<SupplyTabsProps> = ({
+  liquidityHub,
+  onSubmitSuccess,
+  walletFirst = false,
+  renderWalletForm,
+  renderCollateralForm,
+  onSourceChange,
+}) => {
   const [useCoreSupply, setUseCoreSupply] = useState(false);
   const { t } = useTranslation();
 
@@ -36,6 +46,7 @@ export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSu
   const corePool = getPools?.pool;
 
   const corePoolAsset = corePool?.assets.find(asset =>
+    asset.vToken.underlyingToken.chainId === liquidityHub.vhToken.underlyingToken.chainId &&
     areTokensEqual(asset.vToken.underlyingToken, liquidityHub.vhToken.underlyingToken),
   );
 
@@ -43,8 +54,8 @@ export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSu
     return <Spinner />;
   }
 
-  // TODO: add content
-  const walletTabDom = (
+  // Preview renderers reuse the same source navigation and eligibility rules.
+  const walletTabDom = renderWalletForm ? renderWalletForm() : (
     <SupplyWithWalletForm liquidityHub={liquidityHub} onSubmitSuccess={onSubmitSuccess} />
   );
 
@@ -53,6 +64,17 @@ export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSu
   if (!corePool || !corePoolAsset || !liquidityHubMigratorContractAddress) {
     return walletTabDom;
   }
+
+  const collateralFormProps = {
+    liquidityHub,
+    onSubmitSuccess,
+    liquidityHubMigratorContractAddress,
+    corePool,
+    corePoolAsset,
+  };
+  const collateralTabDom = renderCollateralForm
+    ? renderCollateralForm(collateralFormProps)
+    : <SupplyWithCollateralForm {...collateralFormProps} />;
 
   if (walletFirst) {
     const { limitTokens } = calculateCollateralWithdrawLimits({ asset: corePoolAsset, pool: corePool });
@@ -63,20 +85,15 @@ export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSu
         {canTransfer && (
           <div className="lite-e3-funding-source">
             <span className="text-light-grey">{showingCoreSupply ? 'From Core Pool' : 'From wallet'}</span>
-            <button type="button" className="text-blue text-sm" onClick={() => setUseCoreSupply(value => !value)}>
+            <button type="button" className="text-blue text-sm" onClick={() => {
+              setUseCoreSupply(value => !value);
+              onSourceChange?.();
+            }}>
               {showingCoreSupply ? 'Use wallet balance' : 'Transfer from Core Pool'}
             </button>
           </div>
         )}
-        {showingCoreSupply ? (
-          <SupplyWithCollateralForm
-            liquidityHub={liquidityHub}
-            onSubmitSuccess={onSubmitSuccess}
-            liquidityHubMigratorContractAddress={liquidityHubMigratorContractAddress}
-            corePool={corePool}
-            corePoolAsset={corePoolAsset}
-          />
-        ) : walletTabDom}
+        {showingCoreSupply ? collateralTabDom : walletTabDom}
       </div>
     );
   }
@@ -90,17 +107,9 @@ export const SupplyTabs: React.FC<SupplyTabsProps> = ({ liquidityHub, onSubmitSu
     {
       id: 'collateral',
       title: t('liquidityHubForm.supplyTab.collateralTabTitle'),
-      content: (
-        <SupplyWithCollateralForm
-          liquidityHub={liquidityHub}
-          onSubmitSuccess={onSubmitSuccess}
-          liquidityHubMigratorContractAddress={liquidityHubMigratorContractAddress}
-          corePool={corePool}
-          corePoolAsset={corePoolAsset}
-        />
-      ),
+      content: collateralTabDom,
     },
   ];
 
-  return <Tabs tabs={tabs} />;
+  return <Tabs tabs={tabs} onTabChange={onSourceChange} />;
 };

@@ -32,8 +32,10 @@ const BUTTONS = [
 const SCOPE = `:is(.venus-navigation *, ${BUTTONS})`;
 // Popups keep E's own controls (segmented Supply/Withdraw, toggles, health bar), except the
 // buttons inside an amount field (token selector, MAX / SAFE MAX), which get New's glass + hover light.
+// Final navigation menus also keep the shared dropdown material and theme mapping;
+// mirroring New's stronger dark-only menu surface would override its Light mode.
 const KEEP_E =
-  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *, [data-venus-button-group], [data-venus-button-group] > *):where(:not(.lite-markets *), .lite-e3-action-tabs *):where(:not(.venus-popup-panel *), .venus-popup-panel .venus-text-field *)';
+  ':not(.venus-header-row, .venus-header-logo, .venus-header-logo *, .venus-interface-mode-label, .venus-mode-switch, .venus-mode-switch *, [data-venus-button-group], [data-venus-button-group] > *):where(:not([data-figma-header] .venus-navigation-menu)):where(:not(.lite-markets *), .lite-e3-action-tabs *):where(:not(.venus-popup-panel *), .venus-popup-panel .venus-text-field *)';
 
 const NEW_ATTRS: Record<string, string> = {
   glassVersion: 'v6',

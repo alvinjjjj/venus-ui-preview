@@ -92,23 +92,6 @@
   outline-color: var(--segment-selected-text) !important;
 }
 
-/* Account settings and actions use the existing 12px action-stack rhythm.
-   The address and account overview keep their surrounding section spacing. */
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings {
-  row-gap: calc(var(--spacing) * 3);
-}
-
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-settings {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing) * 3);
-}
-
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-account-settings .venus-settings > * {
-  margin-block: 0;
-  min-height: calc(var(--spacing) * 12);
-}
-
 /* Settings labels share a semantic text role in either theme. Keep Language
    and its selected value inline whenever their actual content fits. */
 :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-settings .venus-settings-label {
@@ -191,12 +174,6 @@
   flex-direction: column;
   min-width: 0;
   padding: 0;
-}
-
-/* The portaled account reward action is blue in both themes. Its icon uses
-   the existing on-accent role instead of the default yellow reward color. */
-:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2']:has(.venus-navigation[data-interface-mode='lite']) :is(#root, body) .venus-popup-panel [data-claim-rewards-button] svg {
-  color: var(--e-light-text-on-accent, #fff) !important;
 }
 
 /* The action switch gets the same 12px rhythm below it as above it.

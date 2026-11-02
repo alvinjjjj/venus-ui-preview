@@ -27,7 +27,7 @@
   isolation: isolate;
 }
 
-/* Final Lite owns one shared sky above the page scroller so the transparent
+/* Final Lite and Pro share one sky above the page scroller so the transparent
    navigation and content reveal the same backdrop without another renderer. */
 :root[data-glass-variant='lite-experiment-v2'] #root .lite-full-bleed-sky {
   position: relative;

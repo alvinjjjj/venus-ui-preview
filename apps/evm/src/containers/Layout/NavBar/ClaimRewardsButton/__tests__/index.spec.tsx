@@ -11,6 +11,11 @@ import { ClaimRewardsButton } from '..';
 import TEST_IDS from '../../../testIds';
 import { fakePendingRewardGroups } from '../__testUtils__/fakeData';
 
+const preview = vi.hoisted(() => ({ mode: 'v1' }));
+vi.mock('demo/GlassVersions/store', () => ({
+  useGlassPreview: (selector: (state: { mode: string }) => unknown) => selector(preview),
+}));
+
 beforeAll(() => {
   vi.stubGlobal(
     'ResizeObserver',
@@ -25,9 +30,14 @@ afterAll(() => vi.unstubAllGlobals());
 
 describe('ClaimRewardsButton', () => {
   beforeEach(() => {
+    preview.mode = 'v1';
     (getPendingRewards as Mock).mockImplementation(() => ({
       pendingRewardGroups: fakePendingRewardGroups,
     }));
+  });
+
+  afterEach(() => {
+    preview.mode = 'v1';
   });
 
   it('renders without crashing', () => {
@@ -58,6 +68,18 @@ describe('ClaimRewardsButton', () => {
     });
 
     await waitFor(() => expect(getByTestId(TEST_IDS.claimRewardOpenModalButton)));
+  });
+
+  it('uses a neutral Rewards action in Final and still opens the claim modal', async () => {
+    preview.mode = 'lite-experiment-v2';
+    const { getByTestId } = renderComponent(<ClaimRewardsButton variant="primary" />, {
+      accountAddress: fakeAddress,
+    });
+
+    const button = await waitFor(() => getByTestId(TEST_IDS.claimRewardOpenModalButton));
+    expect(button).toHaveAttribute('data-venus-button-variant', 'secondary');
+    fireEvent.click(button);
+    await waitFor(() => expect(getByTestId(TEST_IDS.claimRewardBreakdown)).toBeInTheDocument());
   });
 
   it('renders correct reward breakdown in modal', async () => {

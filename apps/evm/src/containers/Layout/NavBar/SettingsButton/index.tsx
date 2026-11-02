@@ -3,15 +3,16 @@ import { useState } from 'react';
 
 import { Icon, Modal } from 'components';
 import { useTranslation } from 'libs/translations';
-import { NavButtonWrapper } from '../NavButtonWrapper';
+import { NavButtonWrapper, type NavButtonWrapperProps } from '../NavButtonWrapper';
 import { Settings } from '../Settings';
 import './settings-glass.css';
 
 export interface SettingsButtonProps {
   className?: string;
+  variant?: NavButtonWrapperProps['variant'];
 }
 
-export const SettingsButton: React.FC<SettingsButtonProps> = ({ className }) => {
+export const SettingsButton: React.FC<SettingsButtonProps> = ({ className, variant }) => {
   const { t } = useTranslation();
 
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -22,11 +23,12 @@ export const SettingsButton: React.FC<SettingsButtonProps> = ({ className }) => 
   return (
     <>
       <NavButtonWrapper
+        variant={variant}
         className={cn('size-9 sm:size-12 lg:hidden', className)}
         aria-label="Settings"
         onClick={openSettingsModal}
       >
-        <Icon name="gearFull" className="text-light-grey" />
+        <Icon name="gearFull" className={variant === 'secondary' ? 'text-current' : 'text-light-grey'} />
       </NavButtonWrapper>
 
       <Modal

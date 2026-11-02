@@ -3,6 +3,7 @@ import { featureFlags } from 'hooks/useIsFeatureEnabled';
 import { chains } from 'libs/wallet/chains';
 import { GaslessTransactionSetting } from './GaslessTransactionSetting';
 import { LanguageSetting } from './LanguageSetting';
+import './settings.css';
 
 const gasLessTransactionsChainIds = featureFlags.gaslessTransactions.filter(chain =>
   chains.some(c => c.id === chain),

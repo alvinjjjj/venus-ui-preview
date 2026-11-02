@@ -12,7 +12,7 @@ import { useSimulatePoolMutations } from 'hooks/useSimulatePoolMutations';
 import useTokenApproval from 'hooks/useTokenApproval';
 import { en } from 'libs/translations';
 import { renderComponent } from 'testUtils/render';
-import type { Pool } from 'types';
+import { ChainId, type Pool } from 'types';
 import { convertTokensToMantissa } from 'utilities';
 
 import { SupplyTabs } from '..';
@@ -42,6 +42,15 @@ const renderSupplyTabs = (props: Partial<React.ComponentProps<typeof SupplyTabs>
   renderComponent(<SupplyTabs liquidityHub={liquidityHub} {...props} />, {
     accountAddress: fakeAccountAddress,
   });
+
+beforeAll(() => {
+  vi.stubGlobal('ResizeObserver', class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  });
+});
+afterAll(() => vi.unstubAllGlobals());
 
 describe('SupplyTabs', () => {
   const mockUseGetBalanceOf = useGetBalanceOf as Mock;
@@ -202,5 +211,45 @@ describe('SupplyTabs', () => {
       spenderAddress: liquidityHubMigratorContractAddress,
       accountAddress: fakeAccountAddress,
     });
+  });
+
+  it('shares source tabs and matching Core data with simulated form renderers', () => {
+    const renderCollateralForm = vi.fn(() => <p>Simulated collateral form</p>);
+    const onSourceChange = vi.fn();
+    renderSupplyTabs({
+      renderWalletForm: () => <p>Simulated wallet form</p>,
+      renderCollateralForm,
+      onSourceChange,
+    });
+    expect(screen.getByText('Simulated wallet form')).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: en.liquidityHubForm.supplyTab.collateralTabTitle }));
+    expect(screen.getByText('Simulated collateral form')).toBeVisible();
+    expect(renderCollateralForm).toHaveBeenLastCalledWith(expect.objectContaining({
+      corePool,
+      corePoolAsset,
+      liquidityHubMigratorContractAddress,
+    }));
+    expect(onSourceChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('rejects a Core token on another chain even when its address matches', () => {
+    mockUseGetPool.mockReturnValue({
+      data: { pool: { ...corePool, assets: [{
+        ...corePoolAsset,
+        vToken: {
+          ...corePoolAsset.vToken,
+          underlyingToken: {
+            ...corePoolAsset.vToken.underlyingToken,
+            chainId: ChainId.ETHEREUM,
+          },
+        },
+      }] } },
+      isLoading: false,
+    });
+    const renderCollateralForm = vi.fn(() => <p>Simulated collateral form</p>);
+    renderSupplyTabs({ renderWalletForm: () => <p>Wallet only</p>, renderCollateralForm });
+    expect(screen.getByText('Wallet only')).toBeVisible();
+    expect(screen.queryByRole('button', { name: en.liquidityHubForm.supplyTab.collateralTabTitle })).toBeNull();
+    expect(renderCollateralForm).not.toHaveBeenCalled();
   });
 });

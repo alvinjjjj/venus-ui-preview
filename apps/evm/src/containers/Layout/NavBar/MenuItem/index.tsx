@@ -5,7 +5,7 @@ import './dashboard-glass.css';
 
 import { AccordionAnimatedContent, Dropdown, Icon } from 'components';
 import { Link } from 'containers/Link';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { Tag } from '../Tag';
 import type { MenuItem as MenuItemType, SubMenu } from '../types';
 import { SubMenuContent } from './SubMenuContent';
@@ -14,10 +14,12 @@ import type { SubMenuItemProps } from './SubMenuContent/SubMenuItem';
 export interface MenuItemProps {
   item: MenuItemType | SubMenu;
   onClick: () => void;
+  responsive?: boolean;
 }
 
-export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
+export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick, responsive = false }) => {
   const { pathname } = useLocation();
+  const submenuId = useId();
 
   let isActive = false;
 
@@ -28,7 +30,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   }
 
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(
-    'items' in item ? isActive || !!item.defaultOpenOnMobile : false,
+    'items' in item ? responsive || isActive || !!item.defaultOpenOnMobile : false,
   );
 
   const sharedContainerClassName = cn(
@@ -40,15 +42,18 @@ export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
   const onAccordionTriggerClick = () => setIsSubMenuOpen(value => !value);
 
   return 'items' in item ? (
-    <div>
+    <div className={responsive ? 'venus-mobile-menu-group' : undefined}>
       {/* Mobile/tablet submenu */}
       <div className="lg:hidden">
         <button
           data-header-navigation
+          aria-expanded={isSubMenuOpen}
+          aria-controls={submenuId}
           data-navigation-active={isActive || isSubMenuOpen || undefined}
           className={cn(
             sharedContainerClassName,
             'flex items-center justify-between cursor-pointer lg:gap-x-2',
+            responsive && 'venus-mobile-menu-trigger',
           )}
           type="button"
           onClick={onAccordionTriggerClick}
@@ -65,9 +70,16 @@ export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
           />
         </button>
 
-        <AccordionAnimatedContent isOpen={isSubMenuOpen} className="pb-3 lg:hidden">
+        <AccordionAnimatedContent
+          id={submenuId}
+          isOpen={isSubMenuOpen}
+          inert={!isSubMenuOpen}
+          aria-hidden={!isSubMenuOpen}
+          className={cn('pb-3 lg:hidden', responsive && 'venus-mobile-submenu')}
+        >
           <SubMenuContent
             {...item}
+            inline={responsive}
             items={item.items.map(i => ({
               ...i,
               onClick,
@@ -128,7 +140,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ item, onClick }) => {
       to={item.to}
       href={item.href}
       onClick={onClick}
-      className={cn(sharedContainerClassName, 'flex items-center gap-x-2')}
+      className={cn(sharedContainerClassName, 'flex items-center gap-x-2', responsive && 'venus-mobile-menu-link')}
     >
       <span>{item.label}</span>
 

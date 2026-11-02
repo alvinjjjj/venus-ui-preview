@@ -96,8 +96,8 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
           </div>
         )}
 
-        <div className="flex flex-col">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <div className="venus-submenu-copy flex flex-col">
+          <div className="venus-submenu-heading flex flex-wrap items-center gap-x-2 gap-y-1">
             <p
               className={cn(
                 'font-semibold whitespace-nowrap',

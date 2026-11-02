@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { type Claim, useClaimRewards } from 'clients/api';
 import { type ButtonProps, Icon, Modal } from 'components';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useChain } from 'hooks/useChain';
 import { VError } from 'libs/errors';
 import { useTranslation } from 'libs/translations';
@@ -20,7 +21,11 @@ export interface ClaimRewardsButtonProps extends Omit<ButtonProps, 'onClick' | '
   variant?: 'primary' | 'secondary';
 }
 
-export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({ ...otherProps }) => {
+export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({
+  variant,
+  ...otherProps
+}) => {
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { accountAddress } = useAccountAddress();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -113,9 +118,10 @@ export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({ ...other
         data-claim-rewards-button="true"
         onClick={handleOpenModal}
         {...otherProps}
+        variant={isFinal ? 'secondary' : variant}
       >
         <div className="flex items-center gap-x-2">
-          <Icon name="gift" className="text-yellow" />
+          <Icon name="gift" className={isFinal ? 'text-inherit' : 'text-yellow'} />
 
           <span>{readableClaimableRewards}</span>
         </div>

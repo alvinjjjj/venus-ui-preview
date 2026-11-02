@@ -28,6 +28,8 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
       placeLabelToLeft,
       menuTitle,
       menuPosition,
+      menuClassName,
+      matchTriggerWidth,
       triggerOnHover,
       ...otherProps
     }: SelectProps,
@@ -106,7 +108,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
 
     return (
       <Dropdown
-        menuClassName="venus-select-panel"
+        menuClassName={cn('venus-select-panel', menuClassName)}
         className={className}
         modalPortalContainer={modalPortalContainer}
         optionsDom={optionsDom}
@@ -115,6 +117,7 @@ export const Select = forwardRef<HTMLInputElement, SelectProps>(
         placeLabelToLeft={placeLabelToLeft}
         menuTitle={menuTitle}
         menuPosition={menuPosition}
+        matchTriggerWidth={matchTriggerWidth}
         triggerOnHover={triggerOnHover}
         {...otherProps}
       >

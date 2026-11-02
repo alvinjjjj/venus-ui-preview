@@ -1,0 +1,176 @@
+/* Final account family — Figma 3290:114452 (Appearance New).
+   Component-scoped roles reproduce the supplied Color modes; they do not
+   replace the app palette or depend on the Lite route loading first. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel.venus-popup-panel {
+  background: rgb(25 30 40 / 75%);
+  border-color: rgb(255 255 255 / 10%);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%), 0 24px 64px rgb(0 0 0 / 28%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-account-panel, .venus-settings) {
+  --account-secondary-ink: var(--color-light-grey);
+  --account-control-fill: rgb(255 255 255 / 7%);
+  --account-control-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) :is(.venus-account-panel, .venus-settings) {
+  /* Figma text/secondary/default and button/glass/defOff roles. */
+  --account-secondary-ink: #4b5563;
+  --account-control-fill: rgb(255 255 255 / 55%);
+  --account-control-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%), 0 2px 6px rgb(30 55 85 / 7%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-account-panel.venus-popup-panel {
+  background: rgb(250 250 248 / 85%);
+  border-color: rgb(30 40 55 / 9%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), 0 24px 64px rgb(30 40 55 / 14%);
+}
+
+/* Theme and Language share the same label role in every account/settings entry. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings .venus-settings-label {
+  color: var(--account-secondary-ink);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings {
+  --color-light-grey: var(--account-secondary-ink);
+}
+
+/* Keep the established 48px controls and 12px stack. Only the material and
+   text role change: navigation and disconnect are neutral secondary actions. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-action {
+  min-height: calc(var(--spacing) * 12);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-account-panel .venus-account-settings .venus-account-action[data-venus-button-variant], .venus-settings .venus-language-setting .venus-language-select [data-select-trigger]) {
+  --material-fill: var(--account-control-fill) !important;
+  --material-hover: var(--account-control-fill) !important;
+  --material-ink: var(--account-secondary-ink) !important;
+  --material-hover-ink: var(--account-secondary-ink) !important;
+  --material-shadow: var(--account-control-shadow) !important;
+  --material-hover-shadow: var(--account-control-shadow) !important;
+  background: var(--account-control-fill) !important;
+  color: var(--account-secondary-ink) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--account-control-shadow) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings .venus-language-select [data-select-trigger] svg {
+  color: inherit;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings .venus-theme-switch[data-venus-button-group] {
+  background: #f3f4f6 !important; /* surface/interactive/default */
+  border-color: #e2e5ea !important; /* border/interactive/default */
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 90%), inset 0 -1px 0 rgb(45 78 110 / 12%) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-settings .venus-theme-switch[data-venus-button-group] > button[aria-pressed='true'] {
+  background: radial-gradient(ellipse at 48% 12%, #398cfa 0%, transparent 65%), linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6) !important;
+  box-shadow: inset 0 1px 2px rgb(255 255 255 / 20%), 0 2px 4px rgb(0 0 0 / 16%) !important;
+  border-color: rgb(255 255 255 / 20%) !important;
+  color: white !important;
+}
+
+/* Figma Wallet New / Light: the same ice sheen in Lite, Pro and the
+   non-interactive address display. Prime keeps its copper membership edge. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study) {
+  --account-wallet-fill: linear-gradient(159.4386deg, rgb(255 255 255 / 86%) 5.363%, rgb(255 255 255 / 30%) 35.45%, rgb(183 196 213 / 26%) 73.742%, rgb(255 255 255 / 38%) 96.535%), rgb(237 242 248 / 78%);
+  --account-wallet-shadow: inset 0 1px 4px rgb(255 255 255 / 95%), inset 0 -1px 4px rgb(183 196 213 / 35%), 0 2px 4px rgb(31 53 83 / 6%);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study):not([data-prime-account='true'])[data-venus-button-material] {
+  --material-fill: var(--account-wallet-fill) !important;
+  --material-ink: #101218 !important;
+  --material-hover-ink: #101218 !important;
+  background: var(--account-wallet-fill) !important;
+  color: #101218 !important; /* text/primary/default */
+  border: 1px solid #d4dde8 !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--account-wallet-shadow) !important;
+  backdrop-filter: blur(12px) saturate(130%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(130%) !important;
+  padding: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study):not([data-prime-account='true']) > div {
+  background: transparent !important;
+  border-radius: inherit;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true'] > div {
+  background: var(--account-wallet-fill) !important;
+  box-shadow: var(--account-wallet-shadow) !important;
+}
+
+/* Restore UserButton's existing Prime edge after legacy popup overrides. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true'][data-venus-button-material] {
+  --material-fill: linear-gradient(135deg, #ffece3, #6d4637, #674031) !important;
+  background: var(--material-fill) !important;
+  border-color: transparent !important;
+}
+
+/* This is an address display, not an unavailable action. Keep disabled
+   behavior while matching the full-contrast Figma read-only component. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-address-study:disabled {
+  opacity: 1 !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-address-study > div > svg {
+  margin-bottom: 0;
+}
+
+/* The shared overview's horizontal scroller clips its second label on a
+   phone. Reflow only the account popup; the Dashboard keeps its own layout. */
+@media (width < 40rem) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-row {
+    height: auto;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-cells {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    align-items: start;
+    column-gap: calc(var(--spacing) * 3);
+    row-gap: var(--spacing);
+    width: 100%;
+    overflow: visible;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-cells > div {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-cells > div > div:first-child {
+    align-items: flex-start;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-cells .space-x-2 {
+    flex-wrap: wrap;
+    column-gap: calc(var(--spacing) * 2);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel .venus-account-performance-cells .space-x-2 > * {
+    margin-inline: 0;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-panel.venus-popup-panel {
+    background: rgb(25 30 40);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-account-panel.venus-popup-panel {
+    background: rgb(250 250 248);
+  }
+}

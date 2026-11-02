@@ -10,16 +10,18 @@ export const LanguageSetting: React.FC = () => {
   const { t, i18n, language } = useTranslation();
 
   return (
-    <div className="venus-language-setting flex flex-col gap-y-3 lg:flex-row lg:justify-between lg:items-center lg:gap-y-0">
-      <p className="venus-settings-label">{t('layout.menu.settings.language.label')}</p>
+    <div className="venus-language-setting flex flex-wrap items-center justify-between gap-3">
+      <p className="venus-settings-label text-light-grey">{t('layout.menu.settings.language.label')}</p>
 
       <Select
-        className="venus-language-select"
+        className="venus-language-select w-40 max-w-full"
         value={language.bcp47Tag}
         onChange={tag => i18n.changeLanguage(tag as string)}
         options={selectOptions}
         dropdownClassName="lg:overflow-auto lg:max-h-48"
+        menuClassName="venus-settings-language-menu"
         menuPosition="right"
+        matchTriggerWidth
       />
     </div>
   );

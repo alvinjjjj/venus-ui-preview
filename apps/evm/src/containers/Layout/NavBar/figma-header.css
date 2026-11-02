@@ -1,14 +1,70 @@
 /* Final Header maps Figma 1:21034 onto the existing navigation and materials.
    Component-local values come from header/height (64), Pro Lite (55 × 48),
    B2R/B2S (14/21), and the exported brand assets. Other previews stay intact. */
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] {
+:root[data-glass-variant='lite-experiment-v2'] :is(.venus-navigation[data-figma-header], .venus-account-popover) {
   --venus-header-height: calc(var(--spacing) * 16);
+  /* Figma 3290:114114: the panel starts 12px below the 64px header. */
+  --venus-header-popover-gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] {
   --venus-header-control-height: calc(var(--spacing) * 12);
   --venus-header-gutter: calc(var(--spacing) * 4);
   --venus-header-gap: calc(var(--spacing) * 2);
-  /* Fixed component width and CSS-equivalent backdrop blur from Figma. */
+  /* Fixed component width from Figma. */
   --venus-header-mode-width: 55px;
-  --venus-header-blur: 9.45px;
+}
+
+/* Final Pro shares one overlay header on every route. Its backdrop is a
+   sibling of the controls, never their ancestor, so expanded menus can still
+   sample and blur the page independently. Reuse the existing glass palette. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro'] {
+  position: fixed;
+  inset: 0 0 auto;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(125deg, rgb(255 255 255 / 8%), transparent 65%), color-mix(in srgb, var(--color-background-active) 80%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-light-grey) 12%, transparent);
+  backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(120%);
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 3)) saturate(120%);
+  opacity: 0;
+  transition: opacity 240ms ease-out;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-header-scrolled='true']::before {
+  opacity: 1;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header][data-interface-mode='pro']::before {
+  background: linear-gradient(125deg, rgb(255 255 255 / 24%), transparent 65%), color-mix(in srgb, var(--e-light-surface-panel) 80%, transparent);
+}
+
+/* Preserve the initial 64px offset while allowing scrolled content beneath
+   the header. This does not change Lite or archived preview layouts. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro'] + #page-container {
+  padding-top: calc(var(--spacing) * 16);
+  scroll-padding-top: calc(var(--spacing) * 16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro']::before {
+    transition: none;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro']::before {
+    background: var(--color-background-active);
+  }
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row {
@@ -16,16 +72,102 @@
   min-height: var(--venus-header-height);
   padding: 0 var(--venus-header-gutter);
   gap: var(--venus-header-gap);
-  backdrop-filter: blur(var(--venus-header-blur));
-  -webkit-backdrop-filter: blur(var(--venus-header-blur));
-}
-
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='lite'] .venus-header-row {
+  /* Keep the navigation's dropdowns outside any ancestor backdrop root so
+     their shared glass can blur the page beneath them, including its title. */
   background: transparent;
   border: 0;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* Preserve the existing menu geometry and entrance while the shared dropdown
+   owns its fill, edge colour, blur and elevation in both themes. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu {
+  padding: calc(var(--spacing) * 2);
+  border-width: 1px;
+}
+
+/* Product and chain menus share the header baseline, with a continuous hover bridge. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row .venus-dropdown-surface {
+  margin-top: var(--venus-header-popover-gap);
+}
+
+/* Product menus use Figma's updated 292px width, one 8px outer inset and
+   8px row padding. Remove the nested content inset so it cannot stack.
+   Borrow (486:4405) has a 12px row gap; Earn retains its approved 24px. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has(:is([data-earn-motion='core'], [data-earn-motion='vault'])) {
+  width: calc(var(--spacing) * 73);
+  max-width: 100%;
+  padding: calc(var(--spacing) * 2);
+}
+
+/* Earn's outer stroke remains omitted per the approved review. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has([data-earn-motion='vault']) {
+  border-width: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has(:is([data-earn-motion='core'], [data-earn-motion='vault'])) .venus-submenu-content {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has(:is([data-earn-motion='core'], [data-earn-motion='vault'])) .venus-submenu-content > div {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has([data-earn-motion='vault']) .venus-submenu-content > div {
+  gap: calc(var(--spacing) * 6);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault'], [data-earn-motion='core'], [data-earn-motion='spoke']) {
+  margin: 0;
+  padding: calc(var(--spacing) * 2);
+}
+
+/* These are the Figma icon's asset colours, not the semantic yellow token:
+   that token darkens in Light Mode and made the Vault tile turn brown.
+   Apply the same tile to the mobile navigation's inline Earn section. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] [data-earn-motion='hub'] .venus-submenu-icon {
+  background: linear-gradient(140deg, #85ccff, #0085e3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] [data-earn-motion='vault'] .venus-earn-icon > rect:first-child {
+  fill: transparent;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] [data-earn-motion='vault'] .venus-submenu-icon {
+  background: linear-gradient(140.64deg, #f7d979 8.7%, #f0b90b 55.56%, #d39e09 93.9%);
+  box-shadow: none;
+}
+
+/* Figma's Core tile uses the Light foreground (#101218). Read the existing
+   RGB token because the E Light text alias uses a different cool-grey value. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] [data-earn-motion='core'] .venus-earn-icon > rect:first-child {
+  fill: rgb(var(--color-white-rgb));
+}
+
+/* Earn, Borrow and Others share the approved Light glass and elevation.
+   Override the older almost-opaque Light preview for navigation menus only. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] .venus-navigation-menu {
+  background: rgb(255 255 255 / 64%);
+  border-width: 0;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 80%), 0 calc(var(--spacing) * 3) calc(var(--spacing) * 8) rgb(30 40 55 / 12%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header] .venus-header-row .venus-navigation-menu [data-submenu-variant]:is(:hover, :focus-visible) {
+  /* Override the legacy header mirror's important dark hover fill. */
+  background: #f3f4f6 !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu {
+    animation: new-menu-in 240ms cubic-bezier(.2, .7, .2, 1) both;
+  }
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-leading {
@@ -169,6 +311,10 @@
 }
 
 @media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-account-popover {
+    top: calc(var(--venus-header-height) + var(--venus-header-popover-gap));
+  }
+
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-brand-mark,
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='lite'] .venus-header-brand {
     gap: calc(var(--spacing) * 2.5);
@@ -224,6 +370,11 @@
 }
 
 @media (forced-colors: active) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro']::before {
+    background: Canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-row {
     background: Canvas;
     backdrop-filter: none;

@@ -1,0 +1,15 @@
+/* Final Settings and account actions share the existing 12px stack rhythm.
+   Load it with Settings so direct Pro entry has the same spacing as Lite. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-settings, .venus-account-settings) {
+  row-gap: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-settings > * {
+  margin-block: 0;
+  min-height: calc(var(--spacing) * 12);
+}
