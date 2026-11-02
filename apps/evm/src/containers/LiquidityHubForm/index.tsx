@@ -274,11 +274,6 @@ const PreviewLiquidityHubForm = ({
                       renderType={inlineHeader ? 'accordion' : 'block'}
                     />
                   )}
-                  {showFundingSources && (
-                    <p className="text-light-grey text-b1r">
-                      Preview only. No transaction will be sent.
-                    </p>
-                  )}
                   <InlineSubmit>
                     <Button
                       type="submit"
