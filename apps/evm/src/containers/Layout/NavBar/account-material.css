@@ -103,16 +103,47 @@
   border-radius: inherit;
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true'] > div {
-  background: var(--account-wallet-fill) !important;
-  box-shadow: var(--account-wallet-shadow) !important;
+/* Figma 3966:47205: Prime shares the wallet glass; membership colour belongs
+   to the existing logo and masked 1px ring, rather than the whole plate. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button[data-prime-account='true'] {
+  --account-wallet-fill: rgb(255 255 255 / 7%);
+  --account-wallet-shadow: inset 0 1px 1px rgb(255 255 255 / 27%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 4px 10px rgb(0 0 0 / 12%);
+  --account-prime-ring: linear-gradient(110deg, var(--vip-01, var(--lite-prime-text-start)), var(--vip-03, var(--lite-prime-text-highlight)) 45%, var(--vip-05, var(--lite-prime-text-end)));
 }
 
-/* Restore UserButton's existing Prime edge after legacy popup overrides. */
 :root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true'][data-venus-button-material] {
-  --material-fill: linear-gradient(135deg, #ffece3, #6d4637, #674031) !important;
-  background: var(--material-fill) !important;
+  --material-fill: var(--account-wallet-fill) !important;
+  --material-hover: var(--account-wallet-fill) !important;
+  position: relative;
+  background: var(--account-wallet-fill) !important;
   border-color: transparent !important;
+  box-shadow: var(--account-wallet-shadow) !important;
+  padding: 0;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true'] > div {
+  background: transparent !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--account-prime-ring) !important;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box xor, linear-gradient(#000 0 0);
+  opacity: .72 !important;
+  pointer-events: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-user-button:is(.venus-connected-wallet, .venus-account-address-study)[data-prime-account='true']:not(:disabled):is(:hover, :focus-visible)::after {
+  opacity: 1 !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet[data-prime-account='true'] > div {
+  gap: calc(var(--spacing) * 2);
 }
 
 /* This is an address display, not an unavailable action. Keep disabled
