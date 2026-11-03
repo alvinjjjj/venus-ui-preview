@@ -1,0 +1,25 @@
+/* Reuse the approved Lite Light thumb (black at 12%) across Final, including
+   portals. Existing hidden-scrollbar behavior and component sizing stay local. */
+@layer final-scrollbars {
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+    color-scheme: light;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'],
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] * {
+    scrollbar-color: rgb(0 0 0 / 12%) transparent !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] *::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] *::-webkit-scrollbar-thumb {
+    background: rgb(0 0 0 / 12%) !important;
+    border-radius: var(--radius-lg);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] *::-webkit-scrollbar-thumb:hover {
+    background: rgb(0 0 0 / 22%) !important;
+  }
+}

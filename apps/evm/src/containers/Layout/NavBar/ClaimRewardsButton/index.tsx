@@ -121,7 +121,7 @@ export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({
         variant={isFinal ? 'secondary' : variant}
       >
         <div className="flex items-center gap-x-2">
-          <Icon name="gift" className={isFinal ? 'text-inherit' : 'text-yellow'} />
+          <Icon name="gift" className="text-yellow" />
 
           <span>{readableClaimableRewards}</span>
         </div>

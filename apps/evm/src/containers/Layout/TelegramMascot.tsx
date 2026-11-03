@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { VENUS_TELEGRAM_URL } from 'constants/production';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useStore as useLayoutStore } from './store';
 
 // Two continuous displacement fields keep the original transparent artwork
@@ -37,6 +38,7 @@ const badgeMap = makeMotionMap('badge');
 const duration = 1050;
 
 export const TelegramMascot = () => {
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const nearFooter = useLayoutStore(state => state.isCloseToBottom);
   const filterId = `telegram-greeting-${useId().replace(/:/g, '')}`;
   const headRef = useRef<SVGFEDisplacementMapElement>(null);
@@ -97,7 +99,7 @@ export const TelegramMascot = () => {
     frameRef.current = requestAnimationFrame(tick);
   };
 
-  if (dismissed) return null;
+  if (dismissed || isFinal) return null;
 
   const closeButton = (
     <button type="button" aria-label="Hide Telegram widget until refresh" onClick={dismiss}

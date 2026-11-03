@@ -68,11 +68,17 @@
     box-shadow: inset 0 1px 1px rgb(255 255 255 / 25%), inset 0 -1px 1px rgb(255 255 255 / 9%), 0 3px 8px rgb(0 0 0 / 10%) !important;
   }
 
-  /* Foreground wrappers must follow their semantic button, not legacy Light
-     utility overrides. SVGs inherit too (including the neutral Rewards gift). */
-  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action) > span:not(.venus-mode-border-flow),
-  :root[data-glass-variant='lite-experiment-v2'] [data-claim-rewards-button] svg {
+  /* Foreground wrappers follow their semantic button, not legacy Light
+     utility overrides. */
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action) > span:not(.venus-mode-border-flow) {
     color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  /* The shared Rewards gift keeps Pro's yellow in both modes and themes,
+     including hover. Use the existing asset colour, rather than warning ink. */
+  :root[data-glass-variant='lite-experiment-v2'] [data-claim-rewards-button] svg.text-yellow {
+    color: rgb(var(--color-yellow-rgb)) !important;
     -webkit-text-fill-color: currentColor !important;
   }
 
@@ -117,8 +123,25 @@
   }
 
   @media (hover: hover) {
-    :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='primary'], [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-select-trigger], .venus-multiselect-trigger, .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover {
-      --final-button-ink: var(--color-blue) !important;
+    :root[data-glass-variant='lite-experiment-v2'] :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover {
+      --final-button-ink: var(--color-white) !important;
+      color: var(--color-white) !important;
+      font-weight: var(--font-weight-semibold) !important;
+    }
+
+    /* Figma text/secondary/active uses slate/950 in Light mode. */
+    :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover {
+      --final-button-ink: #101218 !important;
+      color: #101218 !important;
+    }
+
+    :root[data-glass-variant='lite-experiment-v2'] :is(a[data-venus-text-link]:not([data-venus-button-variant], [data-submenu-variant], [data-header-navigation], .venus-header-logo), [data-venus-button-variant='text'], [data-header-navigation]):hover {
+      color: var(--color-white) !important;
+      font-weight: var(--font-weight-semibold) !important;
+    }
+
+    :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(a[data-venus-text-link]:not([data-venus-button-variant], [data-submenu-variant], [data-header-navigation], .venus-header-logo), [data-venus-button-variant='text'], [data-header-navigation]):hover {
+      color: #101218 !important;
     }
 
     :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger, .venus-mode-switch):not(:disabled):not([aria-disabled='true']):hover {
@@ -126,7 +149,7 @@
     }
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-select-trigger], .venus-multiselect-trigger, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):active {
+  :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant='primary']:not(.venus-mode-switch, [data-select-trigger], .venus-multiselect-trigger, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):active {
     --final-button-fill: radial-gradient(ellipse at center, rgb(255 255 255 / 22%), transparent 70%), radial-gradient(ellipse at 48% 12%, #529dff 0%, transparent 65%), linear-gradient(115deg, #2a77eb, #398cfa 46%, #2875e6) !important;
     --final-button-ink: #fff !important;
     --final-button-shadow: inset 0 1px 1px rgb(255 255 255 / 40%), 0 2px 5px rgb(0 0 0 / 8%) !important;
@@ -152,8 +175,80 @@
     color: var(--e-light-text-muted) !important;
   }
 
+  /* An address is read-only identity, not an unavailable action. Explicit
+     appearance and text fill prevent iOS Safari painting a grey native button. */
+  :root[data-glass-variant='lite-experiment-v2'] .venus-account-address-study:disabled {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background: var(--account-wallet-fill) !important;
+    color: var(--color-white) !important;
+    -webkit-text-fill-color: currentColor !important;
+    box-shadow: var(--account-wallet-shadow) !important;
+    opacity: 1 !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-account-address-study:disabled {
+    color: #101218 !important; /* Figma Light text/secondary/active. */
+  }
+
+  /* One existing glass spotlight for every neutral control, including Chain,
+     Reward, wallet and popup actions. It follows --glass-x/y without animation
+     loops; content remains above the reflection and shadows stay on ::after. */
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']) {
+    --final-control-reflection: radial-gradient(ellipse 60% 200% at var(--glass-x, 50%) var(--glass-y, 50%), rgb(255 255 255 / 22%), rgb(255 255 255 / 7%) 30%, transparent 72%), linear-gradient(125deg, transparent 25%, rgb(255 255 255 / 6%) 65%, transparent 90%);
+    position: relative;
+    isolation: isolate;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']) {
+    --final-control-reflection: radial-gradient(ellipse 60% 200% at var(--glass-x, 50%) var(--glass-y, 50%), rgb(255 255 255 / 95%), rgb(255 255 255 / 35%) 30%, transparent 72%), linear-gradient(125deg, transparent 25%, color-mix(in srgb, var(--e-light-border-control) 24%, transparent) 65%, transparent 90%);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true'])::before {
+    content: '' !important;
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: var(--final-control-reflection) !important;
+    pointer-events: none;
+    opacity: 0 !important;
+    transform: none !important;
+    transition: opacity 240ms ease-out;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']) > :not(.button-bevel-outline, .venus-mode-border-flow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (hover: hover) {
+    :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover::before {
+      opacity: .85 !important;
+    }
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):is(:active, :focus-visible)::before {
+    opacity: 1 !important;
+  }
+
+  /* Pressed is transient. It must not turn a neutral action into a selected
+     blue action; the spotlight supplies feedback while its plate stays put. */
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):active {
+    background: var(--final-button-fill) !important;
+    color: var(--final-button-ink) !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not(.venus-mode-switch, .lite-e2-market-action) {
+      transition: none !important;
+    }
+
+    :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]::before {
       transition: none !important;
     }
   }

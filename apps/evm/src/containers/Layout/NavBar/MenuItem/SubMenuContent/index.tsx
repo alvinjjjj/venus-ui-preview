@@ -9,12 +9,18 @@ export interface SubMenuContentProps extends Omit<SubMenu, 'items'> {
 }
 
 // Reuse the same product rows in desktop dropdowns and responsive navigation cards.
-export const SubMenuContent: React.FC<SubMenuContentProps> = ({ variant = 'primary', items, inline = false }) => {
+export const SubMenuContent: React.FC<SubMenuContentProps> = ({
+  variant = 'primary',
+  items,
+  inline = false,
+}) => {
   const content = (
     <div
       className={cn(
         'venus-submenu-content rounded-lg',
-        variant === 'primary' ? 'min-w-83' : 'p-2 bg-background-active sm:w-79',
+        variant === 'primary'
+          ? 'venus-others-submenu min-w-83'
+          : 'p-2 bg-background-active sm:w-79',
         inline && 'venus-inline-submenu',
       )}
     >
@@ -30,5 +36,7 @@ export const SubMenuContent: React.FC<SubMenuContentProps> = ({ variant = 'prima
     <div className="venus-inline-product-menu venus-navigation-menu venus-dropdown-surface">
       {content}
     </div>
-  ) : content;
+  ) : (
+    content
+  );
 };

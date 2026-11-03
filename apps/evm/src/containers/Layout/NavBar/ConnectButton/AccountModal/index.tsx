@@ -13,6 +13,7 @@ import { AccountOverview } from 'containers/AccountOverview';
 import { CopyAddressButton } from 'containers/CopyAddressButton';
 import { VipTelegramGroupButton } from 'containers/VipTelegramGroupButton';
 import { ClaimRewardsButton } from '../../ClaimRewardsButton';
+import { ChainSelect } from '../../ChainSelect';
 import { Settings } from '../../Settings';
 import { UserButton } from '../UserButton';
 import './address-glass.css';
@@ -26,7 +27,7 @@ export interface AccountModalProps {
 
 export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPrime, onClose }) => {
   const { logout } = useDemo();
-  const { isLite, setMode } = useInterfaceMode();
+  const { isLite, mode, setMode } = useInterfaceMode();
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const handleDisconnect = () => {
     logout();
@@ -44,11 +45,17 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
           <div className="venus-account-panel venus-popup-panel w-full max-h-[calc(100dvh-6rem)] bg-background-active p-6 flex flex-col gap-y-6 overflow-auto sm:w-123 rounded-lg border border-blue">
             <div className="flex flex-col gap-y-3">
               <div className="flex items-start justify-between">
-                <div className="flex items-center gap-x-3">
+                <div className="venus-account-identity flex items-center gap-x-3">
+                  {isFinal && (
+                    <div className="venus-account-chain">
+                      <ChainSelect buttonClassName="h-12 px-3 py-0" />
+                    </div>
+                  )}
                   <UserButton
                     address={address}
                     isVip={isVip}
                     isPrime={isPrime}
+                    figmaHeader={isFinal}
                     disabled
                     className="venus-account-address-study h-12"
                   />
@@ -66,11 +73,13 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
                 </button>
               </div>
 
-              <ClaimRewardsButton
-                className={
-                  isLite ? 'h-12 bg-dark-blue-active' : 'h-12 bg-dark-blue-active sm:hidden'
-                }
-              />
+              {!isFinal && (
+                <ClaimRewardsButton
+                  className={
+                    isLite ? 'h-12 bg-dark-blue-active' : 'h-12 bg-dark-blue-active sm:hidden'
+                  }
+                />
+              )}
             </div>
 
             <AccountOverview accountAddress={address} showGraph={false} />
@@ -80,7 +89,7 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
               <div className="flex flex-col gap-y-3">
                 {isVip && <VipTelegramGroupButton />}
 
-                {isLite && (
+                {(isLite || isFinal) && (
                   <ButtonWrapper
                     variant={isFinal ? 'secondary' : 'primary'}
                     material={isFinal ? 'glass' : undefined}
@@ -88,8 +97,8 @@ export const AccountModal: React.FC<AccountModalProps> = ({ address, isVip, isPr
                     asChild
                   >
                     <Link
-                      to={{ pathname: routes.dashboard.path, search: '?interface=lite' }}
-                      state={{ interfaceMode: 'lite' }}
+                      to={{ pathname: routes.dashboard.path, search: `?interface=${mode}` }}
+                      state={{ interfaceMode: mode }}
                       onClick={onClose}
                       noStyle
                     >

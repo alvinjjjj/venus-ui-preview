@@ -129,7 +129,7 @@
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu:has([data-submenu-variant='primary']) > div {
-  gap: var(--spacing);
+  gap: calc(var(--spacing) * 2);
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-responsive-navigation .venus-inline-submenu [data-submenu-variant='primary'] {
@@ -219,8 +219,13 @@
 }
 
 @media (max-width: 767px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-actions [data-rewards-button] {
+  /* Figma 640 keeps Reward outside and moves chain selection into Menu. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-chain {
     display: none;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-chain {
+    display: block;
   }
 }
 

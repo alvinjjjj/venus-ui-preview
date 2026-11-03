@@ -24,11 +24,24 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
     );
 
     return formattedTo ? (
-      <RRLink {...otherProps} className={classes} to={formattedTo} ref={ref}>
+      <RRLink
+        {...otherProps}
+        data-venus-text-link={!noStyle || undefined}
+        className={classes}
+        to={formattedTo}
+        ref={ref}
+      >
         {children}
       </RRLink>
     ) : (
-      <a target="_blank" rel="noreferrer" {...otherProps} className={classes} ref={ref}>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        {...otherProps}
+        data-venus-text-link={!noStyle || undefined}
+        className={classes}
+        ref={ref}
+      >
         {children}
       </a>
     );

@@ -6,6 +6,7 @@ import { InterfaceOnboarding } from 'demo/InterfaceOnboarding';
 import { LiquidityLightPreview } from 'demo/LiquidityLightPreview';
 import { AnalyticProvider } from 'libs/analytics';
 import { ErrorBoundary } from 'libs/errors';
+import NotificationCenter from 'libs/notifications/NotificationCenter';
 import { Web3Wrapper } from 'libs/wallet';
 import { HashRouter } from 'react-router';
 import { TelegramMascot } from 'containers/Layout/TelegramMascot';
@@ -20,6 +21,7 @@ const App = () => (
           <Web3Wrapper>
             <AnalyticProvider>
               <AppRoutes />
+              <NotificationCenter />
               <TelegramMascot />
               <InterfaceOnboarding />
               <DemoLogin />

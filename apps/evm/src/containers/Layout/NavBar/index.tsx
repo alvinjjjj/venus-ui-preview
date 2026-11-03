@@ -110,7 +110,11 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
     const onEscape = (event: KeyboardEvent) => {
       if (event.key !== 'Escape' || event.defaultPrevented) return;
       // Let a nested chain/language picker handle its own Escape first.
-      if (event.target instanceof Element && event.target.closest('[role="dialog"], [data-dropdown-open="true"]')) return;
+      if (
+        event.target instanceof Element &&
+        event.target.closest('[role="dialog"], [data-dropdown-open="true"]')
+      )
+        return;
       useStore.setState({ openModal: undefined });
       document.querySelector<HTMLButtonElement>('.venus-header-menu')?.focus();
     };
@@ -198,15 +202,17 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
           )}
           data-testid={TEST_IDS.navBarActions}
         >
-          {/* Sits to the left of the reward claim button, and only from the breakpoint the desktop
-              menu appears at: below that, the dashboard is reachable from the mobile menu */}
-          {!isLite && (
+          {/* Final keeps Dashboard in the Address menu at every breakpoint. */}
+          {!isLite && !isFinal && (
             <div className="hidden items-center lg:flex">
               <MenuItem item={dashboardMenuItem} onClick={closeMobileMenu} />
             </div>
           )}
 
-          <ClaimRewardsButton className="h-full hidden sm:flex" data-rewards-button="true" />
+          <ClaimRewardsButton
+            className={isFinal ? 'h-full flex' : 'h-full hidden sm:flex'}
+            data-rewards-button="true"
+          />
 
           {!isLite && (
             <div className="venus-header-chain">
@@ -267,16 +273,23 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
               aria-expanded={isMobileMenuOpen}
             >
               <Icon
-                name={isMobileMenuOpen ? 'closeRounded' : 'burger'}
-                className={cn(isMobileMenuOpen ? 'text-light-grey size-3' : 'text-white')}
+                name={isMobileMenuOpen ? 'close' : 'burger'}
+                className={cn(
+                  'venus-header-menu-glyph',
+                  isFinal ? 'text-current' : isMobileMenuOpen ? 'text-light-grey' : 'text-white',
+                )}
               />
             </NavButtonWrapper>
           )}
 
-          {!isLite && !isUserConnected && (
+          {!isUserConnected && (isFinal || !isLite) && (
             <SettingsButton
               variant={isFinal ? 'secondary' : undefined}
-              className="h-full px-0 hidden lg:flex"
+              className={
+                isFinal
+                  ? 'venus-header-settings flex h-full px-0 lg:flex'
+                  : 'h-full px-0 hidden lg:flex'
+              }
             />
           )}
         </div>
@@ -291,26 +304,33 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
         )}
       >
         <div className={isFinal ? 'venus-mobile-menu-content' : undefined}>
-        <div className="venus-mobile-menu-heading flex items-center justify-between mb-5">
-          <p>{t('layout.menu.label')}</p>
-        </div>
-
-        <div className="venus-mobile-menu-list mb-2">
-          {[dashboardMenuItem, ...menuItems].map(item => (
-            <MenuItem key={item.label} item={item} onClick={closeMobileMenu} responsive={isFinal} />
-          ))}
-        </div>
-
-        {isFinal && isMobileMenuOpen && (
-          <div className="venus-mobile-chain mb-6 sm:hidden">
-            <p className="mb-2 text-sm text-light-grey">{t('layout.chainSelect.label')}</p>
-            <ChainSelect buttonClassName="h-12 px-3" />
+          <div className="venus-mobile-menu-heading flex items-center justify-between mb-5">
+            <p>{t('layout.menu.label')}</p>
           </div>
-        )}
 
-        <Delimiter className="mb-6" />
+          <div className="venus-mobile-menu-list mb-2">
+            {(isFinal ? menuItems : [dashboardMenuItem, ...menuItems]).map(item => (
+              <MenuItem
+                key={item.label}
+                item={item}
+                onClick={closeMobileMenu}
+                responsive={isFinal}
+              />
+            ))}
+          </div>
 
-        <Settings />
+          {(!isFinal || !isUserConnected) && (
+            <div className="venus-mobile-menu-footer">
+              {isFinal && isMobileMenuOpen && (
+                <div className="venus-mobile-chain mb-6 sm:hidden">
+                  <p className="mb-2 text-sm text-light-grey">{t('layout.chainSelect.label')}</p>
+                  <ChainSelect buttonClassName="h-12 px-3" />
+                </div>
+              )}
+              <Delimiter className="mb-6" />
+              <Settings />
+            </div>
+          )}
         </div>
       </div>
     </nav>

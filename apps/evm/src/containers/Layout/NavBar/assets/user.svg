@@ -1,12 +1,12 @@
 <svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="16 px General" clip-path="url(#clip0_0_65)">
+<g id="16 px General" clip-path="url(#clip0_0_26)">
 <g id="Base">
 </g>
-<path id="Rectangle 71" d="M2.66667 15H13.3333C14.2538 15 15 14.2538 15 13.3333C15 11.4924 13.5076 10 11.6667 10H4.33333C2.49238 10 1 11.4924 1 13.3333C1 14.2538 1.74619 15 2.66667 15Z" stroke-width="2" stroke-linejoin="round" stroke="white"/>
-<circle id="Ellipse 59" cx="8" cy="4" r="3" stroke="white" stroke-width="2"/>
+<path id="Rectangle 71" d="M2.66667 15H13.3333C14.2538 15 15 14.2538 15 13.3333C15 11.4924 13.5076 10 11.6667 10H4.33333C2.49238 10 1 11.4924 1 13.3333C1 14.2538 1.74619 15 2.66667 15Z" stroke-width="1.5" stroke-linejoin="round" stroke="white"/>
+<circle id="Ellipse 59" cx="8" cy="4" r="3" stroke="white" stroke-width="1.5"/>
 </g>
 <defs>
-<clipPath id="clip0_0_65">
+<clipPath id="clip0_0_26">
 <rect width="16" height="16" fill="white"/>
 </clipPath>
 </defs>

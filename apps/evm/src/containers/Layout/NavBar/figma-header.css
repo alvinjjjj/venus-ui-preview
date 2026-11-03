@@ -120,10 +120,6 @@
   gap: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu:has([data-earn-motion='vault']) .venus-submenu-content > div {
-  gap: calc(var(--spacing) * 6);
-}
-
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-navigation-menu :is([data-earn-motion='hub'], [data-earn-motion='vault'], [data-earn-motion='core'], [data-earn-motion='spoke']) {
   margin: 0;
   padding: calc(var(--spacing) * 2);
@@ -229,7 +225,26 @@
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet > div {
   padding-inline: calc(var(--spacing) * 3);
-  gap: calc(var(--spacing) * 3);
+  gap: calc(var(--spacing) * 2);
+}
+
+/* Key 3966:47177: the 145px plate includes its inside stroke. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet {
+  min-width: calc(var(--spacing) * 36.25);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet[data-prime-account='true'] {
+  min-width: calc(var(--spacing) * 36.75); /* Prime Key: 147px. */
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-user-address-compact {
+  display: none;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] [data-rewards-button] {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  white-space: nowrap;
 }
 
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-user-address {
@@ -256,20 +271,45 @@
   min-width: var(--venus-header-control-height);
 }
 
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-settings {
+  width: var(--venus-header-control-height);
+  height: var(--venus-header-control-height);
+  min-width: var(--venus-header-control-height);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-menu > .venus-header-menu-glyph {
+  /* The shared burger SVG already has Figma's 18 × 12 drawing/viewBox.
+     A 24px square stretches its visible bars to 24 × 16 instead. */
+  width: calc(var(--spacing) * 4.5);
+  height: calc(var(--spacing) * 3);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-menu[aria-expanded='true'] > .venus-header-menu-glyph {
+  width: calc(var(--spacing) * 5);
+  height: calc(var(--spacing) * 5);
+}
+
+/* Confirmed Others item gap: 8px, independent of row padding. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-others-submenu > div {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-others-submenu > div > * {
+  margin-block: 0;
+}
+
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-mobile-navigation {
   top: var(--venus-header-height);
 }
 
-/* Mobile Header 1112:4172: 36px controls, 41px Lite entry, 24px menu glyph.
+/* Mobile Header 1112:4172: 36px controls, 41px Lite entry, 18 × 12 menu bars.
    Keep the desktop 48px material and the current action order intact. */
 @media (max-width: 639px) {
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] {
     --venus-header-control-height: calc(var(--spacing) * 9);
     --venus-header-mode-width: 41px;
-  }
-  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-header-menu > svg:not(.button-bevel-outline) {
-    width: calc(var(--spacing) * 6);
-    height: calc(var(--spacing) * 6);
   }
   :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-header-actions, .venus-header-actions > div:has(> .venus-connected-wallet), .venus-connected-wallet) {
     min-width: 0;
@@ -283,6 +323,34 @@
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='pro'] .venus-header-actions {
+    gap: var(--spacing);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet {
+    min-width: calc(var(--spacing) * 20.75) !important; /* Mobile Key 3966:47188: 83px. */
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet[data-prime-account='true'] {
+    min-width: calc(var(--spacing) * 21.25) !important; /* Mobile Prime Key: 85px. */
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-connected-wallet > div {
+    padding-inline: calc(var(--spacing) * 2);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] :is(.venus-user-address-full, .venus-wallet-expand) {
+    display: none;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] .venus-user-address-compact {
+    display: inline;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header] [data-rewards-button] {
+    padding-inline: calc(var(--spacing) * 2);
   }
 }
 

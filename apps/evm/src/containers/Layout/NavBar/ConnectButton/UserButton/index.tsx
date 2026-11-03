@@ -4,6 +4,7 @@ import primeLogoSrc from 'assets/img/primeLogo.svg';
 import PrimeLogo from 'assets/img/primeLogo.svg?react';
 import { Icon, Username } from 'components';
 import { useTranslation } from 'libs/translations';
+import { truncateAddress } from 'utilities';
 import type { Address } from 'viem';
 import expandSrc from '../../assets/expand.svg';
 import userSrc from '../../assets/user.svg';
@@ -32,6 +33,7 @@ export const UserButton: React.FC<UserButtonProps> = ({
       variant="secondary"
       material="glass"
       data-prime-account={isPrime || undefined}
+      aria-label={figmaHeader ? truncateAddress(address) : undefined}
       disabled={disabled}
       type="button"
       className={cn(
@@ -73,14 +75,30 @@ export const UserButton: React.FC<UserButtonProps> = ({
           showTooltip={false}
           address={address}
           shouldEllipseAddress
-        />
+        >
+          {figmaHeader && !disabled
+            ? ({ innerContent }) => (
+                <>
+                  <span className="venus-user-address-full">{innerContent}</span>
+                  <span className="venus-user-address venus-user-address-compact">
+                    {`${address.slice(0, 2)}...${address.slice(-2)}`}
+                  </span>
+                </>
+              )
+            : undefined}
+        </Username>
 
         {isVip && <img src={vipLogoSrc} alt={t('connectButton.vipLogoAlt')} className="size-4.5" />}
 
         {!isVip &&
           !disabled &&
           (figmaHeader ? (
-            <img className="venus-header-account-icon" src={expandSrc} alt="" aria-hidden="true" />
+            <img
+              className="venus-header-account-icon venus-wallet-expand"
+              src={expandSrc}
+              alt=""
+              aria-hidden="true"
+            />
           ) : (
             <Icon name="expand" className="text-light-grey" />
           ))}

@@ -29,6 +29,7 @@ import './lite-neutral-surfaces.css';
 import './lite-mobile.css';
 import './lite-form-spacing.css';
 import './final-button-material.css';
+import './final-scrollbars.css';
 import {
   beforeVersions,
   currentVersions,
@@ -75,7 +76,8 @@ export const GlassVersions = () => {
   const selectCollection = (next: PreviewCollection) => {
     setCollection(next);
     if (next === 'preview') setVersion('lite-experiment-v2');
-    if (isComponentRoute) navigate({ pathname: '/', search: location.search }, { state: { interfaceMode: 'lite' } });
+    if (isComponentRoute)
+      navigate({ pathname: '/', search: location.search }, { state: { interfaceMode: 'lite' } });
   };
   const styleVersion = previewDesignByMode[version];
   const landingVersion = landingDesignByMode[version];
@@ -105,7 +107,8 @@ export const GlassVersions = () => {
     // Share E's initial materials, but retain an independent revision selector.
     document.documentElement.dataset.glassChoice = styleVersion;
     document.documentElement.dataset.glassStudy = getPreviewStudy(version);
-    document.documentElement.dataset.glassRevision = version === 'lite-experiment-v2-legacy' ? 'lite-experiment-v2' : version;
+    document.documentElement.dataset.glassRevision =
+      version === 'lite-experiment-v2-legacy' ? 'lite-experiment-v2' : version;
     document.documentElement.dataset.glassVariant = version;
     document.documentElement.toggleAttribute('data-glass-landing', isLandingRoute);
     try {
@@ -134,15 +137,21 @@ export const GlassVersions = () => {
   useLayoutEffect(() => {
     if (styleVersion !== 'v5' && !isEHeaderLight) return;
     const icyLite = version === 'lite-experiment-v2' && isLight && isLite;
+    const finalControls = version === 'lite-experiment-v2';
     const updateLight = (event: PointerEvent) => {
       if (!(event.target instanceof Element)) return;
       const button = event.target.closest<HTMLElement>(
-        `[data-venus-button-variant="primary"], [data-venus-button-variant="secondary"], .venus-text-field [data-venus-button-variant], .lite-e3-card [data-select-trigger], .lite-e3-card .lite-e3-market-option, ${TOTAL_LIGHT_SELECTOR}${icyLite ? `, ${LITE_ICE_POINTER_SELECTOR}` : ''}`,
+        finalControls
+          ? '[data-venus-button-material], [data-select-trigger], .venus-multiselect-trigger'
+          : `[data-venus-button-variant="primary"], [data-venus-button-variant="secondary"], .venus-text-field [data-venus-button-variant], .lite-e3-card [data-select-trigger], .lite-e3-card .lite-e3-market-option, ${TOTAL_LIGHT_SELECTOR}${
+              icyLite ? `, ${LITE_ICE_POINTER_SELECTOR}` : ''
+            }`,
       );
       const icyControl = icyLite && button?.matches(LITE_ICE_POINTER_SELECTOR);
       if (
         !button ||
-        (isEHeaderLight &&
+        (!finalControls &&
+          isEHeaderLight &&
           !icyControl &&
           !button.closest(`.lite-e3-card, ${TOTAL_LIGHT_SELECTOR}`) &&
           (!!button.closest('.venus-mode-switch, .lite-markets') ||
@@ -234,10 +243,28 @@ export const GlassVersions = () => {
               </button>
             </div>
             {isComponentRoute && (
-              <div className="preview-dpad preview-dpad--before" role="group" aria-label="Component design">
-                <button type="button" aria-pressed={version === 'v1'} onClick={() => setVersion('v1')}>Original</button>
-                <button type="button" aria-pressed={version === 'lite-experiment-v2'} onClick={() => setVersion('lite-experiment-v2')}>Final</button>
-                <span className="preview-current" aria-live="polite">{version === 'v1' ? 'Original' : currentVersion?.label}</span>
+              <div
+                className="preview-dpad preview-dpad--before"
+                role="group"
+                aria-label="Component design"
+              >
+                <button
+                  type="button"
+                  aria-pressed={version === 'v1'}
+                  onClick={() => setVersion('v1')}
+                >
+                  Original
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={version === 'lite-experiment-v2'}
+                  onClick={() => setVersion('lite-experiment-v2')}
+                >
+                  Final
+                </button>
+                <span className="preview-current" aria-live="polite">
+                  {version === 'v1' ? 'Original' : currentVersion?.label}
+                </span>
               </div>
             )}
             {collections.map(group => (

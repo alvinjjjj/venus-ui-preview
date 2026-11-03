@@ -21,6 +21,7 @@ export const CopyAddressButton: React.FC<CopyAddressButtonProps> = ({
   const dom = (
     <button
       type="button"
+      aria-label={t('interactive.copy.address.tooltip')}
       className={cn(
         'text-blue hover:text-blue active:text-blue hover:cursor-pointer transition-colors',
         className,

@@ -23,7 +23,9 @@ vi.mock('../ConnectButton', () => ({
   ConnectButton: () => <button type="button">Connect Wallet</button>,
 }));
 vi.mock('../Settings', () => ({ Settings: () => null }));
-vi.mock('../SettingsButton', () => ({ SettingsButton: () => null }));
+vi.mock('../SettingsButton', () => ({
+  SettingsButton: () => <button type="button" aria-label="Settings" />,
+}));
 vi.mock('../useMenuItems', () => ({
   useMenuItems: () => [],
   useDashboardMenuItem: () => ({ label: 'Dashboard' }),
@@ -117,6 +119,40 @@ describe('Final Pro scroll glass', () => {
     (useAccountAddress as Mock).mockReturnValue({ accountAddress: undefined });
     useInterfaceModeStore.getState().setMode('pro');
     useStore.setState({ openModal: undefined });
+  });
+
+  it.each(['lite', 'pro'] as const)('offers Settings before connecting a wallet in %s', mode => {
+    useInterfaceModeStore.getState().setMode(mode);
+    renderComponent(<NavBar />, {
+      routerInitialEntries: ['/?chainId=56'],
+      routePath: '*',
+    });
+    expect(screen.getByRole('button', { name: 'Settings' })).toBeInTheDocument();
+  });
+
+  it('keeps chain and settings out of the connected responsive menu', () => {
+    (useAccountAddress as Mock).mockReturnValue({
+      accountAddress: '0x000000000000000000000000000000000000dEaD',
+    });
+    const { container } = renderComponent(<NavBar />, {
+      routerInitialEntries: ['/liquidity-hubs?chainId=56'],
+      routePath: '*',
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Open menu' }));
+    expect(container.querySelector('.venus-mobile-menu-footer')).toBeNull();
+    expect(container.querySelector('.venus-mobile-chain')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Settings' })).toBeNull();
+  });
+
+  it('keeps Dashboard out of both the desktop bar and mobile menu in Final', () => {
+    renderComponent(<NavBar />, {
+      routerInitialEntries: ['/markets/0x123?chainId=56'],
+      routePath: '*',
+    });
+
+    expect(screen.queryByText('Dashboard')).toBeNull();
+    expect(screen.getByRole('button', { name: 'Switch to Lite' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Choose chain' })).toBeTruthy();
   });
 
   it('tracks the app scroll container and clears the glass when returning to the top', () => {
