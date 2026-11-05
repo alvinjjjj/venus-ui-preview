@@ -1,6 +1,6 @@
 import { cn } from '@venusprotocol/ui';
 import BigNumber from 'bignumber.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   type AccountPerformanceHistoryDataPoint,
@@ -13,6 +13,7 @@ import {
 import {
   AccordionAnimatedContent,
   ButtonGroup,
+  Card,
   CellGroup,
   type CellProps,
   Delimiter,
@@ -45,6 +46,10 @@ export interface AccountOverviewProps extends React.HTMLAttributes<HTMLDivElemen
   accountAddress?: Address;
   previewPool?: Pool;
   splitLayout?: boolean;
+  chartColor?: string;
+  chartVariant?: 'area' | 'line';
+  netWorthInfoIcon?: React.ReactNode;
+  balanceVisibilityIcon?: React.ReactNode;
 }
 
 export const AccountOverview: React.FC<AccountOverviewProps> = ({
@@ -52,9 +57,14 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
   accountAddress,
   previewPool,
   splitLayout = false,
+  chartColor,
+  chartVariant,
+  netWorthInfoIcon,
+  balanceVisibilityIcon,
   ...otherProps
 }) => {
   const { t } = useTranslation();
+  const ChartContainer = !splitLayout && chartVariant === 'line' ? Card : 'div';
 
   const isVaiFeatureEnabled = useIsFeatureEnabled({
     name: 'vaiRoute',
@@ -94,6 +104,11 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
   const [selectedDataPoint, setSelectedDataPoint] = useState<
     AccountPerformanceHistoryDataPoint | undefined
   >();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Account changes must clear the previous account's hovered chart value.
+  useEffect(() => {
+    setSelectedDataPoint(undefined);
+  }, [accountAddress]);
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const toggleAccordion = () => setIsAccordionOpen(current => !current);
@@ -195,14 +210,14 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     {
       label: t('dashboard.overview.todaysChange'),
       value: (
-        <div className="space-x-2 flex items-start">
+        <div className="dashboard-performance-values space-x-2 flex items-start">
           <HidableUserBalance>
             <DollarValueChange value={dailyChangeCents} />
 
             {dailyChangeCents !== undefined && dailyChangeCents !== 0 && (
               <div
                 className={cn(
-                  'flex items-center',
+                  'dashboard-performance-percentage flex items-center',
                   dailyChangeCents > 0 ? 'text-green' : 'text-red',
                 )}
               >
@@ -270,18 +285,38 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     });
   }
 
+  const overviewCells = [
+    ...graphCells,
+    ...summaryCells.slice(0, 2).map(cell => ({
+      ...cell,
+      value: <HidableUserBalance>{cell.value}</HidableUserBalance>,
+    })),
+  ];
+
   const readableNetWorth = formatCentsToReadableValue({
     value: selectedDataPoint ? Number(selectedDataPoint.netWorthCents) : netWorthCents,
   });
+
+  const isEmptyPerformance =
+    !!accountAddress &&
+    !!getAccountPerformanceHistoryData &&
+    !getAccountPerformanceHistoryError &&
+    accountPerformanceHistory.length === 0;
 
   const shouldShowAccountBreakdown =
     !!accountAddress && !userChainSettings.doNotShowUserBalances && showGraph;
 
   return (
     <div {...otherProps}>
-      <div className={cn(splitLayout && 'grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-center')}>
-        <div className="min-w-0">
-          <div className="mb-3 space-y-3">
+      <div
+        className={cn(
+          splitLayout &&
+            'dashboard-overview-layout grid grid-cols-1 gap-6 lg:grid-cols-2 lg:items-center',
+          splitLayout && isEmptyPerformance && 'dashboard-overview-empty',
+        )}
+      >
+        <div className={cn('min-w-0', splitLayout && 'dashboard-overview-summary')}>
+          <div className={cn('mb-3 space-y-3', splitLayout && 'dashboard-overview-networth')}>
             {selectedDataPoint ? (
               <p className="text-sm">
                 {t('dashboard.performanceChart.dataPoint.date', {
@@ -294,6 +329,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
 
                 <InfoIcon
                   className="inline-flex"
+                  icon={netWorthInfoIcon}
                   tooltip={
                     isVaiFeatureEnabled
                       ? t('dashboard.overview.netWorth.tooltipWithVai')
@@ -304,7 +340,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
             )}
 
             <div className="flex items-center gap-x-3">
-              <p className="text-3xl">
+              <p className={cn('text-3xl', splitLayout && 'dashboard-networth-value')}>
                 <HidableUserBalance>{readableNetWorth}</HidableUserBalance>
               </p>
 
@@ -313,54 +349,65 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
                   type="button"
                   onClick={toggleShowUserBalances}
                   className="cursor-pointer p-1"
+                  aria-label={
+                    userChainSettings.doNotShowUserBalances ? 'Show balances' : 'Hide balances'
+                  }
                 >
-                  <Icon
-                    name={userChainSettings.doNotShowUserBalances ? 'closedEye' : 'eye'}
-                    className="size-5"
-                  />
+                  {!userChainSettings.doNotShowUserBalances && balanceVisibilityIcon ? (
+                    balanceVisibilityIcon
+                  ) : (
+                    <Icon
+                      name={userChainSettings.doNotShowUserBalances ? 'closedEye' : 'eye'}
+                      className="size-5"
+                    />
+                  )}
                 </button>
               )}
             </div>
           </div>
 
-          <button
-            className={cn(
-              'venus-account-performance-row flex items-center w-full h-15 text-left justify-between gap-x-3',
-              shouldShowAccountBreakdown && 'cursor-pointer',
-            )}
-            type="button"
-            disabled={!accountAddress || splitLayout}
-            onClick={splitLayout ? undefined : toggleAccordion}
-          >
-            <CellGroup cells={graphCells} className="venus-account-performance-cells" />
+          {splitLayout ? (
+            <CellGroup cells={overviewCells} className="venus-account-performance-cells" />
+          ) : (
+            <button
+              className={cn(
+                'venus-account-performance-row flex items-center w-full h-15 text-left justify-between gap-x-3',
+                shouldShowAccountBreakdown && 'cursor-pointer',
+              )}
+              type="button"
+              disabled={!accountAddress}
+              onClick={toggleAccordion}
+            >
+              <CellGroup cells={graphCells} className="venus-account-performance-cells" />
 
-            {shouldShowAccountBreakdown && !splitLayout && (
-              <div
-                className="flex items-center gap-x-3"
-                data-testid={testIds.performanceChartPreview}
-              >
-                {!isAccordionOpen && (
-                  <PerformanceChart
-                    accountPerformanceHistory={accountPerformanceHistory}
-                    className="hidden md:block w-49 h-15"
-                    displayAxes={false}
-                    displayToolTip={false}
-                    areaChartMargin={{
-                      top: 0,
-                    }}
+              {shouldShowAccountBreakdown && !splitLayout && (
+                <div
+                  className="flex items-center gap-x-3"
+                  data-testid={testIds.performanceChartPreview}
+                >
+                  {!isAccordionOpen && (
+                    <PerformanceChart
+                      accountPerformanceHistory={accountPerformanceHistory}
+                      className="hidden md:block w-49 h-15"
+                      displayAxes={false}
+                      displayToolTip={false}
+                      areaChartMargin={{
+                        top: 0,
+                      }}
+                    />
+                  )}
+
+                  <Icon
+                    name="chevronDown"
+                    className={cn('size-3 text-white', isAccordionOpen && 'rotate-180')}
                   />
-                )}
-
-                <Icon
-                  name="chevronDown"
-                  className={cn('size-3 text-white', isAccordionOpen && 'rotate-180')}
-                />
-              </div>
-            )}
-          </button>
+                </div>
+              )}
+            </button>
+          )}
         </div>
-        {splitLayout && showGraph && (
-          <div className="min-w-0 space-y-4">
+        {splitLayout && showGraph && !isEmptyPerformance && (
+          <ChartContainer className="dashboard-overview-chart min-w-0 space-y-4">
             <ButtonGroup
               buttonLabels={periodOptions.map(p => p.label)}
               className="ml-auto w-fit"
@@ -371,6 +418,8 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
             {shouldShowAccountBreakdown ? (
               <PerformanceChart
                 displayAxes
+                variant={chartVariant}
+                {...(chartColor && { chartColor })}
                 onSelectedDataPointChange={setSelectedDataPoint}
                 accountPerformanceHistory={accountPerformanceHistory}
                 onRefetch={refetchAccountPerformanceHistoryData}
@@ -381,7 +430,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
                 {accountAddress ? 'Balances hidden' : 'Connect wallet to view performance'}
               </div>
             )}
-          </div>
+          </ChartContainer>
         )}
       </div>
 

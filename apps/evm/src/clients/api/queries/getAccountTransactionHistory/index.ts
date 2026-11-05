@@ -1,3 +1,4 @@
+import { isEmptyDemoAddress } from 'demo/state';
 import { transactions as mockData } from '__mocks__/models/transactions';
 import type { TxType } from 'types';
 import { matchesTransactionFilters } from 'utilities/matchesTransactionFilters';
@@ -30,11 +31,13 @@ export const TX_TYPE_TO_API_FILTER: Record<TxType, number> = {
 };
 
 export const getAccountTransactionHistory = async ({
+  accountAddress,
   types,
   page = 0,
   sourceFilters,
   pageSize = 10,
 }: GetAccountTransactionHistoryInput): Promise<GetAccountTransactionHistoryOutput> => {
+  if (isEmptyDemoAddress(accountAddress)) return { transactions: [], count: 0 };
   const data = (mockData.transactions as GetAccountTransactionHistoryOutput['transactions']).filter(
     tx => matchesTransactionFilters(tx, { types, sources: sourceFilters }),
   );

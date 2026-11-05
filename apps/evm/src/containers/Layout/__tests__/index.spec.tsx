@@ -50,7 +50,7 @@ describe('Layout', () => {
     expect(screen.queryByText('Test warning')).not.toBeInTheDocument();
     expect(screen.getByText('Header')).toBeInTheDocument();
     expect(screen.getByText('Dashboard outlet')).toBeInTheDocument();
-    expect(screen.getByText('Scroll top')).toBeInTheDocument();
+    expect(screen.queryByText('Scroll top')).not.toBeInTheDocument();
     expect(screen.getByText('Footer')).toBeInTheDocument();
     expect(document.getElementById(PAGE_CONTAINER_ID)).toBeInTheDocument();
     expect(document.getElementById(BODY_PORTAL_ID)).toBeInTheDocument();

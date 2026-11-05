@@ -56,7 +56,13 @@ export const Summary: React.FC<SummaryProps> = ({
     ? [
         {
           label: t('account.summary.cellGroup.healthFactor'),
-          value: <HealthFactorPill factor={pool.userHealthFactor || 0} showLabel />,
+          value: (
+            <HealthFactorPill
+              className="dashboard-health-factor"
+              factor={pool.userHealthFactor || 0}
+              showLabel
+            />
+          ),
           tooltip: t('account.summary.cellGroup.healthFactorTooltip'),
           className: cellClassName,
         },
@@ -151,12 +157,14 @@ export const Summary: React.FC<SummaryProps> = ({
       <Card className="justify-between border-0 p-0 hidden xl:flex">
         <CellGroup
           cells={displayAccountHealth ? cells.slice(0, cells.length - 1) : cells}
-          className="w-full xl:p-0"
+          className="dashboard-summary-metrics w-full xl:p-0"
         />
 
         {/* Account health */}
         {displayAccountHealth && (
-          <div className="shrink-0 min-w-96">{cells[cells.length - 1].value}</div>
+          <div className="dashboard-summary-healthbar shrink-0 min-w-96">
+            {cells[cells.length - 1].value}
+          </div>
         )}
       </Card>
     </Section>

@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
-import type { Asset, LiquidityHub, Token } from 'types';
+import { type Asset, type LiquidityHub, type Token, type Vault, VaultCategory, type VenusVault } from 'types';
+import { convertMantissaToTokens } from 'utilities';
 import getCombinedApy from 'utilities/getCombinedApy';
 
 export interface LiteMarket {
@@ -13,6 +14,10 @@ export interface LiteMarket {
   supplyUsd: BigNumber;
   liquidity: BigNumber;
   liquidityUsd: BigNumber;
+  /** Core market whose underlying is a Liquidity Hub vhToken (Lite selector: vhToken or underlying). */
+  vhHub?: LiquidityHub;
+  /** Lite Earn: XVS Vault next to Venus Core under XVS (opens the XVS Vault supply modal). */
+  vault?: VenusVault;
 }
 export interface LiteAsset {
   key: string;
@@ -24,7 +29,12 @@ export interface LiteAsset {
   liquidityUsd: BigNumber;
 }
 
-export function aggregateLiteAssets(assets: Asset[], hubs: LiquidityHub[], comptroller: string) {
+export function aggregateLiteAssets(
+  assets: Asset[],
+  hubs: LiquidityHub[],
+  comptroller: string,
+  vaults: Vault[] = [],
+) {
   const rows = new Map<string, LiteAsset>();
   const seen = new Set<string>();
   const add = (token: Token, market: LiteMarket, overlap?: Partial<LiteMarket>) => {
@@ -57,8 +67,12 @@ export function aggregateLiteAssets(assets: Asset[], hubs: LiquidityHub[], compt
     }).totalApyPercentage;
 
   for (const asset of assets) {
+    const vhHub = hubs.find(
+      hub => hub.vhToken.address.toLowerCase() === asset.vToken.underlyingToken.address.toLowerCase(),
+    );
     add(asset.vToken.underlyingToken, {
       asset,
+      vhHub,
       id: asset.vToken.address,
       name: 'Venus Core',
       path: `/markets/${comptroller}/${asset.vToken.address}`,
@@ -97,7 +111,7 @@ export function aggregateLiteAssets(assets: Asset[], hubs: LiquidityHub[], compt
       {
         hub,
         id: hub.vhToken.address,
-        name: 'Liquidity Hub – Venus',
+        name: 'Liquidity Hub',
         path: `/liquidity-hubs/${hub.vhToken.address}`,
         apy: apy(hub),
         supply: hub.supplyBalanceTokens,
@@ -107,6 +121,24 @@ export function aggregateLiteAssets(assets: Asset[], hubs: LiquidityHub[], compt
       },
       overlap,
     );
+  }
+  // XVS Vault (governance staking) as a second XVS source, like FE's Lite Earn.
+  const xvsVault = vaults.find(
+    vault => vault.category === VaultCategory.GOVERNANCE && vault.stakedToken.symbol === 'XVS',
+  ) as VenusVault | undefined;
+  const xvsAsset = assets.find(asset => asset.vToken.underlyingToken.symbol === 'XVS');
+  if (xvsVault) {
+    add(xvsAsset?.vToken.underlyingToken ?? xvsVault.stakedToken, {
+      vault: xvsVault,
+      id: `vault-${xvsVault.key}`,
+      name: 'XVS Vault',
+      path: '/vaults',
+      apy: new BigNumber(xvsVault.stakeAprPercentage),
+      supply: convertMantissaToTokens({ value: xvsVault.stakeBalanceMantissa, token: xvsVault.stakedToken }),
+      supplyUsd: new BigNumber(xvsVault.stakeBalanceCents),
+      liquidity: new BigNumber(0),
+      liquidityUsd: new BigNumber(0),
+    });
   }
   return [...rows.values()].sort(
     (a, b) =>

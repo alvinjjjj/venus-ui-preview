@@ -3,6 +3,9 @@ import type { Address } from 'viem';
 import { Modal, type ModalProps, ProtectionModeIndicator, TokenIcon } from 'components';
 import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
 import { MarketForm } from 'containers/MarketForm';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { useIsSmDown } from 'hooks/responsive';
 import { useUserChainSettings } from 'hooks/useUserChainSettings';
 import type { Asset } from 'types';
 
@@ -26,6 +29,9 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
   marketName,
 }) => {
   const [userChainSettings] = useUserChainSettings();
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
+  const isMobile = useIsSmDown();
+  const { isLite } = useInterfaceMode();
 
   if (asset.isGated && !userChainSettings.doNotShowGatedAssetModal) {
     return <GatedAssetAcknowledgementModal onReject={onClose} />;
@@ -56,6 +62,8 @@ export const MarketFormModal: React.FC<MarketFormModalProps> = ({
       handleClose={onClose}
     >
       <MarketForm
+        // Lite: Supply / Withdraw always use underline tabs (desktop and mobile). Pro unchanged.
+        actionTabsVariant={isLite ? 'secondary' : isFinal && isMobile ? 'primary' : undefined}
         vToken={asset.vToken}
         poolComptrollerAddress={poolComptrollerAddress}
         initialActiveTabId={initialActiveTabId}

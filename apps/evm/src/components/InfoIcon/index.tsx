@@ -7,6 +7,7 @@ export interface InfoIconProps {
   tooltip: string | React.ReactNode;
   iconName?: IconName;
   iconClassName?: string;
+  icon?: React.ReactNode;
   className?: string;
 }
 
@@ -15,8 +16,9 @@ export const InfoIcon = ({
   className,
   iconName = 'info',
   iconClassName,
+  icon,
 }: InfoIconProps) => (
   <Tooltip className={cn('inline-flex align-sub', className)} content={tooltip}>
-    <Icon className={iconClassName} name={iconName} />
+    {icon ?? <Icon className={iconClassName} name={iconName} />}
   </Tooltip>
 );

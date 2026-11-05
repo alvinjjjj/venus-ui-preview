@@ -1,33 +1,41 @@
 import { useGetLiquidityHubs, useGetPool, useGetVaults } from 'clients/api';
-import { Page, Spinner, Tabs } from 'components';
-import { AdBanner } from 'containers/AdBanner';
+import { Delimiter, Page, Spinner } from 'components';
+import { routes } from 'constants/routing';
 import { isNewDesignMode, useGlassPreview } from 'demo/GlassVersions/store';
-import { isDemoAddress, useDemo } from 'demo/state';
-import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { isFundedDemoAddress, useDemo } from 'demo/state';
 import { useChain } from 'hooks/useChain';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
-import type { Tab } from 'hooks/useTabs';
 import { PAGE_PARAM_DEFAULT_KEY } from 'hooks/useUrlPagination';
-import { useTranslation } from 'libs/translations';
 import { useAccountAddress, useChainId } from 'libs/wallet';
 import { useEffect, useMemo, useRef } from 'react';
-import { useSearchParams } from 'react-router';
+import { Navigate, useSearchParams } from 'react-router';
 import { ChainId } from 'types';
 import { AccountOverview } from '../../containers/AccountOverview';
 import { Guide } from './Guide';
-import { Hubs } from './Hubs';
 import { LitePositions } from './LitePositions';
-import { Markets } from './Markets';
 import { getNewPreviewPool } from './Markets/getNewPreviewPool';
-import { Settings } from './Settings';
 import { Transactions } from './Transactions';
-import { Vaults } from './Vaults';
+import DashboardEyeIcon from './assets/eye.svg?react';
+import DashboardInfoIcon from './assets/info.svg?react';
+import './figma-dashboard.css';
 import './styles.css';
 import './typography-study.css';
 
 export const Dashboard: React.FC = () => {
-  const { t } = useTranslation();
-  const { isLite } = useInterfaceMode();
+  const { accountAddress } = useAccountAddress();
+  const [searchParams] = useSearchParams();
+  if (!accountAddress) {
+    const next = new URLSearchParams();
+    for (const key of ['interface', 'chainId']) {
+      const value = searchParams.get(key);
+      if (value) next.set(key, value);
+    }
+    return <Navigate to={{ pathname: routes.landing.path, search: next.toString() }} replace />;
+  }
+  return <ConnectedDashboard />;
+};
+
+const ConnectedDashboard: React.FC = () => {
   const { corePoolComptrollerContractAddress } = useChain();
   const { chainId } = useChainId();
   const [, setSearchParams] = useSearchParams();
@@ -43,12 +51,6 @@ export const Dashboard: React.FC = () => {
     }
   }, [chainId, setSearchParams]);
 
-  const isGaslessTransactionsFeatureEnabled = useIsFeatureEnabled({
-    name: 'gaslessTransactions',
-  });
-  const isHistoricalTransactionsFeatureEnabled = useIsFeatureEnabled({
-    name: 'transactionHistory',
-  });
   const isLiquidityHubFeatureEnabled = useIsFeatureEnabled({
     name: 'liquidityHub',
   });
@@ -60,9 +62,9 @@ export const Dashboard: React.FC = () => {
   });
   const pool = getPoolData?.pool;
   const isPreviewMode = useGlassPreview(
-    state => isNewDesignMode(state.mode) || (isLite && state.mode === 'lite-experiment-v2'),
+    state => isNewDesignMode(state.mode) || state.mode === 'lite-experiment-v2',
   );
-  const isFinalLite = useGlassPreview(state => isLite && state.mode === 'lite-experiment-v2');
+  const isFinalDashboard = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const isDemoLoggedIn = useDemo(state => state.loggedIn);
   const previewPool = useMemo(
     () =>
@@ -70,7 +72,7 @@ export const Dashboard: React.FC = () => {
       chainId === ChainId.BSC_MAINNET &&
       isPreviewMode &&
       isDemoLoggedIn &&
-      isDemoAddress(accountAddress)
+      isFundedDemoAddress(accountAddress)
         ? getNewPreviewPool(pool)
         : undefined,
     [pool, chainId, isPreviewMode, isDemoLoggedIn, accountAddress],
@@ -96,43 +98,6 @@ export const Dashboard: React.FC = () => {
   );
   const { liquidityHubs } = getLiquidityHubsData;
 
-  const tabs: Tab[] = [
-    {
-      title: t('account.tabs.markets'),
-      id: 'pools',
-      content: pool && <Markets pool={pool} />,
-    },
-    {
-      title: t('account.tabs.vaults'),
-      id: 'vaults',
-      content: isGetVaultsLoading ? <Spinner /> : <Vaults vaults={vaults} />,
-    },
-  ];
-
-  if (isLiquidityHubFeatureEnabled) {
-    tabs.push({
-      title: t('account.tabs.hubs'),
-      id: 'hub',
-      content: isGetLiquidityHubsLoading ? <Spinner /> : <Hubs liquidityHubs={liquidityHubs} />,
-    });
-  }
-
-  if (isHistoricalTransactionsFeatureEnabled) {
-    tabs.push({
-      title: t('account.tabs.transactions'),
-      id: 'transactions',
-      content: <Transactions />,
-    });
-  }
-
-  if (isGaslessTransactionsFeatureEnabled) {
-    tabs.push({
-      title: t('account.tabs.settings'),
-      id: 'settings',
-      content: <Settings />,
-    });
-  }
-
   const isFetching = isGetPoolLoading;
 
   if (isFetching) {
@@ -144,54 +109,58 @@ export const Dashboard: React.FC = () => {
       className="venus-glass-card glass-dashboard-overview w-full"
       accountAddress={accountAddress}
       previewPool={previewPool}
-      splitLayout={isLite}
+      splitLayout
+      chartColor={isFinalDashboard ? 'var(--color-blue)' : undefined}
+      chartVariant={isFinalDashboard ? 'line' : undefined}
+      netWorthInfoIcon={
+        isFinalDashboard ? (
+          <DashboardInfoIcon className="dashboard-static-icon" aria-hidden="true" />
+        ) : undefined
+      }
+      balanceVisibilityIcon={
+        isFinalDashboard ? (
+          <DashboardEyeIcon className="dashboard-static-icon" aria-hidden="true" />
+        ) : undefined
+      }
     />
   );
 
   return (
     <Page>
-      <div className={`dashboard-page contents${isLite ? ' lite-dashboard' : ''}`}>
-        {!isLite && (
-          <div className="dashboard-ad-banner mt-2 mb-12">
-            <AdBanner />
-          </div>
-        )}
-
+      <div className="dashboard-page contents lite-dashboard">
         <div
           className={
-            isFinalLite ? 'space-y-6 mb-6' : isLite ? 'space-y-12 mb-24' : 'space-y-12 mb-12'
+            isFinalDashboard ? 'dashboard-overview-section space-y-6 mb-6' : 'space-y-12 mb-24'
           }
         >
+          {isFinalDashboard && <h2 className="dashboard-section-title">Summary</h2>}
           {accountOverview}
 
-          <Guide />
+          {!isFinalDashboard && <Guide />}
         </div>
 
+        {isFinalDashboard && <Delimiter className="dashboard-positions-divider" />}
+
         <div className="venus-glass-card glass-dashboard-tabs">
-          {isLite ? (
-            <LitePositions
-              corePool={previewPool ?? pool}
-              previewInteractions={!!previewPool}
-              liquidityHubs={liquidityHubs}
-              isHubsLoading={isGetLiquidityHubsLoading}
-            />
-          ) : (
-            <Tabs
-              tabs={tabs}
-              navType="searchParam"
-              variant="tertiary"
-              headerClassName="dashboard-main-tabs"
-            />
-          )}
+          <LitePositions
+            corePool={previewPool ?? pool}
+            previewInteractions={!!previewPool}
+            liquidityHubs={liquidityHubs}
+            isHubsLoading={isGetLiquidityHubsLoading}
+            vaults={vaults}
+            isVaultsLoading={isGetVaultsLoading}
+          />
         </div>
-        {isLite && (
-          <section aria-labelledby="lite-transactions-title" className="mt-12 mb-10 space-y-6">
+        {isFinalDashboard && <Delimiter className="dashboard-transactions-divider" />}
+
+        <section aria-labelledby="lite-transactions-title" className="mt-12 mb-10 space-y-6">
+          {!isFinalDashboard && (
             <h2 id="lite-transactions-title" className="text-lg font-semibold">
               Transaction
             </h2>
-            <Transactions allowDemoPreview />
-          </section>
-        )}
+          )}
+          <Transactions allowDemoPreview />
+        </section>
       </div>
     </Page>
   );

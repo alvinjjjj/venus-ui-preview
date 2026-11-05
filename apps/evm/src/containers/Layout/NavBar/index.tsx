@@ -10,8 +10,8 @@ import { useGlassPreview } from 'demo/GlassVersions/store';
 import venusLogoLightSrc from 'demo/LiquidityLightPreview/venusLogoLight.svg';
 import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
-import { useTranslation } from 'libs/translations';
 import { useBreakpointUp } from 'hooks/responsive';
+import { useTranslation } from 'libs/translations';
 import { useAccountAddress } from 'libs/wallet';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
@@ -25,10 +25,10 @@ import { MenuItem } from './MenuItem';
 import { NavButtonWrapper } from './NavButtonWrapper';
 import { Settings } from './Settings';
 import { SettingsButton } from './SettingsButton';
-import './figma-header.css';
 import './account-material.css';
-import './responsive-navigation.css';
+import './figma-header.css';
 import './interface-mode.css';
+import './responsive-navigation.css';
 import { useDashboardMenuItem, useMenuItems } from './useMenuItems';
 
 export type NavBarProps = React.HTMLAttributes<HTMLDivElement>;
@@ -36,7 +36,7 @@ export type NavBarProps = React.HTMLAttributes<HTMLDivElement>;
 export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { search } = useLocation();
+  const { pathname, search } = useLocation();
   const isLightPreview = useLiquidityLightPreview();
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { supportsModes: original, isNew, mode, isLite } = useInterfaceMode();
@@ -49,7 +49,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
 
   useLayoutEffect(() => {
     const pageContainer = document.getElementById(PAGE_CONTAINER_ID);
-    if (!isFinal || isLite || !pageContainer) {
+    if (!isFinal || !pageContainer) {
       setIsHeaderScrolled(false);
       return;
     }
@@ -67,7 +67,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
     };
     pageContainer.addEventListener('scroll', handleScroll, { passive: true });
     return () => pageContainer.removeEventListener('scroll', handleScroll);
-  }, [isFinal, isLite]);
+  }, [isFinal]);
 
   const isUserConnected = !!accountAddress;
 
@@ -130,7 +130,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
       className="venus-navigation relative z-50 isolate"
       data-interface-mode={mode}
       data-figma-header={isFinal || undefined}
-      data-header-scrolled={isFinal && !isLite ? isHeaderScrolled : undefined}
+      data-header-scrolled={isFinal ? isHeaderScrolled : undefined}
       data-mobile-menu-open={isFinal && isMobileMenuOpen ? true : undefined}
     >
       <div
@@ -241,10 +241,17 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
                   aria-label={`Switch to ${option === 'lite' ? 'Lite' : 'Pro'}`}
                   onClick={() => {
                     closeMobileMenu();
+                    const isDashboard = pathname === routes.dashboard.path;
+                    const nextSearch = new URLSearchParams(search);
+                    if (isDashboard) nextSearch.set('interface', option);
                     navigate(
                       {
-                        pathname: option === 'pro' ? routes.liquidityHubs.path : '/',
-                        search,
+                        pathname: isDashboard
+                          ? routes.dashboard.path
+                          : option === 'pro'
+                            ? routes.liquidityHubs.path
+                            : '/',
+                        search: isDashboard ? nextSearch.toString() : search,
                       },
                       { state: { interfaceMode: option } },
                     );

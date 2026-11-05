@@ -4,11 +4,16 @@ import { useUID } from 'react-uid';
 import {
   Area,
   CartesianGrid,
+  ComposedChart as RCComposedChart,
   AreaChart as RCAreaChart,
+  LineChart as RCLineChart,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
+  type XAxisProps,
   YAxis,
+  type YAxisProps,
 } from 'recharts';
 import type { DataKey, Margin } from 'recharts/types/util/types';
 
@@ -19,6 +24,8 @@ export interface AreaChartProps<T extends Record<string, any>> {
   xAxisDataKey: DataKey<T>;
   yAxisDataKey: DataKey<T>;
   chartColor: string;
+  variant?: 'area' | 'line';
+  showGradient?: boolean;
   formatXAxisValue: (value: any) => string;
   formatYAxisValue: (value: any) => string;
   yAxisTickCount?: number;
@@ -29,6 +36,8 @@ export interface AreaChartProps<T extends Record<string, any>> {
   /** Maximum number of labels to display on the X axis. */
   interval?: number;
   xAxisTickInterval?: 'preserveStartEnd';
+  xAxisProps?: Pick<XAxisProps, 'height' | 'padding' | 'tick' | 'tickMargin'>;
+  yAxisProps?: Pick<YAxisProps, 'width' | 'interval'>;
   yAxisDomain?: [number, number];
   yAxisTicks?: number[];
   displayAxes?: boolean;
@@ -41,8 +50,12 @@ export const AreaChart = <T extends Record<string, any>>({
   className,
   data,
   chartColor,
+  variant = 'area',
+  showGradient = variant === 'area',
   interval,
   xAxisTickInterval,
+  xAxisProps,
+  yAxisProps,
   xAxisDataKey,
   yAxisDataKey,
   yAxisDomain,
@@ -64,11 +77,12 @@ export const AreaChart = <T extends Record<string, any>>({
   const baseId = useUID();
   const gradientId = `gradient-${baseId}`;
   const xAxisTicks = getXAxisTicks({ data, interval, xAxisDataKey });
+  const Chart = variant === 'line' ? (showGradient ? RCComposedChart : RCLineChart) : RCAreaChart;
 
   return (
     <div className={cn('w-full h-62', className)}>
       <ResponsiveContainer>
-        <RCAreaChart
+        <Chart
           margin={{
             top: 20,
             left: -14,
@@ -84,12 +98,14 @@ export const AreaChart = <T extends Record<string, any>>({
           }}
         >
           {/* Gradient used as filler */}
-          <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={chartColor} stopOpacity={0.2} />
-              <stop offset="100%" stopColor={chartColor} stopOpacity={0} />
-            </linearGradient>
-          </defs>
+          {showGradient && (
+            <defs>
+              <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={chartColor} stopOpacity={0.2} />
+                <stop offset="100%" stopColor={chartColor} stopOpacity={0} />
+              </linearGradient>
+            </defs>
+          )}
 
           {displayAxes && (
             <XAxis
@@ -104,6 +120,7 @@ export const AreaChart = <T extends Record<string, any>>({
               interval={xAxisTicks ? xAxisTickInterval ?? 0 : undefined}
               padding={{ left: 0, right: 24 }}
               className="text-xs"
+              {...xAxisProps}
             />
           )}
 
@@ -121,6 +138,7 @@ export const AreaChart = <T extends Record<string, any>>({
               className="text-xs text-left"
               domain={yAxisDomain ?? ['auto', 'auto']}
               ticks={yAxisTicks}
+              {...yAxisProps}
             />
           )}
 
@@ -144,16 +162,41 @@ export const AreaChart = <T extends Record<string, any>>({
             />
           )}
 
-          <Area
-            isAnimationActive={false}
-            dataKey={yAxisDataKey}
-            stroke={chartColor}
-            strokeWidth={2}
-            fillOpacity={1}
-            fill={`url(#${gradientId})`}
-            activeDot={{ r: 8, strokeWidth: 4 }}
-          />
-        </RCAreaChart>
+          {variant === 'line' && showGradient && (
+            <Area
+              type="linear"
+              isAnimationActive={false}
+              dataKey={yAxisDataKey}
+              stroke="none"
+              fill={`url(#${gradientId})`}
+              dot={false}
+              activeDot={false}
+              tooltipType="none"
+            />
+          )}
+
+          {variant === 'line' ? (
+            <Line
+              type="linear"
+              isAnimationActive={false}
+              dataKey={yAxisDataKey}
+              stroke={chartColor}
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, strokeWidth: 2 }}
+            />
+          ) : (
+            <Area
+              isAnimationActive={false}
+              dataKey={yAxisDataKey}
+              stroke={chartColor}
+              strokeWidth={2}
+              fillOpacity={1}
+              fill={showGradient ? `url(#${gradientId})` : 'none'}
+              activeDot={{ r: 8, strokeWidth: 4 }}
+            />
+          )}
+        </Chart>
       </ResponsiveContainer>
     </div>
   );

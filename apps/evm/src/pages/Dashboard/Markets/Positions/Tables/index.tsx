@@ -3,10 +3,15 @@ import { Card } from 'components';
 import { useState } from 'react';
 
 import { ButtonGroup } from 'components';
+import { MarketFormModal } from 'containers/MarketFormModal';
 import { MarketTable, type MarketTableProps } from 'containers/MarketTable';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
+import { BorrowSourceModal } from 'pages/LiteMarkets/BorrowSourceModal';
+import { aggregateLiteAssets } from 'pages/LiteMarkets/data';
 import { useIsSmDown } from 'hooks/responsive';
 import { useTranslation } from 'libs/translations';
-import type { Pool } from 'types';
+import type { Asset, Pool } from 'types';
+import { positionTableColumnWidths } from '../../../positionTableLayout';
 
 import { EModeHeader } from './EModeHeader';
 import { IsolatedModeHeader } from './IsolatedModeHeader';
@@ -23,6 +28,18 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const isMobile = useIsSmDown();
+  // Lite: rows open the Lite modals in place instead of the Core market detail page.
+  // Supplied row -> Lite Core supply modal; Borrowed row -> Lite Core borrow modal. Pro unchanged.
+  const { isLite } = useInterfaceMode();
+  const [liteSupplyAsset, setLiteSupplyAsset] = useState<Asset>();
+  const [liteBorrowAsset, setLiteBorrowAsset] = useState<Asset>();
+  const liteRowClick = (open: (asset: Asset) => void) =>
+    isLite
+      ? (e: React.MouseEvent<HTMLDivElement>, row: Asset) => {
+          e.preventDefault();
+          open(row);
+        }
+      : undefined;
 
   const marketTableProps: {
     supply: MarketTableProps;
@@ -36,14 +53,16 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
       poolComptrollerContractAddress: pool.comptrollerAddress,
       userEModeGroup: pool.userEModeGroup,
       marketType: 'supply',
+      rowOnClick: liteRowClick(setLiteSupplyAsset),
       previewInteractions,
       className: previewInteractions
-        ? 'dashboard-position-table dashboard-position-preview-table'
+        ? 'dashboard-position-table dashboard-position-preview-table dashboard-supplied-table'
         : 'dashboard-position-table',
       controls: false,
       rowControl: false,
       breakpoint: 'sm',
       columns: ['asset', 'supplyApy', 'userSupplyBalance', 'collateral'],
+      columnWidths: previewInteractions ? positionTableColumnWidths : undefined,
       initialOrder: {
         orderBy: 'userSupplyBalance',
         orderDirection: 'desc',
@@ -56,6 +75,7 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
       poolComptrollerContractAddress: pool.comptrollerAddress,
       userEModeGroup: pool.userEModeGroup,
       marketType: 'borrow',
+      rowOnClick: liteRowClick(setLiteBorrowAsset),
       previewInteractions,
       className: previewInteractions
         ? 'dashboard-position-table dashboard-position-preview-table'
@@ -64,7 +84,7 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
       rowControl: false,
       breakpoint: 'sm',
       columns: ['asset', 'borrowApy', 'userBorrowBalance', 'userBorrowLimitSharePercentage'],
-      columnWidths: previewInteractions ? ['20%', '27%', '20%', '33%'] : undefined,
+      columnWidths: previewInteractions ? positionTableColumnWidths : undefined,
       initialOrder: {
         orderBy: 'userBorrowBalance',
         orderDirection: 'desc',
@@ -80,8 +100,8 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
         <div
           className={
             previewInteractions
-              ? 'flex flex-col gap-6 2xl:grid 2xl:grid-cols-2'
-              : 'flex flex-col gap-6 xl:grid xl:grid-cols-2'
+              ? 'dashboard-position-tables flex flex-col gap-6 2xl:grid 2xl:grid-cols-2'
+              : 'dashboard-position-tables flex flex-col gap-6 xl:grid xl:grid-cols-2'
           }
         >
           <MarketTable
@@ -112,8 +132,8 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
           />
         </div>
       ) : (
-        <Card css={[styles.tabletContainer]} className="border-0">
-          <div css={styles.tabletHeader}>
+        <Card css={[styles.tabletContainer]} className="dashboard-mobile-assets border-0">
+          <div css={styles.tabletHeader} className="dashboard-mobile-assets-header">
             <div className="items-center gap-x-2">
               <Typography variant="h4" css={styles.tabletHeaderTitle}>
                 {t('account.marketBreakdown.tables.tabletTitle')}
@@ -121,6 +141,7 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
             </div>
 
             <ButtonGroup
+              fullWidth={previewInteractions}
               buttonSize="sm"
               css={styles.tabletHeaderButtonGroup}
               buttonLabels={[
@@ -153,7 +174,7 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
               }
               {...marketTableProps.supply}
               css={styles.tabletMarketTable}
-              className="border-0"
+              className={previewInteractions ? 'dashboard-supplied-table border-0' : 'border-0'}
             />
           ) : (
             <MarketTable
@@ -180,6 +201,24 @@ export const Tables: React.FC<TablesProps> = ({ pool, previewInteractions }) => 
             />
           )}
         </Card>
+      )}
+      {liteSupplyAsset && (
+        <MarketFormModal
+          asset={liteSupplyAsset}
+          poolComptrollerAddress={pool.comptrollerAddress}
+          initialActiveTabId="supply"
+          earnOnly
+          marketName="Venus Core"
+          onClose={() => setLiteSupplyAsset(undefined)}
+        />
+      )}
+      {liteBorrowAsset && (
+        <BorrowSourceModal
+          asset={liteBorrowAsset}
+          source={{ name: 'Venus Core', collateral: [] }}
+          rows={aggregateLiteAssets(pool.assets, [], pool.comptrollerAddress)}
+          onClose={() => setLiteBorrowAsset(undefined)}
+        />
       )}
     </>
   );

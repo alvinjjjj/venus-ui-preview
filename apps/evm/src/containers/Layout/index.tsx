@@ -4,16 +4,19 @@ import { BODY_PORTAL_ID, PAGE_CONTAINER_ID } from 'constants/layout';
 
 import { Wrapper, cn } from 'components';
 import { Subdirectory, routes } from 'constants/routing';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
+import { useInterfaceMode, useInterfaceModeStore } from 'demo/useInterfaceMode';
+import { GhostBackground } from 'pages/LiteMarkets/GhostBackground';
 import { useLayoutEffect, useRef } from 'react';
 import { Footer } from './Footer';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import ScrollToTop from './ScrollToTop';
 import { useStore } from './store';
-import { useInterfaceMode, useInterfaceModeStore } from 'demo/useInterfaceMode';
-import { GhostBackground } from 'pages/LiteMarkets/GhostBackground';
-import { useGlassPreview } from 'demo/GlassVersions/store';
-import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
+
+// Temporarily hidden by design request; retain the component for later review.
+const SHOW_SCROLL_TO_TOP = false;
 
 // Pages here render their own Wrapper so a full-bleed promo banner can sit above it.
 const NO_WRAPPER_PATHNAMES = [
@@ -43,7 +46,7 @@ export const Layout: React.FC = () => {
   }, [mode]);
   const showStardust = supportsModes && pathname.replace(/\/$/, '') !== routes.aboutUs.path;
   const fullBleedSky = showStardust && (isE3 || isFinal);
-  const quietDashboard = isFinal && isLite && pathname.replace(/\/$/, '') === routes.dashboard.path;
+  const quietDashboard = isFinal && pathname.replace(/\/$/, '') === routes.dashboard.path;
 
   const isCloseToBottomState = useStore(state => state.isCloseToBottom);
   const setIsCloseToBottom = useStore(state => state.setIsCloseToBottom);
@@ -54,7 +57,7 @@ export const Layout: React.FC = () => {
   const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const scrollElem = event.currentTarget;
     const shouldShowScrollToTopVisible =
-      scrollElem?.scrollTop && scrollElem.scrollTop > viewportHeight;
+      SHOW_SCROLL_TO_TOP && scrollElem?.scrollTop && scrollElem.scrollTop > viewportHeight;
 
     const scrollToTopRect = scrollToTopRef.current?.getBoundingClientRect();
     const footerRect = footerRef.current?.getBoundingClientRect();
@@ -87,7 +90,7 @@ export const Layout: React.FC = () => {
   const contentDom = (
     <>
       <Outlet />
-      <ScrollToTop ref={scrollToTopRef} />
+      {SHOW_SCROLL_TO_TOP && <ScrollToTop ref={scrollToTopRef} />}
     </>
   );
 
@@ -111,7 +114,6 @@ export const Layout: React.FC = () => {
           />
         )}
         <NavBar className="shrink-0" />
-
 
         <div
           className={cn(

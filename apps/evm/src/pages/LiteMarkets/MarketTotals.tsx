@@ -1,14 +1,17 @@
 import BigNumber from 'bignumber.js';
 import { useGetLiquidityHubs, useGetPool } from 'clients/api';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useChain } from 'hooks/useChain';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue } from 'utilities';
 import { SimulatedMarketTotal } from './SimulatedMarketTotal';
 import { aggregateLiteAssets } from './data';
-import { useGlassPreview } from 'demo/GlassVersions/store';
 
 /** Shared protocol totals for the Lite home and Pro Hub, using the same query cache. */
-export const MarketTotals = ({ variant = 'default', supplyUpdateIntervalMs }: { variant?: 'default' | 'inline'; supplyUpdateIntervalMs?: number }) => {
+export const MarketTotals = ({
+  variant = 'default',
+  supplyUpdateIntervalMs,
+}: { variant?: 'default' | 'inline'; supplyUpdateIntervalMs?: number }) => {
   const inline = variant === 'inline';
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { accountAddress } = useAccountAddress();
@@ -38,12 +41,7 @@ export const MarketTotals = ({ variant = 'default', supplyUpdateIntervalMs }: { 
         ] as const
       ).map(([label, field]) => (
         <div key={field} className={inline ? 'lite-e2-market-total' : undefined}>
-          <p className="mb-3 text-light-grey text-sm">
-            {inline && (
-              <span className="lite-e2-total-dot" data-total-kind={field} aria-hidden="true" />
-            )}
-            {label}
-          </p>
+          <p className="mb-3 text-light-grey text-sm">{label}</p>
           <p className="text-3xl xl:text-4xl font-normal tabular-nums">
             {ready ? (
               inline ? (

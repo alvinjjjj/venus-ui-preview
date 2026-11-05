@@ -242,17 +242,16 @@
   }
 }
 
-/* Final Lite social links are quiet navigation, using the same icy neutral
-   states as secondary controls instead of a filled primary-action hover. */
+/* Footer social links retain neutral defaults and brand-blue hover feedback. */
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root:has(.venus-navigation[data-interface-mode='lite']) .venus-compact-footer .venus-footer-social-link {
   background: var(--e-light-surface-subtle);
   color: var(--e-light-text-secondary);
   border: 1px solid var(--e-light-border-control);
 }
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root:has(.venus-navigation[data-interface-mode='lite']) .venus-compact-footer .venus-footer-social-link:is(:hover, :focus-visible, :active) {
-  background: var(--e-light-surface-hover);
-  color: var(--e-light-text-primary);
-  border-color: var(--e-light-border-control);
+  background: var(--color-blue);
+  color: var(--e-light-text-on-accent);
+  border-color: var(--color-blue);
 }
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root:has(.venus-navigation[data-interface-mode='lite']) .venus-compact-footer .venus-footer-social-link svg {
   color: inherit;

@@ -130,11 +130,11 @@ it('keeps the asset entry Prime-only and compares ordinary and Prime APY inside 
   expect(primeEntry.querySelector('[data-apy-badge-text="prime"]')).toHaveTextContent('%');
   expect(document.querySelector('.lite-mobile-table .lite-base-apy')).toBeVisible();
   fireEvent.click(within(row!).getByRole('button', { name: 'Compare USDT markets' }));
-  const coreSource = table().getByRole('button', { name: 'Core Pool' }).closest('tr');
+  const coreSource = table().getByRole('button', { name: 'Venus Core' }).closest('tr');
   expect(coreSource?.querySelector('.lite-base-apy')).toBeVisible();
   expect(coreSource?.querySelector('[data-apy-badge-text="prime"]')).toHaveTextContent('%');
   expect(screen.queryByTitle('Total value locked')).toBeNull();
-  const hubSource = table().getByRole('button', { name: 'Liquidity Hub – Venus' }).closest('tr');
+  const hubSource = table().getByRole('button', { name: 'Liquidity Hub' }).closest('tr');
   expect(hubSource?.querySelector('.lite-base-apy')).toBeVisible();
 });
 
@@ -144,20 +144,20 @@ it('uses two-column Earn tables and opens the existing hub form inline with work
   fireEvent.click(table().getByRole('button', { name: 'Compare USDT markets' }));
   expect(table().getAllByRole('columnheader')).toHaveLength(2);
   expect(within(screen.getByRole('navigation', { name: 'Earn navigation' })).getAllByRole('listitem')).toHaveLength(2);
-  fireEvent.click(table().getByRole('button', { name: 'Liquidity Hub – Venus' }));
+  fireEvent.click(table().getByRole('button', { name: 'Liquidity Hub' }));
   expect(screen.queryByRole('dialog')).toBeNull();
   expect(screen.getByTestId('hub-form')).toBeVisible();
   const marketNavigation = screen.getByRole('navigation', { name: 'Earn navigation' });
   expect(within(marketNavigation).getAllByRole('listitem')).toHaveLength(3);
-  expect(within(marketNavigation).getByText('Liquidity Hub – Venus')).toHaveAttribute('aria-current', 'page');
+  expect(within(marketNavigation).getByText('Liquidity Hub')).toHaveAttribute('aria-current', 'page');
   expect(vi.mocked(LiquidityHubForm).mock.lastCall?.[0]).toMatchObject({ inlineHeader: false, actionTabsVariant: 'secondary' });
   fireEvent.click(
     within(screen.getByRole('navigation', { name: 'Earn navigation' })).getByRole('button', {
       name: 'Back to USDT Earn markets',
     }),
   );
-  expect(table().getByRole('button', { name: 'Core Pool' })).toBeVisible();
-  fireEvent.click(table().getByRole('button', { name: 'Core Pool' }));
+  expect(table().getByRole('button', { name: 'Venus Core' })).toBeVisible();
+  fireEvent.click(table().getByRole('button', { name: 'Venus Core' }));
   expect(vi.mocked(MarketForm).mock.lastCall?.[0]).toMatchObject({ earnOnly: true, actionTabsVariant: 'secondary' });
   fireEvent.click(screen.getByRole('button', { name: 'Back to Earn sources' }));
   fireEvent.click(screen.getByRole('button', { name: 'Back to Earn assets from USDT' }));
@@ -177,7 +177,7 @@ it('opens a single Earn source directly and returns to assets without a source-l
   expect(screen.getByTestId('real-market-form')).toBeVisible();
   expect(screen.queryByRole('table')).toBeNull();
   const navigation = screen.getByRole('navigation', { name: 'Earn navigation' });
-  expect(within(navigation).getByText('Core Pool')).toHaveAttribute('aria-current', 'page');
+  expect(within(navigation).getByText('Venus Core')).toHaveAttribute('aria-current', 'page');
   fireEvent.click(within(navigation).getByRole('button', {
     name: `Back to Earn assets from ${singleSource.token.symbol}`,
   }));
@@ -191,7 +191,7 @@ it('opens Core loans inline and returns through the source and asset steps', () 
   openBorrowSources();
   const headers = table().getAllByRole('columnheader');
   expect(headers).toHaveLength(3);
-  expect(headers[0]).toHaveTextContent('Pool');
+  expect(headers[0]).toHaveTextContent('Market');
   expect(headers[1]).toHaveTextContent('Collateral');
   expect(headers[2]).toHaveTextContent('APY');
   const coreRow = table().getByRole('button', { name: 'Venus Core' }).closest('tr');
@@ -220,17 +220,20 @@ it('searches source collaterals, retains the chosen preview token and prevents t
   fireEvent.click(table().getByRole('button', { name: 'View bStock index collaterals' }));
   const dialog = screen.getByRole('dialog', { name: 'bStock index Collaterals' });
   expect(within(dialog).queryByText('Preview market · Transactions unavailable')).toBeNull();
-  expect(within(dialog).getAllByRole('columnheader')).toHaveLength(4);
+  expect(within(dialog).getAllByRole('columnheader')).toHaveLength(3);
+  expect(within(dialog).queryByText('Penalty')).toBeNull();
   expect(within(dialog).queryByText('—')).toBeNull();
   expect(within(dialog).getAllByText('75%')).toHaveLength(2);
   expect(within(dialog).getAllByText('80%')).toHaveLength(2);
-  expect(within(dialog).getAllByText('10%')).toHaveLength(2);
+  expect(within(dialog).queryByText('10%')).toBeNull();
   fireEvent.change(within(dialog).getByRole('textbox', { name: 'Search collateral' }), {
     target: { value: 'spy' },
   });
   expect(within(dialog).queryByRole('button', { name: 'Use QQQB collateral' })).toBeNull();
   fireEvent.click(within(dialog).getByRole('button', { name: 'Use SPYB collateral' }));
   expect(screen.queryByRole('dialog')).toBeNull();
+  expect(screen.getAllByRole('button', { name: 'Borrow' }).find(button => button.hasAttribute('disabled'))).toBeDisabled();
+  fireEvent.click(screen.getByRole('button', { name: 'Collateral' }));
   expect(screen.getByRole('button', { name: 'Choose SPYB collateral' })).toBeVisible();
   expect(screen.getByRole('button', { name: 'Supply' })).toBeDisabled();
   expect(screen.queryByText('Preview market · Transactions unavailable')).toBeNull();
@@ -248,6 +251,8 @@ it('passes the chosen Core collateral to its existing form and correct pool', ()
       name: `Use ${chosen.vToken.underlyingToken.symbol} collateral`,
     }),
   );
+  expect(vi.mocked(MarketForm).mock.lastCall?.[0]).toMatchObject({ borrowOnly: true });
+  fireEvent.click(screen.getByRole('button', { name: 'Collateral' }));
   expect(vi.mocked(MarketForm).mock.lastCall?.[0]).toMatchObject({
     earnOnly: true,
     vToken: chosen.vToken,

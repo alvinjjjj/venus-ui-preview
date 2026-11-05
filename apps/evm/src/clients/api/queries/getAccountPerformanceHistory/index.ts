@@ -1,3 +1,4 @@
+import { isEmptyDemoAddress } from 'demo/state';
 import type {
   GetAccountPerformanceHistoryInput,
   GetAccountPerformanceHistoryOutput,
@@ -5,8 +6,11 @@ import type {
 export * from './types';
 export const getAccountPerformanceHistory = async ({
   period,
+  accountAddress,
 }: GetAccountPerformanceHistoryInput): Promise<GetAccountPerformanceHistoryOutput> => {
-  const days = period === 'month' ? 30 : 180;
+  if (isEmptyDemoAddress(accountAddress))
+    return { startOfDayNetWorthCents: 0, performanceHistory: [] };
+  const days = period === 'month' ? 30 : period === 'halfyear' ? 180 : 365;
   return {
     startOfDayNetWorthCents: 412000,
     performanceHistory: Array.from({ length: 31 }, (_, i) => ({

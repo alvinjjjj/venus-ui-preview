@@ -1,0 +1,13 @@
+/* Approved Lite divider rule: translucent internal lines, separate card rims.
+   Scope includes portal dialogs while the Lite navigation is active. */
+:root[data-glass-variant='lite-experiment-v2']:is(:has([data-interface-mode='lite']), :has(.lite-dashboard)) {
+  --venus-surface-line-stroke: rgb(255 255 255 / 8%);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light']:is(:has([data-interface-mode='lite']), :has(.lite-dashboard)) {
+  --venus-surface-line-stroke: rgb(0 0 0 / 6%);
+}
+
+:root[data-glass-variant='lite-experiment-v2']:has([data-interface-mode='lite']) #root :is(hr, thead, thead tr, th, tr.border-t, div.border-t:not(.border), div.border-b:not(.border)) {
+  border-color: var(--venus-surface-line-stroke) !important;
+}

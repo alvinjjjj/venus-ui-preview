@@ -8,6 +8,9 @@
 
 @import '@venusprotocol/ui/fonts/proximaNova' layer(base);
 @import '@venusprotocol/ui/theme' layer(theme);
+/* Design tokens exported from Figma (Venus UI Kits_new). */
+@import './venus-tokens.css';
+@import './lite-dividers.css';
 
 @layer base {
   body {

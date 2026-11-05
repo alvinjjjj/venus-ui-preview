@@ -42,7 +42,11 @@ export const Modal: FC<ModalProps> = ({
       return;
     }
 
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     rootRef.current?.focus({ preventScroll: true });
+    return () => {
+      if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+    };
   }, [isOpen]);
 
   if (!isOpen || typeof document === 'undefined') {
@@ -58,6 +62,44 @@ export const Modal: FC<ModalProps> = ({
       ref={rootRef}
       role="dialog"
       tabIndex={-1}
+      onKeyDown={event => {
+        if (event.defaultPrevented) return;
+        if (event.key === 'Escape' && handleClose) {
+          event.stopPropagation();
+          handleClose();
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = Array.from(
+          event.currentTarget.querySelectorAll<HTMLElement>(
+            'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])',
+          ),
+        )
+          .filter(element => !element.hidden && getComputedStyle(element).display !== 'none')
+          .sort((left, right) =>
+            left === right
+              ? 0
+              : left.compareDocumentPosition(right) & Node.DOCUMENT_POSITION_FOLLOWING
+                ? -1
+                : 1,
+          );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first) {
+          event.preventDefault();
+        } else if (
+          event.shiftKey &&
+          (document.activeElement === first || document.activeElement === event.currentTarget)
+        ) {
+          event.preventDefault();
+          last.focus();
+        } else if (
+          !event.shiftKey &&
+          (document.activeElement === last || document.activeElement === event.currentTarget)
+        ) {
+          event.preventDefault();
+          first.focus();
+        }
+      }}
     >
       <div
         className={cn(

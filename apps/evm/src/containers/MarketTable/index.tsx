@@ -160,7 +160,7 @@ export const MarketTable: React.FC<MarketTableProps> = ({
     <>
       <Table
         controls={controls}
-        getRowHref={getRowHref}
+        getRowHref={otherTableProps.rowOnClick ? undefined : getRowHref}
         columns={columns}
         data={
           previewInteractions

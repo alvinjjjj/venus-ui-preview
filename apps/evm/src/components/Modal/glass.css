@@ -82,3 +82,54 @@
  box-shadow: none !important;
  backdrop-filter: none !important;
 }
+
+/* Final popup material belongs to Modal, so a direct Dashboard load does not
+   depend on Lite Markets loading its route CSS first. Reuse the approved
+   popup roles and Light recipe; no new global palette values. */
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-popup-panel:not(.venus-account-panel) {
+  background: var(--venus-surface-popup-fill);
+  border-color: var(--venus-surface-popup-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(calc(var(--spacing) * 5));
+  -webkit-backdrop-filter: blur(calc(var(--spacing) * 5));
+  box-shadow: inset 0 1px 0 var(--venus-surface-popup-inset), 0 24px 64px var(--venus-surface-popup-drop);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .venus-popup-panel:not(.venus-account-panel) {
+  /* Figma popup/modal/fill, container/border and container/shadow, 2459:22457. */
+  background: rgb(251 253 255 / 96%);
+  border-color: var(--e-light-border-subtle);
+  box-shadow: inset 0 1px 0 var(--venus-surface-popup-inset), var(--e-light-shadow-overlay);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal {
+  overflow: hidden;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal :is(.venus-multiselect-option, [data-select-option]):is(:hover, :active) {
+  background: var(--venus-surface-dropdown-item-hover) !important;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal > .venus-popup-header {
+  flex-shrink: 0;
+  position: relative;
+  margin: 0;
+  padding: calc(var(--spacing) * 6);
+  background: transparent;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal > .venus-popup-header h2 {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal > .venus-popup-header > button[aria-label='Close'] {
+  right: calc(var(--spacing) * 6);
+}
+
+:root[data-glass-study='lite-experiment'][data-glass-variant='lite-experiment-v2'] :is(#root, body) .venus-dropdown-modal > :last-child:not(.venus-popup-header) {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 calc(var(--spacing) * 3) calc(var(--spacing) * 3);
+}

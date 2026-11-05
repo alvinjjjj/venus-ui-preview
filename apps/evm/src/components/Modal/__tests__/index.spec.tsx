@@ -6,6 +6,39 @@ import { Modal } from '..';
 import { MODAL_BACKDROP_TEST_ID } from '../testIds';
 
 describe('components/Modal', () => {
+  it('closes with Escape and returns focus to the trigger', () => {
+    const trigger = document.createElement('button');
+    document.body.appendChild(trigger);
+    trigger.focus();
+    const close = vi.fn();
+    const { unmount } = renderComponent(
+      <Modal isOpen title="Keyboard dialog" handleClose={close} />,
+    );
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveFocus();
+    fireEvent.keyDown(dialog, { key: 'Escape' });
+    expect(close).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(trigger).toHaveFocus();
+    trigger.remove();
+  });
+
+  it('keeps Tab and Shift Tab inside the dialog', () => {
+    renderComponent(
+      <Modal isOpen title="Keyboard dialog" handleClose={vi.fn()}>
+        <input aria-label="Amount" />
+        <button type="button">Save</button>
+      </Modal>,
+    );
+    const close = screen.getByRole('button', { name: 'Close' });
+    const save = screen.getByRole('button', { name: 'Save' });
+    save.focus();
+    fireEvent.keyDown(save, { key: 'Tab' });
+    expect(close).toHaveFocus();
+    fireEvent.keyDown(close, { key: 'Tab', shiftKey: true });
+    expect(save).toHaveFocus();
+  });
+
   it('renders a dialog with a backdrop and closes when the backdrop is clicked', () => {
     const handleCloseMock = vi.fn();
 

@@ -473,6 +473,13 @@
 /* keep the ✓ out of the grid so every row's columns line up */
 .lite-collateral-options [data-select-option] { position: relative; padding-right: calc(var(--spacing) * 9) !important; }
 .lite-collateral-options [data-select-option] > svg { position: absolute !important; right: calc(var(--spacing) * 3); margin: 0 !important; }
+@media (min-width: 768px) {
+  /* Header starts at the same 12px inset as each option. Reserve the remaining
+     24px of its 36px checkmark gutter so the numeric columns share an edge. */
+  .venus-select-panel:has(.lite-collateral-options) .lite-collateral-cols {
+    padding-inline-end: calc(var(--spacing) * 6);
+  }
+}
 /* Mobile: the menu opens as a sheet whose title bar is centred with 24px padding; line the
    column labels up with the option rows (12px row padding, 36px reserved for the ✓). */
 .text-center:has(> .lite-collateral-head) { flex: 1 1 auto; min-width: 0; padding-inline: 0 !important; }
@@ -696,3 +703,8 @@
     transform: none !important;
   }
 }
+
+/* The card itself never scrolls (overflow hidden); a reserved scrollbar gutter
+   here left an 11px strip on the right, so the header divider stopped short
+   of the card edge. The list scrolls inside tbody, which keeps its own gutter. */
+.lite-experiment .lite-experiment-scroll.lite-experiment-scroll { scrollbar-gutter: auto; }

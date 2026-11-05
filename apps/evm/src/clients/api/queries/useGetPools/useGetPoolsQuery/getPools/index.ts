@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { isEmptyDemoAddress } from 'demo/state';
 import snapshot from 'demo/pools.json';
 import type { GetPoolsInput, GetPoolsOutput } from '../../types';
 import { formatOutput } from './formatOutput';
@@ -11,6 +12,7 @@ export const getPools = async ({
   tokens,
   accountAddress,
 }: GetPoolsInput): Promise<GetPoolsQueryOutput> => {
+  const hasDemoFunds = !!accountAddress && !isEmptyDemoAddress(accountAddress);
   const payload = snapshot as unknown as GetApiPoolsResponse;
   const source =
     chainId === 56
@@ -34,13 +36,13 @@ export const getPools = async ({
       userPoolEModeGroupIdMapping: {},
       vaiPriceMantissa: 1000000000000000000n,
       vaiRepayRateMantissa: 10000000000000000n,
-      userTokenBalances: accountAddress
+      userTokenBalances: hasDemoFunds
         ? tokens.map(token => ({
             token,
             balanceMantissa: new BigNumber(2000).shiftedBy(token.decimals),
           }))
         : [],
-      userVTokenBalances: accountAddress
+      userVTokenBalances: hasDemoFunds
         ? markets.map(market => ({
             vTokenAddress: market.address,
             underlyingTokenSupplyBalanceMantissa: new BigNumber(
@@ -51,7 +53,7 @@ export const getPools = async ({
             ).shiftedBy(market.underlyingDecimal),
           }))
         : [],
-      userCollateralVTokenAddresses: accountAddress
+      userCollateralVTokenAddresses: hasDemoFunds
         ? markets
             .filter(market => ['USDT', 'USDC'].includes(market.underlyingSymbol))
             .map(market => market.address)

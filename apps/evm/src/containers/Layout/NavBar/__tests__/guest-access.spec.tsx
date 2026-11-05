@@ -121,6 +121,27 @@ describe('Final Pro scroll glass', () => {
     useStore.setState({ openModal: undefined });
   });
 
+  it.each(['lite', 'pro'] as const)(
+    'keeps the shared dashboard and filters when leaving %s',
+    mode => {
+      renderComponent(
+        <>
+          <NavBar />
+          <Location />
+        </>,
+        {
+          routerInitialEntries: [`/dashboard?interface=${mode}&chainId=56&page=2&txType=repay`],
+          routePath: '*',
+        },
+      );
+      const target = mode === 'lite' ? 'Pro' : 'Lite';
+      fireEvent.click(screen.getByRole('button', { name: `Switch to ${target}` }));
+      expect(screen.getByTestId('current-page').textContent).toContain(
+        `/dashboard?interface=${target.toLowerCase()}&chainId=56&page=2&txType=repay`,
+      );
+    },
+  );
+
   it.each(['lite', 'pro'] as const)('offers Settings before connecting a wallet in %s', mode => {
     useInterfaceModeStore.getState().setMode(mode);
     renderComponent(<NavBar />, {
@@ -193,7 +214,7 @@ describe('Final Pro scroll glass', () => {
     }
   });
 
-  it('keeps Lite transparent even when its page has scrolled', () => {
+  it('marks the Lite header as scrolled so its approved subtle blur can appear', () => {
     useInterfaceModeStore.getState().setMode('lite');
     renderComponent(
       <>
@@ -206,6 +227,6 @@ describe('Final Pro scroll glass', () => {
       },
     );
     fireEvent.scroll(screen.getByTestId('page-scroll'), { target: { scrollTop: 96 } });
-    expect(screen.getByRole('navigation')).not.toHaveAttribute('data-header-scrolled');
+    expect(screen.getByRole('navigation')).toHaveAttribute('data-header-scrolled', 'true');
   });
 });

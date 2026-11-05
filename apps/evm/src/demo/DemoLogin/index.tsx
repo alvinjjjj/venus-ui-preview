@@ -19,6 +19,15 @@ export const DemoLogin = () => {
           </Button>
         </div>
         <div className="rounded-lg bg-background-active p-5 space-y-3">
+          <h3 className="text-b1s">Empty account</h3>
+          <p className="text-light-grey">
+            Connected account with no assets, positions or transaction history.
+          </p>
+          <Button className="w-full" onClick={() => login('empty')}>
+            Use Empty account
+          </Button>
+        </div>
+        <div className="rounded-lg bg-background-active p-5 space-y-3">
           <img src={primeLogoSrc} alt="Venus Prime" className="h-5" />
           <h3 className="text-b1s">Prime account</h3>
           <p className="text-light-grey">

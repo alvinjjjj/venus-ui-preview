@@ -141,7 +141,7 @@ export function BorrowSources({
   ];
   const filtered = sortableSources.filter(
     source =>
-      source.name.toLowerCase().includes(search.trim().toLowerCase()) &&
+      source.collateral.some(collateral => collateral.symbol.toLowerCase().includes(search.trim().toLowerCase())) &&
       (collateralFilter.length === 0 || source.collateral.some(c => collateralFilter.includes(c.symbol))),
   );
   const renderAmount = (source: BorrowSource, field: 'liquidity' | 'borrowed') => {
@@ -185,8 +185,8 @@ export function BorrowSources({
   const columns: TableColumn<SortableBorrowSource>[] = [
     {
       key: 'yield',
-      label: mobile ? 'Pool' : 'Yield',
-      selectOptionLabel: 'Yield',
+      label: 'Market',
+      selectOptionLabel: 'Market',
       sortRows: (a, b, direction) => a.name.localeCompare(b.name) * (direction === 'asc' ? 1 : -1),
       renderCell: source => (
         <div className={isE2 ? 'lite-e2-source-name' : undefined}>
@@ -324,8 +324,8 @@ export function BorrowSources({
             )}
             <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
               <TextField
-                aria-label="Search borrowing markets"
-                placeholder="Search market"
+                aria-label="Search collateral"
+                placeholder="Search collateral"
                 size="sm"
                 inputContainerClassName="venus-market-search-surface"
                 leftIconSrc="magnifier"

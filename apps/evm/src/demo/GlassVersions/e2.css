@@ -922,10 +922,10 @@
 
 /* One component-local feedback fill for desktop hover and phone press/hover.
    These aliases reuse the approved row recipe; shared palette tokens stay intact. */
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-markets {
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.lite-markets, .lite-dashboard) {
   --lite-row-feedback-fill: linear-gradient(180deg, color-mix(in srgb, var(--color-white) 5%, transparent), color-mix(in srgb, var(--color-white) 4%, transparent));
 }
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .lite-markets {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.lite-markets, .lite-dashboard) {
   --lite-row-feedback-fill: linear-gradient(180deg, color-mix(in srgb, var(--e-light-text-primary) 6%, transparent), color-mix(in srgb, var(--e-light-text-primary) 7%, transparent));
 }
 

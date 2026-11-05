@@ -4,6 +4,7 @@ import { useWatch } from 'react-hook-form';
 import { useGetBalanceOf, useStakeInVault } from 'clients/api';
 import { NULL_ADDRESS } from 'constants/address';
 import { Footer as PrimeRankFooter } from 'containers/PrimeRank/Footer';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { VaultForm } from 'containers/VaultForm';
 import { useGetContractAddress } from 'hooks/useGetContractAddress';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
@@ -30,8 +31,12 @@ export const StakeForm: React.FC<StakeFormProps> = ({
 
   const { accountAddress } = useAccountAddress();
   const isPrimeLeaderboardEnabled = useIsFeatureEnabled({ name: 'primeLeaderboard' });
+  // Lite: the Prime card also shows before connecting ("Connect wallet to see your rank.").
+  const { isLite } = useInterfaceMode();
   const showPrimeRankFooter =
-    isPrimeLeaderboardEnabled && vault.category === VaultCategory.GOVERNANCE && !!accountAddress;
+    isPrimeLeaderboardEnabled &&
+    vault.category === VaultCategory.GOVERNANCE &&
+    (!!accountAddress || isLite);
 
   const fromToken = vault.stakedToken;
 

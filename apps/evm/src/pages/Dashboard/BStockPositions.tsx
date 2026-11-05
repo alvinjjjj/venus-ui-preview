@@ -1,11 +1,12 @@
-import { Table, type TableColumn, Toggle, ProgressBar, InfoIcon } from 'components';
-import BigNumber from 'bignumber.js';
-import { Summary } from './Markets/Positions/Summary';
 import qqqb from 'assets/img/spoke/qqqb.png';
-import spyb from 'assets/img/spoke/spyb.png';
 import spcxb from 'assets/img/spoke/spcxb.png';
+import spyb from 'assets/img/spoke/spyb.png';
 import tslab from 'assets/img/spoke/tslab.png';
+import BigNumber from 'bignumber.js';
+import { InfoIcon, ProgressBar, Table, type TableColumn, Toggle } from 'components';
 import type { Pool } from 'types';
+import { Summary } from './Markets/Positions/Summary';
+import { positionTableColumnWidths } from './positionTableLayout';
 
 type Position = {
   symbol: string;
@@ -52,7 +53,7 @@ export function BStockPositions({
       renderCell: row => (
         <span className="inline-flex items-center gap-3 font-normal">
           {row.icon && <img src={row.icon} alt="" className="size-8 rounded-full" />}
-          {row.symbol}
+          <span data-token-symbol>{row.symbol}</span>
         </span>
       ),
     },
@@ -65,7 +66,7 @@ export function BStockPositions({
       ),
       selectOptionLabel: 'APY',
       align: 'right',
-      renderCell: row => row.apy,
+      renderCell: row => <span data-position-apy>{row.apy}</span>,
     },
     {
       key: 'balance',
@@ -98,10 +99,11 @@ export function BStockPositions({
   return (
     <div className="space-y-6">
       {summaryPool && <Summary pool={summaryPool} displayHealthFactor displayAccountHealth />}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="dashboard-position-tables grid grid-cols-1 xl:grid-cols-2 gap-6">
         <Table
           title="Supplied"
           className="dashboard-position-table pt-4 sm:pt-4"
+          columnWidths={positionTableColumnWidths}
           data={supplied}
           columns={[
             ...columns,
@@ -127,6 +129,7 @@ export function BStockPositions({
         <Table
           title="Borrowed"
           className="dashboard-position-table pt-4 sm:pt-4"
+          columnWidths={positionTableColumnWidths}
           data={borrowed}
           columns={[
             ...columns,

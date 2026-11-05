@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { NoticeWarning, Select, Tabs } from 'components';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 import type { Tab } from 'hooks/useTabs';
 import { useTranslation } from 'libs/translations';
@@ -27,7 +28,12 @@ export const Repay: React.FC<RepayProps> = ({
     name: 'repayWithCollateral',
   });
 
+  // Lite: repay only the token of the row the user opened, from the wallet.
+  // No "Repay from" selector and no repay-with-collateral. Pro unchanged.
+  const { isLite } = useInterfaceMode();
+
   const displayTabs =
+    !isLite &&
     isRepayWithCollateralFeatureEnabled &&
     !asset.disabledTokenActions.includes('repayWithCollateral');
 

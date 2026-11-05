@@ -2,7 +2,8 @@ import { PromotedTokenFire } from './PromotedTokenFire';
 import { LiteMarketAction } from './LiteMarketAction';
 import BigNumber from 'bignumber.js';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useGetPool, useGetLiquidityHubs } from 'clients/api';
+import { useGetPool, useGetLiquidityHubs, useGetVaults } from 'clients/api';
+import { VenusVaultModal } from 'containers/VenusVaultModal';
 import {
   Apy,
   AssetApy,
@@ -29,6 +30,7 @@ import { useChain } from 'hooks/useChain';
 import { useBreakpointUp } from 'hooks/responsive';
 import { useAccountAddress } from 'libs/wallet';
 import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
+import { useDemoVhMarketStore } from 'demo/demoVhMarket';
 import { aggregateLiteAssets } from './data';
 import type { LiteAsset, LiteMarket } from './data';
 import { E3ActionCard } from './E3ActionCard';
@@ -199,6 +201,16 @@ function AssetSources({
   const isFinalSources = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const singleMarket = isFinalSources && row.markets.length === 1 ? row.markets[0] : undefined;
   const [openedMarket, setOpenedMarket] = useState<LiteMarket | undefined>(singleMarket);
+  const setVhMarket = useDemoVhMarketStore(state => state.set);
+  useEffect(() => {
+    const hub = openedMarket?.vhHub;
+    setVhMarket({
+      vhToken: hub ? openedMarket?.asset?.vToken.underlyingToken : undefined,
+      underlyingToken: hub?.vhToken.underlyingToken,
+      underlyingBalanceTokens: hub?.userWalletBalanceTokens,
+    });
+    return () => setVhMarket({});
+  }, [openedMarket, setVhMarket]);
   const closeMarket = useCallback(() => {
     if (singleMarket) onBack();
     else setOpenedMarket(undefined);
@@ -221,8 +233,8 @@ function AssetSources({
   const columns: TableColumn<LiteMarket>[] = [
     {
       key: 'yield',
-      label: 'Yield',
-      selectOptionLabel: 'Yield',
+      label: 'Market',
+      selectOptionLabel: 'Market',
       sortRows: (a, b, direction) => a.name.localeCompare(b.name) * (direction === 'asc' ? 1 : -1),
       renderCell: market => (
         <button
@@ -231,7 +243,7 @@ function AssetSources({
           aria-haspopup={inline ? undefined : 'dialog'}
           className="font-normal text-white hover:text-blue text-left cursor-pointer focus-visible:outline-2 focus-visible:outline-blue"
         >
-          {isE2Sources ? (market.asset ? 'Core Pool' : market.name) : market.name}
+          {isE2Sources ? (market.asset ? 'Venus Core' : market.name) : market.name}
         </button>
       ),
     },
@@ -291,7 +303,8 @@ function AssetSources({
     })),
   ];
 
-  if (inline && openedMarket) {
+  // XVS Vault always opens its own supply modal (no inline form), on desktop and mobile.
+  if (inline && openedMarket && !openedMarket.vault) {
     return (
       <section
         ref={mobileFormRef}
@@ -304,7 +317,7 @@ function AssetSources({
             token={row.token}
             onBackToAssets={onBack}
             onBackToSources={singleMarket ? undefined : closeMarket}
-            marketName={isFinalSources && openedMarket.asset ? 'Core Pool' : openedMarket.name}
+            marketName={isFinalSources && openedMarket.asset ? 'Venus Core' : openedMarket.name}
           />
         ) : (
         <nav aria-label="Earn navigation" className="lite-inline-market-path">
@@ -322,7 +335,7 @@ function AssetSources({
             {row.token.symbol}
           </button>
           <span aria-hidden="true">/</span>
-          <span aria-current="page">{isFinalSources && openedMarket.asset ? 'Core Pool' : openedMarket.name}</span>
+          <span aria-current="page">{isFinalSources && openedMarket.asset ? 'Venus Core' : openedMarket.name}</span>
         </nav>
         )}
         <div className="lite-inline-market-body" key={openedMarket.id}>
@@ -336,7 +349,7 @@ function AssetSources({
               ) : (
                 <MarketForm
                   inlineHeader={!mobile}
-                  actionTabsVariant={mobile ? 'secondary' : undefined}
+                  actionTabsVariant="secondary"
                   vToken={openedMarket.asset.vToken}
                   poolComptrollerAddress={corePoolComptrollerContractAddress}
                   initialActiveTabId="supply"
@@ -347,7 +360,7 @@ function AssetSources({
             ) : openedMarket.hub ? (
               <LiquidityHubForm
                 inlineHeader={!mobile}
-                actionTabsVariant={mobile ? 'secondary' : undefined}
+                actionTabsVariant="secondary"
                 vhToken={openedMarket.hub.vhToken}
                 initialActiveTabId="supply"
                 onSubmitSuccess={closeMarket}
@@ -400,8 +413,22 @@ function AssetSources({
           poolComptrollerAddress={corePoolComptrollerContractAddress}
           initialActiveTabId="supply"
           earnOnly
-          marketName={isFinalSources ? 'Core Pool' : undefined}
+          marketName={isFinalSources ? 'Venus Core' : undefined}
           onClose={closeMarket}
+        />
+      )}
+      {openedMarket?.vault && (
+        <VenusVaultModal
+          isOpen
+          vault={openedMarket.vault}
+          handleClose={closeMarket}
+          tabsVariant="secondary"
+          title={
+            <span className="inline-flex items-center gap-2 font-normal">
+              <TokenIcon token={row.token} size="md" />
+              {row.token.symbol} / {openedMarket.name}
+            </span>
+          }
         />
       )}
       {openedMarket?.hub && (
@@ -436,6 +463,7 @@ export default function LiteMarkets() {
     accountAddress,
   });
   const hubsQuery = useGetLiquidityHubs({ accountAddress });
+  const vaultsQuery = useGetVaults({ accountAddress });
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<string>();
   const [selectedBorrow, setSelectedBorrow] = useState<string>();
@@ -451,6 +479,7 @@ export default function LiteMarkets() {
     poolQuery.data?.pool.assets ?? [],
     hubsQuery.data?.liquidityHubs ?? [],
     corePoolComptrollerContractAddress,
+    vaultsQuery.data ?? [],
   );
   const categoryOptions = [
     ...new Map(

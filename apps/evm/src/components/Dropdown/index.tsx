@@ -267,6 +267,7 @@ export const Dropdown = ({
         backdropClassName="z-100000"
         rootClassName="z-100001"
         noHorizontalPadding
+        className="venus-dropdown-modal"
         onBlur={onBlur}
         title={menuTitle as React.ComponentProps<typeof Modal>['title']}
         portalContainer={modalPortalContainer}

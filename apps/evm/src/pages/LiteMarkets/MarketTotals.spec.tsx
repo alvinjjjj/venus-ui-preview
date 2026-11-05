@@ -33,12 +33,9 @@ it('renders full whole-dollar totals without enabling rolling digits in the inli
   ).toBeVisible();
   const supplyMarker = screen.getByText('Total Supply').firstElementChild;
   const liquidityMarker = screen.getByText('Available Liquidity').firstElementChild;
-  expect(supplyMarker).toHaveAttribute('data-total-kind', 'supplyUsd');
-  expect(liquidityMarker).toHaveAttribute('data-total-kind', 'liquidityUsd');
-  for (const marker of [supplyMarker, liquidityMarker]) {
-    expect(marker).toHaveClass('lite-e2-total-dot');
-    expect(marker).toHaveAttribute('aria-hidden', 'true');
-  }
+  expect(supplyMarker).toBeNull();
+  expect(liquidityMarker).toBeNull();
+  expect(document.querySelector('.lite-e2-total-dot')).toBeNull();
   expect(screen.queryByRole('button')).toBeNull();
 });
 

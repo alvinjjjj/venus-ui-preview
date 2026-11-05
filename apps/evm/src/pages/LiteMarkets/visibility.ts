@@ -25,7 +25,8 @@ export function isVisibleLiteAsset(row: LiteAsset, groups: EModeGroup[]) {
     row.token.address.toLowerCase() === '0x0782b6d8c4551b9760e74c0545a9bcd90bdc41e5';
   return (
     !screenshotFlagged &&
-    !row.token.symbol.toLowerCase().startsWith('vh') &&
+    // vhToken markets in Core stay visible: Lite lets users supply the vhToken or its underlying.
+    (!row.token.symbol.toLowerCase().startsWith('vh') || row.markets.some(market => !!market.vhHub)) &&
     !row.markets.some(market => market.asset && isRestrictedLiteAsset(market.asset, groups))
   );
 }

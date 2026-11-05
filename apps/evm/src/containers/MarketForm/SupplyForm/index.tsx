@@ -39,6 +39,9 @@ import { Footer } from '../Footer';
 import type { Approval } from '../Footer/types';
 import { calculateAmountDollars } from '../calculateAmountDollars';
 import { useGetOperationFormTokenBalances } from '../useGetOperationFormTokenBalances';
+import { useDemoVhMarketStore } from 'demo/demoVhMarket';
+import { useLiteNativeCollateralStore } from 'demo/liteNativeCollateral';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import TEST_IDS from './testIds';
 import useForm, { type FormValues } from './useForm';
 
@@ -81,7 +84,11 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
   const isIntegratedSwapEnabled = useIsFeatureEnabled({
     name: 'integratedSwap',
   });
+  // Lite rule: the Supply modal only supplies the token of the row the user opened.
+  // Exception: WBNB in Core (WBNB or BNB, via canWrapNativeToken). Pro is unchanged.
+  const { isLite } = useInterfaceMode();
   const isIntegratedSwapFeatureEnabled =
+    !isLite &&
     isIntegratedSwapEnabled &&
     // Check swap and supply action is enabled for underlying token
     !asset.disabledTokenActions.includes('swapAndSupply');
@@ -109,8 +116,13 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
     action: 'supply',
   });
 
+  // Lite borrow modal: "BNB (WBNB market)" picked as collateral -> start on native BNB.
+  const liteNativeCollateralVToken = useLiteNativeCollateralStore(state => state.nativeForVToken);
+  const isLiteNativeCollateral =
+    isLite && canWrapNativeToken && liteNativeCollateralVToken === asset.vToken.address;
   const shouldSelectNativeToken =
-    !collateralSelector && canWrapNativeToken && userWalletNativeTokenBalanceTokens?.gt(asset.userWalletBalanceTokens);
+    isLiteNativeCollateral ||
+    (!collateralSelector && canWrapNativeToken && userWalletNativeTokenBalanceTokens?.gt(asset.userWalletBalanceTokens));
 
   const initialFormValues: FormValues = useMemo(
     () => ({
@@ -125,6 +137,52 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
   );
 
   const [formValues, setFormValues] = useState<FormValues>(initialFormValues);
+
+  // Lite only: in the WBNB market, label native BNB as "BNB (WBNB market)" so users can tell it
+  // apart from the standalone BNB market (agreed with Zed Liang / Cuzz). Display only.
+  const liteLabelNative = <T extends { isNative?: boolean; symbol: string }>(token: T): T =>
+    isLite && canWrapNativeToken && token.isNative
+      ? { ...token, symbol: `${token.symbol} (${asset.vToken.underlyingToken.symbol} market)` }
+      : token;
+  const selectTokenBalances = useMemo(
+    () => tokenBalances.map(item => ({ ...item, token: liteLabelNative(item.token) })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [tokenBalances, isLite, canWrapNativeToken, asset.vToken.underlyingToken.symbol],
+  );
+
+  // Lite only: Core market whose underlying is a vhToken. The selector offers the vhToken and
+  // its underlying; the default is whichever has the higher wallet balance (UI only here).
+  const demoVhToken = useDemoVhMarketStore(state => state.vhToken);
+  const demoVhUnderlying = useDemoVhMarketStore(state => state.underlyingToken);
+  const demoVhUnderlyingBalance = useDemoVhMarketStore(state => state.underlyingBalanceTokens);
+  const isDemoVhMarket =
+    isLite && !collateralSelector && !!demoVhToken && !!demoVhUnderlying &&
+    areTokensEqual(demoVhToken, asset.vToken.underlyingToken);
+  const vhWalletBalance = asset.userWalletBalanceTokens ?? new BigNumber(0);
+  const underlyingWalletBalance = demoVhUnderlyingBalance ?? new BigNumber(0);
+  const demoVhTokenBalances = useMemo(
+    () =>
+      demoVhToken && demoVhUnderlying
+        ? [
+            {
+              token: demoVhToken,
+              balanceMantissa: convertTokensToMantissa({ value: vhWalletBalance, token: demoVhToken }),
+            },
+            {
+              token: demoVhUnderlying,
+              balanceMantissa: convertTokensToMantissa({
+                value: underlyingWalletBalance,
+                token: demoVhUnderlying,
+              }),
+            },
+          ]
+        : [],
+    [demoVhToken, demoVhUnderlying, vhWalletBalance, underlyingWalletBalance],
+  );
+  const [demoVhSelected, setDemoVhSelected] = useState<typeof demoVhToken>();
+  const demoVhSelectedToken =
+    demoVhSelected ??
+    (underlyingWalletBalance.gt(vhWalletBalance) ? demoVhUnderlying : demoVhToken);
 
   // Reset form when user disconnects their wallet
   useEffect(() => {
@@ -420,7 +478,29 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
     <>
       {!cardLayout && collateralControl}
 
-      {!collateralSelector && (isIntegratedSwapFeatureEnabled || canWrapNativeToken) ? (
+      {isDemoVhMarket && demoVhSelectedToken ? (
+        <SelectTokenTextField
+          data-testid={TEST_IDS.selectTokenTextField}
+          selectedToken={demoVhSelectedToken}
+          value={formValues.amountTokens}
+          disabled={!isUserConnected || isSubmitting}
+          onChange={amountTokens =>
+            setFormValues(currentFormValues => ({ ...currentFormValues, amountTokens }))
+          }
+          onChangeSelectedToken={token => {
+            setDemoVhSelected(token);
+            setFormValues(currentFormValues => ({
+              ...currentFormValues,
+              amountTokens: initialFormValues.amountTokens,
+            }));
+          }}
+          rightMaxButton={{
+            label: t('marketForm.rightMaxButtonLabel'),
+            onClick: handleRightMaxButtonClick,
+          }}
+          tokenBalances={demoVhTokenBalances}
+        />
+      ) : !collateralSelector && (isIntegratedSwapFeatureEnabled || canWrapNativeToken) ? (
         <SelectTokenTextField
           data-testid={TEST_IDS.selectTokenTextField}
           selectedToken={formValues.fromToken}
@@ -443,18 +523,21 @@ const SupplyForm: React.FC<SupplyFormProps> = ({
               amountTokens,
             }));
           }}
-          onChangeSelectedToken={fromToken =>
+          onChangeSelectedToken={selected => {
+            // Map the display-labelled token back to the original token object.
+            const fromToken =
+              tokenBalances.find(item => areTokensEqual(item.token, selected))?.token ?? selected;
             setFormValues(currentFormValues => ({
               ...currentFormValues,
               amountTokens: initialFormValues.amountTokens,
               fromToken,
-            }))
-          }
+            }));
+          }}
           rightMaxButton={{
             label: t('marketForm.rightMaxButtonLabel'),
             onClick: handleRightMaxButtonClick,
           }}
-          tokenBalances={tokenBalances}
+          tokenBalances={selectTokenBalances}
           description={
             !isSubmitting && !!formError?.message ? (
               <p className="text-red">{formError.message}</p>

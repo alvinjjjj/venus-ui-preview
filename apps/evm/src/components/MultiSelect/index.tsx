@@ -18,6 +18,7 @@ export interface MultiSelectProps {
   resetLabel: React.ReactNode;
   className?: string;
   menuClassName?: string;
+  optionsClassName?: string;
   size?: 'small' | 'medium';
 }
 
@@ -31,6 +32,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
   resetLabel,
   className,
   menuClassName,
+  optionsClassName,
   size = 'medium',
 }) => {
   const toggle = (optionValue: string) =>
@@ -57,7 +59,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = ({
         menuClassName,
       )}
       optionsDom={() => (
-        <div className="min-w-full">
+        <div className={cn('min-w-full', optionsClassName)}>
           <div className="venus-multiselect-title flex min-h-12 items-center justify-between gap-3 px-4 py-3">
             <span className="text-b1r text-white">{title}</span>
 

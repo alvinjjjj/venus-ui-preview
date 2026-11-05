@@ -10,6 +10,7 @@ import {
   SpendingLimit,
   TokenTextField,
 } from 'components';
+import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { NULL_ADDRESS } from 'constants/address';
 import { TRANSACTION_BUFFER_PERCENTAGE } from 'constants/fullRepaymentBuffer';
 import useDebounceValue from 'hooks/useDebounceValue';
@@ -60,7 +61,10 @@ const RepayWithWalletBalanceForm: React.FC<RepayWithWalletBalanceFormProps> = ({
     name: 'integratedSwap',
   });
 
+  // Lite: no token selection on Repay; the user repays the row's token only. Pro unchanged.
+  const { isLite } = useInterfaceMode();
   const isIntegratedSwapFeatureEnabled =
+    !isLite &&
     isIntegratedSwapEnabled &&
     // Check swap and supply action is enabled for underlying token
     !asset.disabledTokenActions.includes('swapAndRepay');
@@ -76,7 +80,7 @@ const RepayWithWalletBalanceForm: React.FC<RepayWithWalletBalanceFormProps> = ({
   });
 
   const canWrapNativeToken =
-    isWrapUnwrapNativeTokenEnabled && !!asset.vToken.underlyingToken.tokenWrapped;
+    !isLite && isWrapUnwrapNativeTokenEnabled && !!asset.vToken.underlyingToken.tokenWrapped;
 
   const { tokenBalances, userWalletNativeTokenBalanceTokens } = useGetOperationFormTokenBalances({
     poolComptrollerContractAddress: pool.comptrollerAddress,

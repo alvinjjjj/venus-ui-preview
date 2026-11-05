@@ -2,18 +2,26 @@ import BigNumber from 'bignumber.js';
 import { Select, Spinner, cn } from 'components';
 import { routes } from 'constants/routing';
 import { useGlassPreview } from 'demo/GlassVersions/store';
-import { isDemoAddress, useDemo } from 'demo/state';
+import { isFundedDemoAddress, useDemo } from 'demo/state';
 import { useAccountAddress } from 'libs/wallet';
-import { type ReactNode, useState } from 'react';
-import type { LiquidityHub, Pool } from 'types';
+import { type ReactNode, useEffect, useState } from 'react';
+import type { LiquidityHub, Pool, Vault } from 'types';
 import { getCombinedApy } from 'utilities';
 import { BStockPositions, bStockPreviewHealthFactor } from './BStockPositions';
+import { DashboardEmptyState } from './EmptyState';
 import { Hubs } from './Hubs';
 import { Positions } from './Markets/Positions';
 import { Placeholder } from './Placeholder';
 import { PositionHealthIndicator } from './PositionHealthIndicator';
+import { Vaults } from './Vaults';
 
-type PositionChoice = { id: string; label: string; content: ReactNode; healthFactor?: number };
+type PositionChoice = {
+  id: string;
+  label: string;
+  content: ReactNode;
+  hasPositions: boolean;
+  healthFactor?: number;
+};
 
 function PositionChoiceLabel({
   choice,
@@ -35,11 +43,15 @@ export function LitePositions({
   previewInteractions,
   liquidityHubs,
   isHubsLoading,
+  vaults = [],
+  isVaultsLoading = false,
 }: {
   corePool?: Pool;
   previewInteractions?: boolean;
   liquidityHubs: LiquidityHub[];
   isHubsLoading: boolean;
+  vaults?: Vault[];
+  isVaultsLoading?: boolean;
 }) {
   const { accountAddress } = useAccountAddress();
   const demoLoggedIn = useDemo(state => state.loggedIn);
@@ -54,12 +66,15 @@ export function LitePositions({
       asset =>
         asset.userSupplyBalanceTokens.gt(0) ||
         asset.userBorrowBalanceTokens.gt(0) ||
-        asset.isCollateralOfUser,
+        // Membership with no supplied/borrowed balance is not a holding.
+        // Keep the earlier previews' membership behavior outside Final.
+        (!isFinal && asset.isCollateralOfUser),
     );
   const choices: PositionChoice[] = [
     {
       id: 'venus-core',
       label: 'Venus Core',
+      hasPositions: !!hasCorePositions,
       healthFactor:
         accountAddress && corePool?.userBorrowBalanceCents?.gt(0)
           ? corePool.userHealthFactor
@@ -67,6 +82,8 @@ export function LitePositions({
       content:
         hasCorePositions && corePool ? (
           <Positions pools={[corePool]} previewInteractions={previewInteractions} />
+        ) : isFinal ? (
+          <DashboardEmptyState message="No positions yet" to={routes.landing.path} />
         ) : (
           <Placeholder
             iconName="venus"
@@ -84,7 +101,7 @@ export function LitePositions({
     : [];
   // One display-only holding for the demo wallet; never modify fetched wallet data.
   const showcaseHub = liquidityHubs.find(hub => hub.vhToken.underlyingToken.symbol === 'USDT');
-  if (demoLoggedIn && isDemoAddress(accountAddress) && showcaseHub) {
+  if (demoLoggedIn && isFundedDemoAddress(accountAddress) && showcaseHub) {
     const balance = new BigNumber('1.000018');
     const balanceCents = balance.times(showcaseHub.tokenPriceCents);
     const { totalApyPercentage } = getCombinedApy({
@@ -104,19 +121,33 @@ export function LitePositions({
   choices.push({
     id: 'liquidity-hub',
     label: 'Liquidity Hub',
+    hasPositions: activeHubs.length > 0,
     content: isHubsLoading ? <Spinner /> : <Hubs liquidityHubs={activeHubs} />,
   });
+  if (isFinal) {
+    choices.push({
+      id: 'vaults',
+      label: 'Vaults',
+      hasPositions: !!accountAddress && vaults.some(vault => vault.userStakeBalanceMantissa?.gt(0)),
+      content: isVaultsLoading ? <Spinner /> : <Vaults vaults={vaults} />,
+    });
+  }
   for (const variant of ['index', 'growth'] as const) {
     choices.push({
       id: `bstock-${variant}`,
       label: `bStock ${variant}`,
+      // The current bStock cards contain fixtures only for the demo wallet.
+      // Ordinary wallets have no bStock position data to display here yet.
+      hasPositions: !!(demoLoggedIn && isFundedDemoAddress(accountAddress)),
       healthFactor:
-        demoLoggedIn && isDemoAddress(accountAddress) && corePool
+        demoLoggedIn && isFundedDemoAddress(accountAddress) && corePool
           ? bStockPreviewHealthFactor
           : undefined,
       content:
-        demoLoggedIn && isDemoAddress(accountAddress) ? (
+        demoLoggedIn && isFundedDemoAddress(accountAddress) ? (
           <BStockPositions variant={variant} corePool={corePool} />
+        ) : isFinal ? (
+          <DashboardEmptyState message="No positions yet" to={routes.landing.path} />
         ) : (
           <Placeholder
             iconName="venus"
@@ -127,18 +158,33 @@ export function LitePositions({
         ),
     });
   }
-  const active = choices.find(choice => choice.id === selected) ?? choices[0];
+  // Lite tab order: Liquidity Hub, Venus Core, bStock index, bStock growth, Vaults.
+  const tabOrder = ['liquidity-hub', 'venus-core', 'bstock-index', 'bstock-growth', 'vaults'];
+  choices.sort((a, b) => tabOrder.indexOf(a.id) - tabOrder.indexOf(b.id));
+  const availableChoices = isFinal ? choices.filter(choice => choice.hasPositions) : choices;
+  const active = availableChoices.find(choice => choice.id === selected) ?? availableChoices[0];
+  const activeId = active?.id;
+  useEffect(() => {
+    // Commit the fallback so a vanished market cannot steal the selection
+    // again if its holdings arrive in a later refresh or account switch.
+    if (selected && selected !== activeId) setSelected(activeId);
+  }, [selected, activeId]);
   return (
-    <section aria-label="Positions" className="space-y-8">
-      <div className={cn('space-y-8', isFinal && 'dashboard-position-picker')}>
-        <h2 className="text-lg font-semibold">Positions</h2>
-        {isFinal && (
+    <section aria-label="Positions" className={cn('space-y-8', isFinal && 'dashboard-positions')}>
+      <div className={cn('space-y-8', isFinal && active && 'dashboard-position-picker')}>
+        <h2 className={cn(isFinal ? 'dashboard-section-title' : 'text-lg', 'font-semibold')}>
+          Positions
+        </h2>
+        {isFinal && active && (
           <div className="sm:hidden">
             <Select
               name="position-market"
+              buttonClassName="p-3 h-auto"
+              optionClassName="p-3 h-auto"
+              dropdownClassName="dashboard-position-options"
               value={active.id}
               onChange={value => setSelected(String(value))}
-              options={choices.map(choice => ({
+              options={availableChoices.map(choice => ({
                 value: choice.id,
                 label: ({ isRenderedInButton }) => (
                   <PositionChoiceLabel
@@ -151,13 +197,13 @@ export function LitePositions({
             />
           </div>
         )}
-        {choices.length > 0 && (
+        {active && (
           <div
             className={cn('flex flex-wrap gap-3', isFinal && 'hidden sm:flex')}
             role="group"
             aria-label="Position market"
           >
-            {choices.map(choice => (
+            {availableChoices.map(choice => (
               <button
                 key={choice.id}
                 type="button"
@@ -191,7 +237,19 @@ export function LitePositions({
           </div>
         )}
       </div>
-      {active?.content}
+      {active?.content ??
+        (isHubsLoading || isVaultsLoading ? (
+          <Spinner />
+        ) : isFinal ? (
+          <DashboardEmptyState message="No positions yet" to={routes.landing.path} />
+        ) : (
+          <Placeholder
+            iconName="venus"
+            title="No active positions"
+            to={routes.markets.path}
+            buttonSize="sm"
+          />
+        ))}
     </section>
   );
 }

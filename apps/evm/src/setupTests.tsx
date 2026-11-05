@@ -47,6 +47,16 @@ Object.defineProperty(globalThis, 'localStorage', {
   value: window.localStorage,
 });
 
+// JSDOM does not implement layout observation. Components still render their
+// accessible content while responsive chart geometry is checked in the browser.
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  };
+}
+
 // Mock config
 vi.mock('config', async () => {
   const actual = await vi.importActual('config');

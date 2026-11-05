@@ -4,7 +4,7 @@ import { withDemoLiquidityHubBalance } from '../withDemoLiquidityHubBalance';
 
 const usdtHub = liquidityHubs.find(hub => hub.vhToken.underlyingToken.symbol === 'USDT')!;
 
-it.each(Object.values(demoAddresses))(
+it.each([demoAddresses.normal, demoAddresses.prime])(
   'gives demo account %s 2,000 USDT without changing the snapshot',
   address => {
     const originalBalance = usdtHub.userWalletBalanceTokens?.toFixed();

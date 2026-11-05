@@ -1,4 +1,5 @@
 import { cn } from '@venusprotocol/ui';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { RewardBadgePreview } from 'demo/RewardBadgePreview';
 import { useDemo } from 'demo/state';
 
@@ -82,6 +83,7 @@ export const useColumns = ({
 }) => {
   const { t, Trans } = useTranslation();
   const isPrimePreview = useDemo(state => state.loggedIn && state.profile === 'prime');
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { chainId: accountChainId } = useAccountChainId();
   const { chainId } = useChainId();
   const isAccountOnWrongChain = accountChainId !== chainId;
@@ -224,23 +226,54 @@ export const useColumns = ({
           column === 'labeledSupplyApy' ||
           column === 'labeledBorrowApy'
         ) {
+          // Layout fixtures only: keep fetched rates, sorting and account totals intact.
+          const showCampaignPreview =
+            isFinal &&
+            previewInteractions &&
+            marketType === 'supply' &&
+            column === 'supplyApy' &&
+            asset.vToken.underlyingToken.symbol === 'USDC';
           return (
-            <div className={cn('venus-market-apy-cell flex items-center gap-1 flex-wrap', align === 'right' && 'justify-end')}>
-            <AssetApy
-              className={cn('venus-market-apy', isPaused && 'text-grey', align === 'right' && 'justify-end')}
-              asset={asset}
-              type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'}
-            />
-            {asset.vToken.address.toLowerCase() === '0xfd5840cd36d94d7229439859c0112a4185bc0255' && (
-              <span className="venus-market-reward-preview">
-                <RewardBadgePreview
-                  token={asset.vToken.underlyingToken}
-                  type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'}
-                  showEarnedPrime={previewInteractions && isPrimePreview}
-                  dashboardPreview={previewInteractions}
-                />
-              </span>
-            )}
+            <div
+              className={cn(
+                'venus-market-apy-cell flex items-center gap-1 flex-wrap',
+                align === 'right' && 'justify-end',
+              )}
+              title={
+                showCampaignPreview ? 'Campaign layout preview — simulated rewards' : undefined
+              }
+            >
+              <AssetApy
+                className={cn(
+                  'venus-market-apy',
+                  isPaused && 'text-grey',
+                  align === 'right' && 'justify-end',
+                )}
+                asset={
+                  showCampaignPreview
+                    ? {
+                        ...asset,
+                        supplyPointDistributions: [
+                          { title: 'Campaign layout preview (simulated)', incentive: '2x' },
+                        ],
+                      }
+                    : asset
+                }
+                type={column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'}
+              />
+              {asset.vToken.address.toLowerCase() ===
+                '0xfd5840cd36d94d7229439859c0112a4185bc0255' && (
+                <span className="venus-market-reward-preview">
+                  <RewardBadgePreview
+                    token={asset.vToken.underlyingToken}
+                    type={
+                      column === 'supplyApy' || column === 'labeledSupplyApy' ? 'supply' : 'borrow'
+                    }
+                    showEarnedPrime={previewInteractions && isPrimePreview}
+                    dashboardPreview={previewInteractions}
+                  />
+                </span>
+              )}
             </div>
           );
         }

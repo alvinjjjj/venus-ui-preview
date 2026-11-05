@@ -62,12 +62,14 @@ export const LiquidityHubCard: React.FC<LiquidityHubCardProps> = ({
     {
       label: t('dashboard.hubs.apy'),
       value: formatPercentageToReadableValue(totalApyPercentage),
+      className: 'dashboard-position-metric dashboard-position-apy',
     },
   ];
 
   if (hasUserSupplyBalance) {
     cells.push({
       label: t('dashboard.hubs.dailyEarnings'),
+      className: 'dashboard-position-metric',
       value: (
         <HidableUserBalance>
           {formatCentsToReadableValue({
@@ -84,6 +86,7 @@ export const LiquidityHubCard: React.FC<LiquidityHubCardProps> = ({
     cells.push({
       label: t('dashboard.previewCard.totalSupplied'),
       value: totalSuppliedReadableValue,
+      className: 'dashboard-position-metric',
     });
   }
 

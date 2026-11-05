@@ -1,10 +1,14 @@
 import BigNumber from 'bignumber.js';
-import { demoAddresses } from 'demo/state';
+import { demoAddresses, isEmptyDemoAddress } from 'demo/state';
 import { useGetToken } from 'libs/tokens';
 import type { Address } from 'viem';
 import { formatToVenusVault } from '../formatToVenusVault';
 export const useGetVestingVaults = (input?: { accountAddress?: Address }) => {
-  const stakeAmount = input?.accountAddress === demoAddresses.prime ? 5000 : 250;
+  const stakeAmount = isEmptyDemoAddress(input?.accountAddress)
+    ? 0
+    : input?.accountAddress === demoAddresses.prime
+      ? 5000
+      : 250;
   const stakedToken = useGetToken({ symbol: 'XVS' });
   const rewardToken = useGetToken({ symbol: 'XVS' });
   const vault =

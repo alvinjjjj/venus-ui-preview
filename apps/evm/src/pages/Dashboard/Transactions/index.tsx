@@ -1,5 +1,6 @@
 import { useGetAccountTransactionHistory, useGetLiquidityHubs, useGetPools } from 'clients/api';
 import {
+  Button,
   MultiSelect,
   Pagination,
   Select,
@@ -10,7 +11,7 @@ import {
 import { NULL_ADDRESS } from 'constants/address';
 import { TX_TYPES } from 'constants/marketTxTypes';
 import { isNewDesignMode, useGlassPreview } from 'demo/GlassVersions/store';
-import { isDemoAddress, useDemo } from 'demo/state';
+import { isFundedDemoAddress, useDemo } from 'demo/state';
 import { useIsFeatureEnabled } from 'hooks/useIsFeatureEnabled';
 import { useTranslation } from 'libs/translations';
 import { useAccountAddress, useChainId } from 'libs/wallet';
@@ -20,6 +21,9 @@ import { ChainId, type Token, type TxType } from 'types';
 import { getTransactionName } from 'utilities';
 import { matchesTransactionFilters } from 'utilities/matchesTransactionFilters';
 import { isAddress } from 'viem';
+import { DashboardEmptyState } from '../EmptyState';
+import DownloadCsvIcon from '../assets/download-csv.svg?react';
+import { createTransactionsCsv } from './createTransactionsCsv';
 import { getNewPreviewTransactions } from './getNewPreviewTransactions';
 
 const FIRST_PAGE = 1;
@@ -119,12 +123,15 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
   const { t } = useTranslation();
   const { accountAddress } = useAccountAddress();
   const isNewMode = useGlassPreview(state => isNewDesignMode(state.mode));
+  const isFinalDashboard = useGlassPreview(
+    state => allowDemoPreview && state.mode === 'lite-experiment-v2',
+  );
   const isDemoLoggedIn = useDemo(state => state.loggedIn);
   const isNewPreview =
     chainId === ChainId.BSC_MAINNET &&
     (isNewMode || allowDemoPreview) &&
     isDemoLoggedIn &&
-    isDemoAddress(accountAddress);
+    isFundedDemoAddress(accountAddress);
   const { data: poolData } = useGetPools({
     accountAddress,
     includeIsolatedPools: true,
@@ -303,94 +310,142 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
     : historicalTxsData?.count || 0;
   const isLoading = !isNewPreview && areHistoricalTxsLoading;
 
+  const isEmptyHistory =
+    isFinalDashboard &&
+    !isLoading &&
+    transactionsCount === 0 &&
+    selectedTxTypes.length === 0 &&
+    selectedSources.length === 0;
+
+  const downloadCsv = () => {
+    const csv = createTransactionsCsv(transactions, type => getTransactionName({ type, t }));
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `venus-${isNewPreview ? 'demo-' : ''}transactions-page-${page}.csv`;
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 0);
+  };
+
   return (
     <div ref={containerRef} className="dashboard-transactions grid grid-cols-1 gap-4">
-      {accountAddress && (
-        <div
-          className={
-            allowDemoPreview
-              ? 'flex flex-col sm:flex-row gap-3 md:gap-4'
-              : 'flex flex-row gap-3 md:gap-4'
-          }
-        >
-          {allowDemoPreview ? (
-            <>
-              <MultiSelect
-                className="lite-transaction-filter w-full sm:w-60"
-                menuClassName="lite-transaction-multiselect"
-                size="small"
-                placeholder={t('account.transactions.selects.txType.all')}
-                title="Transactions"
-                resetLabel="Reset"
-                renderCount={count => `${count} transaction types`}
-                value={selectedTxTypes}
-                onChange={values => setFilter(TX_TYPE_PARAM_KEY, values)}
-                options={txTypeSelectOptions
-                  .filter(option => option.value !== ALL_OPTION_VALUE)
-                  .map(option => ({
-                    value: option.value,
-                    label:
-                      typeof option.label === 'function'
-                        ? option.label({ isRenderedInButton: false })
-                        : option.label,
-                  }))}
-              />
-              <MultiSelect
-                className="lite-transaction-filter w-full sm:w-60"
-                menuClassName="lite-transaction-multiselect"
-                size="small"
-                placeholder={t('account.transactions.selects.source.all')}
-                title="Sources"
-                resetLabel="Reset"
-                renderCount={count => `${count} sources`}
-                value={selectedSources}
-                onChange={values => setFilter(CONTRACT_ADDRESS_PARAM_KEY, values)}
-                options={sourceSelectOptions
-                  .filter(option => option.value !== ALL_OPTION_VALUE)
-                  .map(option => ({
-                    value: option.value,
-                    label:
-                      typeof option.label === 'function'
-                        ? option.label({ isRenderedInButton: false })
-                        : option.label,
-                  }))}
-              />
-            </>
-          ) : (
-            <>
-              <Select
-                className="flex-1 md:flex-none"
-                size="small"
-                variant="tertiary"
-                placeLabelToLeft
-                options={txTypeSelectOptions}
-                optionClassName="px-3 h-10 scrollbar-track-cards"
-                dropdownClassName="overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey"
-                buttonClassName="min-w-1/2 sm:min-w-45"
-                value={selectedTxType}
-                onChange={newValue => setTxType(newValue.toString())}
-              />
+      <div className={isFinalDashboard ? 'dashboard-transaction-header' : 'contents'}>
+        {isFinalDashboard && (
+          <h2 id="lite-transactions-title" className="dashboard-section-title">
+            Transaction
+          </h2>
+        )}
+        {accountAddress && !isEmptyHistory && (
+          <div
+            className={
+              isFinalDashboard
+                ? 'dashboard-transaction-toolbar flex flex-wrap items-center justify-between gap-3'
+                : allowDemoPreview
+                  ? 'flex flex-col sm:flex-row gap-3 md:gap-4'
+                  : 'flex flex-row gap-3 md:gap-4'
+            }
+          >
+            <div className={isFinalDashboard ? 'dashboard-transaction-filters' : 'contents'}>
+              {allowDemoPreview ? (
+                <>
+                  <MultiSelect
+                    className="lite-transaction-filter w-full sm:w-60"
+                    menuClassName="lite-transaction-multiselect"
+                    optionsClassName={
+                      isFinalDashboard ? 'dashboard-transaction-options' : undefined
+                    }
+                    size="small"
+                    placeholder={t('account.transactions.selects.txType.all')}
+                    title="Transactions"
+                    resetLabel="Reset"
+                    renderCount={count => `${count} transaction types`}
+                    value={selectedTxTypes}
+                    onChange={values => setFilter(TX_TYPE_PARAM_KEY, values)}
+                    options={txTypeSelectOptions
+                      .filter(option => option.value !== ALL_OPTION_VALUE)
+                      .map(option => ({
+                        value: option.value,
+                        label:
+                          typeof option.label === 'function'
+                            ? option.label({ isRenderedInButton: false })
+                            : option.label,
+                      }))}
+                  />
+                  <MultiSelect
+                    className="lite-transaction-filter w-full sm:w-60"
+                    menuClassName="lite-transaction-multiselect"
+                    optionsClassName={
+                      isFinalDashboard ? 'dashboard-transaction-options' : undefined
+                    }
+                    size="small"
+                    placeholder={t('account.transactions.selects.source.all')}
+                    title="Sources"
+                    resetLabel="Reset"
+                    renderCount={count => `${count} sources`}
+                    value={selectedSources}
+                    onChange={values => setFilter(CONTRACT_ADDRESS_PARAM_KEY, values)}
+                    options={sourceSelectOptions
+                      .filter(option => option.value !== ALL_OPTION_VALUE)
+                      .map(option => ({
+                        value: option.value,
+                        label:
+                          typeof option.label === 'function'
+                            ? option.label({ isRenderedInButton: false })
+                            : option.label,
+                      }))}
+                  />
+                </>
+              ) : (
+                <>
+                  <Select
+                    className="flex-1 md:flex-none"
+                    size="small"
+                    variant="tertiary"
+                    placeLabelToLeft
+                    options={txTypeSelectOptions}
+                    optionClassName="px-3 h-10 scrollbar-track-cards"
+                    dropdownClassName="overflow-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey"
+                    buttonClassName="min-w-1/2 sm:min-w-45"
+                    value={selectedTxType}
+                    onChange={newValue => setTxType(newValue.toString())}
+                  />
 
-              <Select
-                className="flex-1 md:flex-none"
-                size="small"
-                variant="tertiary"
-                placeLabelToLeft
-                options={sourceSelectOptions}
-                optionClassName="px-3 h-10 scrollbar-track-cards"
-                dropdownClassName={
-                  isNewMode
-                    ? 'dashboard-source-options'
-                    : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
-                }
-                buttonClassName="m-w-1/2 sm:min-w-45"
-                value={selectedContractAddress}
-                onChange={newValue => setSelectedContractAddress(newValue.toString())}
-              />
-            </>
-          )}
-        </div>
-      )}
+                  <Select
+                    className="flex-1 md:flex-none"
+                    size="small"
+                    variant="tertiary"
+                    placeLabelToLeft
+                    options={sourceSelectOptions}
+                    optionClassName="px-3 h-10 scrollbar-track-cards"
+                    dropdownClassName={
+                      isNewMode
+                        ? 'dashboard-source-options'
+                        : 'overflow-y-auto max-h-70 scrollbar-thin scrollbar-track-cards scrollbar-thumb-grey sm:min-w-68'
+                    }
+                    buttonClassName="m-w-1/2 sm:min-w-45"
+                    value={selectedContractAddress}
+                    onChange={newValue => setSelectedContractAddress(newValue.toString())}
+                  />
+                </>
+              )}
+            </div>
+            {isFinalDashboard && (
+              <Button
+                variant="text"
+                className="dashboard-download-csv"
+                contentClassName="gap-1"
+                aria-label="Download displayed transactions as CSV"
+                title="Download this filtered page as CSV"
+                disabled={isLoading || transactions.length === 0}
+                onClick={downloadCsv}
+              >
+                Download .CSV
+                <DownloadCsvIcon aria-hidden="true" className="dashboard-static-icon" />
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
 
       {isNewPreview && !allowDemoPreview && transactionsCount > 0 && (
         <p className="dashboard-preview-label text-sm text-grey">
@@ -398,15 +453,21 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
         </p>
       )}
 
-      <TransactionsList
-        transactions={transactions}
-        isLoading={isLoading}
-        isPreview={isNewPreview}
-        glowFrame={isNewMode}
-      />
+      {isEmptyHistory ? (
+        <DashboardEmptyState message="No transactions yet" />
+      ) : (
+        <TransactionsList
+          transactions={transactions}
+          isLoading={isLoading}
+          isPreview={isNewPreview}
+          glowFrame={isNewMode}
+        />
+      )}
 
-      {!isLoading && (
+      {!isLoading && transactionsCount > 0 && (
         <Pagination
+          showSinglePage={isFinalDashboard}
+          className={isFinalDashboard ? 'dashboard-transaction-pagination' : undefined}
           initialPageIndex={FIRST_PAGE}
           itemsCount={transactionsCount}
           itemsPerPageCount={ITEMS_PER_PAGE_COUNT}

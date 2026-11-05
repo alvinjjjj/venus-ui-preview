@@ -54,7 +54,7 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
   );
 
   const rowClassName = cn(
-    'flex flex-col px-4 py-3 border border-dark-blue-hover rounded-xl w-full items-center justify-evenly group hover:bg-background-hover @2xl:border-0 @2xl:flex-row @2xl:px-6 @2xl:py-0 @2xl:h-16 @2xl:rounded-none',
+    'dashboard-transaction-row flex flex-col px-4 py-3 border border-dark-blue-hover rounded-xl w-full items-center justify-evenly group hover:bg-background-hover @2xl:border-0 @2xl:flex-row @2xl:px-6 @2xl:py-0 @2xl:h-16 @2xl:rounded-none',
     isPreview && 'transition-colors duration-200',
     className,
   );
