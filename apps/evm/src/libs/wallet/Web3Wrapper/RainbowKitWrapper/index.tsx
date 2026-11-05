@@ -24,7 +24,7 @@ const rkTheme = merge(
   }),
   {
     fonts: {
-      body: '"ProximaNova", var(--font-fallback)',
+      body: 'var(--font-proxima-nova), var(--font-fallback)',
     },
     colors: {
       closeButtonBackground: 'transparent',

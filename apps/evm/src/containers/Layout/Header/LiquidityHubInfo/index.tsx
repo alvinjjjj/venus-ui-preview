@@ -1,3 +1,4 @@
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useParams } from 'react-router';
 import type { Address } from 'viem';
 
@@ -59,12 +60,15 @@ export const LiquidityHubInfo = () => {
     liquidityHub.vhToken,
   ];
 
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
+
   return (
     <TokenInfo
       token={liquidityHub?.vhToken.underlyingToken}
       tokenPriceOracleAddress={liquidityHub?.tokenPriceOracleAddress}
       relatedTokens={relatedTokens}
       cells={cells}
+      actionVariant={isFinal ? 'secondary' : undefined}
     />
   );
 };

@@ -281,3 +281,17 @@ it('redirects the retired New selection to Final', () => {
   useGlassPreview.getState().setMode('v5');
   expect(useGlassPreview.getState().mode).toBe('lite-experiment-v2');
 });
+
+it('moves the Final Oracle reflection with the pointer', () => {
+  renderController();
+  const { getByText } = render(
+    <a className="venus-resilient-oracle-link" data-venus-button-variant="secondary" href="#oracle">
+      Oracle reflection
+    </a>,
+  );
+  const oracle = getByText('Oracle reflection');
+  fireEvent(oracle, new MouseEvent('pointermove', { bubbles: true, clientX: 20, clientY: 12 }));
+  expect(oracle.style.getPropertyValue('--glass-x')).toBe('20px');
+  fireEvent(oracle, new MouseEvent('pointermove', { bubbles: true, clientX: 90, clientY: 12 }));
+  expect(oracle.style.getPropertyValue('--glass-x')).toBe('90px');
+});

@@ -1,3 +1,4 @@
+import './claim-rewards.css';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
 
@@ -131,7 +132,8 @@ export const ClaimRewardsButton: React.FC<ClaimRewardsButtonProps> = ({
         isOpen={isModalOpen}
         handleClose={handleCloseModal}
         title={titleDom}
-        noHorizontalPadding={!isMdOrUp}
+        className="venus-claim-rewards-modal"
+        noHorizontalPadding={!isFinal && !isMdOrUp}
       >
         <ClaimRewardsContent
           isClaimingRewards={isClaimingRewards}

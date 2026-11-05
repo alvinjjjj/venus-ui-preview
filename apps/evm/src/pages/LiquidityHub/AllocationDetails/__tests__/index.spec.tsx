@@ -14,6 +14,7 @@ vi.mock('components/Tooltip', () => ({
 }));
 
 vi.mock('motion/react', () => ({
+  useReducedMotion: () => true,
   AnimatePresence: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
   motion: {
     div: ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

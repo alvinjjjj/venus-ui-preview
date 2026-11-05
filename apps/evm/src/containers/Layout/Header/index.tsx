@@ -65,9 +65,11 @@ export const Header: React.FC = () => {
       )}
       style={
         gradientAccentColor
-          ? {
+          ? ({
               backgroundColor: gradientAccentColor,
-            }
+              // Final Hub header tints its own band from this (Figma 17:14100).
+              '--hub-accent': gradientAccentColor,
+            } as React.CSSProperties)
           : undefined
       }
     >

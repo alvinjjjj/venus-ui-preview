@@ -21,14 +21,14 @@ export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, 
 
   return (
     <>
-      <Card className="pt-6 px-0 pb-2 space-y-6">
+      <Card className="venus-core-mode-card pt-6 px-0 pb-2 space-y-6">
         <div className="text-p2s px-6 flex items-center gap-1">
           <span>{title}</span>
 
           {tooltip && <InfoIcon tooltip={tooltip} />}
         </div>
 
-        <div className="px-2">
+        <div className="venus-core-mode-list px-2">
           {/* Card view */}
           <CompactTableCardList
             className="md:hidden lg:block 2xl:hidden"
@@ -48,7 +48,7 @@ export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, 
           />
 
           {/* Table  view */}
-          <div className="hidden md:block lg:hidden 2xl:block max-h-104 overflow-y-auto [&_.MuiTableContainer-root]:overflow-visible! [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10 [&_thead_th]:bg-background">
+          <div className="venus-core-mode-table hidden md:block lg:hidden 2xl:block max-h-104 overflow-y-auto [&_.MuiTableContainer-root]:overflow-visible! [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10">
             <Table
               className="border-0"
               variant="secondary"
@@ -64,7 +64,7 @@ export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, 
       </Card>
 
       {selectedEModeGroup && (
-        <Modal isOpen handleClose={closeModal}>
+        <Modal className="venus-core-mode-modal" title={title} isOpen handleClose={closeModal}>
           <EModeGroupList
             pool={pool}
             eModeGroups={[selectedEModeGroup]}

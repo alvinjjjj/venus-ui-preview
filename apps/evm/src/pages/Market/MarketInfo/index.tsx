@@ -165,6 +165,7 @@ const MarketInfo: React.FC<MarketInfoProps> = ({ asset }) => {
 
   return (
     <MarketInfoCard
+      className="venus-core-market-info"
       title={t('asset.marketInfo.title')}
       data-testid={TEST_IDS.marketInfo}
       items={stats}

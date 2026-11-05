@@ -7,7 +7,6 @@ import { scrollToElement } from 'utilities';
 
 import { Modal, Notice } from 'components';
 import { MarketTable } from 'containers/MarketTable';
-import { useBreakpointUp } from 'hooks/responsive';
 import { getDescription } from './getDescription';
 import TEST_IDS from './testIds';
 
@@ -26,7 +25,6 @@ export const AssetWarning: React.FC<AssetWarningProps> = ({
 }) => {
   const [showAssets, setShowAssets] = useState(false);
   const { Trans, t } = useTranslation();
-  const isSmOrUp = useBreakpointUp('sm');
 
   const handleShowAssets = () => setShowAssets(true);
   const handleHideAssets = () => setShowAssets(false);
@@ -63,7 +61,7 @@ export const AssetWarning: React.FC<AssetWarningProps> = ({
       <Modal
         isOpen={showAssets}
         handleClose={handleHideAssets}
-        noHorizontalPadding={isSmOrUp}
+        className="venus-core-assets-modal"
         title={t('assetWarning.modalTitle', {
           poolName: pool.name,
         })}

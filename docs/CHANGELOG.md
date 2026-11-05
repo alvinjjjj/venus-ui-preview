@@ -119,3 +119,25 @@ Append dated revisions to an existing topic. Allocate #26 onward only for new to
 - Covers chart ranges, Wallet/Collateral, Markets, Dashboard, landing and modal controls through the shared component. Groups remain on one line. Selected blue styling and existing interaction timing are retained.
 - Scoped to V5; V4, V3 and O keep their existing group layout.
 - Publication status: local only. The public site remains on the prior stable release after the earlier deployment was rolled back.
+
+
+## 2026-11-05 — Core Pool and Liquidity Hub consistency
+
+- Set Inter as the global font, loaded through Google Fonts, including RainbowKit.
+- Align Final Core Pool and Liquidity Hub headers, token controls, form cards,
+  neutral dropdown hover surfaces, and light/dark popup treatments.
+- Restore blue action-card outlines; use responsive detail-card spacing and
+  regular information values. Clean up allocation dates and history labels.
+- Standardize E-mode and Isolation tables with full-width dividers, 60px rows,
+  fixed headers and independently scrolling rows. Update their detail modals.
+- Fix Core Pool token-modal scrolling and selector focus/inset alignment;
+  align Claim rewards surfaces and mobile layout with shared modals.
+- Preserve pointer-follow lighting on totals while adding Oracle controls.
+- Scope: Final includes Pro/Core Pool; the Inter font change is global.
+- Validation: TypeScript and production build passed; 114 targeted tests passed
+  (110 in the initial run, then four allocation tests after updating motion mocks).
+  New CSS files passed Stylelint. Browser QA covered representative Core/Hub
+  flows and responsive layouts; this is not exhaustive transaction validation.
+- Follow-up: light supply-cap track contrast, icon accessibility labels,
+  keyboard navigation in token/mode lists, chart-range product consistency,
+  and the previously noted XVS Vault USD total discrepancy remain outstanding.

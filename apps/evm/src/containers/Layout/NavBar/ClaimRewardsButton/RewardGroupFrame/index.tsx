@@ -15,7 +15,7 @@ export const RewardGroupFrame: React.FC<RewardGroupFrameProps> = ({
 }: RewardGroupFrameProps) => {
   return (
     <div
-      className={cn('border-lightGrey md:rounded-2xl md:border px-4 md:py-6 bg-cards', className)}
+      className={cn('venus-reward-group-frame border-lightGrey md:rounded-2xl md:border px-4 md:py-6 bg-cards', className)}
     >
       <div className="border-lightGrey flex items-center justify-between border-b pb-4 mb-4">
         <p className="text-lg">{title}</p>

@@ -89,12 +89,21 @@ export const useColumns = ({
       label: t('liquidityHub.allocationDetails.yieldGroup.lockEndDateColumn.title'),
       selectOptionLabel: t('liquidityHub.allocationDetails.yieldGroup.lockEndDateColumn.title'),
       align: 'right',
+      // Main-site pattern: date on top (white), time below (grey) — no mid-date wraps.
       renderCell: ({ lockEndDate }) =>
-        lockEndDate
-          ? t('liquidityHub.allocationDetails.yieldGroup.lockEndDateColumn.date', {
+        lockEndDate ? (
+          <LayeredValues
+            className="liquidity-hub-lock-date text-end whitespace-nowrap"
+            topValue={t('liquidityHub.allocationDetails.yieldGroup.lockEndDateColumn.dateOnly', {
               date: lockEndDate,
-            })
-          : PLACEHOLDER_KEY,
+            })}
+            bottomValue={t('liquidityHub.allocationDetails.yieldGroup.lockEndDateColumn.time', {
+              date: lockEndDate,
+            })}
+          />
+        ) : (
+          PLACEHOLDER_KEY
+        ),
     });
   }
 

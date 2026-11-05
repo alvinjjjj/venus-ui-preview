@@ -75,6 +75,7 @@ export const TokenTextField: React.FC<TokenTextFieldProps> = forwardRef<
     return (
       <>
       <TextField
+        inputMode="decimal"
         ref={ref}
         placeholder={placeholder ?? '0.00'}
         min={0}

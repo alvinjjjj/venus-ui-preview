@@ -1,0 +1,273 @@
+/* Final · Liquidity Hub header (Figma Liquidity-Hub 17:14100).
+   One tinted band under the nav: token tint at the top fading to the page,
+   1px translucent lines top and bottom, 48px vertical rhythm. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --hub-line: rgb(255 255 255 / 8%);
+  --hub-base: rgb(24 29 39);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --hub-line: rgb(0 0 0 / 6%);
+  --hub-base: rgb(251 252 254);
+}
+
+/* Band starts below the nav (no more tint bleeding behind it). */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  background-color: transparent !important;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--hub-accent, rgb(38 161 123)) 30%, var(--hub-base)) 0%,
+    color-mix(in srgb, var(--hub-base) 30%, transparent) 100%
+  ) !important;
+  border-block: 1px solid var(--hub-line);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--hub-accent, rgb(38 161 123)) 14%, var(--hub-base)) 0%,
+    color-mix(in srgb, var(--hub-base) 30%, transparent) 100%
+  ) !important;
+}
+
+/* Rhythm: 48 top · breadcrumb · 48 · title row · 24 · stats · 48 bottom. */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child {
+  padding-top: calc(var(--spacing) * 12) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :not(:first-child) {
+  margin-top: calc(var(--spacing) * 12) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child {
+  border-bottom: 0 !important;
+  padding-bottom: calc(var(--spacing) * 12) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child > div {
+  padding-top: 0 !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child > div > :not(:first-child) {
+  margin-top: calc(var(--spacing) * 6) !important;
+}
+
+/* space-y-* sets margin-bottom on earlier siblings; the gaps above own the rhythm. */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child > div > :not(:last-child),
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :not(:last-child) {
+  margin-bottom: 0 !important;
+}
+
+/* Token identity: 40px icon, 20px symbol (Figma). */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :first-child .w-8.shrink-0 {
+  width: calc(var(--spacing) * 10) !important;
+  height: calc(var(--spacing) * 10) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :first-child .font-bold.text-lg {
+  font-size: var(--text-lg); /* 20px */
+  line-height: 1.5;
+}
+
+/* Title row: 12px gaps; Oracle pill matches the secondary buttons (8px radius, 32px). */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-resilient-oracle-link {
+  border-radius: var(--radius-lg);
+  height: calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 5);
+}
+
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child {
+    padding-top: calc(var(--spacing) * 6) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :not(:first-child) {
+    margin-top: calc(var(--spacing) * 6) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child {
+    padding-bottom: calc(var(--spacing) * 6) !important;
+  }
+}
+
+/* Stats sit directly on the band (no card behind them, either theme). */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :last-child,
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :last-child > * {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* TRY: no token tint — header sits on the starfield. Delete this block to bring the tint back. */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])),
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) {
+  background-image: none !important;
+  background-color: transparent !important;
+  border-block: 0 !important; /* no band → no band lines either */
+}
+
+/* Without the tint band the 48px rhythm floats; tighten to 24 · 24 · 24 · 32. */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child {
+  padding-top: calc(var(--spacing) * 6) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :not(:first-child) {
+  margin-top: calc(var(--spacing) * 6) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child {
+  padding-bottom: calc(var(--spacing) * 8) !important;
+}
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child { padding-top: calc(var(--spacing) * 4) !important; }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :not(:first-child) { margin-top: calc(var(--spacing) * 4) !important; }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child { padding-bottom: calc(var(--spacing) * 6) !important; }
+}
+
+/* New Figma: copy / explorer buttons and the Resilient Oracle pill are one family —
+   secondary fill, 1px quiet rim, 8px radius, 32px tall. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --hub-chip-fill: rgb(255 255 255 / 7%);
+  --hub-chip-rim: rgb(255 255 255 / 10%);
+  --hub-chip-text: rgb(170 179 202);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --hub-chip-fill: rgb(255 255 255 / 55%);
+  --hub-chip-rim: rgb(0 0 0 / 8%);
+  --hub-chip-text: rgb(75 85 99);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-resilient-oracle-link {
+  /* Material (fill, rim, sweep) comes from the native secondary button rules. */
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-lg);
+  height: calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 4);
+  gap: calc(var(--spacing) * 2);
+}
+
+/* Round 2: more air under the nav (40), stats sit closer to the cards. */
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child {
+  padding-top: calc(var(--spacing) * 10) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :last-child {
+  padding-bottom: 0 !important;
+}
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) > .relative > div > :first-child { padding-top: calc(var(--spacing) * 6) !important; }
+}
+
+/* Title row: token · copy · explorer · Oracle stay on ONE line from 640px up
+   (no jump to the far right / next line), all vertically centred on the 40px icon. */
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :first-child > div {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: auto !important;
+    column-gap: calc(var(--spacing) * 3) !important;
+  }
+}
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-resilient-oracle-link {
+    align-self: center !important;
+  }
+}
+:root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .relative > div > :last-child > div > :first-child > div > div {
+  align-items: center;
+}
+
+/* Hub detail cards (Supply info, Position unit price, Allocation details, Hub info)
+   use the Lite list card material: black 10% + 50px blur, 16% rim, soft shadow. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-glass-card.border:not(.border-0):not(.venus-glass-card *) {
+  background-color: rgb(0 0 0 / 10%) !important;
+  border-color: rgb(255 255 255 / 16%) !important;
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%) !important;
+  backdrop-filter: blur(50px) !important;
+  -webkit-backdrop-filter: blur(50px) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-glass-card.border:not(.border-0):not(.venus-glass-card *) {
+  background-color: rgb(251 252 254) !important;
+  border-color: rgb(212 221 232) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}
+
+/* Chrome ignores a child's backdrop-filter when an ancestor also has one, so the
+   chart tooltip inside these cards never frosted. Move the card's 50px blur onto
+   a ::before layer; the card itself stops being a backdrop root. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-glass-card.border:not(.border-0):not(.venus-glass-card *) {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  position: relative;
+  isolation: isolate;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-glass-card.border:not(.border-0):not(.venus-glass-card *)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  pointer-events: none;
+}
+
+/* Allocation details: source rows and the expanded market rows (e.g. Venus USDT)
+   are 60px, like every other Final list (were h-18 = 72px). */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18,
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18 > td {
+  height: calc(var(--spacing) * 15) !important;
+}
+
+/* Allocation details hover = the Lite list hover: no solid grey row, just a
+   soft band (white 4% Dark / navy 4% Light) inset 4px top & bottom. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --hub-row-hover: rgb(255 255 255 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --hub-row-hover: rgb(30 55 85 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr:hover {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18:is(:hover, :focus-visible) > td {
+  background: linear-gradient(var(--hub-row-hover), var(--hub-row-hover)) center / 100% calc(100% - 8px) no-repeat !important;
+}
+
+/* Allocation details: the expanded market box (frame + header divider) uses the
+   same faint internal line as the form rows — white 8% Dark / black 6% Light. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] :is(table table, td .venus-glass-card, td [class*='border'], thead, thead tr, th, tr.border-t, tr.border-b) {
+  border-color: var(--venus-form-line, rgb(255 255 255 / 8%)) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] :is(.venus-glass-card, hr) {
+  border-color: var(--venus-form-line, rgb(255 255 255 / 8%)) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] hr {
+  background-color: transparent !important;
+}
+
+/* Allocation details type, matching the outer lists:
+   APY column Semi Bold; row name Regular → Semi Bold on hover/focus. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18 > td:nth-child(4),
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18 > td:nth-child(4) * {
+  font-weight: var(--font-weight-semibold) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18 > td:first-child,
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18 > td:first-child * {
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18:is(:hover, :focus-visible) > td:first-child,
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] tbody tr.h-18:is(:hover, :focus-visible) > td:first-child * {
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+/* Allocation details polish */
+/* 1. Two-line values (date/time, amount/$) always hug the right edge together. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] td:is(.text-right, [align='right']) > div:has(> [data-layered-value]) {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+/* 2. Collateral icons sit on the row's centre line. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] td > .inline-flex {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) [class*='venus-liquidity-hub-section'] td img {
+  display: block;
+}

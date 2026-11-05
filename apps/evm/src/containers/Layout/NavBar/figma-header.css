@@ -48,15 +48,16 @@
   background: linear-gradient(125deg, rgb(255 255 255 / 24%), transparent 65%), color-mix(in srgb, var(--e-light-surface-panel) 80%, transparent);
 }
 
-/* Lite keeps only a faint scroll veil, without a visible bottom edge. */
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode='lite']::before {
+/* Lite and Pro keep only a faint scroll veil, without a visible bottom edge
+   (Pro used an 80% dark bar + 1px line, which read as a heavy band). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-navigation[data-figma-header][data-interface-mode]::before {
   background: color-mix(in srgb, var(--color-background-active) 20%, transparent);
   border-bottom: 0;
   backdrop-filter: blur(var(--spacing));
   -webkit-backdrop-filter: blur(var(--spacing));
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header][data-interface-mode='lite']::before {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-navigation[data-figma-header][data-interface-mode]::before {
   background: color-mix(in srgb, var(--e-light-surface-panel) 20%, transparent);
 }
 

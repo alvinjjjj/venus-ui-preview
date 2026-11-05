@@ -11,3 +11,20 @@
 :root[data-glass-variant='lite-experiment-v2']:has([data-interface-mode='lite']) #root :is(hr, thead, thead tr, th, tr.border-t, div.border-t:not(.border), div.border-b:not(.border)) {
   border-color: var(--venus-surface-line-stroke) !important;
 }
+
+/* Same translucent internal lines inside Pro form cards and popups (Final):
+   white 8% on Dark, black 6% on Light — e.g. the rows under Wallet balance. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --venus-form-line: rgb(255 255 255 / 8%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --venus-form-line: rgb(0 0 0 / 6%);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-market-form-panel, .venus-popup-panel) :is(hr, [role='separator'], .border-t, .border-b):not(.border, [data-venus-button-group], .venus-text-field) {
+  border-color: var(--venus-form-line) !important;
+}
+/* hr already paints the line with its border; a matching background stacked
+   under it doubled the alpha (~15%), making Pro lines brighter than Lite. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-market-form-panel, .venus-popup-panel) hr {
+  background-color: transparent !important;
+}

@@ -103,5 +103,5 @@ export const LiquidityHubInfo: React.FC<LiquidityHubInfoProps> = ({ liquidityHub
     },
   ];
 
-  return <MarketInfo title={t('liquidityHub.info.title')} items={stats} />;
+  return <MarketInfo className="liquidity-hub-info" title={t('liquidityHub.info.title')} items={stats} />;
 };

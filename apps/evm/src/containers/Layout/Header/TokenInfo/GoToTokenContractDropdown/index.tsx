@@ -1,5 +1,5 @@
 import { cn } from '@venusprotocol/ui';
-import { Dropdown, Icon } from 'components';
+import { type ButtonProps, Dropdown, Icon } from 'components';
 import { useTranslation } from 'libs/translations';
 import { useChainId } from 'libs/wallet';
 import type { Token, VToken, VhToken } from 'types';
@@ -9,11 +9,13 @@ import { TokenDropdownOption } from '../TokenDropdownOption';
 export interface GoToTokenContractProps
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, 'onClick'> {
   tokens: Array<Token | VToken | VhToken>;
+  toggleVariant?: ButtonProps['variant'];
 }
 
 export const GoToTokenContractDropdown: React.FC<GoToTokenContractProps> = ({
   tokens,
   className,
+  toggleVariant,
 }) => {
   const { chainId } = useChainId();
   const { t } = useTranslation();
@@ -40,7 +42,7 @@ export const GoToTokenContractDropdown: React.FC<GoToTokenContractProps> = ({
       menuTitle={t('interactive.goTo.modalTitle')}
     >
       {({ isDropdownOpen, handleToggleDropdown }) => (
-        <DropdownToggleButton handleToggleDropdown={handleToggleDropdown}>
+        <DropdownToggleButton variant={toggleVariant} handleToggleDropdown={handleToggleDropdown}>
           <Icon name="link" className={cn('h-5 w-5 border-none', isDropdownOpen && 'text-blue')} />
         </DropdownToggleButton>
       )}

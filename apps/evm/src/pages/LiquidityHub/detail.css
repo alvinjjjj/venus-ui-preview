@@ -1,0 +1,273 @@
+/* Keep full lock dates readable within the existing aligned allocation columns. */
+td:has(> .liquidity-hub-lock-date) {
+  padding-inline: calc(var(--spacing) * 2);
+  overflow: visible;
+  text-overflow: clip;
+}
+
+:is(.liquidity-hub-info, .venus-core-market-page .venus-core-market-info) [data-labeled-inline-value] > span,
+:is(.liquidity-hub-info, .venus-core-market-page .venus-core-market-info) [data-labeled-inline-value] .font-semibold {
+  font-weight: var(--font-weight-normal);
+}
+
+:is(.liquidity-hub-info, .venus-core-market-page .venus-core-market-info) > ul > li:not(:last-child):is(:hover, :focus-within) [data-labeled-inline-value] > span,
+:is(.liquidity-hub-info, .venus-core-market-page .venus-core-market-info) > ul > li:not(:last-child):is(:hover, :focus-within) [data-labeled-inline-value] .font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Match the adjacent form's internal dividers; keep the card rim separate. */
+:root[data-glass-variant='lite-experiment-v2'] :is(.liquidity-hub-info, .venus-core-market-page .venus-core-market-info) > ul > li {
+  border-color: var(--venus-form-line);
+}
+
+/* The action form keeps its blue CTA outline in both themes and all viewports. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-market-form-panel {
+  border: 1px solid var(--color-blue);
+  border-radius: var(--radius-lg);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-market-form-panel {
+  border-color: var(--color-blue);
+}
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-token-identity {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: calc(var(--spacing) * 3);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-resilient-oracle-link {
+    width: calc(var(--spacing) * 8);
+    padding-inline: 0;
+    justify-content: center;
+    align-self: center;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root header:is([data-liquidity-hub-header], :has([data-core-token-info])) .venus-resilient-oracle-label {
+    display: none;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-market-form-panel {
+    padding: calc(var(--spacing) * 4);
+  }
+}
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) :is(.liquidity-hub-supply-info, .liquidity-hub-position-info, .liquidity-hub-info) {
+    padding: calc(var(--spacing) * 4);
+  }
+}
+
+@media (max-width: 639px) {
+  /* Allocation rows already own 16px insets; avoid doubling that spacing. */
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-liquidity-hub-section-card {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-liquidity-hub-section-card > .px-6 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-liquidity-hub-section-card > .px-2 {
+    padding-inline: 0;
+  }
+}
+
+/* Mobile Light forms match the opaque white information-card surface. */
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-liquidity-hub-page, .venus-core-market-page) .venus-market-form-panel {
+    background-color: var(--e-light-surface-panel);
+  }
+}
+
+/* Core markets share Hub geometry without changing isolated pools. */
+:root[data-glass-variant='lite-experiment-v2'] #root [data-core-token-info] {
+  border-bottom: 0;
+}
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-market-card {
+    padding: calc(var(--spacing) * 4);
+  }
+}
+
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card > .px-6 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card > .px-2 {
+    padding-inline: 0;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-market-form-panel > [data-venus-tabs-variant] > [data-venus-tabs-header] {
+    overflow-x: auto;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-market-form-panel > [data-venus-tabs-variant] > [data-venus-tabs-header] > [data-venus-tabs-list] {
+    gap: calc(var(--spacing) * 2);
+    font-size: var(--text-xs);
+    min-width: max-content;
+  }
+}
+
+/* Core mode tables keep the same quiet header/divider treatment as Hub lists. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card :is(thead, tr, th, td) {
+  border-color: var(--venus-form-line);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card thead th {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card thead {
+  background: transparent !important;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--venus-form-line);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card td:first-child {
+  overflow: visible;
+  text-overflow: clip;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card td:first-child > div {
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-mode-modal .venus-glass-card {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-color: var(--venus-form-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-mode-modal :is(.border-b, .border-t, .border-lightGrey) {
+  border-color: var(--venus-form-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .token-list-dropdown {
+  background: var(--venus-surface-popup-fill);
+  border-color: var(--venus-surface-popup-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(calc(var(--spacing) * 5));
+  box-shadow: 0 24px 64px var(--venus-surface-popup-drop);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-core-market-page .token-list-dropdown {
+  background: var(--e-light-surface-panel);
+  border-color: var(--e-light-border-subtle);
+}
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-market-page .venus-text-field:has(.venus-token-selector:focus):not(:has(input:focus)) {
+  border-color: var(--venus-form-line) !important;
+}
+
+/* Match the existing 60px market rows; headers remain transparent. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card tbody :is(tr, td) {
+  height: calc(var(--spacing) * 15);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-card tbody td {
+  padding-block: 0;
+}
+/* Neutral dropdown surface, using the existing canvas and form tokens. */
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-market-page .token-list-dropdown {
+  background: var(--color-background);
+}
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-market-page .token-list-dropdown .venus-text-field {
+  background: var(--color-background) !important;
+}
+/* The modal itself supplies the rim and padding, avoiding a nested card frame. */
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-mode-modal .venus-glass-card {
+  border: 0 !important;
+  padding: 0;
+}
+
+/* Asset-row hover shares the neutral dropdown highlight, not the legacy slate fill. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-core-market-page, .venus-liquidity-hub-page) .token-list-dropdown .venus-token-list-item:hover {
+  background-color: var(--venus-surface-dropdown-item-hover);
+}
+
+/* Embedded selectors have the same outer inset as the MAX button. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is(.venus-core-market-page, .venus-liquidity-hub-page) .venus-market-form-panel .venus-text-field.venus-text-field:has(.venus-token-selector) {
+  padding-inline: calc(var(--spacing) * 2) !important;
+}
+@layer final-button-material {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-token-selector:is([aria-expanded='true'], :focus-visible) {
+    outline: 1px solid var(--color-blue) !important;
+    outline-offset: calc(var(--spacing) / 2) !important;
+  }
+}
+/* Keep the title outside the scrolling list; the popup supplies the only frame. */
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-assets-modal {
+  overflow: hidden;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-assets-modal > .venus-popup-header {
+  position: relative;
+  flex-shrink: 0;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-assets-modal > .venus-popup-header + div {
+  min-height: 0;
+  overflow-y: auto;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-core-assets-modal .venus-glass-card {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Full-width mode rows, with only the body scrolling below the transparent header. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-list {
+  padding-inline: 0;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table {
+  max-height: none;
+  overflow: visible;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table table {
+  display: block;
+  width: 100%;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead {
+  position: static;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody {
+  display: block;
+  max-height: calc(var(--spacing) * 90);
+  overflow-y: auto;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody tr:hover {
+  background: var(--venus-surface-dropdown-item-hover);
+}
+/* Reserve equal scrollbar space so header and body columns stay aligned. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table :is(thead, tbody) {
+  display: block;
+  scrollbar-gutter: stable;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead {
+  overflow-y: hidden;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Mode table (Group · Collateral · …): no empty scroll gutter when the list fits
+   (one group left a 15px gap at the right and cut the hover short); 40px header
+   with no blank space; Lite hover band. A long list still scrolls. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table :is(thead, tbody) {
+  scrollbar-gutter: auto;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table thead tr {
+  height: calc(var(--spacing) * 10) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table th {
+  height: calc(var(--spacing) * 10);
+  padding-block: 0;
+  vertical-align: middle;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody tr:hover {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .venus-core-mode-table tbody tr:is(:hover, :focus-visible) > td {
+  background: linear-gradient(rgb(255 255 255 / 4%), rgb(255 255 255 / 4%)) center / 100% calc(100% - 8px) no-repeat;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-core-market-page .venus-core-mode-table tbody tr:is(:hover, :focus-visible) > td {
+  background-image: linear-gradient(rgb(30 55 85 / 4%), rgb(30 55 85 / 4%));
+}

@@ -1014,6 +1014,8 @@
         },
         "lockEndDateColumn": {
           "date": "{{date, textualWithTime}}",
+          "dateOnly": "{{date, textual}}",
+          "time": "{{date, time}}",
           "title": "Lock end date"
         },
         "nameColumn": {

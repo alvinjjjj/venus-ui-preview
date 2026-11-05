@@ -27,6 +27,9 @@ export interface TokenInfoProps {
     tokenBorrowPriceCents: BigNumber;
   };
   cells: CellProps[];
+  /** Hub header (Final): neutral secondary buttons, per Figma 17:14100. */
+  actionVariant?: 'primary' | 'secondary';
+  coreMarket?: boolean;
 }
 
 export const TokenInfo: React.FC<TokenInfoProps> = ({
@@ -35,6 +38,8 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({
   relatedTokens = [],
   protectionModeIndicator,
   tokenPriceOracleAddress,
+  actionVariant,
+  coreMarket,
 }) => {
   const { t } = useTranslation();
 
@@ -51,11 +56,14 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({
     });
 
   return (
-    <div className="pb-6 sm:pb-5 md:pb-12 border-b-dark-blue-hover border-b">
+    <div
+      data-core-token-info={coreMarket || undefined}
+      className="pb-6 sm:pb-5 md:pb-12 border-b-dark-blue-hover border-b"
+    >
       <Wrapper className="space-y-6 pt-6 sm:space-y-8">
         <div className="flex items-center min-h-8">
           {token ? (
-            <div className="flex flex-col gap-y-3 sm:items-center sm:flex-row sm:justify-between sm:w-full md:w-auto md:gap-x-3">
+            <div className="venus-token-identity flex flex-col gap-y-3 sm:items-center sm:flex-row sm:justify-between sm:w-full md:w-auto md:gap-x-3">
               <div className="flex items-center gap-3">
                 <TokenIcon token={token} className="h-full w-8 shrink-0" />
 
@@ -66,18 +74,27 @@ export const TokenInfo: React.FC<TokenInfoProps> = ({
                 <AddTokenToWalletDropdown
                   isUserConnected={isUserConnected}
                   tokens={relatedTokens}
+                  toggleVariant={actionVariant}
                 />
 
-                <GoToTokenContractDropdown tokens={relatedTokens} />
+                <GoToTokenContractDropdown tokens={relatedTokens} toggleVariant={actionVariant} />
               </div>
 
               {oracleContractHref && (
                 <Link
                   noStyle
                   href={oracleContractHref}
+                  aria-label={t('layout.header.resilientOracle')}
+                  title={t('layout.header.resilientOracle')}
+                  // Final Hub: Oracle joins the secondary button family (same material + light sweep).
+                  {...(actionVariant === 'secondary'
+                    ? { 'data-venus-button-variant': 'secondary' }
+                    : {})}
                   className="venus-resilient-oracle-link inline-flex items-center gap-x-2 self-start shrink-0 rounded-full bg-background/40 px-5 h-8 text-light-grey text-sm transition-colors duration-250 hover:bg-background"
                 >
-                  <span>{t('layout.header.resilientOracle')}</span>
+                  <span className="venus-resilient-oracle-label">
+                    {t('layout.header.resilientOracle')}
+                  </span>
 
                   <Icon name="resilientOracle" className="h-5 w-5 text-inherit" />
                 </Link>

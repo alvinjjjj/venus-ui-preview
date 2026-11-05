@@ -1,3 +1,4 @@
+import './detail.css';
 import { useParams } from 'react-router';
 import type { Address } from 'viem';
 

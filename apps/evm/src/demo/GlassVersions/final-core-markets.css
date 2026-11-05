@@ -1,0 +1,317 @@
+/* Final · Venus Core markets page — same list recipe as the Liquidity Hub list:
+   Lite card material, 40px header, 60px rows, 24px inset (12px below 1280),
+   translucent dividers, soft hover band, Regular→Semi Bold name, Semi Bold APYs. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --core-line: rgb(255 255 255 / 8%);
+  --core-hover: rgb(255 255 255 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --core-line: rgb(0 0 0 / 6%);
+  --core-hover: rgb(30 55 85 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs > div > .venus-glass-card:has(table) {
+  border: 1px solid rgb(255 255 255 / 16%) !important;
+  background-color: rgb(0 0 0 / 10%) !important;
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%) !important;
+  position: relative;
+  isolation: isolate;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs > div > .venus-glass-card:has(table)::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px); pointer-events: none;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-markets-page .venus-markets-tabs > div > .venus-glass-card:has(table) {
+  border-color: rgb(212 221 232) !important;
+  background-color: rgb(251 252 254) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table :is(thead, thead tr, th, tbody tr) {
+  border-color: var(--core-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table :is(thead, thead tr, th) {
+  height: calc(var(--spacing) * 10);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table th { padding-block: 0; }
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr.h-18 {
+  height: calc(var(--spacing) * 15);
+}
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table :is(th, td) {
+    padding-inline: calc(var(--spacing) * 3);
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1280px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table :is(th, td) {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr:hover {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr.h-18:is(:hover, :focus-visible) > td {
+  background: linear-gradient(var(--core-hover), var(--core-hover)) center / 100% calc(100% - 8px) no-repeat !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr.h-18 > td:first-child :is(span, p) {
+  font-weight: var(--font-weight-normal) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr.h-18:is(:hover, :focus-visible) > td:first-child :is(span, p) {
+  font-weight: var(--font-weight-semibold) !important;
+}
+/* Supply APY (3rd) and Borrow APY (5th) */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table tbody tr.h-18 > td:is(:nth-child(3), :nth-child(5)) {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Venus Core header = Liquidity Hub header (pages/LiquidityHubs/pro.css). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header h1 {
+  font-size: var(--text-h5);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--text-3xl--line-height);
+  letter-spacing: normal;
+  text-wrap: balance;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header h1 + p {
+  margin-top: var(--spacing);
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  color: var(--color-light-grey);
+  text-wrap: pretty;
+}
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header h1 { font-size: var(--text-h4); }
+}
+@media (min-width: 1024px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header h1 { font-size: var(--text-h3); }
+}
+@media (forced-colors: none) {
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-final-header h1 {
+    background-image: linear-gradient(180deg, #d9edff 0%, #99c8ff 50%, #598eff 100%);
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-core-final-header h1 {
+    background-image: linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+  }
+}
+@media (forced-colors: active) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header h1 {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Controls row: search + category dropdown share one size (40px, 8px radius),
+   same as the Liquidity Hub list search. */
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs .venus-text-field:has(input[placeholder*='Search']) {
+    height: calc(var(--spacing) * 10) !important;
+    width: calc(var(--spacing) * 60) !important;
+    padding-block: 0 !important;
+    padding-inline: calc(var(--spacing) * 3) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs :is([data-select-trigger], .venus-multiselect-trigger, button:has(> * ~ svg)):not([data-venus-button-group] *) {
+    height: calc(var(--spacing) * 10) !important;
+  }
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs .venus-text-field:has(input[placeholder*='Search']) {
+  border-radius: var(--radius-lg) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs .venus-text-field:has(input[placeholder*='Search']) input {
+  font-size: var(--text-sm);
+}
+
+/* Markets / E-mode / Isolation → table card: 12px (was 24px). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs {
+  row-gap: calc(var(--spacing) * 3) !important;
+}
+/* The search wrapper kept its old 300px slot (field is 240px), leaving a 72px gap
+   to All Categories. Let it hug the field so the row's 12px gap is the only gap. */
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs div:has(> .venus-text-field input[placeholder*='Search']) {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+/* ───────── RWD fixes (Venus Core markets + Liquidity Hub list) ───────── */
+
+/* Mobile (<768): the list wrapper is borderless in the original layout — keep it
+   that way so search/filters don't sit flush against a card rim. */
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs > div > .venus-glass-card:has(table) {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-markets-tabs > div > .venus-glass-card:has(table)::before {
+    content: none;
+  }
+}
+
+/* Every control in the toolbar is 40px tall at every width (search, category,
+   sort, Markets dropdown on mobile). */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-text-field:has(input[placeholder*='Search']) {
+  height: calc(var(--spacing) * 10) !important;
+  padding-block: 0 !important;
+  padding-inline: calc(var(--spacing) * 3) !important;
+  border-radius: var(--radius-lg) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-text-field:has(input[placeholder*='Search']) input {
+  font-size: var(--text-sm);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) :is([data-select-trigger], .venus-multiselect-trigger) {
+  height: calc(var(--spacing) * 10) !important;
+  min-height: 0 !important;
+  font-size: var(--text-sm) !important;
+}
+
+/* Remove the redundant "Sort by" block (640–767px); columns already sort. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .block.md\:hidden > .w-56:has(.text-grey.font-semibold) {
+  display: none !important;
+}
+
+/* Toolbar toggles wrap instead of running past the card edge (768–1279). */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-table-controls :is(.flex, [class*='@2xl:flex-row']) {
+  flex-wrap: wrap;
+  row-gap: calc(var(--spacing) * 3);
+}
+
+/* Header labels never overlap: keep them on one line; if the 7 columns don't fit
+   (≈1024–1279), the table scrolls sideways inside the card instead. */
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table {
+    width: 100%;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table th,
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page table th * {
+    white-space: nowrap;
+  }
+}
+
+/* Mobile market cards: hover is the neutral grey band, never blue. */
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) a.venus-glass-card:is(:hover, :focus-visible),
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-glass-card[class*='hover:bg-cards']:is(:hover, :focus-visible) {
+  background-color: rgb(255 255 255 / 4%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-markets-page, .liquidity-hubs-page) a.venus-glass-card:is(:hover, :focus-visible),
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-glass-card[class*='hover:bg-cards']:is(:hover, :focus-visible) {
+  background-color: rgb(30 55 85 / 4%) !important;
+}
+
+/* ───────── Mobile round 2 ───────── */
+@media (max-width: 639px) {
+  /* 1. Header stats: two only (Total supply · Available liquidity); hide Assets. */
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-core-final-header > div:last-child > div:nth-child(3) {
+    display: none;
+  }
+}
+
+/* 2. Category sheet: pull the title up under the close button (was a 38px gap). */
+:root[data-glass-variant='lite-experiment-v2'] .venus-popup-panel:has(.venus-multiselect-title) .venus-popup-header {
+  padding-bottom: 0 !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-popup-panel:has(.venus-multiselect-title) .venus-multiselect-title {
+  padding-top: 0 !important;
+  min-height: calc(var(--spacing) * 10) !important;
+}
+
+/* 3. Mobile market cards: frosted card, not see-through (stars were showing through). */
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-glass-card .venus-glass-card,
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) a.venus-glass-card {
+    background-color: rgb(24 29 39 / 72%) !important;
+    border-color: rgb(255 255 255 / 12%) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-markets-page, .liquidity-hubs-page) .venus-glass-card .venus-glass-card,
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-markets-page, .liquidity-hubs-page) a.venus-glass-card {
+    background-color: rgb(251 252 254 / 90%) !important;
+    border-color: rgb(212 221 232) !important;
+  }
+  /* hover band sits on top of the frosted fill */
+  :root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-markets-page, .liquidity-hubs-page) a.venus-glass-card:is(:hover, :focus-visible) {
+    background-image: linear-gradient(rgb(255 255 255 / 4%), rgb(255 255 255 / 4%)) !important;
+  }
+}
+
+/* Mobile starfield (all Final pages): the sky is a static SVG of ~2,200 stars
+   (no animation on mobile). On a 375px screen that reads busy behind the cards,
+   so dim it and draw every other star — half the nodes to paint, too. */
+@media (max-width: 767px) {
+  :root[data-glass-variant='lite-experiment-v2'] .lite-ghost--stars {
+    opacity: .45 !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] .lite-ghost--stars .lite-ghost__still circle:nth-child(2n) {
+    display: none;
+  }
+}
+
+/* ───────── E-mode & Isolation mode (.venus-mode-panel) ───────── */
+/* Outer panel = Lite card material (from sm, where it has a rim). */
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel {
+    border-color: rgb(255 255 255 / 16%) !important;
+    background-color: rgb(0 0 0 / 10%);
+    box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%);
+    position: relative;
+    isolation: isolate;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px);
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-markets-page .venus-mode-panel {
+    border-color: rgb(212 221 232) !important;
+    background-color: rgb(251 252 254);
+    box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%);
+  }
+}
+/* Group cards inside the panel (Stablecoins / BTC / LINK…): one quiet inner box,
+   no second glass layer — same treatment as the Hub's expanded market box. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel .venus-glass-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: var(--core-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel .venus-glass-card::before {
+  content: none !important;
+}
+/* Info banner: neutral (was navy fill + navy rim). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel > .relative.rounded-lg.border:first-child,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel .relative.bg-background.rounded-lg.border {
+  background-color: rgb(255 255 255 / 4%) !important;
+  border-color: var(--core-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-markets-page .venus-mode-panel .relative.bg-background.rounded-lg.border {
+  background-color: rgb(30 55 85 / 4%) !important;
+}
+/* Search field rim = the other toolbars (white 8%), not the old navy. */
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-markets-page .venus-mode-panel .venus-text-field {
+  border-color: rgb(255 255 255 / 12%) !important;
+}
+/* Mobile (<640): the panel has no rim/fill there, so each group card must carry
+   the frosted card itself (else stars show through). */
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel .venus-glass-card {
+    background-color: rgb(24 29 39 / 72%) !important;
+    border-color: rgb(255 255 255 / 12%) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-markets-page .venus-mode-panel .venus-glass-card {
+    background-color: rgb(251 252 254 / 90%) !important;
+    border-color: rgb(212 221 232) !important;
+  }
+}
+/* Mode panel rhythm: banner → search 12px, search → first group 12px (groups keep 24). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel > :is(.relative.rounded-lg.border, .venus-table-controls) {
+  margin-bottom: calc(var(--spacing) * 3) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-markets-page .venus-mode-panel > :is(.venus-table-controls, .relative.rounded-lg.border) + * {
+  margin-top: 0 !important;
+}

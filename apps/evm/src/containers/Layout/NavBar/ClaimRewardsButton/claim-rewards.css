@@ -1,0 +1,13 @@
+/* Final rewards use the shared modal material, including narrow Pro layouts. */
+:root[data-glass-variant='lite-experiment-v2'] .venus-claim-rewards-modal .venus-reward-group-frame {
+  background: transparent;
+  border: 1px solid var(--venus-form-line);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 4);
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-claim-rewards-modal .venus-reward-group-frame > .border-b {
+  border-color: var(--venus-form-line);
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-claim-rewards-modal .venus-popup-header img {
+  flex-shrink: 0;
+}

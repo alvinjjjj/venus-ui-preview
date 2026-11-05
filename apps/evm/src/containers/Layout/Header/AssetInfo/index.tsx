@@ -1,3 +1,4 @@
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import BigNumber from 'bignumber.js';
 import { useParams } from 'react-router';
 import type { Address } from 'viem';
@@ -18,6 +19,7 @@ import { TokenInfo } from '../TokenInfo';
 import { UtilizationRate } from './UtilizationRate';
 
 export const AssetInfo = () => {
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const { poolComptrollerAddress = NULL_ADDRESS, vTokenAddress = NULL_ADDRESS } = useParams<{
     poolComptrollerAddress: Address;
     vTokenAddress: Address;
@@ -158,6 +160,8 @@ export const AssetInfo = () => {
       relatedTokens={relatedTokens}
       protectionModeIndicator={protectionModeIndicator}
       cells={cells}
+      coreMarket={!!pool && !pool.isIsolated}
+      actionVariant={isFinal && pool && !pool.isIsolated ? 'secondary' : undefined}
     />
   );
 };

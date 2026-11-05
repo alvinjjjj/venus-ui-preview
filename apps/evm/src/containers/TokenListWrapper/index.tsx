@@ -175,7 +175,7 @@ export const TokenListWrapper: React.FC<TokenListWrapperProps> = ({
               <div className="max-h-50 overflow-y-auto">
                 {filteredTokenBalances.map(tokenBalance => (
                   <div
-                    className="cursor-pointer flex items-center justify-between h-12 px-3 hover:bg-lightGrey"
+                    className="venus-token-list-item cursor-pointer flex items-center justify-between h-12 px-3 hover:bg-lightGrey"
                     onClick={() => handleTokenClick(tokenBalance.token)}
                     key={`select-token-text-field-item-${tokenBalance.token.address}`}
                     data-testid={

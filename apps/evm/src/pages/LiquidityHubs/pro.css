@@ -90,3 +90,123 @@
     background-image: linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
   }
 }
+
+/* Final Hub table follows the Lite list recipe (FE feat/lite-mode):
+   40px header, 60px rows, 24px cell inset, translucent dividers, soft row hover. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --lh-line: rgb(255 255 255 / 8%);
+  --lh-hover: rgb(255 255 255 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --lh-line: rgb(0 0 0 / 6%);
+  --lh-hover: rgb(30 55 85 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table {
+  border-color: var(--venus-border-card-default);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table :is(thead, thead tr, th, tbody tr) {
+  border-color: var(--lh-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table :is(thead, thead tr) {
+  height: calc(var(--spacing) * 10);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table th {
+  height: calc(var(--spacing) * 10);
+  padding-block: 0;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr {
+  height: calc(var(--spacing) * 15);
+}
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table :is(th, td) {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table .venus-table-controls {
+    padding-inline: calc(var(--spacing) * 2);
+  }
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr:hover {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr > td {
+  transition: background-color 150ms ease;
+  background-clip: content-box;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr:is(:hover, :focus-visible) > td {
+  background: linear-gradient(var(--lh-hover), var(--lh-hover)) center / 100% calc(100% - 8px) no-repeat;
+}
+/* Asset name: Regular at rest, Semi Bold on hover/focus (Lite list rule). */
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr > td:first-child :is(span, p) {
+  font-weight: var(--font-weight-normal) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr:is(:hover, :focus-visible) > td:first-child :is(span, p) {
+  font-weight: var(--font-weight-semibold) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody tr > td { transition: none; }
+}
+/* Supply APY reads as the key figure, like Lite's APY column. */
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table tbody td:nth-child(4) {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Hub subtitle one step down (lg 20px → base 16px). */
+:root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-pro .liquidity-hubs-stat-header h1 + p {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+}
+
+/* Search field matches the Lite list control: 40px tall, 240px wide. */
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table .venus-text-field {
+    height: calc(var(--spacing) * 10);
+    width: calc(var(--spacing) * 60);
+    padding-block: 0;
+    padding-inline: calc(var(--spacing) * 3);
+  }
+}
+
+/* Exposure tooltip one step tighter: 48px → 40px rows, 16px → 12px inset. */
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content table :is(thead, thead tr) {
+  height: calc(var(--spacing) * 10);
+}
+/* Rows follow the Final dropdown option height (48px). */
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content table tbody tr {
+  height: calc(var(--spacing) * 12);
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content table :is(th, td) {
+  padding-inline: calc(var(--spacing) * 3);
+  padding-block: 0;
+}
+/* Same 4px inner inset as the Final dropdown panel. */
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content > .venus-glass-card {
+  padding: var(--spacing);
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content:has(table) {
+  width: max-content;
+  min-width: calc(var(--spacing) * 50);
+}
+/* Exposure tooltip lists only a few protocols, so everything is visible:
+   no scroll area, no scrollbar. */
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content :is(.overflow-auto, .venus-glass-card) {
+  overflow: visible !important;
+  max-height: none !important;
+  scrollbar-width: none;
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content *::-webkit-scrollbar { display: none; }
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content:has(table) {
+  overflow: visible !important;
+  scrollbar-width: none;
+}
+:root[data-glass-variant='lite-experiment-v2']:has(.liquidity-hubs-page) .venus-tooltip-content:has(table)::-webkit-scrollbar { display: none; }
+
+/* QC 768–1279: five columns + row menu don't fit at a 24px inset (table scrolled
+   sideways and values wrapped). Use 12px there; 24px returns from 1280px. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table :is(th, td) {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .liquidity-hubs-page .liquidity-hubs-table td {
+    white-space: nowrap;
+  }
+}

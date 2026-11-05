@@ -57,8 +57,10 @@ export const SelectTokenTextField: React.FC<SelectTokenTextFieldProps> = ({
             tokenBalances.length > 1 ? (
               <TertiaryButton
                 onClick={handleButtonClick}
+                aria-expanded={isTokenListShown}
+                aria-label={`Select asset: ${selectedToken.symbol}`}
                 className={cn(
-                  'pl-2 pr-1 max-w-34 min-w-0',
+                  'venus-token-selector pl-2 pr-1 max-w-34 min-w-0',
                   isTokenListShown && 'relative z-10 border-blue hover:border-blue',
                 )}
                 contentClassName="min-w-0"

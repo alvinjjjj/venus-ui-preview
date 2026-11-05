@@ -10,12 +10,14 @@ import { TokenDropdownOption } from '../TokenDropdownOption';
 export interface AddTokenToWalletDropdownProps extends Omit<ButtonProps, 'onClick' | 'variant'> {
   isUserConnected: boolean;
   tokens: Array<Token | VToken | VhToken>;
+  toggleVariant?: ButtonProps['variant'];
 }
 
 export const AddTokenToWalletDropdown: React.FC<AddTokenToWalletDropdownProps> = ({
   className,
   isUserConnected,
   tokens,
+  toggleVariant,
 }) => {
   const { addTokenToWallet } = useAddTokenToWallet();
   const { t } = useTranslation();
@@ -57,7 +59,7 @@ export const AddTokenToWalletDropdown: React.FC<AddTokenToWalletDropdownProps> =
       }
     >
       {({ isDropdownOpen, handleToggleDropdown }) => (
-        <DropdownToggleButton handleToggleDropdown={handleToggleDropdown}>
+        <DropdownToggleButton variant={toggleVariant} handleToggleDropdown={handleToggleDropdown}>
           <Icon
             name={isUserConnected ? 'wallet' : 'copy'}
             className={cn(

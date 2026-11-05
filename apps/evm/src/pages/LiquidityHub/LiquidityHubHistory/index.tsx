@@ -89,6 +89,7 @@ export const LiquidityHubHistory: React.FC<LiquidityHubHistoryProps> = ({ liquid
   return (
     <div className="space-y-6">
       <MarketHistoryCard
+        className="liquidity-hub-supply-info"
         title={t('market.supplyInfo.title')}
         cells={[
           {
@@ -124,6 +125,7 @@ export const LiquidityHubHistory: React.FC<LiquidityHubHistoryProps> = ({ liquid
       />
 
       <MarketCard
+        className="liquidity-hub-position-info"
         title={t('market.positionUnitPrice', { vhTokenSymbol: liquidityHub.vhToken.symbol })}
         topContent={<p className="text-h6 -mt-3">{readableUnitPrice}</p>}
         rightContent={

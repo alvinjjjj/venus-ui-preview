@@ -22,4 +22,23 @@
   :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] *::-webkit-scrollbar-thumb:hover {
     background: rgb(0 0 0 / 22%) !important;
   }
+  /* Dark mirrors the Light recipe (same width / radius, white at 16%) so both
+     themes show the same quiet thumb instead of the browser's bright default. */
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']),
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) * {
+    scrollbar-color: rgb(255 255 255 / 16%) transparent !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) *::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) *::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 16%) !important;
+    border-radius: var(--radius-lg);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) *::-webkit-scrollbar-thumb:hover {
+    background: rgb(255 255 255 / 26%) !important;
+  }
 }

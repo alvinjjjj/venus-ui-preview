@@ -28,6 +28,10 @@ import './form-segments.css';
 import './lite-neutral-surfaces.css';
 import './lite-mobile.css';
 import './lite-form-spacing.css';
+import './final-pro-forms.css';
+import './final-hub-header.css';
+import './final-input.css';
+import './final-core-markets.css';
 import './final-button-material.css';
 import './final-scrollbars.css';
 import {
@@ -142,7 +146,7 @@ export const GlassVersions = () => {
       if (!(event.target instanceof Element)) return;
       const button = event.target.closest<HTMLElement>(
         finalControls
-          ? '[data-venus-button-material], [data-select-trigger], .venus-multiselect-trigger'
+          ? `[data-venus-button-material], [data-select-trigger], .venus-multiselect-trigger, .venus-resilient-oracle-link[data-venus-button-variant], ${TOTAL_LIGHT_SELECTOR}`
           : `[data-venus-button-variant="primary"], [data-venus-button-variant="secondary"], .venus-text-field [data-venus-button-variant], .lite-e3-card [data-select-trigger], .lite-e3-card .lite-e3-market-option, ${TOTAL_LIGHT_SELECTOR}${
               icyLite ? `, ${LITE_ICE_POINTER_SELECTOR}` : ''
             }`,
