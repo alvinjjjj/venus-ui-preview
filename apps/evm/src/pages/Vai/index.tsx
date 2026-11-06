@@ -1,6 +1,7 @@
 import { Card, Notice, Page, Tabs } from 'components';
 import { VENUS_DOC_URL } from 'constants/production';
 import { Link } from 'containers/Link';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { Borrow } from './Borrow';
 import { Repay } from './Repay';
@@ -9,6 +10,8 @@ const VAI_DOC_URL = `${VENUS_DOC_URL}/guides/borrowing-vai`;
 
 const Vai: React.FC = () => {
   const { t, Trans } = useTranslation();
+  // Final rule: single-level Borrow / Repay form → underline tabs.
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
 
   const tabsContent = [
     { id: 'borrow', title: t('vai.borrow.tabTitle'), content: <Borrow /> },
@@ -31,7 +34,11 @@ const Vai: React.FC = () => {
         />
 
         <Card>
-          <Tabs tabs={tabsContent} navType="searchParam" />
+          <Tabs
+            tabs={tabsContent}
+            navType="searchParam"
+            variant={isFinal ? 'secondary' : undefined}
+          />
         </Card>
       </div>
     </Page>
