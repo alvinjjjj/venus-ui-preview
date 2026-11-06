@@ -269,3 +269,26 @@
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .venus-glass-card.min-h-39::before {
   background: rgb(255 255 255);
 }
+
+/* Narrow layouts: "Prime rewards / Ranking" tabs at 16px (form-tab size) with
+   20px icons; selected = Semi Bold + blue underline, no focus box on click. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page [data-venus-tabs-variant] > :first-child button {
+  font-size: var(--text-base) !important;
+  line-height: var(--text-base--line-height) !important;
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page [data-venus-tabs-variant] > :first-child button :is(span, p) {
+  font-size: inherit !important;
+  font-weight: inherit !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page [data-venus-tabs-variant] > :first-child button svg {
+  width: calc(var(--spacing) * 5) !important;
+  height: calc(var(--spacing) * 5) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page [data-venus-tabs-variant] > :first-child button:is([aria-selected='true'], [aria-pressed='true'], [data-active='true'], .text-white) {
+  font-weight: var(--font-weight-semibold);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page [data-venus-tabs-variant] > :first-child button:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
