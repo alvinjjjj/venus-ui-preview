@@ -250,3 +250,8 @@
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] > span {
   width: 100%;
 }
+
+/* Light mode: no blue hero glow behind the title. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-prime-hero-glow {
+  display: none !important;
+}
