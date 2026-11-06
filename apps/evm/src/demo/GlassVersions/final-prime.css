@@ -255,3 +255,17 @@
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-prime-hero-glow {
   display: none !important;
 }
+
+/* Light mode: the three summary cards (Total / Your rewards / Your rank) use the
+   same white surface as the End of cycle card. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .bg-background-active {
+  background-color: rgb(255 255 255) !important;
+  border-color: rgb(212 221 232) !important;
+  box-shadow: 0 8px 24px -8px rgb(31 53 83 / 14%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .bg-background-active::before {
+  content: none;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .venus-glass-card.min-h-39::before {
+  background: rgb(255 255 255);
+}
