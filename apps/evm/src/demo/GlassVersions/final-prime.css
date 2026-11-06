@@ -293,13 +293,3 @@
   box-shadow: none !important;
 }
 
-/* Pagination = Dashboard transactions pagination: 14px light-grey count, 12px above. */
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .my-5.flex.flex-wrap:has(> p) {
-  margin-block: calc(var(--spacing) * 3) !important;
-  color: var(--color-light-grey);
-}
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .my-5.flex.flex-wrap:has(> p) > p {
-  font-size: var(--text-sm) !important;
-  line-height: 1.5;
-  color: var(--color-light-grey);
-}

@@ -24,3 +24,15 @@
 :root[data-glass-variant='lite-experiment-v2'] #root .venus-vault-card:is(:hover, :focus-visible) .venus-vault-card__footer * {
   font-weight: var(--font-weight-semibold);
 }
+
+/* Final pagination (all pages): same as the Dashboard transactions list —
+   14px light-grey "Items x - y out of z", 12px above and below. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-pagination {
+  margin-block: calc(var(--spacing) * 3);
+  color: var(--color-light-grey);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-pagination > p {
+  font-size: var(--text-sm) !important;
+  line-height: 1.5;
+  color: var(--color-light-grey);
+}

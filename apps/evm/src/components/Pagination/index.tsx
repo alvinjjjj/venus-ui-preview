@@ -100,6 +100,7 @@ export const Pagination = ({
   return (
     <div
       className={cn(
+        'venus-pagination',
         'my-5 flex flex-wrap items-center justify-center sm:flex-nowrap sm:justify-end',
         className,
       )}
