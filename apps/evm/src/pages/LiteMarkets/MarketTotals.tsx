@@ -42,7 +42,9 @@ export const MarketTotals = ({
       ).map(([label, field]) => (
         <div key={field} className={inline ? 'lite-e2-market-total' : undefined}>
           <p className="mb-3 text-light-grey text-sm">{label}</p>
-          <p className="text-3xl xl:text-4xl font-normal tabular-nums">
+          <p
+            className={`${inline ? 'text-3xl xl:text-4xl' : 'text-xl xl:text-2xl'} font-normal tabular-nums`}
+          >
             {ready ? (
               inline ? (
                 <SimulatedMarketTotal
@@ -56,7 +58,7 @@ export const MarketTotals = ({
               ) : (
                 formatCentsToReadableValue({
                   value: rows.reduce((sum, row) => sum.plus(row[field]), new BigNumber(0)),
-                })
+                }).replace(/(\.\d)\d+(?=[KMBT]?$)/, '$1')
               )
             ) : (
               '—'

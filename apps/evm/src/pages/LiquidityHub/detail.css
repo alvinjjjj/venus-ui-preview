@@ -131,14 +131,14 @@ td:has(> .liquidity-hub-lock-date) {
 :root[data-glass-variant='lite-experiment-v2'] .venus-core-mode-modal :is(.border-b, .border-t, .border-lightGrey) {
   border-color: var(--venus-form-line) !important;
 }
-:root[data-glass-variant='lite-experiment-v2'] #root .venus-core-market-page .token-list-dropdown {
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-core-market-page, .venus-spoke-market-page) .token-list-dropdown {
   background: var(--venus-surface-popup-fill);
   border-color: var(--venus-surface-popup-border);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(calc(var(--spacing) * 5));
   box-shadow: 0 24px 64px var(--venus-surface-popup-drop);
 }
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-core-market-page .token-list-dropdown {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root :is(.venus-core-market-page, .venus-spoke-market-page) .token-list-dropdown {
   background: var(--e-light-surface-panel);
   border-color: var(--e-light-border-subtle);
 }
@@ -154,10 +154,10 @@ td:has(> .liquidity-hub-lock-date) {
   padding-block: 0;
 }
 /* Neutral dropdown surface, using the existing canvas and form tokens. */
-:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-market-page .token-list-dropdown {
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root :is(.venus-core-market-page, .venus-spoke-market-page) .token-list-dropdown {
   background: var(--color-background);
 }
-:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-core-market-page .token-list-dropdown .venus-text-field {
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root :is(.venus-core-market-page, .venus-spoke-market-page) .token-list-dropdown .venus-text-field {
   background: var(--color-background) !important;
 }
 /* The modal itself supplies the rim and padding, avoiding a nested card frame. */
@@ -167,7 +167,7 @@ td:has(> .liquidity-hub-lock-date) {
 }
 
 /* Asset-row hover shares the neutral dropdown highlight, not the legacy slate fill. */
-:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-core-market-page, .venus-liquidity-hub-page) .token-list-dropdown .venus-token-list-item:hover {
+:root[data-glass-variant='lite-experiment-v2'] #root :is(.venus-core-market-page, .venus-liquidity-hub-page, .venus-spoke-market-page) .token-list-dropdown .venus-token-list-item:hover {
   background-color: var(--venus-surface-dropdown-item-hover);
 }
 

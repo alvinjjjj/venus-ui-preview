@@ -51,8 +51,8 @@ export const VaultList: FC<VaultListProps> = ({ vaults, className, ...props }) =
   });
 
   return (
-    <div className="flex flex-col">
-      <div className="relative pb-6">
+    <div className="venus-vaults-page flex flex-col">
+      <div className="venus-vaults-header relative pb-6">
         <div className="mb-3">
           <h1 className="venus-page-title text-p1s sm:text-h6">{t('vault.header')}</h1>
           <p className="venus-page-subtitle">{t('vault.description')}</p>

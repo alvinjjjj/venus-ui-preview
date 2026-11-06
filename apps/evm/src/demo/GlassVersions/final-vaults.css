@@ -1,0 +1,142 @@
+/* Final · Vaults list — today's recipe (Hub / Core / Spoke):
+   gradient hero, 40px controls with solid-black search, Lite card material,
+   faint inner lines, 12px rhythm, neutral hover, footer as a divider row. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --vault-line: rgb(255 255 255 / 8%);
+  --vault-hover: rgb(255 255 255 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --vault-line: rgb(0 0 0 / 6%);
+  --vault-hover: rgb(30 55 85 / 4%);
+}
+
+/* Hero */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header h1 {
+  font-size: var(--text-h5);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--text-3xl--line-height);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header h1 + p {
+  margin-top: var(--spacing);
+  font-size: var(--text-base);
+  color: var(--color-light-grey);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header > .mb-3 { margin-bottom: calc(var(--spacing) * 10); }
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header h1 { font-size: var(--text-h4); }
+}
+@media (min-width: 1024px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header h1 { font-size: var(--text-h3); }
+}
+@media (forced-colors: none) {
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-vaults-header h1 {
+    background-image: linear-gradient(180deg, #d9edff 0%, #99c8ff 50%, #598eff 100%);
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-header h1 {
+    background-image: linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+  }
+}
+@media (forced-colors: active) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header h1 {
+    background-image: none; -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Controls: 40px, 8px radius; search solid black like the Spoke search */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header .venus-text-field {
+  height: calc(var(--spacing) * 10) !important;
+  padding-block: 0 !important;
+  padding-inline: calc(var(--spacing) * 3) !important;
+  border-radius: var(--radius-lg) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header .venus-text-field input { font-size: var(--text-sm); }
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-vaults-header .venus-text-field {
+  background-color: rgb(12 14 19) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-header .venus-text-field {
+  background-color: rgb(251 252 254) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-header :is([data-select-trigger], .venus-multiselect-trigger) {
+  height: calc(var(--spacing) * 10) !important;
+  min-height: 0 !important;
+  font-size: var(--text-sm) !important;
+}
+
+/* Card material */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card {
+  border: 1px solid rgb(255 255 255 / 16%) !important;
+  background-color: rgb(0 0 0 / 10%) !important;
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%) !important;
+  position: relative;
+  isolation: isolate;
+  transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px); pointer-events: none;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-page .venus-vault-card {
+  border-color: rgb(212 221 232) !important;
+  background-color: rgb(251 252 254) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}
+/* Hover: neutral grey band, not a blue rim */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card:is(:hover, :focus-visible) {
+  background-color: var(--vault-hover) !important;
+  border-color: rgb(255 255 255 / 24%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-page .venus-vault-card:is(:hover, :focus-visible) {
+  background-color: rgb(244 247 251) !important;
+  border-color: rgb(196 208 222) !important;
+}
+
+/* Body + footer share the card surface; the footer is a divider row */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page :is(.venus-vault-card__body, .venus-vault-card__footer) {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__body {
+  gap: calc(var(--spacing) * 4);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__rows {
+  row-gap: calc(var(--spacing) * 3);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__footer {
+  /* Full-width divider, edge to edge like the card's own rim. */
+  border-top: 1px solid var(--vault-line);
+}
+/* Any inner borders use the faint line */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card :is(hr, .border-b, .border-t) {
+  border-color: var(--vault-line) !important;
+}
+
+/* Footer divider sits 16px from the content above and 16px from the row below. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__body {
+  padding-bottom: calc(var(--spacing) * 4) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__footer {
+  padding-block: calc(var(--spacing) * 4) !important;
+}
+
+/* Footer: its own colour layer at rest (two-tone card), both themes. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card__footer {
+  background: rgb(255 255 255 / 4%) !important;
+  padding-block: calc(var(--spacing) * 3) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-page .venus-vault-card__footer {
+  background: rgb(30 55 85 / 4%) !important;
+}
+
+/* Hover = live site: light-blue rim with a soft blue glow; surface unchanged. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vaults-page .venus-vault-card:is(:hover, :focus-visible) {
+  background-color: rgb(0 0 0 / 10%) !important;
+  border-color: rgb(110 165 255 / 70%) !important;
+  box-shadow: 0 0 0 1px rgb(110 165 255 / 25%), 0 0 24px -4px rgb(58 120 255 / 45%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-vaults-page .venus-vault-card:is(:hover, :focus-visible) {
+  background-color: rgb(251 252 254) !important;
+  /* Light: plain blue rim, no glow. */
+  border-color: rgb(58 120 255) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}

@@ -3,6 +3,7 @@ import { Icon, Page, Tabs } from 'components';
 import { useBreakpointUp } from 'hooks/responsive';
 import type { Tab } from 'hooks/useTabs';
 import { useTranslation } from 'libs/translations';
+import { useEffect } from 'react';
 
 import { EndOfCycle } from './EndOfCycle';
 import { Hero } from './Hero';
@@ -18,6 +19,34 @@ const PrimeLeaderboard: React.FC = () => {
   const { data: currentCycle, isLoading: isCurrentCycleLoading } = useGetPrimeCurrentCycle();
 
   useRefreshOnNewCycle();
+
+  // Side by side, the summary cards of both panels share one height (the tallest
+  // card's content), so the two table headers ("Wallet …") sit on the same line.
+  useEffect(() => {
+    if (!isSideBySide) return;
+    const cards = () =>
+      Array.from(document.querySelectorAll<HTMLElement>('.venus-prime-page .bg-background-active'));
+    const sync = () => {
+      const list = cards();
+      list.forEach(card => card.style.removeProperty('min-height'));
+      const tallest = Math.max(0, ...list.map(card => card.getBoundingClientRect().height));
+      list.forEach(card => card.style.setProperty('min-height', `${tallest}px`));
+    };
+    const observer = new ResizeObserver(() => requestAnimationFrame(sync));
+    const mutation = new MutationObserver(() => {
+      observer.disconnect();
+      cards().forEach(card => observer.observe(card));
+      requestAnimationFrame(sync);
+    });
+    const root = document.querySelector('.venus-prime-page');
+    if (root) mutation.observe(root, { childList: true, subtree: true });
+    cards().forEach(card => observer.observe(card));
+    sync();
+    return () => {
+      observer.disconnect();
+      mutation.disconnect();
+    };
+  }, [isSideBySide]);
 
   const endOfCycleDate = currentCycle?.cycle?.endsAt;
   const currentCycleIndex = currentCycle?.cycle?.cycleIndex;
@@ -62,6 +91,7 @@ const PrimeLeaderboard: React.FC = () => {
 
   return (
     <Page>
+      <div className="venus-prime-page">
       <div
         aria-hidden
         className="venus-prime-hero-glow pointer-events-none absolute left-1/2 top-[200px] aspect-square w-[1200px] max-w-[150vw] -translate-x-1/2 -translate-y-1/2 bg-[url('/images/prime-leaderboard-bg.webp')] bg-contain bg-center bg-no-repeat"
@@ -98,6 +128,7 @@ const PrimeLeaderboard: React.FC = () => {
           tabs={tabs}
         />
       )}
+      </div>
     </Page>
   );
 };

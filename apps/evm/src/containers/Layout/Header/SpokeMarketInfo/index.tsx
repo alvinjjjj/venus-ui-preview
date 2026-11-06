@@ -1,4 +1,5 @@
 import { type CellProps, ImgGroup } from 'components';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { useSpokeMarket } from 'pages/SpokeMarket/useSpokeMarket';
 import { formatCentsToReadableValue } from 'utilities';
@@ -7,6 +8,7 @@ import { TokenInfo } from '../TokenInfo';
 export const SpokeMarketInfo = () => {
   const { t } = useTranslation();
   const { pool, market } = useSpokeMarket();
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
 
   const cells: CellProps[] = [
     {
@@ -42,6 +44,7 @@ export const SpokeMarketInfo = () => {
       tokenPriceOracleAddress={pool?.priceOracleAddress}
       relatedTokens={market ? [market.token] : undefined}
       cells={cells}
+      actionVariant={isFinal ? 'secondary' : undefined}
     />
   );
 };

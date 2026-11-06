@@ -1,0 +1,252 @@
+/* Final · Prime leaderboard — keep the title size; Core-style subtitle;
+   grey panels become the Lite black card material. */
+:root[data-glass-variant='lite-experiment-v2'] {
+  --prime-line: rgb(255 255 255 / 8%);
+  --prime-hover: rgb(255 255 255 / 4%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] {
+  --prime-line: rgb(0 0 0 / 6%);
+  --prime-hover: rgb(30 55 85 / 4%);
+}
+
+/* Subtitle = Venus Core subtitle (16px Regular, light grey) */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 + p {
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-light-grey);
+}
+
+/* Outer frames only (refresh note + Rewards / Ranking panels): black glass.
+   Nested cards and tables keep their own system styling. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page :is(.venus-glass-card.border-dark-grey, .relative.bg-background.rounded-lg.border) {
+  border-color: rgb(255 255 255 / 16%) !important;
+  background-color: rgb(0 0 0 / 10%) !important;
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page :is(.venus-glass-card.border-dark-grey, .relative.bg-background.rounded-lg.border) {
+  border-color: rgb(212 221 232) !important;
+  background-color: rgb(251 252 254) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}
+
+/* End of cycle: dark frosted glass — the hero glow blurs behind it. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 {
+  border: 1px solid rgb(255 255 255 / 12%) !important;
+  background: linear-gradient(180deg, rgb(255 255 255 / 4%), rgb(255 255 255 / 0%)), rgb(12 14 19 / 58%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), 0 12px 32px -8px rgb(0 0 0 / 40%) !important;
+  backdrop-filter: blur(24px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .venus-glass-card.min-h-39 {
+  border-color: rgb(212 221 232) !important;
+  background: rgb(251 252 254 / 72%) !important;
+  box-shadow: 0 8px 24px -8px rgb(31 53 83 / 14%) !important;
+}
+
+/* A layered rule repaints this card's background, so the dark frosted tint
+   lives on ::before (blur + tint), which nothing else styles. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgb(255 255 255 / 5%), rgb(255 255 255 / 0%) 60%), rgb(10 12 17 / 62%);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  pointer-events: none;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .venus-glass-card.min-h-39::before {
+  background: rgb(251 252 254 / 70%);
+}
+
+/* End of cycle: no press/hover motion on click, and fixed-width digits so the
+   countdown doesn't jitter every second. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39:is(:hover, :active, :focus-within) {
+  transform: none !important;
+  transition: none !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 * {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Title: Venus Core recipe at Prime's size — Medium weight + blue gradient. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 {
+  font-weight: var(--font-weight-medium);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (forced-colors: none) {
+  :root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-prime-page h1 {
+    background-image: linear-gradient(180deg, #d9edff 0%, #99c8ff 50%, #598eff 100%);
+  }
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page h1 {
+    background-image: linear-gradient(115deg, #1460ff, #2873ff 48%, #1557ed);
+  }
+}
+@media (forced-colors: active) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 {
+    background-image: none; -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* "See last cycle's Prime summary": stays blue; hover/press only turns it Semi Bold.
+   The card is a little wider so the bolder link never re-wraps the line. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 {
+  max-width: 520px !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 [data-venus-button-variant='text'],
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 [data-venus-button-variant='text']:is(:hover, :active, :focus-visible) {
+  color: var(--color-blue) !important;
+  -webkit-text-fill-color: currentColor;
+  background: none !important;
+  transform: none !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card.min-h-39 [data-venus-button-variant='text']:is(:hover, :active, :focus-visible) {
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+/* Title = Liquidity Hub hero size; subtitle sits 4px below, like the Hub. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 {
+  font-size: var(--text-h5);
+  line-height: var(--text-3xl--line-height);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page :has(> h1 + p) {
+  row-gap: var(--spacing);
+}
+@media (min-width: 768px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 { font-size: var(--text-h4); }
+}
+@media (min-width: 1024px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page h1 { font-size: var(--text-h3); }
+}
+
+/* Summary cards (Total Prime rewards / Your Prime rewards / Your rank):
+   Liquidity Hub black card — black 10% fill with a visible 16% white rim.
+   Height grows with content (no more overflow into the table below);
+   index.tsx equalises the two panels so the table headers share a line. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .bg-background-active {
+  height: auto !important;
+  background-color: rgb(0 0 0 / 10%) !important;
+  border: 1px solid rgb(255 255 255 / 16%);
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-prime-page .bg-background-active {
+  background-color: rgb(251 252 254) !important;
+  border-color: rgb(212 221 232);
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%);
+}
+
+/* Outer frames: keep a hint of the hero blue instead of flat black. */
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-prime-page :is(.venus-glass-card.border-dark-grey, .relative.bg-background.rounded-lg.border) {
+  background-image: linear-gradient(180deg, rgb(58 120 255 / 8%), rgb(58 120 255 / 0%) 220px) !important;
+}
+
+/* Both leaderboard tables (Rewards + Ranking): 60px rows, 40px header,
+   faint lines, inset hover band — same recipe as Hub / Core / Spoke. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table :is(thead tr, th) {
+  height: calc(var(--spacing) * 10);
+  padding-block: 0 !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody tr,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td {
+  height: calc(var(--spacing) * 15) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td {
+  padding-block: 0 !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table :is(thead, thead tr, th, tbody tr) {
+  border-color: var(--prime-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody tr:hover,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody tr:hover > td {
+  background: transparent !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody tr:is(:hover, :focus-visible) > td {
+  background: linear-gradient(var(--prime-hover), var(--prime-hover)) center / 100% calc(100% - 8px) no-repeat !important;
+}
+/* The wallet pill must fit inside a 60px row (with breathing room). */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td :is(a, button, [class*='rounded']):has(svg, img) {
+  max-height: calc(var(--spacing) * 11);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table thead {
+  height: calc(var(--spacing) * 10) !important;
+}
+
+/* Summary cards use the Hub list card material in full: the 50px backdrop blur
+   (on ::before, so nested blurs still work) turns the starfield into a solid
+   dark surface instead of showing stars through. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .bg-background-active {
+  position: relative;
+  isolation: isolate;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .bg-background-active::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px); pointer-events: none;
+}
+
+/* Tables run edge to edge inside their panel: the header line and row lines touch
+   the panel rim (no 12px inset), and both panels' header lines sit on one line.
+   The nested table card loses its own border (that 1–2px was the misalignment). */
+@media (min-width: 640px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page .venus-glass-card .venus-glass-card:has(table) {
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin-inline: calc(var(--spacing) * -3);
+    width: calc(100% + var(--spacing) * 6);
+    border-radius: 0 !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table :is(th, td):first-child {
+    padding-left: calc(var(--spacing) * 6) !important;
+  }
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table :is(th, td):last-child {
+    padding-right: calc(var(--spacing) * 6) !important;
+  }
+}
+
+/* Trial: outer panels (Rewards / Ranking + refresh note) get the same 50px blur,
+   so the tables sit on frosted glass instead of the raw starfield. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page :is(.venus-glass-card.border-dark-grey, .relative.bg-background.rounded-lg.border) {
+  position: relative;
+  isolation: isolate;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page :is(.venus-glass-card.border-dark-grey, .relative.bg-background.rounded-lg.border)::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
+  backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px); pointer-events: none;
+}
+
+/* Compact Prime wallet pill: 32px tall (was 44), 16px mark, 14px Regular,
+   8px radius — same copper rim, sits quietly inside a 60px row. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] {
+  border-radius: var(--radius-md, 6px);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] > span {
+  min-width: 0 !important;
+  height: calc(var(--spacing) * 8 - 2px);
+  padding: 0 calc(var(--spacing) * 2.5) !important;
+  gap: calc(var(--spacing) * 1.5) !important;
+  border-radius: calc(var(--radius-md, 6px) - 1px) !important;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] > span img {
+  height: calc(var(--spacing) * 4) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody tr:is(:hover, :focus-visible) td span[class*='p-px'] > span {
+  font-weight: var(--font-weight-semibold);
+}
+/* Every wallet pill shares one width so the column reads as a clean stack. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] {
+  width: calc(var(--spacing) * 32);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-prime-page table tbody td span[class*='p-px'] > span {
+  width: 100%;
+}

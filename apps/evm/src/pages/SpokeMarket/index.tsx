@@ -1,3 +1,4 @@
+import '../LiquidityHub/detail.css';
 import { type SpokeHistoryRange, type SpokeMarket, useGetSpokeMarketHistory } from 'clients/api';
 import {
   LayeredValues,
@@ -121,6 +122,7 @@ const SpokeMarketPage: React.FC = () => {
 
   return (
     <Page>
+      <div className="venus-liquidity-hub-page venus-spoke-market-page">
       <MarketPageGrid
         form={<SpokeForm pool={pool} market={market} />}
         content={
@@ -200,6 +202,7 @@ const SpokeMarketPage: React.FC = () => {
           </div>
         }
       />
+      </div>
     </Page>
   );
 };

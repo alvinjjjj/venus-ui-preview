@@ -39,3 +39,12 @@
 .spoke-filters__search input,
 .spoke-filters__select [data-select-trigger] > span { font-weight: 400; }
 .spoke-filters__select .spoke-filters__placeholder > span { color: var(--color-grey); }
+
+/* 4 stacked icons, then a +N counter; the tooltip lists every collateral. */
+.spoke-collateral-group .spoke-collateral-icon { box-shadow: 0 0 0 1.5px var(--color-background, #181d27); }
+.spoke-collateral-more {
+  margin-left: calc(var(--spacing) * 1.5);
+  font-size: var(--text-b2r, 12px);
+  color: var(--color-grey);
+  font-variant-numeric: tabular-nums;
+}

@@ -1504,7 +1504,8 @@
       "hours": "Hours",
       "mins": "Mins",
       "sec": "Sec",
-      "title": "END OF CYCLE"
+      "title": "END OF CYCLE",
+      "tooltip": "This countdown is for Prime eligibility only: the top {{limit}} accounts when it ends receive Prime rewards in the next cycle. Prime rewards are based on the APY currently displayed."
     },
     "lastCycleSummary": {
       "primeScoreLabel": "Prime score",
@@ -2876,7 +2877,11 @@
       "totalBorrowApy": "Total borrow APY",
       "maxLtv": "Max LTV",
       "liquidationThreshold": "Liquidation threshold",
-      "walletBalance": "Wallet balance"
+      "walletBalance": "Wallet balance",
+      "available": "Available",
+      "borrowBalance": "Borrow balance",
+      "supplyBalance": "Supply balance",
+      "enterValidAmount": "Enter valid amount"
     }
   },
   "hubApyBanner": {

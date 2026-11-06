@@ -1,0 +1,26 @@
+/* Final · type weight rule for controls:
+   every non-primary button / dropdown trigger rests at Regular and turns
+   Semi Bold on hover (final-button-material's hover rule) or when it is the
+   selected/open state. Primary (solid blue) actions stay Semi Bold.
+   Unlayered normal declarations beat Tailwind's `font-semibold` utility;
+   the layered !important hover rule still wins over this base. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant]:not([data-venus-button-variant='primary']), [data-select-trigger], .venus-multiselect-trigger) {
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant]:not([data-venus-button-variant='primary']), [data-select-trigger], .venus-multiselect-trigger) * {
+  font-weight: inherit;
+}
+/* Selected / open states keep Semi Bold */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):is([aria-pressed='true'], [data-venus-button-active='true'], [aria-expanded='true']) {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Vault card footer: "You supplied" row is Regular, Semi Bold while the card is hovered. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vault-card__footer,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vault-card__footer * {
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vault-card:is(:hover, :focus-visible) .venus-vault-card__footer,
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-vault-card:is(:hover, :focus-visible) .venus-vault-card__footer * {
+  font-weight: var(--font-weight-semibold);
+}

@@ -44,7 +44,8 @@ export const Header: React.FC<HeaderProps> = ({ pool, className }) => {
           {finalCells.map(cell => (
             <div key={String(cell.label)}>
               <p className="mb-3 text-light-grey text-sm">{cell.label}</p>
-              <p className="text-3xl xl:text-4xl font-normal tabular-nums">{cell.value}</p>
+              <p className="text-xl xl:text-2xl font-normal tabular-nums">{typeof cell.value === 'string' ? cell.value.replace(/(\.\d)\d(?=[KMB])/, '$1') : cell.value}
+              </p>
             </div>
           ))}
         </div>

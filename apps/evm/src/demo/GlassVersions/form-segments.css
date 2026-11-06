@@ -399,8 +399,22 @@
 }
 /* Arrow follows the rim. */
 :root[data-glass-variant='lite-experiment-v2'] .venus-tooltip-content > span svg path {
-  fill: rgb(20 24 31) !important;
+  /* The frosted fill lives on the arrow's wrapper (below), so the path only draws the rim. */
+  fill: transparent !important;
   stroke: rgb(255 255 255 / 12%) !important;
+}
+/* Arrow = same frosted glass as the body (tint + blur), clipped to the triangle,
+   so it matches over any backdrop (e.g. the bright Prime hero glow). */
+:root[data-glass-variant='lite-experiment-v2'] .venus-tooltip-content > span:has(> svg) {
+  background-color: rgb(20 24 31 / 58%);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-tooltip-content > span:has(> svg) {
+  background-color: rgb(251 252 254);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-tooltip-content > span svg path {
   fill: rgb(251 252 254) !important;
@@ -487,4 +501,32 @@
       box-shadow: inset 0 2px 4px rgb(0 0 0 / 28%) !important;
     }
   }
+}
+
+/* Dark Final tooltip arrow, take 3: keep the arrow and make it one piece with the body.
+   - Body tint goes up to 82% so the backdrop barely shows through; the arrow uses the
+     same 82% tint + blur, so the two read as the same surface over any backdrop.
+   - The arrow is pulled up 1px over the body's rim, hiding the seam line; the svg
+     only draws the two outer sides (open V) in the rim colour. */
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .venus-tooltip-content {
+  background-color: rgb(20 24 31 / 82%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .venus-tooltip-content > span:has(> svg) {
+  background-color: rgb(20 24 31 / 82%);
+  margin-top: -1px;
+}
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) .venus-tooltip-content[data-side='bottom'] > span:has(> svg) {
+  margin-top: 0;
+  margin-bottom: -1px;
+}
+
+/* Final: the ⓘ trigger turns blue while hovered / while its tooltip is open,
+   with a short colour ease (same 150ms as the other hover states). */
+:root[data-glass-variant='lite-experiment-v2'] .venus-info-icon,
+:root[data-glass-variant='lite-experiment-v2'] .venus-info-icon svg {
+  transition: color 150ms ease, fill 150ms ease, stroke 150ms ease;
+}
+:root[data-glass-variant='lite-experiment-v2'] .venus-info-icon:is(:hover, :focus-visible, [data-state$='open']),
+:root[data-glass-variant='lite-experiment-v2'] .venus-info-icon:is(:hover, :focus-visible, [data-state$='open']) svg {
+  color: var(--color-blue) !important;
 }

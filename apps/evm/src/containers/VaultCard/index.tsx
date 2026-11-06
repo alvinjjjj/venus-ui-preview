@@ -104,12 +104,12 @@ export const VaultCard: React.FC<VaultProps> = ({ vault, className }) => {
     <>
       <Card
         className={cn(
-          'w-full flex flex-col p-0 overflow-hidden duration-250 cursor-pointer hover:border-blue',
+          'venus-vault-card w-full flex flex-col p-0 overflow-hidden duration-250 cursor-pointer hover:border-blue',
           className,
         )}
         onClick={openModal}
       >
-        <div className={cn('bg-dark-blue p-3 sm:p-6 flex flex-col gap-4 sm:gap-6 flex-1')}>
+        <div className={cn('venus-vault-card__body bg-dark-blue p-3 sm:p-6 flex flex-col gap-4 sm:gap-6 flex-1')}>
           <div className={cn('flex items-center justify-between')}>
             <div className={cn('flex items-center gap-x-3')}>
               <VaultName vault={vault} className="min-h-10" />
@@ -125,7 +125,7 @@ export const VaultCard: React.FC<VaultProps> = ({ vault, className }) => {
             <StatusLabel status={vault.status} />
           </div>
 
-          <div className={cn('flex flex-col gap-y-4')}>
+          <div className={cn('venus-vault-card__rows flex flex-col gap-y-4')}>
             <LabeledInlineContent tooltip={aprTooltip} label={aprLabel}>
               <LayeredValues
                 className="text-end"
@@ -286,7 +286,7 @@ export const VaultCard: React.FC<VaultProps> = ({ vault, className }) => {
         </div>
 
         {!!accountAddress && readableUserStakedTokens && (
-          <div className={cn('bg-cards px-4 sm:px-6 py-4 flex items-center justify-between')}>
+          <div className={cn('venus-vault-card__footer bg-cards px-4 sm:px-6 py-4 flex items-center justify-between')}>
             <span className="text-b1s">{t('vault.card.youDeposited')}</span>
 
             <div className={cn('flex items-center gap-x-3 text-b1s')}>

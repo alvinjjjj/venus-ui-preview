@@ -15,6 +15,7 @@ import {
   Wrapper,
 } from 'components';
 import { routes } from 'constants/routing';
+import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { useMemo, useState } from 'react';
 import {
@@ -28,6 +29,9 @@ import { type SpokeLoanAsset, type SpokeOverviewPool, getSpokeOverview } from '.
 import './styles.css';
 
 const ALL = 'all';
+// Hero stats show one decimal: $160.8K, not $160.86K.
+const oneDecimal = (value: string) => value.replace(/(\.\d)\d+(?=[KMBT]?$)/, '$1');
+const MAX_STACKED_ICONS = 4;
 
 export const getSpokeMarketPath = (market: SpokeMarket) =>
   routes.spokeMarket.path
@@ -43,7 +47,9 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
   const tokenValue = (market: SpokeMarket, tokens: SpokeMarket['borrowTokens']) =>
     formatTokensToReadableValue({ value: tokens, token: market.token, addSymbol: false });
 
+  // Same tooltip component; long lists (20 bStocks) scroll inside it.
   const collateralInfo = (
+    <div className="overflow-auto pr-1">
     <table className="w-full text-b1r">
       <thead className="text-grey">
         <tr>
@@ -75,6 +81,7 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
         ))}
       </tbody>
     </table>
+    </div>
   );
 
   const columns: TableColumn<SpokeLoanAsset>[] = [
@@ -152,7 +159,7 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
       renderCell: () => (
         <Tooltip content={collateralInfo} triggerTabIndex={0} className="inline-flex">
           <div className="spoke-collateral-group inline-flex items-center">
-            {pool.collateralAssets.map(({ symbol, iconSrc }, index) => (
+            {pool.collateralAssets.slice(0, MAX_STACKED_ICONS).map(({ symbol, iconSrc }, index) => (
               <img
                 key={symbol}
                 src={iconSrc}
@@ -166,6 +173,11 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
                 }
               />
             ))}
+            {pool.collateralAssets.length > MAX_STACKED_ICONS ? (
+              <span className="spoke-collateral-more">
+                +{pool.collateralAssets.length - MAX_STACKED_ICONS}
+              </span>
+            ) : null}
           </div>
         </Tooltip>
       ),
@@ -212,6 +224,7 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
 const Spoke: React.FC = () => {
   const { t } = useTranslation();
   const { data, isLoading } = useGetSpokePools();
+  const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
 
   const [search, setSearch] = useState('');
   const [loanAsset, setLoanAsset] = useState<string>(ALL);
@@ -252,13 +265,15 @@ const Spoke: React.FC = () => {
   const cells: CellProps[] = [
     {
       label: t('spoke.stats.totalBorrow'),
-      value: formatCentsToReadableValue({ value: data ? overview.totalBorrowCents : undefined }),
+      value: oneDecimal(
+        formatCentsToReadableValue({ value: data ? overview.totalBorrowCents : undefined }),
+      ),
     },
     {
       label: t('spoke.stats.availableLiquidity'),
-      value: formatCentsToReadableValue({
-        value: data ? overview.availableLiquidityCents : undefined,
-      }),
+      value: oneDecimal(
+        formatCentsToReadableValue({ value: data ? overview.availableLiquidityCents : undefined }),
+      ),
     },
     { label: t('spoke.stats.pools'), value: data ? pools.length : '-' },
   ];
@@ -269,12 +284,30 @@ const Spoke: React.FC = () => {
     <Page>
       <Wrapper className="pt-5 sm:pt-10">
         <div className="spoke-page space-y-5 sm:space-y-10">
-          <PageStatHeader
-            className="spoke-stat-header"
-            title={t('spoke.header')}
-            description={t('spoke.description')}
-            cells={cells}
-          />
+          {isFinal ? (
+            // Final: same hero as Liquidity Hub / Venus Core — plain stats, no dividers.
+            <div className="venus-core-final-header spoke-stat-header flex flex-col gap-8 xl:flex-row xl:items-start xl:justify-between">
+              <div className="xl:max-w-140">
+                <h1 className="venus-page-title">{t('spoke.header')}</h1>
+                <p className="venus-page-subtitle">{t('spoke.description')}</p>
+              </div>
+              <div className="flex shrink-0 flex-wrap gap-8 sm:gap-12">
+                {cells.map(cell => (
+                  <div key={String(cell.label)}>
+                    <p className="mb-3 text-light-grey text-sm">{cell.label}</p>
+                    <p className="text-xl xl:text-2xl font-normal tabular-nums">{cell.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <PageStatHeader
+              className="spoke-stat-header"
+              title={t('spoke.header')}
+              description={t('spoke.description')}
+              cells={cells}
+            />
+          )}
 
           <div className="space-y-4 sm:space-y-6">
             <div className="spoke-filters">
