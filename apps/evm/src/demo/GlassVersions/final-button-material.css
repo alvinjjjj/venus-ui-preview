@@ -4,6 +4,19 @@
    unlayered preview overrides; archived O / E2 / E3 remain unaffected.
    Figma's background-blur radius 24 exports as CSS blur(12px). */
 @layer final-button-material {
+  /* Header labels keep their width as hover and open states change color. */
+  :root[data-glass-variant='lite-experiment-v2'] #root [data-header-navigation] {
+    font-weight: var(--font-weight-normal) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root [data-header-navigation] {
+    color: var(--e-light-text-muted) !important;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root [data-header-navigation]:is(:hover, :focus-visible, :active, [aria-expanded='true'], [data-navigation-active='true'], [aria-current='page']) {
+    color: var(--e-light-text-primary) !important;
+  }
+
   :root[data-glass-variant='lite-experiment-v2'] [data-venus-button-variant]:not([data-venus-button-variant='text'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *) {
     --final-button-fill: rgb(255 255 255 / 7%);
     --final-button-ink: #aab3ca; /* text/secondary/default, Dark */
@@ -126,7 +139,7 @@
     :root[data-glass-variant='lite-experiment-v2'] :is([data-venus-button-variant], [data-select-trigger], .venus-multiselect-trigger):not([data-venus-button-variant='primary']:not([data-select-trigger], .venus-multiselect-trigger), [data-venus-button-variant='text'], [data-venus-button-active='true'], [aria-pressed='true'], .venus-user-button, .venus-mode-switch, [data-apy-badge], .lite-e2-market-action, [data-venus-button-group] > *):not(:disabled):not([aria-disabled='true']):hover {
       --final-button-ink: var(--color-white) !important;
       color: var(--color-white) !important;
-      font-weight: var(--font-weight-semibold) !important;
+      font-weight: var(--font-weight-normal) !important;
     }
 
     /* Figma text/secondary/active uses slate/950 in Light mode. */
@@ -137,7 +150,7 @@
 
     :root[data-glass-variant='lite-experiment-v2'] :is(a[data-venus-text-link]:not([data-venus-button-variant], [data-submenu-variant], [data-header-navigation], .venus-header-logo), [data-venus-button-variant='text'], [data-header-navigation]):hover {
       color: var(--color-white) !important;
-      font-weight: var(--font-weight-semibold) !important;
+      font-weight: var(--font-weight-normal) !important;
     }
 
     :root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(a[data-venus-text-link]:not([data-venus-button-variant], [data-submenu-variant], [data-header-navigation], .venus-header-logo), [data-venus-button-variant='text'], [data-header-navigation]):hover {
