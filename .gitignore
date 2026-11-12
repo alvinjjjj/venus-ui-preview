@@ -56,3 +56,11 @@ Thumbs.db
 playwright-report
 test-results
 .last-run.json
+
+# Local working files (not part of the app)
+Claude outputs/
+_to_delete/
+exports/
+*.mp4
+*.mov
+*.tgz
