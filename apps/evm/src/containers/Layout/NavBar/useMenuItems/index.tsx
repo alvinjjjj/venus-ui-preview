@@ -4,7 +4,7 @@ import { useAccountAddress } from 'libs/wallet';
 
 import liquidityHubIconSrc from 'assets/img/liquidityHubIcon.svg';
 import vaultsIconSrc from 'assets/img/vaultsIcon.svg';
-import venusCoreIconSrc from 'assets/img/venusCoreIcon.png';
+import venusCoreIconSrc from 'assets/img/venusCoreIcon.svg';
 import venusSpokeIconSrc from 'assets/img/venusSpokeIcon.png';
 import { VENUS_FLUX_URL } from 'constants/production';
 import { useGetMarketsPagePath } from 'hooks/useGetMarketsPagePath';

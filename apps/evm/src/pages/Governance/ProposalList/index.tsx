@@ -223,8 +223,8 @@ const ProposalList: React.FC<ProposalListPageProps> = ({
           }
           placeholder={t('vote.searchInput.placeholder')}
           leftIconSrc="magnifier"
-          variant="secondary"
-          className="sm:max-w-[300px] w-full"
+          variant="primary"
+          className="venus-governance-search sm:max-w-[300px] w-full"
         />
       </div>
 

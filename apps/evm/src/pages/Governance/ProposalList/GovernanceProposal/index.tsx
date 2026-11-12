@@ -107,7 +107,7 @@ const GovernanceProposalUi: React.FC<GovernanceProposalProps> = ({
 
   return (
     <ProposalCard
-      className={className}
+      className={`venus-governance-proposal ${className ?? ''}`}
       linkTo={routes.governanceProposal.path.replace(':proposalId', proposalId.toString())}
       proposalNumber={proposalId}
       headerRightItem={

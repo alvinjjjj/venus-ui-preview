@@ -6,3 +6,31 @@
 
 .spoke-capacity { display: inline-grid; justify-items: end; gap: 6px; min-width: 120px; }
 .spoke-capacity__bar { width: 120px; }
+
+/* Header and body share column widths; only the body scrolls. Scoped to this table. */
+.spoke-collateral-table--scroll table { display: block; }
+.spoke-collateral-table--scroll :is(thead, tbody) { display: block; }
+.spoke-collateral-table--scroll tr { display: table; width: 100%; table-layout: fixed; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(1) { width: 20%; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(2) { width: 14%; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(3) { width: 14%; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(4) { width: 14%; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(5) { width: 14%; }
+.spoke-collateral-table--scroll :is(th, td):nth-child(6) { width: 24%; }
+
+.spoke-collateral-table--scroll thead { padding-right: var(--table-scrollbar-width, 0px); }
+/* Keep numeric columns readable when the action rail narrows the table. */
+.spoke-collateral-table--scroll :is(th, td) {
+  padding-inline: calc(var(--spacing) * 2) !important;
+}
+.spoke-collateral-table--scroll :is(th, td):first-child {
+  padding-left: calc(var(--spacing) * 6) !important;
+}
+.spoke-collateral-table--scroll :is(th, td):last-child {
+  padding-right: calc(var(--spacing) * 6) !important;
+}
+.spoke-collateral-table--scroll .spoke-capacity { min-width: 0; width: 100%; }
+.spoke-collateral-table--scroll .spoke-capacity__bar { max-width: 100%; }
+
+/* Match the circular token treatment in the collateral table and page header. */
+.spoke-form__body img { border-radius: 50%; }

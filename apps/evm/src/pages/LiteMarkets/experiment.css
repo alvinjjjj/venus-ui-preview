@@ -708,3 +708,19 @@
    here left an 11px strip on the right, so the header divider stopped short
    of the card edge. The list scrolls inside tbody, which keeps its own gutter. */
 .lite-experiment .lite-experiment-scroll.lite-experiment-scroll { scrollbar-gutter: auto; }
+
+/* Final Lite search: preserve the field surface and show pointer/focus states
+   above the existing flat-field overrides in both themes. */
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-markets .venus-text-field.venus-market-search-surface:hover:not(:focus-within):not([data-disabled]):not([data-has-error]) {
+  border-color: var(--color-light-grey) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root, body) .lite-markets .venus-text-field.venus-market-search-surface:hover:not(:focus-within):not([data-disabled]):not([data-has-error]) {
+  border-color: var(--e-light-border-control) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-markets .venus-text-field.venus-market-search-surface:focus-within:not([data-disabled]):not([data-has-error]) {
+  border-color: var(--color-blue) !important;
+  box-shadow: inset 0 0 0 calc(var(--spacing) / 4) var(--color-blue) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, body) .lite-markets .venus-market-search-surface input {
+  caret-color: var(--color-blue);
+}

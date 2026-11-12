@@ -1,6 +1,8 @@
 import { fireEvent, waitFor } from '@testing-library/react';
+import BigNumber from 'bignumber.js';
 
 import fakeAccountAddress from '__mocks__/models/address';
+import { legacyCorePool } from '__mocks__/models/pools';
 import { useGetAccountPerformanceHistory } from 'clients/api';
 import { defaultUserChainSettings, useUserChainSettings } from 'hooks/useUserChainSettings';
 import { en } from 'libs/translations';
@@ -104,7 +106,7 @@ describe('AccountOverview', () => {
     `);
   });
 
-  it('shows all four metrics in the shared split overview without an accordion button', () => {
+  it('shows VAI debt beside the other metrics in the split overview without an accordion button', () => {
     const { container } = renderComponent(
       <AccountOverview accountAddress={fakeAccountAddress} splitLayout chartVariant="line" />,
       { accountAddress: fakeAccountAddress },
@@ -117,7 +119,9 @@ describe('AccountOverview', () => {
       en.dashboard.overview.absolutePerformance,
       en.dashboard.overview.summary.cellGroup.netApy,
       en.dashboard.overview.summary.cellGroup.dailyEarnings,
+      en.dashboard.overview.summary.cellGroup.mintedVai,
     ]);
+    expect(metrics.querySelector('.dashboard-overview-minted-vai')).toHaveTextContent('$10');
     expect(metrics.closest('button')).toBeNull();
     expect(metrics.querySelector('[data-tooltip-trigger]')).toBeInTheDocument();
     expect(container.querySelector('.dashboard-overview-chart')).not.toHaveClass(
@@ -136,9 +140,46 @@ describe('AccountOverview', () => {
     );
     const values = container.querySelectorAll('.venus-account-performance-cells > div > .text-p2s');
 
-    expect(values).toHaveLength(4);
+    expect(values).toHaveLength(5);
     expect(new Set(Array.from(values).map(value => value.textContent)).size).toBe(1);
     expect(values[2].textContent).toMatch(/^\*+$/);
+    expect(values[4].textContent).toMatch(/^\*+$/);
+  });
+
+  it('shows zero minted VAI when the account has no VAI debt', () => {
+    const { container } = renderComponent(
+      <AccountOverview
+        accountAddress={fakeAccountAddress}
+        splitLayout
+        previewPool={{
+          ...legacyCorePool,
+          vai: legacyCorePool.vai && {
+            ...legacyCorePool.vai,
+            userBorrowBalanceCents: new BigNumber(0),
+          },
+        }}
+      />,
+      { accountAddress: fakeAccountAddress },
+    );
+
+    expect(container.querySelector('.dashboard-overview-minted-vai')).toHaveTextContent('$0');
+  });
+
+  it('keeps the four-metric layout when VAI balances are unavailable', () => {
+    const { container, queryByText } = renderComponent(
+      <AccountOverview
+        accountAddress={fakeAccountAddress}
+        splitLayout
+        previewPool={{
+          ...legacyCorePool,
+          vai: undefined,
+        }}
+      />,
+      { accountAddress: fakeAccountAddress },
+    );
+
+    expect(queryByText(en.dashboard.overview.summary.cellGroup.mintedVai)).toBeNull();
+    expect(container.querySelector('.venus-account-performance-cells')?.children).toHaveLength(4);
   });
 
   it('uses the compact overview only after connected empty history is confirmed', () => {
@@ -149,7 +190,11 @@ describe('AccountOverview', () => {
     });
 
     const { container, queryByText } = renderComponent(
-      <AccountOverview accountAddress={fakeAccountAddress} splitLayout />,
+      <AccountOverview
+        accountAddress={fakeAccountAddress}
+        splitLayout
+        previewPool={{ ...legacyCorePool, vai: undefined }}
+      />,
       { accountAddress: fakeAccountAddress },
     );
 

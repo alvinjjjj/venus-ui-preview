@@ -1,0 +1,518 @@
+
+ RUN  v3.2.7 /private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm
+
+stdout | src/pages/Dashboard/__tests__/index.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/containers/AccountOverview/__tests__/index.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stderr | src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/containers/AccountOverview/__tests__/index.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/pages/Dashboard/__tests__/index.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+ ❯ src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx (1 test | 1 failed) 273ms
+   × Positions - Feature flag enabled: E-mode > displays E-mode banner correctly when user has enabled an E-mode group 273ms
+     → 
+ ❯ src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx (1 test | 1 failed) 276ms
+   × Positions > displays content correctly 275ms
+     → 
+ ❯ src/containers/AccountOverview/__tests__/index.spec.tsx (4 tests | 1 failed) 176ms
+   ✓ AccountOverview > displays correctly when user is not connected 63ms
+   ✓ AccountOverview > displays correctly when user is connected 18ms
+   × AccountOverview > displays correctly when user is connected and accordion is expanded 41ms
+     → 
+   ✓ AccountOverview > hides user balances when doNotShowUserBalances setting is true 54ms
+ ❯ src/pages/Dashboard/__tests__/index.spec.tsx (2 tests | 2 failed) 22ms
+   × Dashboard > displays content correctly 19ms
+     → store.getState is not a function
+   × Dashboard > displays Hubs tab when the liquidity hub feature flag is enabled 2ms
+     → store.getState is not a function
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/containers/AccountOverview/__tests__/index.spec.tsx > AccountOverview > displays correctly when user is connected and accordion is expanded
+{
+  stack: 'AggregateError: \n' +
+    '    at aggregateErrors (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11)\n' +
+    '    at process.env.NODE_ENV.exports.act (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24)\n' +
+    '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25\n' +
+    '    at Object.eventWrapper (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:106:28)\n' +
+    '    at fireEvent (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js:12:35)\n' +
+    '    at fireEvent.<computed> [as click] (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js:110:36)\n' +
+    '    at fireEvent.<computed> [as click] (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/fire-event.js:15:52)\n' +
+    '    at /private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/containers/AccountOverview/__tests__/index.spec.tsx:44:15\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:752:20',
+  errors: [
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    }
+  ],
+  message: '',
+  constructor: 'Function<AggregateError>',
+  name: 'AggregateError',
+  toString: 'Function<toString>',
+  stacks: [
+    {
+      method: 'aggregateErrors',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 551,
+      column: 11
+    },
+    {
+      method: 'process.env.NODE_ENV.exports.act',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 897,
+      column: 24
+    },
+    {
+      method: '',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js',
+      line: 46,
+      column: 25
+    },
+    {
+      method: 'Object.eventWrapper',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js',
+      line: 106,
+      column: 28
+    },
+    {
+      method: 'fireEvent',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js',
+      line: 12,
+      column: 35
+    },
+    {
+      method: 'fireEvent.<computed> [as click]',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js',
+      line: 110,
+      column: 36
+    },
+    {
+      method: 'fireEvent.<computed> [as click]',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/fire-event.js',
+      line: 15,
+      column: 52
+    },
+    {
+      method: '',
+      file: '/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/containers/AccountOverview/__tests__/index.spec.tsx',
+      line: 44,
+      column: 15
+    }
+  ]
+}
+ ❯ aggregateErrors ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11
+ ❯ process.env.NODE_ENV.exports.act ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24
+ ❯ ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ Object.eventWrapper ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:106:28
+ ❯ fireEvent ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js:12:35
+ ❯ fireEvent.<computed> [as click] ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/dom/dist/events.js:110:36
+ ❯ fireEvent.<computed> [as click] ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/fire-event.js:15:52
+ ❯ src/containers/AccountOverview/__tests__/index.spec.tsx:44:15
+     42| 
+     43|     // Expand accordion
+     44|     fireEvent.click(getByText(en.dashboard.overview.absolutePerformanc…
+       |               ^
+     45| 
+     46|     expect(container.textContent).toMatchSnapshot();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/pages/Dashboard/__tests__/index.spec.tsx > Dashboard > displays content correctly
+ FAIL  src/pages/Dashboard/__tests__/index.spec.tsx > Dashboard > displays Hubs tab when the liquidity hub feature flag is enabled
+TypeError: store.getState is not a function
+ ❯ __mocks__/zustand.ts:14:32
+     12|   (stateCreator: zustand.StateCreator<T>) => {
+     13|     const store = actualCreate(stateCreator);
+     14|     const initialState = store.getState();
+       |                                ^
+     15|     storeResetFns.add(() => {
+     16|       store.setState(initialState, true);
+ ❯ useInterfaceMode src/demo/useInterfaceMode.ts:20:29
+ ❯ Dashboard src/pages/Dashboard/index.tsx:30:22
+ ❯ Object.react_stack_bottom_frame ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateFunctionComponent ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ ❯ beginWork ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ ❯ runWithFiberInDEV ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx > Positions - Feature flag enabled: E-mode > displays E-mode banner correctly when user has enabled an E-mode group
+{
+  stack: 'AggregateError: \n' +
+    '    at aggregateErrors (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11)\n' +
+    '    at process.env.NODE_ENV.exports.act (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24)\n' +
+    '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25\n' +
+    '    at renderRoot (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:189:26)\n' +
+    '    at render (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:291:10)\n' +
+    '    at renderComponent (/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/testUtils/render.tsx:73:3)\n' +
+    '    at /private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx:23:27\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:155:11\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:752:26\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:1897:20',
+  errors: [
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    }
+  ],
+  message: '',
+  constructor: 'Function<AggregateError>',
+  name: 'AggregateError',
+  toString: 'Function<toString>',
+  stacks: [
+    {
+      method: 'aggregateErrors',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 551,
+      column: 11
+    },
+    {
+      method: 'process.env.NODE_ENV.exports.act',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 897,
+      column: 24
+    },
+    {
+      method: '',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js',
+      line: 46,
+      column: 25
+    },
+    {
+      method: 'renderRoot',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js',
+      line: 189,
+      column: 26
+    },
+    {
+      method: 'render',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js',
+      line: 291,
+      column: 10
+    },
+    {
+      method: 'renderComponent',
+      file: '/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/testUtils/render.tsx',
+      line: 73,
+      column: 3
+    },
+    {
+      method: '',
+      file: '/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx',
+      line: 23,
+      column: 27
+    }
+  ]
+}
+ ❯ aggregateErrors ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11
+ ❯ process.env.NODE_ENV.exports.act ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24
+ ❯ ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ render ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ renderComponent src/testUtils/render.tsx:73:3
+     71| 
+     72| export const renderComponent = (children: ReactElement, options?: Part…
+     73|   renderComponentTl(children, {
+       |   ^
+     74|     wrapper: props => <Wrapper options={options} {...props} />,
+     75|   });
+ ❯ src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx:23:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx > Positions > displays content correctly
+{
+  stack: 'AggregateError: \n' +
+    '    at aggregateErrors (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11)\n' +
+    '    at process.env.NODE_ENV.exports.act (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24)\n' +
+    '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25\n' +
+    '    at renderRoot (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:189:26)\n' +
+    '    at render (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:291:10)\n' +
+    '    at renderComponent (/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/testUtils/render.tsx:73:3)\n' +
+    '    at /private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx:10:27\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:155:11\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:752:26\n' +
+    '    at file:///Users/alvin/Documents/Claude/Projects/Venus%20project/venus-earn-demo/node_modules/@vitest/runner/dist/chunk-hooks.js:1897:20',
+  errors: [
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    },
+    {
+      stack: 'ReferenceError: ResizeObserver is not defined\n' +
+        '    at /Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/packages/ui/src/components/ButtonOutline/index.tsx:10:22\n' +
+        '    at Object.react_stack_bottom_frame (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:25989:20)\n' +
+        '    at runWithFiberInDEV (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:874:13)\n' +
+        '    at commitHookEffectListMount (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13249:29)\n' +
+        '    at commitHookPassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:13336:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15484:13)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15718:11)\n' +
+        '    at recursivelyTraversePassiveMountEffects (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15439:11)\n' +
+        '    at commitPassiveMountOnFiber (/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react-dom/cjs/react-dom-client.development.js:15476:11)',
+      message: 'ResizeObserver is not defined',
+      constructor: 'Function<ReferenceError>',
+      name: 'ReferenceError',
+      toString: 'Function<toString>'
+    }
+  ],
+  message: '',
+  constructor: 'Function<AggregateError>',
+  name: 'AggregateError',
+  toString: 'Function<toString>',
+  stacks: [
+    {
+      method: 'aggregateErrors',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 551,
+      column: 11
+    },
+    {
+      method: 'process.env.NODE_ENV.exports.act',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js',
+      line: 897,
+      column: 24
+    },
+    {
+      method: '',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js',
+      line: 46,
+      column: 25
+    },
+    {
+      method: 'renderRoot',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js',
+      line: 189,
+      column: 26
+    },
+    {
+      method: 'render',
+      file: '/Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js',
+      line: 291,
+      column: 10
+    },
+    {
+      method: 'renderComponent',
+      file: '/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/testUtils/render.tsx',
+      line: 73,
+      column: 3
+    },
+    {
+      method: '',
+      file: '/private/var/folders/9_/2j_9mzdx5t3_zxq75v61w3qm0000gn/T/venus-ui-release-20261103-ltpsz8r2/apps/evm/src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx',
+      line: 10,
+      column: 27
+    }
+  ]
+}
+ ❯ aggregateErrors ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:551:11
+ ❯ process.env.NODE_ENV.exports.act ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/react/cjs/react.development.js:897:24
+ ❯ ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/act-compat.js:46:25
+ ❯ renderRoot ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:189:26
+ ❯ render ../../../../../../../../../Users/alvin/Documents/Claude/Projects/Venus project/venus-earn-demo/node_modules/@testing-library/react/dist/pure.js:291:10
+ ❯ renderComponent src/testUtils/render.tsx:73:3
+     71| 
+     72| export const renderComponent = (children: ReactElement, options?: Part…
+     73|   renderComponentTl(children, {
+       |   ^
+     74|     wrapper: props => <Wrapper options={options} {...props} />,
+     75|   });
+ ❯ src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx:10:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+
+  Snapshots  4 obsolete
+             ↳ src/pages/Dashboard/Markets/Positions/__tests__/index.eMode.spec.tsx
+               · Positions - Feature flag enabled: E-mode > displays E-mode banner correctly when user has enabled an E-mode group 1
+             ↳ src/pages/Dashboard/Markets/Positions/__tests__/index.spec.tsx
+               · Positions > displays content correctly 1
+             ↳ src/containers/AccountOverview/__tests__/index.spec.tsx
+               · AccountOverview > displays correctly when user is connected and accordion is expanded 1
+             ↳ src/pages/Dashboard/__tests__/index.spec.tsx
+               · Dashboard > displays content correctly 1
+
+ Test Files  4 failed (4)
+      Tests  5 failed | 3 passed (8)
+   Start at  12:06:55
+   Duration  8.81s (transform 3.80s, setup 697ms, collect 27.92s, tests 748ms, environment 1.83s, prepare 401ms)
+

@@ -1,0 +1,231 @@
+{
+  "breakpoints": [
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 280
+        },
+        {
+          "height": 52,
+          "width": 280
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 1440
+    },
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 280
+        },
+        {
+          "height": 52,
+          "width": 280
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 1280
+    },
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 280
+        },
+        {
+          "height": 52,
+          "width": 280
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 1024
+    },
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 240
+        },
+        {
+          "height": 52,
+          "width": 240
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 768
+    },
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 240
+        },
+        {
+          "height": 52,
+          "width": 240
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 640
+    },
+    {
+      "aboveLine": 48,
+      "belowLine": 48,
+      "buttons": [
+        {
+          "height": 52,
+          "width": 167
+        },
+        {
+          "height": 52,
+          "width": 167
+        }
+      ],
+      "font": "24px",
+      "overflow": 0,
+      "width": 390
+    }
+  ],
+  "types": [
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Supply • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Borrow • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Withdraw • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Repay • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Enable collateral • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Disable collateral • Venus Core",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Supply • Liquidity Hub",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Migrate • Liquidity Hub",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Withdraw • Liquidity Hub",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Close (loss) • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Close (profit) • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Opened • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Reduced (profit) • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Reduced (loss) • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Increase • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Realized PnL • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Supply • Trade",
+      "textHeight": 21
+    },
+    {
+      "contained": true,
+      "height": 48,
+      "text": "Withdraw • Trade",
+      "textHeight": 21
+    }
+  ],
+  "lightMobile": {
+    "allTextContained": true,
+    "overflow": 0,
+    "rows": 89,
+    "width": 390
+  },
+  "lightDesktop": {
+    "allTextContained": true,
+    "overflow": 0,
+    "width": 1440
+  },
+  "selectionAndReset": "passed",
+  "typescript": "passed",
+  "build": "passed",
+  "localOnly": true
+}

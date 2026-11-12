@@ -1,0 +1,440 @@
+[
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "1280px",
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 94.828125,
+        "x": 78,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 136.5703125,
+        "x": 212.828125,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 75.6796875,
+        "x": 389.3984375,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 86.9609375,
+        "x": 505.078125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 1440
+  },
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "1116px",
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 94.828125,
+        "x": 80,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 136.5703125,
+        "x": 214.828125,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 75.6796875,
+        "x": 391.3984375,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 86.9609375,
+        "x": 507.078125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 1280
+  },
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "892px",
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 94.828125,
+        "x": 64,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 136.5703125,
+        "x": 198.828125,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 75.6796875,
+        "x": 375.3984375,
+        "y": 277
+      },
+      {
+        "divider": "\"\"",
+        "width": 86.9609375,
+        "x": 491.078125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 1024
+  },
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "684px",
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 94.828125,
+        "x": 40,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 136.5703125,
+        "x": 174.828125,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 75.6796875,
+        "x": 351.3984375,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 86.9609375,
+        "x": 467.078125,
+        "y": 269
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 768
+  },
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "572px",
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 94.828125,
+        "x": 32,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 136.5703125,
+        "x": 166.828125,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 75.6796875,
+        "x": 343.3984375,
+        "y": 269
+      },
+      {
+        "divider": "\"\"",
+        "width": 86.9609375,
+        "x": 459.078125,
+        "y": 269
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 640
+  },
+  {
+    "cards": [
+      {
+        "border": "1px",
+        "height": 242
+      },
+      {
+        "border": "1px",
+        "height": 242
+      }
+    ],
+    "chart": false,
+    "empty": true,
+    "layoutColumns": "346px",
+    "metricColumns": "165px 165px",
+    "metrics": [
+      {
+        "divider": "none",
+        "width": 165,
+        "x": 20,
+        "y": 249
+      },
+      {
+        "divider": "\"\"",
+        "width": 165,
+        "x": 201,
+        "y": 249
+      },
+      {
+        "divider": "none",
+        "width": 165,
+        "x": 20,
+        "y": 322
+      },
+      {
+        "divider": "\"\"",
+        "width": 165,
+        "x": 201,
+        "y": 322
+      }
+    ],
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "x": 72.5,
+        "y": 277
+      },
+      {
+        "x": 207.328125,
+        "y": 277
+      },
+      {
+        "x": 383.8984375,
+        "y": 277
+      },
+      {
+        "x": 499.578125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 1440
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "x": 80,
+        "y": 277
+      },
+      {
+        "x": 214.828125,
+        "y": 277
+      },
+      {
+        "x": 391.3984375,
+        "y": 277
+      },
+      {
+        "x": 507.078125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 1280
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "x": 64,
+        "y": 277
+      },
+      {
+        "x": 198.828125,
+        "y": 277
+      },
+      {
+        "x": 375.3984375,
+        "y": 277
+      },
+      {
+        "x": 491.078125,
+        "y": 277
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 1024
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "x": 40,
+        "y": 269
+      },
+      {
+        "x": 174.828125,
+        "y": 269
+      },
+      {
+        "x": 351.3984375,
+        "y": 269
+      },
+      {
+        "x": 467.078125,
+        "y": 269
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 768
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "94.8281px 136.57px 75.6797px 86.9609px",
+    "metrics": [
+      {
+        "x": 32,
+        "y": 269
+      },
+      {
+        "x": 166.828125,
+        "y": 269
+      },
+      {
+        "x": 343.3984375,
+        "y": 269
+      },
+      {
+        "x": 459.078125,
+        "y": 269
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 640
+  },
+  {
+    "cards": 2,
+    "chart": false,
+    "empty": true,
+    "metricColumns": "159.5px 159.5px",
+    "metrics": [
+      {
+        "x": 20,
+        "y": 249
+      },
+      {
+        "x": 195.5,
+        "y": 249
+      },
+      {
+        "x": 20,
+        "y": 322
+      },
+      {
+        "x": 195.5,
+        "y": 322
+      }
+    ],
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "overflow": false,
+    "theme": "light",
+    "width": 390
+  }
+]

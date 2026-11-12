@@ -2,6 +2,8 @@ import { Card, CompactTableCardList, InfoIcon, Modal, type Order, Table } from '
 import { EModeGroupList } from 'containers/EModeGroupList';
 import { useTranslation } from 'libs/translations';
 import { useState } from 'react';
+import { useTableBodyScroll } from 'hooks/useTableBodyScroll';
+import './scroll.css';
 import type { EModeGroup } from 'types';
 import type { ExtendedEModeAssetSettings, ModeProps } from './types';
 import { useColumns } from './useColumns';
@@ -11,6 +13,7 @@ export * from './types';
 export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, pool }) => {
   const { t } = useTranslation();
   const columns = useColumns();
+  const scrollRef = useTableBodyScroll(eModeAssetSettings.length, 6);
   const [selectedEModeGroup, setSelectedEModeGroup] = useState<EModeGroup>();
   const closeModal = () => setSelectedEModeGroup(undefined);
 
@@ -28,7 +31,7 @@ export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, 
           {tooltip && <InfoIcon tooltip={tooltip} />}
         </div>
 
-        <div className="venus-core-mode-list px-2">
+        <div ref={scrollRef} className="venus-core-mode-list px-2">
           {/* Card view */}
           <CompactTableCardList
             className="md:hidden lg:block 2xl:hidden"
@@ -48,7 +51,7 @@ export const Mode: React.FC<ModeProps> = ({ title, tooltip, eModeAssetSettings, 
           />
 
           {/* Table  view */}
-          <div className="venus-core-mode-table hidden md:block lg:hidden 2xl:block max-h-104 overflow-y-auto [&_.MuiTableContainer-root]:overflow-visible! [&_thead]:sticky [&_thead]:top-0 [&_thead]:z-10">
+          <div className="venus-core-mode-table hidden md:block lg:hidden 2xl:block ">
             <Table
               className="border-0"
               variant="secondary"

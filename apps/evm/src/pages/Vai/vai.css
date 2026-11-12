@@ -1,0 +1,22 @@
+/* Final VAI reuses the action-card surface and shared internal divider contract. */
+:root[data-glass-variant='lite-experiment-v2'] #root .vai-action-card {
+  background: linear-gradient(var(--venus-surface-card-fill), var(--venus-surface-card-fill)), var(--color-background) !important;
+  border-color: var(--color-blue) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .vai-action-card hr {
+  border-color: var(--venus-form-line, rgb(255 255 255 / 8%)) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .vai-action-card form.space-y-6 > :not(:last-child) {
+  margin-block-start: 0;
+  margin-block-end: calc(var(--spacing) * 4);
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .vai-action-card {
+  background: var(--e-light-surface-raised) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .vai-action-card hr {
+  border-color: var(--venus-form-line, rgb(0 0 0 / 6%)) !important;
+}

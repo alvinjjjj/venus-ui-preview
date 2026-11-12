@@ -1,0 +1,40 @@
+
+ RUN  v3.2.7 /Users/alvin/Documents/Claude/Projects/Venus project/venus-ui-preview/apps/evm
+
+······stdout | src/pages/LiteMarkets/mobile-flow.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/pages/Dashboard/__tests__/index.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/containers/AccountOverview/__tests__/index.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/pages/Dashboard/LitePositions.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stdout | src/pages/Dashboard/__tests__/guest.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stderr | src/pages/Dashboard/LitePositions.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+·stderr | src/pages/Dashboard/__tests__/guest.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/pages/LiteMarkets/mobile-flow.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/pages/Dashboard/__tests__/index.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+stderr | src/containers/AccountOverview/__tests__/index.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+············································
+
+ Test Files  7 passed (7)
+      Tests  51 passed (51)
+   Start at  14:13:08
+   Duration  22.00s (transform 7.75s, setup 2.25s, collect 67.53s, tests 7.88s, environment 6.21s, prepare 800ms)
+

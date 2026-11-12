@@ -43,8 +43,8 @@ it.each([undefined, 'default'] as const)(
   'preserves shortened totals for the %s variant',
   variant => {
     renderComponent(<MarketTotals variant={variant} />);
-    expect(screen.getByText('$1.65B')).toBeVisible();
-    expect(screen.getByText('$1.25B')).toBeVisible();
+    expect(screen.getByText('$1.6B')).toBeVisible();
+    expect(screen.getByText('$1.2B')).toBeVisible();
     expect(document.querySelector('.lite-e2-market-totals')).toBeNull();
     expect(document.querySelector('.lite-e2-total-dot')).toBeNull();
     expect(screen.queryByText('Preview · Simulated values')).toBeNull();

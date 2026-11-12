@@ -1,0 +1,85 @@
+{
+  "figma": "3530:186614",
+  "measurements": [
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 1280,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": 24,
+      "titleVisible": true,
+      "width": 1440
+    },
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 1116,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": 24,
+      "titleVisible": true,
+      "width": 1280
+    },
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 892,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": 24,
+      "titleVisible": true,
+      "width": 1024
+    },
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 684,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": 24,
+      "titleVisible": true,
+      "width": 768
+    },
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 572,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": 24,
+      "titleVisible": true,
+      "width": 640
+    },
+    {
+      "controlToSummary": 24,
+      "dividerToHeader": 48,
+      "dividerWidth": 346,
+      "fontSize": "28px",
+      "lineHeight": "42px",
+      "overflow": 0,
+      "overviewToDivider": 48,
+      "titleToChips": null,
+      "titleVisible": false,
+      "width": 390
+    }
+  ],
+  "light": {
+    "dividerColor": "rgb(212, 221, 232)",
+    "font": "28px",
+    "overflow": 0
+  },
+  "typescript": "passed",
+  "build": "passed",
+  "localOnly": true
+}

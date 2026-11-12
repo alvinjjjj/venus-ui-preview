@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 
-import venusCoreIconSrc from 'assets/img/venusCoreIcon.png';
+import venusCoreIconSrc from 'assets/img/venusCoreIcon.svg';
 import venusFluxIconSrc from 'assets/img/venusFluxIcon.png';
 import type { LiquidityHubYieldGroup } from 'types';
 

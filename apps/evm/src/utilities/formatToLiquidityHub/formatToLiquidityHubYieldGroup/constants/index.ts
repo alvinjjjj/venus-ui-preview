@@ -1,5 +1,5 @@
 import vaultsIconSrc from 'assets/img/vaultsIcon.svg';
-import venusCoreIconSrc from 'assets/img/venusCoreIcon.png';
+import venusCoreIconSrc from 'assets/img/venusCoreIcon.svg';
 import venusFluxIconSrc from 'assets/img/venusFluxIcon.png';
 import type { LiquidityHubYieldGroupType } from 'types';
 

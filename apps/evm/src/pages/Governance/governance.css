@@ -1,0 +1,57 @@
+/* Final Governance: reuse shared panel, divider, type and spacing tokens. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page {
+  min-width: 0;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page .venus-glass-card {
+  /* Keep the shared card tint over a solid base so the starfield cannot bleed through. */
+  background: linear-gradient(var(--venus-surface-card-fill), var(--venus-surface-card-fill)), var(--color-background) !important;
+  border-color: rgb(255 255 255 / 16%) !important;
+  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 18%) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page .venus-governance-search .venus-text-field {
+  /* Standalone search needs the same solid backing it has inside a card. */
+  background: linear-gradient(var(--venus-surface-market-search-fill), var(--venus-surface-market-search-fill)), linear-gradient(var(--venus-surface-card-fill), var(--venus-surface-card-fill)), var(--color-background) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page .venus-governance-search .venus-text-field:not(:focus-within):not(:hover) {
+  border-color: var(--venus-border-card-default);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page :is(hr, [role='separator'], .border-t, .border-l, .border-r) {
+  border-color: var(--venus-form-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page p {
+  font-weight: var(--font-weight-normal);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-proposal h4 {
+  font-weight: var(--font-weight-normal);
+  overflow-wrap: anywhere;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-proposal:is(:hover, :focus-visible) {
+  border-color: var(--color-blue) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-proposal:is(:hover, :focus-visible) h4 {
+  font-weight: var(--font-weight-semibold);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-proposal:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+@media (max-width: 639px) {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-page .venus-glass-card:not(.venus-governance-proposal),
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-governance-proposal > div > div {
+    padding: calc(var(--spacing) * 4);
+  }
+}
+
+/* Same approved Light card surface and rim as Final Prime/Core. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-governance-status .rounded-full > svg {
+  /* Status glyphs stay white on their semantic colored discs. */
+  color: var(--e-light-text-on-accent) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-governance-status-progress > svg > circle:first-of-type {
+  stroke: var(--e-light-border-subtle);
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-governance-page .venus-glass-card {
+  background: var(--e-light-surface-raised) !important;
+  border-color: var(--e-light-border-subtle) !important;
+  box-shadow: 0 4px 12px -4px rgb(31 53 83 / 10%) !important;
+}

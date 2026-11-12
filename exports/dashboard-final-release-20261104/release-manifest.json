@@ -1,0 +1,23 @@
+{
+  "deploymentId": "dpl_B4D36nuXub6VFAZGHNqAyhvPy6Uu",
+  "uniqueUrl": "https://venus-ui-preview-5dt9a008g-alvin-edec.vercel.app",
+  "productionUrl": "https://venus-ui-preview.vercel.app",
+  "state": "READY",
+  "entry": "assets/index-6tyKnsi7.js",
+  "tests": {
+    "files": 6,
+    "passed": 42
+  },
+  "notionUrl": "https://app.notion.com/p/Venus-Dashboard-QC-2026-11-04-40eb4e5771bb80688fabe8112b9e6009",
+  "notionUpdate": "Updated existing page; reloaded final specifications and 3 uploaded live screenshots",
+  "time": "2026-11-04T20:05:47.069515+08:00",
+  "notionScreenshots": 3,
+  "checks": [
+    "42 tests / 6 files passed",
+    "TypeScript passed",
+    "Dashboard Stylelint passed",
+    "Production build passed",
+    "git diff --check passed",
+    "HTTP 200 and matching entry / HTML SHA256"
+  ]
+}

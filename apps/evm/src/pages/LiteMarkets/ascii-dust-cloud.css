@@ -1,0 +1,16 @@
+/* One small cloud in the right gutter; the central market remains clear. */
+.lite-ghost canvas.lite-ascii-dust-cloud {
+  position: absolute;
+  right: 1%; top: 48%;
+  width: calc(var(--spacing) * 64);
+  height: calc(var(--spacing) * 40);
+  color: var(--e-light-text-secondary);
+  pointer-events: none;
+  contain: strict;
+}
+@media (min-width: 1600px) {
+  .lite-ghost canvas.lite-ascii-dust-cloud { right: 4%; top: 49%; }
+}
+@media (max-width: 1100px) {
+  .lite-ghost canvas.lite-ascii-dust-cloud { display: none; }
+}

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { describe, expect, it } from 'vitest';
 import type { Asset, LiquidityHub } from 'types';
+import { describe, expect, it } from 'vitest';
 import { aggregateLiteAssets } from './data';
 
 const n = (value: number) => new BigNumber(value);
@@ -38,12 +38,12 @@ const hub = {
 } as unknown as LiquidityHub;
 
 describe('Lite market aggregation', () => {
-  it('merges by asset address and removes matched Core overlap, retaining market APYs', () => {
+  it('sums every token source without removing allocations from token rows', () => {
     const [row] = aggregateLiteAssets([asset], [hub], '0xpool');
-    expect(row.supply.toNumber()).toBe(110);
-    expect(row.supplyUsd.toNumber()).toBe(11000);
-    expect(row.liquidity.toNumber()).toBe(65);
-    expect(row.liquidityUsd.toNumber()).toBe(6500);
+    expect(row.supply.toNumber()).toBe(150);
+    expect(row.supplyUsd.toNumber()).toBe(15000);
+    expect(row.liquidity.toNumber()).toBe(95);
+    expect(row.liquidityUsd.toNumber()).toBe(9500);
     expect(row.markets.map(m => m.apy.toNumber())).toEqual([2, 3]);
   });
   it('does not merge the same symbol at different token addresses', () => {
@@ -56,7 +56,12 @@ describe('Lite market aggregation', () => {
   it('does not count a duplicate source twice', () => {
     const [row] = aggregateLiteAssets([asset, asset], [hub, hub], '0xpool');
     expect(row.markets).toHaveLength(2);
-    expect(row.supply.toNumber()).toBe(110);
+    expect(row.supply.toNumber()).toBe(150);
+  });
+  it('removes internal allocation overlap only from protocol totals', () => {
+    const [row] = aggregateLiteAssets([asset], [hub], '0xpool', [], { protocolTotals: true });
+    expect(row.supplyUsd.toNumber()).toBe(11000);
+    expect(row.liquidityUsd.toNumber()).toBe(6500);
   });
   it('handles no data', () => {
     expect(aggregateLiteAssets([], [], '0xpool')).toEqual([]);

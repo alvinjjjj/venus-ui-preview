@@ -1,0 +1,60 @@
+/* Standalone comparison layout; all sizing reuses the existing UI scale. */
+.ascii-gradient-study {
+  min-height: 100svh;
+  padding: calc(var(--spacing) * 12) 5%;
+  background: var(--color-background);
+  color: var(--color-white);
+}
+.ascii-gradient-study[data-theme='light'] {
+  background: var(--color-grey-50, #f4f7fb);
+  color: var(--color-grey-900, #19283f);
+}
+.ascii-gradient-study-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 6);
+}
+.ascii-gradient-study h1 { font-size: var(--text-3xl); font-weight: 600; }
+.ascii-gradient-study p { line-height: var(--leading-normal); }
+.ascii-gradient-study-header p { margin-top: calc(var(--spacing) * 2); opacity: .7; }
+.ascii-gradient-study nav { display: flex; gap: calc(var(--spacing) * 4); align-items: center; }
+.ascii-gradient-study nav :is(button, a) {
+  border: 1px solid var(--color-grey);
+  border-radius: calc(var(--spacing) * 2);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ascii-gradient-study nav :is(button, a):hover { background: color-mix(in srgb, currentColor 6%, transparent); }
+.ascii-gradient-study nav :is(button, a):focus-visible { outline: 2px solid var(--color-blue); outline-offset: var(--spacing); }
+.ascii-gradient-study-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 8);
+  margin-top: calc(var(--spacing) * 24);
+}
+.ascii-gradient-study figure { min-width: 0; }
+.ascii-gradient-study-orb {
+  position: relative;
+  width: calc(var(--spacing) * 52);
+  height: calc(var(--spacing) * 52);
+  margin: calc(var(--spacing) * 12) auto calc(var(--spacing) * 16);
+}
+.ascii-gradient-study figcaption {
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  padding-top: calc(var(--spacing) * 5);
+}
+.ascii-gradient-study-token { font-size: var(--text-sm); opacity: .7; }
+.ascii-gradient-study h2 { font-size: var(--text-xl); font-weight: 600; margin-block: var(--spacing) calc(var(--spacing) * 2); }
+.ascii-gradient-study figcaption p { font-size: var(--text-sm); opacity: .75; max-width: 28ch; }
+.ascii-gradient-study-note { margin-top: calc(var(--spacing) * 12); font-size: var(--text-sm); opacity: .6; }
+@media (max-width: 1100px) {
+  .ascii-gradient-study-options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: calc(var(--spacing) * 12); }
+}
+@media (max-width: 599px) {
+  .ascii-gradient-study { padding-block: calc(var(--spacing) * 6); }
+  .ascii-gradient-study-header { align-items: flex-start; flex-direction: column; }
+  .ascii-gradient-study h1 { font-size: var(--text-2xl); }
+  .ascii-gradient-study-options { grid-template-columns: minmax(0, 1fr); margin-top: calc(var(--spacing) * 12); }
+}

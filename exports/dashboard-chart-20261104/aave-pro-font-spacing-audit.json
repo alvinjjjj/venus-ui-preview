@@ -1,0 +1,288 @@
+{
+  "source": "https://pro.aave.com/",
+  "measuredAt": "2026-11-04",
+  "desktop": {
+    "apy": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "18px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "height": 21.59375,
+      "lineHeight": "21.6px",
+      "padding": "0px",
+      "width": 62.078125
+    },
+    "card": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "20px",
+      "height": 225,
+      "lineHeight": "normal",
+      "padding": "20px",
+      "width": 347
+    },
+    "cardsGrid": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "32px",
+      "height": 225,
+      "lineHeight": "normal",
+      "padding": "0px",
+      "width": 1105
+    },
+    "dataValue": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "4px",
+      "height": 14,
+      "lineHeight": "14px",
+      "padding": "0px",
+      "width": 93.15625
+    },
+    "filter": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "height": 0,
+      "lineHeight": "normal",
+      "padding": "0px",
+      "width": 0
+    },
+    "filterLabel": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "height": 14,
+      "lineHeight": "14px",
+      "padding": "0px",
+      "width": 46.1484375
+    },
+    "group": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "32px",
+      "height": 289,
+      "lineHeight": "normal",
+      "padding": "0px",
+      "width": 1105
+    },
+    "groupChildren": [
+      {
+        "border": "0px",
+        "class": "pzw0cq_section",
+        "gap": "32px",
+        "margin": "0px",
+        "padding": "0px",
+        "tag": "SECTION"
+      },
+      {
+        "border": "0px",
+        "class": "pzw0cq_divider",
+        "gap": "normal",
+        "margin": "48px 0px",
+        "padding": "0px",
+        "tag": "DIV"
+      },
+      {
+        "border": "0px",
+        "class": "pzw0cq_section",
+        "gap": "32px",
+        "margin": "0px",
+        "padding": "0px",
+        "tag": "SECTION"
+      },
+      {
+        "border": "0px",
+        "class": "pzw0cq_divider",
+        "gap": "normal",
+        "margin": "48px 0px",
+        "padding": "0px",
+        "tag": "DIV"
+      }
+    ],
+    "groupHeading": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "24px",
+      "fontWeight": "500",
+      "gap": "8px",
+      "height": 32,
+      "lineHeight": "28.8px",
+      "padding": "0px",
+      "width": 1105
+    },
+    "headingDescription": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "8px",
+      "height": 60.4921875,
+      "lineHeight": "normal",
+      "padding": "0px",
+      "width": 944.21875
+    },
+    "intro": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "height": 18.8984375,
+      "lineHeight": "18.9px",
+      "padding": "0px",
+      "width": 900
+    },
+    "label": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "gap": "4px",
+      "height": 14,
+      "lineHeight": "14px",
+      "padding": "0px",
+      "width": 114.0234375
+    },
+    "marketName": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "14px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "height": 18,
+      "lineHeight": "18px",
+      "padding": "0px",
+      "width": 32.1015625
+    },
+    "page": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "height": 8034.796875,
+      "lineHeight": "normal",
+      "padding": "104px 32px 128px",
+      "width": 1169
+    },
+    "pageContent": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "48px",
+      "height": 7802.796875,
+      "lineHeight": "normal",
+      "padding": "0px",
+      "width": 1105
+    },
+    "title": {
+      "font": "Inter, \"Inter Fallback\"",
+      "fontSize": "28px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "height": 33.59375,
+      "lineHeight": "33.6px",
+      "padding": "0px",
+      "width": 944.21875
+    },
+    "viewport": 1440
+  },
+  "mobile": {
+    "assetParents": [],
+    "headings": [
+      {
+        "classes": "",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": 0,
+        "lineHeight": "13.2px",
+        "margin": "0px",
+        "padding": "5.4px 10px",
+        "tag": "H3",
+        "text": "Explore",
+        "width": 0
+      },
+      {
+        "classes": "",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": 0,
+        "lineHeight": "13.2px",
+        "margin": "0px",
+        "padding": "5.4px 10px",
+        "tag": "H3",
+        "text": "Protocol",
+        "width": 0
+      },
+      {
+        "classes": "",
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": 0,
+        "lineHeight": "13.2px",
+        "margin": "0px",
+        "padding": "5.4px 10px",
+        "tag": "H3",
+        "text": "Support",
+        "width": 0
+      },
+      {
+        "classes": "",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": 0,
+        "lineHeight": "18px",
+        "margin": "0px",
+        "padding": "0px",
+        "tag": "H2",
+        "text": "Introducing Earn",
+        "width": 0
+      },
+      {
+        "classes": "a2_z3a_heading",
+        "fontSize": "24px",
+        "fontWeight": "500",
+        "gap": "normal",
+        "height": 28.796875,
+        "lineHeight": "28.8px",
+        "margin": "0px",
+        "padding": "0px",
+        "tag": "H1",
+        "text": "Earn",
+        "width": 347
+      }
+    ],
+    "main": {
+      "classes": "",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "height": 1651.59375,
+      "lineHeight": "normal",
+      "margin": "0px",
+      "padding": "76px 16px 128px",
+      "tag": "MAIN",
+      "text": "EarnDeposit assets to liquidity hubs. Ea",
+      "width": 379
+    },
+    "pageContent": {
+      "classes": "_1UeGwG_pageContent",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "28px",
+      "height": 1447.59375,
+      "lineHeight": "normal",
+      "margin": "0px",
+      "padding": "0px",
+      "tag": "DIV",
+      "text": "EarnDeposit assets to liquidity hubs. Ea",
+      "width": 347
+    },
+    "width": 390
+  }
+}

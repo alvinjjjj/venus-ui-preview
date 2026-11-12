@@ -1,48 +1,94 @@
-import { type CSSProperties, useLayoutEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useIsPresent, useReducedMotion } from 'motion/react';
+import { type CSSProperties, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './glass.css';
-import { AnimatePresence, motion, useIsPresent, useReducedMotion } from 'motion/react';
 
-const NavigationPresence = ({ children, animated }: { children: React.ReactNode; animated: boolean }) => {
+const NavigationPresence = ({
+  children,
+  animated,
+}: { children: React.ReactNode; animated: boolean }) => {
   const present = useIsPresent();
-  return <motion.div
-    className="relative z-50 hidden min-w-full md:block"
-    inert={!present}
-    style={{ pointerEvents: present ? 'auto' : 'none' }}
-    initial={animated ? 'hidden' : false}
-    animate="visible"
-    exit="closed"
-    variants={{
-      hidden: { y: -4 },
-      visible: { y: 0, transition: { duration: animated ? 0.22 : 0, ease: 'easeOut' } },
-      closed: { y: animated ? -2 : 0, transition: { duration: animated ? 0.14 : 0, ease: 'easeOut' } },
-    }}
-  >{children}</motion.div>;
+  return (
+    <motion.div
+      className="relative z-50 hidden min-w-full md:block"
+      inert={!present}
+      style={{ pointerEvents: present ? 'auto' : 'none' }}
+      initial={animated ? 'hidden' : false}
+      animate="visible"
+      exit="closed"
+      variants={{
+        hidden: { y: -4 },
+        visible: { y: 0, transition: { duration: animated ? 0.22 : 0, ease: 'easeOut' } },
+        closed: {
+          y: animated ? -2 : 0,
+          transition: { duration: animated ? 0.14 : 0, ease: 'easeOut' },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 };
 
-const FloatingPresence = ({ children, animated, position, className, onEscape }: {
+const FloatingPresence = ({
+  children,
+  animated,
+  position,
+  className,
+  onEscape,
+  manageContentScroll,
+}: {
   children: React.ReactNode;
   animated: boolean;
   position: CSSProperties;
   className: string;
   onEscape: () => void;
+  manageContentScroll: boolean;
 }) => {
   const present = useIsPresent();
-  return <div className="fixed z-100001" style={{ ...position, pointerEvents: present ? 'auto' : 'none' }} inert={!present}>
-    <motion.div
-      className={className}
-      style={{ maxHeight: position.maxHeight, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
-      initial={animated ? { opacity: 0, y: -4 } : false}
-      animate={{ opacity: 1, y: 0, transition: { duration: animated ? .22 : 0, ease: 'easeOut' } }}
-      exit={{ opacity: 0, y: animated ? -2 : 0, transition: { duration: animated ? .14 : 0, ease: 'easeOut' } }}
-      onKeyDown={event => {
-        if (event.key === 'Escape') {
-          event.stopPropagation();
-          onEscape();
-        }
-      }}
-    ><div className="venus-dropdown-scroll-area min-h-0 overflow-y-auto">{children}</div></motion.div>
-  </div>;
+  return (
+    <div
+      className="fixed z-100001"
+      style={{ ...position, pointerEvents: present ? 'auto' : 'none' }}
+      inert={!present}
+    >
+      <motion.div
+        className={className}
+        style={{
+          maxHeight: position.maxHeight,
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+        initial={animated ? { opacity: 0, y: -4 } : false}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { duration: animated ? 0.22 : 0, ease: 'easeOut' },
+        }}
+        exit={{
+          opacity: 0,
+          y: animated ? -2 : 0,
+          transition: { duration: animated ? 0.14 : 0, ease: 'easeOut' },
+        }}
+        onKeyDown={event => {
+          if (event.key === 'Escape') {
+            event.stopPropagation();
+            onEscape();
+          }
+        }}
+      >
+        <div
+          className={cn(
+            'venus-dropdown-scroll-area min-h-0',
+            manageContentScroll ? 'flex flex-col overflow-hidden' : 'overflow-y-auto',
+          )}
+        >
+          {children}
+        </div>
+      </motion.div>
+    </div>
+  );
 };
 
 import { cn } from '@venusprotocol/ui';
@@ -65,14 +111,24 @@ export const Dropdown = ({
   variant = 'primary',
   menuTitle,
   menuPosition = 'left',
+  menuPlacement = 'auto',
   matchTriggerWidth = false,
   triggerOnHover = false,
   modalPortalContainer,
+  manageContentScroll = false,
+  onOpenChange,
 }: DropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const onOpenChangeRef = useRef(onOpenChange);
+  onOpenChangeRef.current = onOpenChange;
+  useEffect(() => {
+    onOpenChangeRef.current?.(isDropdownOpen);
+  }, [isDropdownOpen]);
   const reduceMotion = useReducedMotion();
-  const animateMenu = !reduceMotion &&
-    typeof document !== 'undefined' && ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '');
+  const animateMenu =
+    !reduceMotion &&
+    typeof document !== 'undefined' &&
+    ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '');
   const anchorRef = useRef<HTMLDivElement>(null);
   const [headerInset, setHeaderInset] = useState<number>();
   const [position, setPosition] = useState({
@@ -87,7 +143,10 @@ export const Dropdown = ({
     const anchor = anchorRef.current;
     const header = anchor?.closest<HTMLElement>('.venus-header-row');
     if (
-      !isDropdownOpen || !triggerOnHover || !isMdOrUp || !anchor ||
+      !isDropdownOpen ||
+      !triggerOnHover ||
+      !isMdOrUp ||
+      !anchor ||
       !header?.closest('[data-figma-header]') ||
       document.documentElement.dataset.glassVariant !== 'lite-experiment-v2'
     ) {
@@ -98,7 +157,9 @@ export const Dropdown = ({
     // Bridge the space below differently sized triggers to one header baseline.
     // The shared header CSS adds the approved gap between that baseline and the panel.
     const update = () => {
-      setHeaderInset(Math.max(0, header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().bottom));
+      setHeaderInset(
+        Math.max(0, header.getBoundingClientRect().bottom - anchor.getBoundingClientRect().bottom),
+      );
     };
     update();
     window.addEventListener('resize', update);
@@ -115,15 +176,26 @@ export const Dropdown = ({
     const update = () => {
       const rect = anchorRef.current?.getBoundingClientRect();
       if (!rect) return;
-      const useTriggerWidth = matchTriggerWidth && (
-        ['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '') ||
-        document.documentElement.dataset.glassVariant === 'lite-experiment-v2'
+      const useTriggerWidth =
+        matchTriggerWidth &&
+        (['v5', 'v6'].includes(document.documentElement.dataset.glassPreview ?? '') ||
+          document.documentElement.dataset.glassVariant === 'lite-experiment-v2');
+      const width = Math.min(
+        useTriggerWidth ? rect.width : Math.max(rect.width, 240),
+        window.innerWidth - 32,
       );
-      const width = Math.min(useTriggerWidth ? rect.width : Math.max(rect.width, 240), window.innerWidth - 32);
       const below = window.innerHeight - rect.bottom - 16;
       const above = rect.top - 16;
-      const height = Math.min(320, Math.max(below, above));
-      const top = below >= Math.min(240, above) ? rect.bottom + 8 : rect.top - 8;
+      const openAbove = menuPlacement === 'top' || below < Math.min(240, above);
+      const height = Math.min(
+        manageContentScroll ? 6 * 48 + 2 * 48 + 32 : 320,
+        manageContentScroll
+          ? Math.max(0, openAbove ? above : below)
+          : menuPlacement === 'top'
+            ? Math.max(0, above)
+            : Math.max(below, above),
+      );
+      const top = openAbove ? rect.top - 8 : rect.bottom + 8;
       const nextPosition = {
         top,
         left: Math.max(
@@ -135,7 +207,7 @@ export const Dropdown = ({
         ),
         width,
         maxHeight: height,
-        transform: below >= Math.min(240, above) ? 'none' : 'translateY(-100%)',
+        transform: openAbove ? 'translateY(-100%)' : 'none',
       };
       setPosition(current =>
         current.top === nextPosition.top &&
@@ -154,7 +226,16 @@ export const Dropdown = ({
       window.removeEventListener('resize', update);
       window.removeEventListener('scroll', update, true);
     };
-  }, [isDropdownOpen, triggerOnHover, menuPosition, matchTriggerWidth, optionsDom, isMdOrUp]);
+  }, [
+    isDropdownOpen,
+    triggerOnHover,
+    menuPosition,
+    menuPlacement,
+    matchTriggerWidth,
+    manageContentScroll,
+    optionsDom,
+    isMdOrUp,
+  ]);
   const handleToggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
@@ -197,40 +278,46 @@ export const Dropdown = ({
 
           {/* MD and up menu */}
           <AnimatePresence>
-          {isDropdownOpen && triggerOnHover && (
-            <NavigationPresence animated={animateMenu}>
-              <div
-                className={cn('pt-2 absolute min-w-full', menuPosition === 'right' && 'right-0')}
-                style={headerInset === undefined ? undefined : { paddingTop: headerInset }}
-              >
-                <motion.div
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1, transition: { duration: animateMenu ? 0.22 : 0, ease: 'easeOut' } },
-                    closed: { opacity: 0, transition: { duration: animateMenu ? 0.14 : 0, ease: 'easeOut' } },
-                  }}
-                  className={cn(
-                    'venus-dropdown-surface border-lightGrey bg-cards overflow-visible border shadow',
-                    variant === 'quaternary' ? 'rounded-xl' : 'rounded-lg',
-                    menuClassName,
-                  )}
+            {isDropdownOpen && triggerOnHover && (
+              <NavigationPresence animated={animateMenu}>
+                <div
+                  className={cn('pt-2 absolute min-w-full', menuPosition === 'right' && 'right-0')}
+                  style={headerInset === undefined ? undefined : { paddingTop: headerInset }}
                 >
-                  {!!menuTitle && (
-                    <div
-                      className={cn(
-                        'text-grey w-full py-3 text-xs',
-                        variant === 'primary' ? 'px-3 sm:px-4' : 'px-3',
-                      )}
-                    >
-                      {menuTitle}
-                    </div>
-                  )}
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: { duration: animateMenu ? 0.22 : 0, ease: 'easeOut' },
+                      },
+                      closed: {
+                        opacity: 0,
+                        transition: { duration: animateMenu ? 0.14 : 0, ease: 'easeOut' },
+                      },
+                    }}
+                    className={cn(
+                      'venus-dropdown-surface border-lightGrey bg-cards overflow-visible border shadow',
+                      variant === 'quaternary' ? 'rounded-xl' : 'rounded-lg',
+                      menuClassName,
+                    )}
+                  >
+                    {!!menuTitle && (
+                      <div
+                        className={cn(
+                          'text-grey w-full py-3 text-xs',
+                          variant === 'primary' ? 'px-3 sm:px-4' : 'px-3',
+                        )}
+                      >
+                        {menuTitle}
+                      </div>
+                    )}
 
-                  {optionsDom({ setIsDropdownOpen, optionClassName })}
-                </motion.div>
-              </div>
-            </NavigationPresence>
-          )}
+                    {optionsDom({ setIsDropdownOpen, optionClassName })}
+                  </motion.div>
+                </div>
+              </NavigationPresence>
+            )}
           </AnimatePresence>
         </div>
       </div>
@@ -239,23 +326,28 @@ export const Dropdown = ({
         !triggerOnHover &&
         createPortal(
           <>
-            {isDropdownOpen && <div className="fixed inset-0 z-100000" onClick={() => setIsDropdownOpen(false)} />}
+            {isDropdownOpen && (
+              <div className="fixed inset-0 z-100000" onClick={() => setIsDropdownOpen(false)} />
+            )}
             <AnimatePresence>
-            {isDropdownOpen && <FloatingPresence
-              animated={animateMenu}
-              position={position}
-              className={cn(
-                'venus-dropdown-surface overflow-auto rounded-lg border bg-cards p-1',
-                menuClassName,
+              {isDropdownOpen && (
+                <FloatingPresence
+                  animated={animateMenu}
+                  manageContentScroll={manageContentScroll}
+                  position={position}
+                  className={cn(
+                    'venus-dropdown-surface overflow-auto rounded-lg border bg-cards p-1',
+                    menuClassName,
+                  )}
+                  onEscape={() => {
+                    setIsDropdownOpen(false);
+                    anchorRef.current?.querySelector('button')?.focus();
+                  }}
+                >
+                  {!!menuTitle && <div className="px-3 py-3 text-grey text-xs">{menuTitle}</div>}
+                  {optionsDom({ setIsDropdownOpen, optionClassName })}
+                </FloatingPresence>
               )}
-              onEscape={() => {
-                  setIsDropdownOpen(false);
-                  anchorRef.current?.querySelector('button')?.focus();
-              }}
-            >
-              {!!menuTitle && <div className="px-3 py-3 text-grey text-xs">{menuTitle}</div>}
-              {optionsDom({ setIsDropdownOpen, optionClassName })}
-            </FloatingPresence>}
             </AnimatePresence>
           </>,
           document.body,
@@ -267,7 +359,10 @@ export const Dropdown = ({
         backdropClassName="z-100000"
         rootClassName="z-100001"
         noHorizontalPadding
-        className="venus-dropdown-modal"
+        className={cn(
+          'venus-dropdown-modal',
+          manageContentScroll && 'venus-dropdown-modal--managed',
+        )}
         onBlur={onBlur}
         title={menuTitle as React.ComponentProps<typeof Modal>['title']}
         portalContainer={modalPortalContainer}

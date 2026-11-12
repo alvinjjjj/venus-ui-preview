@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { useGetLiquidityHubs, useGetPool, useGetVaults } from 'clients/api';
 import { Delimiter, Page, Spinner } from 'components';
 import { routes } from 'constants/routing';
@@ -11,8 +12,9 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Navigate, useSearchParams } from 'react-router';
 import { ChainId } from 'types';
 import { AccountOverview } from '../../containers/AccountOverview';
+import { bStockPreviewBalances } from './BStockPositions';
 import { Guide } from './Guide';
-import { LitePositions } from './LitePositions';
+import { LitePositions, getDashboardHubs } from './LitePositions';
 import { getNewPreviewPool } from './Markets/getNewPreviewPool';
 import { Transactions } from './Transactions';
 import DashboardEyeIcon from './assets/eye.svg?react';
@@ -32,10 +34,11 @@ export const Dashboard: React.FC = () => {
     }
     return <Navigate to={{ pathname: routes.landing.path, search: next.toString() }} replace />;
   }
-  return <ConnectedDashboard />;
+  return <DashboardContent />;
 };
 
-const ConnectedDashboard: React.FC = () => {
+export const DashboardContent = ({ embedded = false }: { embedded?: boolean }) => {
+  const Container = embedded ? 'div' : Page;
   const { corePoolComptrollerContractAddress } = useChain();
   const { chainId } = useChainId();
   const [, setSearchParams] = useSearchParams();
@@ -104,11 +107,43 @@ const ConnectedDashboard: React.FC = () => {
     return <Spinner />;
   }
 
+  const summaryHubs = getDashboardHubs(
+    liquidityHubs,
+    !!accountAddress,
+    isDemoLoggedIn && isFundedDemoAddress(accountAddress),
+  );
+  const fundedDemo = isDemoLoggedIn && isFundedDemoAddress(accountAddress);
+  const spokePreviewTotals = Object.values(bStockPreviewBalances).reduce(
+    (sum, position) => ({
+      supplyCents: sum.supplyCents.plus(position.supplyCents),
+      borrowCents: sum.borrowCents.plus(position.borrowCents),
+      yearlyEarningsCents: sum.yearlyEarningsCents.plus(position.yearlyEarningsCents),
+    }),
+    {
+      supplyCents: new BigNumber(0),
+      borrowCents: new BigNumber(0),
+      yearlyEarningsCents: new BigNumber(0),
+    },
+  );
+  const balanceAdjustment = isFinalDashboard
+    ? {
+        supplyCents: summaryHubs.reduce(
+          (sum, hub) => sum.plus(hub.userSupplyBalanceCents ?? 0),
+          new BigNumber(fundedDemo ? spokePreviewTotals.supplyCents : 0),
+        ),
+        borrowCents: new BigNumber(fundedDemo ? spokePreviewTotals.borrowCents : 0),
+        yearlyEarningsCents: summaryHubs.reduce(
+          (sum, hub) => sum.plus(hub.userYearlyEarningsCents ?? 0),
+          new BigNumber(fundedDemo ? spokePreviewTotals.yearlyEarningsCents : 0),
+        ),
+      }
+    : undefined;
   const accountOverview = (
     <AccountOverview
       className="venus-glass-card glass-dashboard-overview w-full"
       accountAddress={accountAddress}
       previewPool={previewPool}
+      balanceAdjustment={balanceAdjustment}
       splitLayout
       chartColor={isFinalDashboard ? 'var(--color-blue)' : undefined}
       chartVariant={isFinalDashboard ? 'line' : undefined}
@@ -126,7 +161,7 @@ const ConnectedDashboard: React.FC = () => {
   );
 
   return (
-    <Page>
+    <Container>
       <div className="dashboard-page contents lite-dashboard">
         <div
           className={
@@ -162,7 +197,7 @@ const ConnectedDashboard: React.FC = () => {
           <Transactions allowDemoPreview />
         </section>
       </div>
-    </Page>
+    </Container>
   );
 };
 

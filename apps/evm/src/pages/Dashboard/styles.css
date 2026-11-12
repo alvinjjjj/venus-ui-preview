@@ -35,7 +35,7 @@
   overflow: hidden;
 }
 
-#root .lite-dashboard [data-token-symbol] {
+:is(#root, .venus-account-panel) .lite-dashboard [data-token-symbol] {
   font-weight: 400;
 }
 
@@ -43,57 +43,57 @@
   background-color: var(--color-background-active);
 }
 
-#root .lite-dashboard .glass-dashboard-overview,
-#root .lite-dashboard .glass-dashboard-tabs {
+:is(#root, .venus-account-panel) .lite-dashboard .glass-dashboard-overview,
+:is(#root, .venus-account-panel) .lite-dashboard .glass-dashboard-tabs {
   background-color: transparent;
 }
 
 /* Final Lite keeps a single 24px rhythm from the overview through Positions.
    Reuse the existing spacing scale without changing Pro or earlier previews. */
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview > .grid {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .glass-dashboard-overview > .grid {
   align-items: start;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview .venus-account-performance-row {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .glass-dashboard-overview .venus-account-performance-row {
   height: auto;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .glass-dashboard-overview .venus-account-performance-cells {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .glass-dashboard-overview .venus-account-performance-cells {
   flex-wrap: wrap;
   gap: calc(var(--spacing) * 6);
   overflow: visible;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Positions'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard [aria-label='Positions'] {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Positions'] > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard [aria-label='Positions'] > * {
   margin-block: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard [aria-label='Position market'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard [aria-label='Position market'] {
   gap: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-picker {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .dashboard-position-picker {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-picker > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .dashboard-position-picker > * {
   margin-block: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-health-summary {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .dashboard-health-summary {
   margin-bottom: calc(var(--spacing) * 6);
 }
 
 /* Trial a compact 12px inset for Lite Hub holdings, using the existing spacing scale. */
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .dashboard-position-card {
   padding: calc(var(--spacing) * 3);
   gap: calc(var(--spacing) * 6);
 }
@@ -117,22 +117,22 @@
   font-weight: 400;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard .dashboard-position-card > .flex {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard .dashboard-position-card > .flex {
   gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root .lite-dashboard > section[aria-labelledby='lite-transactions-title'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root, .venus-account-panel) .lite-dashboard > section[aria-labelledby='lite-transactions-title'] {
   margin-top: calc(var(--spacing) * 6);
 }
 
 /* Match Lite Markets' token amount / fiat value hierarchy using existing tokens. */
-#root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='primary'] {
+:is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table [data-layered-value='primary'] {
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
   font-weight: 400;
 }
 
-#root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='secondary'] {
+:is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table [data-layered-value='secondary'] {
   font-size: var(--text-sm);
   line-height: var(--text-sm--line-height);
   font-weight: 400;

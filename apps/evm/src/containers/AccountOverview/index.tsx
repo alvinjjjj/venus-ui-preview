@@ -39,12 +39,13 @@ import { DollarValueChange } from './DollarValueChange';
 import { GridCellGroup } from './GridCellGroup';
 import { PerformanceChart } from './PerformanceChart';
 import { testIds } from './testIds';
-import { useExtractData } from './useExtractData';
+import { type AccountBalanceAdjustment, useExtractData } from './useExtractData';
 
 export interface AccountOverviewProps extends React.HTMLAttributes<HTMLDivElement> {
   showGraph?: boolean;
   accountAddress?: Address;
   previewPool?: Pool;
+  balanceAdjustment?: AccountBalanceAdjustment;
   splitLayout?: boolean;
   chartColor?: string;
   chartVariant?: 'area' | 'line';
@@ -56,6 +57,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
   showGraph = true,
   accountAddress,
   previewPool,
+  balanceAdjustment,
   splitLayout = false,
   chartColor,
   chartVariant,
@@ -160,6 +162,7 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
   const { userDailyEarningsCents, userNetApyPercentage, userTotalVaultStakeCents } = useExtractData(
     {
       pool,
+      balanceAdjustment,
       vaults,
       xvsPriceCents,
       vaiPriceCents,
@@ -170,6 +173,8 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     pool && accountAddress
       ? new BigNumber(pool.userSupplyBalanceCents || 0)
           .plus(userTotalVaultStakeCents || 0)
+          .plus(balanceAdjustment?.supplyCents ?? 0)
+          .minus(balanceAdjustment?.borrowCents ?? 0)
           .minus(pool.userBorrowBalanceCents || 0)
           .minus(pool.vai?.userBorrowBalanceCents || 0)
           .toNumber()
@@ -263,11 +268,17 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     },
     {
       label: t('dashboard.overview.summary.cellGroup.totalSupply'),
-      value: formatCentsToReadableValue({ value: pool?.userSupplyBalanceCents }),
+      value: formatCentsToReadableValue({
+        value: pool?.userSupplyBalanceCents
+          ?.plus(balanceAdjustment?.supplyCents ?? 0)
+          .plus(balanceAdjustment ? userTotalVaultStakeCents ?? 0 : 0),
+      }),
     },
     {
       label: t('dashboard.overview.summary.cellGroup.totalBorrow'),
-      value: formatCentsToReadableValue({ value: pool?.userBorrowBalanceCents }),
+      value: formatCentsToReadableValue({
+        value: pool?.userBorrowBalanceCents?.plus(balanceAdjustment?.borrowCents ?? 0),
+      }),
     },
   ];
 
@@ -278,16 +289,30 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
     });
   }
 
-  if (pool?.vai?.userBorrowBalanceCents) {
-    summaryCells.push({
-      label: t('dashboard.overview.summary.cellGroup.mintedVai'),
-      value: formatCentsToReadableValue({ value: pool?.vai?.userBorrowBalanceCents }),
+  const mintedVaiCell: CellProps | undefined = pool?.vai?.userBorrowBalanceCents
+    ? {
+        label: t('dashboard.overview.summary.cellGroup.mintedVai'),
+        value: formatCentsToReadableValue({ value: pool?.vai?.userBorrowBalanceCents }),
+      }
+    : undefined;
+
+  if (mintedVaiCell) {
+    summaryCells.push(mintedVaiCell);
+  }
+
+  const showMintedVai = !!accountAddress && !!mintedVaiCell;
+  const overviewSummaryCells = summaryCells.slice(0, 2);
+
+  if (showMintedVai && mintedVaiCell) {
+    overviewSummaryCells.push({
+      ...mintedVaiCell,
+      className: 'dashboard-overview-minted-vai',
     });
   }
 
   const overviewCells = [
     ...graphCells,
-    ...summaryCells.slice(0, 2).map(cell => ({
+    ...overviewSummaryCells.map(cell => ({
       ...cell,
       value: <HidableUserBalance>{cell.value}</HidableUserBalance>,
     })),
@@ -367,7 +392,13 @@ export const AccountOverview: React.FC<AccountOverviewProps> = ({
           </div>
 
           {splitLayout ? (
-            <CellGroup cells={overviewCells} className="venus-account-performance-cells" />
+            <CellGroup
+              cells={overviewCells}
+              className={cn(
+                'venus-account-performance-cells',
+                showMintedVai && 'dashboard-overview-with-vai',
+              )}
+            />
           ) : (
             <button
               className={cn(

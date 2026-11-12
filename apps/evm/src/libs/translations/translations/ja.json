@@ -256,10 +256,10 @@
       "logoAlt": "Primeロゴ",
       "tooltip": {
         "calculatorLink": "Prime報酬を計算",
-        "primeBorrowSimulation": "Primeにより、ユーザーの借入平均{{borrowBalance}}とボールト預入{{xvsStaked}}に基づきAPYがブーストされます。",
+        "primeBorrowSimulation": "<PrimeLink>Prime</PrimeLink>により、ユーザーの借入平均{{borrowBalance}}とボールト預入{{xvsStaked}}に基づきAPYがブーストされます。",
         "primeDocLink": "詳細を見る",
         "primeMarket": "PrimeによりAPYがブーストされます。",
-        "primeSupplySimulation": "Primeにより、ユーザーの供給平均{{supplyBalance}}とボールト預入{{xvsStaked}}に基づきAPYがブーストされます。"
+        "primeSupplySimulation": "<PrimeLink>Prime</PrimeLink>により、ユーザーの供給平均{{supplyBalance}}とボールト預入{{xvsStaked}}に基づきAPYがブーストされます。"
       }
     }
   },
@@ -461,7 +461,8 @@
       "allCategories": "すべてのカテゴリー",
       "nCategories_other": "{{count}} 件のカテゴリー",
       "reset": "リセット",
-      "title": "カテゴリーを選択"
+      "title": "カテゴリーを選択",
+      "search": "カテゴリーを検索"
     },
     "pausedAssetsToggle": {
       "label": "停止中の資産"
@@ -2396,7 +2397,10 @@
       "resetFilters": "フィルターをリセット",
       "selectCategories": "カテゴリを選択",
       "selectStates": "状態を選択",
-      "selectVenues": "プラットフォームを選択"
+      "selectVenues": "プラットフォームを選択",
+      "searchCategories": "カテゴリーを検索",
+      "searchVenues": "プラットフォームを検索",
+      "searchStates": "状態を検索"
     },
     "header": "ボールト",
     "modals": {
@@ -2761,5 +2765,29 @@
   },
   "yieldsGroups": {
     "protocol": "プロトコル"
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "借入資産を検索",
+      "searchCollaterals": "担保を検索",
+      "searchPools": "プールを検索",
+      "selectLoanAssets": "借入資産を選択",
+      "selectCollaterals": "担保を選択",
+      "selectPools": "プールを選択",
+      "nLoanAssets": "{{count}} 件の借入資産",
+      "nCollaterals": "{{count}} 件の担保",
+      "nPools": "{{count}} 件のプール"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "カテゴリーを検索",
+      "searchCollateral": "担保を検索"
+    }
+  },
+  "multiSelect": {
+    "noResults": "該当する結果がありません",
+    "clearSearch": "検索をクリア",
+    "search": "選択肢を検索"
   }
 }

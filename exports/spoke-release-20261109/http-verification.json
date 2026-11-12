@@ -1,0 +1,163 @@
+{
+  "deployment": {
+    "id": "dpl_5Q5AbEdh3qV56QEYVFm6G3FsGL5Y",
+    "url": "https://venus-ui-preview-6ai3hj84k-alvin-edec.vercel.app",
+    "productionUrl": "https://venus-ui-preview.vercel.app",
+    "inspectorUrl": "https://vercel.com/alvin-edec/venus-ui-preview/5Q5AbEdh3qV56QEYVFm6G3FsGL5Y",
+    "readyState": "READY",
+    "target": "production",
+    "deploymentApiUrl": "https://api.vercel.com/v13/deployments/dpl_5Q5AbEdh3qV56QEYVFm6G3FsGL5Y",
+    "buildMachine": {
+      "cores": 2,
+      "memory": 8192,
+      "machine": "basic",
+      "selectionType": "fixed",
+      "selectionSource": "plan-default"
+    },
+    "deploymentProtection": [
+      "vercel_authentication"
+    ]
+  },
+  "checks": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 5627,
+      "sha256": "6fcaaa7f3ccd364090b3b0529b157755ca7e6b77ab3e04f5cda53e692711de55",
+      "matchesBuild": true
+    },
+    {
+      "path": "release.json",
+      "status": 200,
+      "bytes": 1531,
+      "sha256": "5b0b069588de88d86ebe7c01a6f004b45890c2e3aa590730667dc2d5c6a984bd",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/index-CKAFhNxA.js",
+      "status": 200,
+      "bytes": 630350,
+      "sha256": "4e2bf070f7cd5e47a8f5ce7dcc6e2b00412a7b6bd3f95b3203bd455120fe9770",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/emotion-react-jsx-runtime.browser.esm-CJws3PKJ.js",
+      "status": 200,
+      "bytes": 28241,
+      "sha256": "c4d6d2403c2d7d23f96e66aacd41b18c8a0e9c372d7aef07d65d4ccef8e2ef34",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/preload-helper-B7Ylgxju.js",
+      "status": 200,
+      "bytes": 2190,
+      "sha256": "b8d9785438b499557425d14fd191c1bdde1e320ff6f69a693dea6ce29d33a895",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/utils-B16VwM7i.js",
+      "status": 200,
+      "bytes": 7464,
+      "sha256": "e0cabece8c3dd26745b6dc5c3ecb1e089dfa8e9fe607592fc455226f54f61265",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/secp256k1-Bj97DmVM.js",
+      "status": 200,
+      "bytes": 27403,
+      "sha256": "fd0d90f2c7f30e7d80651787c58dfeba38ed072d03ddba21367e1ed6576805b8",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/localBatchGatewayRequest-DxXGI_Bz.js",
+      "status": 200,
+      "bytes": 114960,
+      "sha256": "f4fbb3d620cd57ae04d23f2a4a01d50c1d646de30cefb7a3abb9b15cd348e614",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/chunk-RDNMH5RE-BupyMzxY.js",
+      "status": 200,
+      "bytes": 56290,
+      "sha256": "34022b03293d239dbbd10910cdbc61e5b37abac9503e0b28ca221f8f1eba5604",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/bignumber-DevGLvc1.js",
+      "status": 200,
+      "bytes": 19646,
+      "sha256": "33f395ef10142cf98cbb2aec65a89357efa4d63860850325e352d95876f71adb",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/translations-CmKcUOfl.js",
+      "status": 200,
+      "bytes": 253815,
+      "sha256": "ce1b22495fc05855d1b6577a0db484ed7e2e2418b68a9e2146407e172c7666b9",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/hooks-CV2NHDJs.js",
+      "status": 200,
+      "bytes": 21897,
+      "sha256": "a0da13e0e0a5810d44ba0e2555fc129a87e44b33e93695b6ba52e9972bc8c137",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/address-BZMS7uys.js",
+      "status": 200,
+      "bytes": 1093,
+      "sha256": "462578f953dc5e2da7e4ae6784faf2c28cc93c17cf0437507b3eb2ff1ce4fc69",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/utilities-Bi4supX_.js",
+      "status": 200,
+      "bytes": 6550208,
+      "sha256": "7dff6e8046d44ae2e94101ce3d5ad30e06473e5a16d9374779ca8ea61687784c",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/production-CyTWu_8A.js",
+      "status": 200,
+      "bytes": 3850,
+      "sha256": "2cc437c7c4b4a7b8c941eb9695197daeee0cf1e10e9af126605fa28c0a21801f",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/components-Bc8_x9k9.js",
+      "status": 200,
+      "bytes": 1040252,
+      "sha256": "cb96fce524cbdcd43125640e1702848b9414037e16426034fd10297a6401ed64",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/store-ClANZv9X.js",
+      "status": 200,
+      "bytes": 2214,
+      "sha256": "3849c4bb490b03a0b9b3c543909cde111c7e5ea17af17dcbfdcad4701a402471",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/utilities-DR00Q9RG.css",
+      "status": 200,
+      "bytes": 27674,
+      "sha256": "a93e4e53af8a54c7bcad573d250ba5a2bb65742d05bef57232112d392fcd1e0e",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/components-n3DRS_7Q.css",
+      "status": 200,
+      "bytes": 28202,
+      "sha256": "47eaf074ff5c6501a2327f886c19133fb37edd7e99ddd8dffe5c622c4dcc5e05",
+      "matchesBuild": true
+    },
+    {
+      "path": "assets/index-Bm6iMV4j.css",
+      "status": 200,
+      "bytes": 552801,
+      "sha256": "7dbf7e38f4b9813b4e4bb36100d27d1bafd5960efa5b8cf3057743ace002a4cb",
+      "matchesBuild": true
+    }
+  ]
+}

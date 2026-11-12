@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-03",
+  "guestSettings": true,
+  "settingsContents": "Settings\nTheme\nDark mode\nLight mode\n\nLanguage (beta)\n\nEnglish",
+  "mobileAccount": {
+    "addressWidth": 126.34375,
+    "chainVisible": true,
+    "dashboard": true,
+    "notificationMounted": true,
+    "rightInset": 13
+  },
+  "responsiveMenu": {
+    "closeGlyph": [
+      20,
+      20
+    ],
+    "footer": false,
+    "othersGap": "8px"
+  },
+  "header": [
+    {
+      "bars": [
+        18,
+        12
+      ],
+      "button": [
+        36,
+        36
+      ],
+      "width": 390
+    },
+    {
+      "bars": [
+        18,
+        12
+      ],
+      "button": [
+        48,
+        48
+      ],
+      "width": 640
+    },
+    {
+      "bars": [
+        18,
+        12
+      ],
+      "button": [
+        48,
+        48
+      ],
+      "width": 768
+    }
+  ],
+  "desktopOthers": {
+    "actual": [
+      8,
+      8,
+      8,
+      8,
+      8
+    ],
+    "gap": "8px"
+  },
+  "note": "Read-only focused walkthrough after completed implementation; no new code edits; test account is simulated."
+}

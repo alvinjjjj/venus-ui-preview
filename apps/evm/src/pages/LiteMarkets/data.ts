@@ -1,5 +1,12 @@
 import BigNumber from 'bignumber.js';
-import { type Asset, type LiquidityHub, type Token, type Vault, VaultCategory, type VenusVault } from 'types';
+import {
+  type Asset,
+  type LiquidityHub,
+  type Token,
+  type Vault,
+  VaultCategory,
+  type VenusVault,
+} from 'types';
 import { convertMantissaToTokens } from 'utilities';
 import getCombinedApy from 'utilities/getCombinedApy';
 
@@ -29,11 +36,13 @@ export interface LiteAsset {
   liquidityUsd: BigNumber;
 }
 
+/** Token rows sum offers; protocol totals separately remove Core allocations held by Hubs. */
 export function aggregateLiteAssets(
   assets: Asset[],
   hubs: LiquidityHub[],
   comptroller: string,
   vaults: Vault[] = [],
+  options: { protocolTotals?: boolean } = {},
 ) {
   const rows = new Map<string, LiteAsset>();
   const seen = new Set<string>();
@@ -54,7 +63,10 @@ export function aggregateLiteAssets(
     row.markets.push(market);
     for (const field of ['supply', 'supplyUsd', 'liquidity', 'liquidityUsd'] as const) {
       row[field] = row[field].plus(
-        BigNumber.maximum(0, market[field].minus(overlap?.[field] ?? 0)),
+        BigNumber.maximum(
+          0,
+          market[field].minus(options.protocolTotals ? overlap?.[field] ?? 0 : 0),
+        ),
       );
     }
     rows.set(key, row);
@@ -68,7 +80,8 @@ export function aggregateLiteAssets(
 
   for (const asset of assets) {
     const vhHub = hubs.find(
-      hub => hub.vhToken.address.toLowerCase() === asset.vToken.underlyingToken.address.toLowerCase(),
+      hub =>
+        hub.vhToken.address.toLowerCase() === asset.vToken.underlyingToken.address.toLowerCase(),
     );
     add(asset.vToken.underlyingToken, {
       asset,
@@ -134,7 +147,10 @@ export function aggregateLiteAssets(
       name: 'XVS Vault',
       path: '/vaults',
       apy: new BigNumber(xvsVault.stakeAprPercentage),
-      supply: convertMantissaToTokens({ value: xvsVault.stakeBalanceMantissa, token: xvsVault.stakedToken }),
+      supply: convertMantissaToTokens({
+        value: xvsVault.stakeBalanceMantissa,
+        token: xvsVault.stakedToken,
+      }),
       supplyUsd: new BigNumber(xvsVault.stakeBalanceCents),
       liquidity: new BigNumber(0),
       liquidityUsd: new BigNumber(0),

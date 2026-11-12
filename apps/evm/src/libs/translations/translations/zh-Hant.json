@@ -256,10 +256,10 @@
       "logoAlt": "Prime 標誌",
       "tooltip": {
         "calculatorLink": "計算你的 Prime 獎勵",
-        "primeBorrowSimulation": "Prime 加成基於用戶借款平均值 {{borrowBalance}} 與金庫存入 {{xvsStaked}} 提升 APY。",
+        "primeBorrowSimulation": "<PrimeLink>Prime</PrimeLink> 加成基於用戶借款平均值 {{borrowBalance}} 與金庫存入 {{xvsStaked}} 提升 APY。",
         "primeDocLink": "瞭解更多",
         "primeMarket": "Prime 提升 APY。",
-        "primeSupplySimulation": "Prime 加成基於用戶供應平均值 {{supplyBalance}} 與金庫存入 {{xvsStaked}} 提升 APY。"
+        "primeSupplySimulation": "<PrimeLink>Prime</PrimeLink> 加成基於用戶供應平均值 {{supplyBalance}} 與金庫存入 {{xvsStaked}} 提升 APY。"
       }
     }
   },
@@ -462,7 +462,8 @@
       "allCategories": "全部類別",
       "nCategories_other": "{{count}} 個類別",
       "reset": "重置",
-      "title": "選擇類別"
+      "title": "選擇類別",
+      "search": "搜尋類別"
     },
     "pausedAssetsToggle": {
       "label": "已暫停資產"
@@ -2436,7 +2437,10 @@
       "resetFilters": "重置篩選",
       "selectCategories": "選擇類別",
       "selectStates": "選擇狀態",
-      "selectVenues": "選擇平台"
+      "selectVenues": "選擇平台",
+      "searchCategories": "搜尋類別",
+      "searchVenues": "搜尋平台",
+      "searchStates": "搜尋狀態"
     },
     "header": "金庫",
     "modals": {
@@ -2805,5 +2809,29 @@
   "hubApyBanner": {
     "buttonLabel": "開始賺取",
     "title": "在流動性中心存入 <Strong>{{symbol}}</Strong>，年化收益最高 <Apy>{{apy}}</Apy>。存一次，自動分配。"
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "搜尋借貸資產",
+      "searchCollaterals": "搜尋抵押品",
+      "searchPools": "搜尋資金池",
+      "selectLoanAssets": "選擇借貸資產",
+      "selectCollaterals": "選擇抵押品",
+      "selectPools": "選擇資金池",
+      "nLoanAssets": "{{count}} 個借貸資產",
+      "nCollaterals": "{{count}} 個抵押品",
+      "nPools": "{{count}} 個資金池"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "搜尋類別",
+      "searchCollateral": "搜尋抵押品"
+    }
+  },
+  "multiSelect": {
+    "noResults": "找不到相符結果",
+    "clearSearch": "清除搜尋",
+    "search": "搜尋選項"
   }
 }

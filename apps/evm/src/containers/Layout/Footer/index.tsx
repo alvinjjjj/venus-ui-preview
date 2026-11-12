@@ -68,7 +68,7 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
     {
       iconName: 'x',
       label: 'X',
-      href: VENUS_FLUX_URL,
+      href: isLite ? 'https://x.com/venusprotocol' : VENUS_FLUX_URL,
     },
     {
       iconName: 'github',
@@ -131,15 +131,17 @@ export const Footer = forwardRef<HTMLDivElement>((_, ref) => {
       >
         {footerLinkGroups.map(links => (
           <div className="flex items-center justify-center gap-4" key={links[0].label}>
-            {links.map(footerLink => {
-              const { label, ...restProps } = footerLink;
+            {links
+              .filter(link => !isLite || link.to !== routes.aboutUs.path)
+              .map(footerLink => {
+                const { label, ...restProps } = footerLink;
 
-              return (
-                <Link className="text-grey text-sm" key={label} {...restProps}>
-                  {label}
-                </Link>
-              );
-            })}
+                return (
+                  <Link className="text-grey text-sm" key={label} {...restProps}>
+                    {label}
+                  </Link>
+                );
+              })}
           </div>
         ))}
       </nav>

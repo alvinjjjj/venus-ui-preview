@@ -7,8 +7,7 @@
 }
 .spoke-filters__fields { display: grid; grid-template-columns: 1fr; gap: calc(var(--spacing) * 3); }
 .spoke-filters__toggles { display: flex; align-items: center; justify-content: space-between; gap: calc(var(--spacing) * 4); }
-.spoke-filters__select { display: none; }
-.spoke-filters__select--pool { display: block; }
+.spoke-filters__select { display: block; }
 @media (min-width: 768px) {
   .spoke-filters__fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .spoke-filters__select { display: block; }
@@ -24,6 +23,13 @@
 }
 .spoke-filters__search,
 .spoke-filters__select { width: 100%; min-width: 0; }
+
+/* Keep the search field and multi-select triggers on the same control baseline. */
+.spoke-filters__fields .venus-text-field,
+.spoke-filters__fields .venus-multiselect-trigger {
+  height: calc(var(--spacing) * 12) !important;
+  min-height: calc(var(--spacing) * 12);
+}
 
 .spoke-pool-table__title h3 { font-size: var(--text-p2s); font-weight: 600; }
 .spoke-pool-table__title p { margin-top: 4px; font-size: var(--text-b1r); color: var(--color-grey); }

@@ -18,6 +18,8 @@ import { LONG_TOKEN_ADDRESS_PARAM_KEY, SHORT_TOKEN_ADDRESS_PARAM_KEY } from './c
 import { useGetLiveKLineCandles } from './useGetLiveKLineCandles';
 import { useGetTradeAssets } from './useGetTradeAssets';
 import { useTokenPair } from './useTokenPair';
+import './trade.css';
+import 'containers/VenusVaultModal/slider.css';
 
 const Trade: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -113,7 +115,7 @@ const Trade: React.FC = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="flex flex-col gap-y-6 lg:grid lg:grid-cols-[minmax(0,6fr)_minmax(0,4fr)] lg:gap-6 xl:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
+        <div className="venus-trade-page flex flex-col gap-y-6 lg:grid lg:grid-cols-[minmax(0,6fr)_minmax(0,4fr)] lg:gap-6 xl:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
           <div className="min-w-0 flex flex-col gap-y-6">
             <PairInfo changePercentage={changePercentage} priceCentsRatio={priceCentsRatio} />
 
@@ -135,7 +137,7 @@ const Trade: React.FC = () => {
           <div className="min-w-0 flex flex-col gap-y-6 relative overflow-hidden lg:self-start">
             {!doNotShowBanner && <Banner className="hidden lg:flex" />}
 
-            <Card className="border-blue bg-dark-blue p-6 lg:min-h-100">
+            <Card className="trade-action-card border-blue bg-dark-blue p-6 lg:min-h-100">
               <OperationForm />
             </Card>
 

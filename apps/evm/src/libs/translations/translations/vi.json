@@ -256,10 +256,10 @@
       "logoAlt": "Logo Prime",
       "tooltip": {
         "calculatorLink": "Tính phần thưởng Prime của bạn",
-        "primeBorrowSimulation": "APY được boost bởi Prime dựa trên mức vay trung bình của người dùng {{borrowBalance}} và khoản gửi trong vault {{xvsStaked}}.",
+        "primeBorrowSimulation": "APY được boost bởi <PrimeLink>Prime</PrimeLink> dựa trên mức vay trung bình của người dùng {{borrowBalance}} và khoản gửi trong vault {{xvsStaked}}.",
         "primeDocLink": "Tìm hiểu thêm",
         "primeMarket": "APY được boost bởi Prime.",
-        "primeSupplySimulation": "APY được boost bởi Prime dựa trên mức cung cấp trung bình của người dùng {{supplyBalance}} và khoản gửi trong vault {{xvsStaked}}."
+        "primeSupplySimulation": "APY được boost bởi <PrimeLink>Prime</PrimeLink> dựa trên mức cung cấp trung bình của người dùng {{supplyBalance}} và khoản gửi trong vault {{xvsStaked}}."
       }
     }
   },
@@ -461,7 +461,8 @@
       "allCategories": "Tất cả danh mục",
       "nCategories_other": "{{count}} danh mục",
       "reset": "Đặt lại",
-      "title": "Chọn danh mục"
+      "title": "Chọn danh mục",
+      "search": "Tìm danh mục"
     },
     "pausedAssetsToggle": {
       "label": "Tài sản tạm dừng"
@@ -2396,7 +2397,10 @@
       "resetFilters": "Đặt lại bộ lọc",
       "selectCategories": "Chọn danh mục",
       "selectStates": "Chọn trạng thái",
-      "selectVenues": "Chọn nền tảng"
+      "selectVenues": "Chọn nền tảng",
+      "searchCategories": "Tìm danh mục",
+      "searchVenues": "Tìm nền tảng",
+      "searchStates": "Tìm trạng thái"
     },
     "header": "Kho",
     "modals": {
@@ -2761,5 +2765,29 @@
   },
   "yieldsGroups": {
     "protocol": "Giao thức"
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "Tìm tài sản vay",
+      "searchCollaterals": "Tìm tài sản thế chấp",
+      "searchPools": "Tìm pool",
+      "selectLoanAssets": "Chọn tài sản vay",
+      "selectCollaterals": "Chọn tài sản thế chấp",
+      "selectPools": "Chọn pool",
+      "nLoanAssets": "{{count}} tài sản vay",
+      "nCollaterals": "{{count}} tài sản thế chấp",
+      "nPools": "{{count}} pool"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "Tìm danh mục",
+      "searchCollateral": "Tìm tài sản thế chấp"
+    }
+  },
+  "multiSelect": {
+    "noResults": "Không tìm thấy kết quả",
+    "clearSearch": "Xóa tìm kiếm",
+    "search": "Tìm tùy chọn"
   }
 }

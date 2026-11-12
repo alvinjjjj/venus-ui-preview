@@ -79,7 +79,9 @@ it('matches Final Earn with four data columns and selectable assets without prom
 
 it('opens source selection from the asset without submitting a loan', () => {
   renderComponent(<BorrowHarness />);
-  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
   expect(screen.getByRole('button', { name: 'Back to Borrow assets from USDT' })).toBeVisible();
   expect(document.querySelector('.lite-e2-borrow-sources')).toBeInTheDocument();
   const headers = screen.getAllByRole('columnheader');
@@ -92,7 +94,9 @@ it('opens source selection from the asset without submitting a loan', () => {
 
 it('combines collateral selections, supports deselection and resets to all sources', () => {
   renderComponent(<BorrowHarness />);
-  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
   fireEvent.click(screen.getByRole('button', { name: 'All collaterals' }));
   const menu = within(document.querySelector('.venus-multiselect-panel') as HTMLElement);
   const table = within(screen.getByRole('table'));
@@ -102,7 +106,10 @@ it('combines collateral selections, supports deselection and resets to all sourc
   expect(table.queryByRole('button', { name: 'bStock index' })).toBeNull();
 
   fireEvent.click(menu.getByRole('button', { name: 'QQQB', pressed: false }));
-  expect(screen.getByRole('button', { name: '2 collaterals' })).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.getByRole('button', { name: '2 collaterals' })).toHaveAttribute(
+    'aria-expanded',
+    'true',
+  );
   expect(table.getByRole('button', { name: 'Venus Core' })).toBeVisible();
   expect(table.getByRole('button', { name: 'bStock index' })).toBeVisible();
   expect(table.queryByRole('button', { name: 'bStock growth' })).toBeNull();
@@ -111,29 +118,35 @@ it('combines collateral selections, supports deselection and resets to all sourc
   expect(table.queryByRole('button', { name: 'Venus Core' })).toBeNull();
   expect(table.getByRole('button', { name: 'bStock index' })).toBeVisible();
   fireEvent.click(menu.getByRole('button', { name: 'All collaterals' }));
-  expect(table.getAllByRole('row')).toHaveLength(6);
+  expect(table.getAllByRole('row')).toHaveLength(5);
   expect(menu.getByRole('button', { name: 'QQQB' })).toHaveAttribute('aria-pressed', 'false');
 });
 
 it('keeps market search active while filtering by multiple collaterals', () => {
   renderComponent(<BorrowHarness />);
-  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
-  fireEvent.change(screen.getByRole('textbox', { name: 'Search borrowing markets' }), {
-    target: { value: 'index' },
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
+  fireEvent.change(screen.getByRole('textbox', { name: 'Search collateral' }), {
+    target: { value: 'QQQB' },
   });
   fireEvent.click(screen.getByRole('button', { name: 'All collaterals' }));
   const menu = within(document.querySelector('.venus-multiselect-panel') as HTMLElement);
   fireEvent.click(menu.getByRole('button', { name: 'USDT' }));
   expect(screen.queryByRole('table')).toBeNull();
   fireEvent.click(menu.getByRole('button', { name: 'QQQB' }));
-  expect(within(screen.getByRole('table')).getByRole('button', { name: 'bStock index' })).toBeVisible();
+  expect(
+    within(screen.getByRole('table')).getByRole('button', { name: 'bStock index' }),
+  ).toBeVisible();
   fireEvent.click(menu.getByRole('button', { name: 'All collaterals' }));
   expect(within(screen.getByRole('table')).getAllByRole('row')).toHaveLength(2);
 });
 
 it('retains real Core Borrow and Collateral form routing and adds only a scoped visual hook', () => {
   renderComponent(<BorrowHarness />);
-  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
   fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Venus Core' }));
   const dialog = screen.getByRole('dialog');
   expect(dialog.querySelector('.lite-e2-borrow-modal')).toHaveClass('venus-popup-panel');
@@ -154,7 +167,9 @@ it('retains real Core Borrow and Collateral form routing and adds only a scoped 
 
 it('keeps preview Borrow / Repay / Collateral disabled after removing Final preview captions', () => {
   renderComponent(<BorrowHarness />);
-  fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }));
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
   fireEvent.click(within(screen.getByRole('table')).getByRole('button', { name: 'bStock index' }));
   const dialog = screen.getByRole('dialog');
   expect(within(dialog).queryByText('Preview market · Transactions unavailable')).toBeNull();
@@ -179,10 +194,42 @@ it('preserves the earlier E2 action column under Before', () => {
   renderComponent(<BorrowHarness />);
   const table = screen.getByRole('table');
   expect(within(table).getAllByRole('columnheader')).toHaveLength(5);
-  expect(within(table).getByRole('button', { name: 'Borrow USDC' })).toHaveAttribute('data-promoted', 'true');
+  expect(within(table).getByRole('button', { name: 'Borrow USDC' })).toHaveAttribute(
+    'data-promoted',
+    'true',
+  );
   fireEvent.click(within(table).getByRole('button', { name: 'Borrow USDT' }));
   expect(screen.getByRole('button', { name: 'Back to Borrow assets from USDT' })).toBeVisible();
   expect(screen.getAllByText('Preview · Not tradable').length).toBeGreaterThan(0);
+});
+
+it('opens desktop collateral details in a compact dropdown and retains the chosen collateral', () => {
+  renderComponent(<BorrowHarness />);
+  fireEvent.click(
+    within(screen.getByRole('table')).getByRole('button', { name: 'Compare USDT borrowing' }),
+  );
+  const trigger = within(screen.getByRole('table')).getByRole('button', {
+    name: 'View bStock index collaterals',
+  });
+  fireEvent.click(trigger);
+  expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  expect(screen.queryByRole('dialog')).toBeNull();
+  const details = screen.getByRole('table', { name: 'bStock index collaterals' });
+  expect(
+    within(details)
+      .getAllByRole('columnheader')
+      .map(cell => cell.textContent),
+  ).toEqual(['Asset', 'Max LTV']);
+  fireEvent.keyDown(details, { key: 'Escape' });
+  expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  expect(trigger).toHaveFocus();
+  fireEvent.click(trigger);
+  fireEvent.click(screen.getByRole('button', { name: 'Use QQQB collateral' }));
+  const form = screen.getByRole('dialog');
+  fireEvent.click(within(form).getByRole('button', { name: 'Collateral' }));
+  expect(within(form).getByRole('button', { name: 'Choose QQQB collateral' })).toBeVisible();
+  expect(within(form).getByRole('button', { name: 'Supply' })).toBeDisabled();
+  expect(MarketForm).not.toHaveBeenCalled();
 });
 
 it.each(['lite-experiment', 'lite-experiment-v3', 'v1', 'v5'])(

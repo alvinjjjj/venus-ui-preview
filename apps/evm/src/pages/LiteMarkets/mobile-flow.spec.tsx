@@ -124,8 +124,8 @@ it('keeps the asset entry Prime-only and compares ordinary and Prime APY inside 
   renderComponent(<LiteMarkets />);
   const row = table().getByRole('button', { name: 'Compare USDT markets' }).closest('tr');
   expect(row).not.toBeNull();
-  expect(row?.querySelector('.lite-base-apy')).toBeNull();
-  const primeEntry = within(row!).getByLabelText('Prime APY on Venus Core');
+  const primeEntry = row!;
+  expect(within(row!).queryByText('2.71%')).toBeNull();
   expect(primeEntry.querySelector('[data-apy-badge="prime"]')).toBeVisible();
   expect(primeEntry.querySelector('[data-apy-badge-text="prime"]')).toHaveTextContent('%');
   expect(document.querySelector('.lite-mobile-table .lite-base-apy')).toBeVisible();

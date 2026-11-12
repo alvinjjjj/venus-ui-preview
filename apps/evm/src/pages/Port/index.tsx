@@ -3,6 +3,7 @@ import ImportablePositions from 'containers/ImportablePositions';
 import { Redirect } from 'containers/Redirect';
 import { useGetMarketsPagePath } from 'hooks/useGetMarketsPagePath';
 import { useAccountAddress } from 'libs/wallet';
+import './port.css';
 
 const Port: React.FC = () => {
   const { accountAddress } = useAccountAddress();
@@ -15,7 +16,7 @@ const Port: React.FC = () => {
 
   return (
     <Page>
-      <div className="max-w-[800px] mx-auto">
+      <div className="venus-port-page max-w-[800px] mx-auto">
         <ImportablePositions wrapInCard />
       </div>
     </Page>

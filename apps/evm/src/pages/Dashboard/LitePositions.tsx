@@ -38,6 +38,38 @@ function PositionChoiceLabel({
   );
 }
 
+export function getDashboardHubs(
+  liquidityHubs: LiquidityHub[],
+  connected: boolean,
+  fundedDemo: boolean,
+) {
+  let activeHubs = connected
+    ? liquidityHubs.filter(
+        hub => hub.userSupplyBalanceTokens?.gt(0) || hub.userSupplyBalanceCents?.gt(0),
+      )
+    : [];
+  // One display-only holding for the demo wallet; never modify fetched wallet data.
+  const showcaseHub = liquidityHubs.find(hub => hub.vhToken.underlyingToken.symbol === 'USDT');
+  if (fundedDemo && showcaseHub) {
+    const balance = new BigNumber('1.000018');
+    const balanceCents = balance.times(showcaseHub.tokenPriceCents);
+    const { totalApyPercentage } = getCombinedApy({
+      type: 'supply',
+      baseApyPercentage: showcaseHub.supplyApyPercentage,
+      tokenDistributions: showcaseHub.supplyTokenDistributions,
+    });
+    activeHubs = [
+      {
+        ...showcaseHub,
+        userSupplyBalanceTokens: balance,
+        userSupplyBalanceCents: balanceCents,
+        userYearlyEarningsCents: balanceCents.times(totalApyPercentage).div(100),
+      },
+    ];
+  }
+  return activeHubs;
+}
+
 export function LitePositions({
   corePool,
   previewInteractions,
@@ -94,30 +126,11 @@ export function LitePositions({
         ),
     },
   ];
-  let activeHubs = accountAddress
-    ? liquidityHubs.filter(
-        hub => hub.userSupplyBalanceTokens?.gt(0) || hub.userSupplyBalanceCents?.gt(0),
-      )
-    : [];
-  // One display-only holding for the demo wallet; never modify fetched wallet data.
-  const showcaseHub = liquidityHubs.find(hub => hub.vhToken.underlyingToken.symbol === 'USDT');
-  if (demoLoggedIn && isFundedDemoAddress(accountAddress) && showcaseHub) {
-    const balance = new BigNumber('1.000018');
-    const balanceCents = balance.times(showcaseHub.tokenPriceCents);
-    const { totalApyPercentage } = getCombinedApy({
-      type: 'supply',
-      baseApyPercentage: showcaseHub.supplyApyPercentage,
-      tokenDistributions: showcaseHub.supplyTokenDistributions,
-    });
-    activeHubs = [
-      {
-        ...showcaseHub,
-        userSupplyBalanceTokens: balance,
-        userSupplyBalanceCents: balanceCents,
-        userYearlyEarningsCents: balanceCents.times(totalApyPercentage).div(100),
-      },
-    ];
-  }
+  const activeHubs = getDashboardHubs(
+    liquidityHubs,
+    !!accountAddress,
+    demoLoggedIn && isFundedDemoAddress(accountAddress),
+  );
   choices.push({
     id: 'liquidity-hub',
     label: 'Liquidity Hub',

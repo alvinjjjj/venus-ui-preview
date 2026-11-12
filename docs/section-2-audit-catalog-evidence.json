@@ -1,0 +1,412 @@
+{
+  "retrievedDate": "2026-10-06",
+  "source": "https://docs-v4.venus.io/links/security-and-audits",
+  "coveredLines": 746,
+  "count": 101,
+  "reports": [
+    {
+      "label": "Certik audit report (2025/02/19)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/210d1e54f0c9136a805977b41077567b0883a4e0/audits/120_risk_stewards_v1_certik_20250219.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2025/02/13)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/210d1e54f0c9136a805977b41077567b0883a4e0/audits/121_risk_stewards_v1_quantstamp_20250213.pdf"
+    },
+    {
+      "label": "FairyProof audit report (2025/02/26)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/210d1e54f0c9136a805977b41077567b0883a4e0/audits/122_risk_stewards_v1_fairyproof_20250226.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2025/12/15)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/b4b9fc4d3d4f3a8b5ecb3308693a0180399f8dec/audits/166_risk_steward_v2_quantstamp_20251215.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/12/29)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/b4b9fc4d3d4f3a8b5ecb3308693a0180399f8dec/audits/167_risk_steward_v2_certik_20251229.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/09/11)",
+      "url": "https://github.com/VenusProtocol/venus-periphery/blob/95e157b5b498ab80fe2715ca5ecf64203f6727fb/audits/152_nativeTokenGateway_certik_20250911.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/05/14)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1faa46139aaec06e0eb2e48341bff22cd6c38c6c/audits/129_erc4626_certik_20250514.pdf"
+    },
+    {
+      "label": "Pessimistic audit report (2025/05/02)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1faa46139aaec06e0eb2e48341bff22cd6c38c6c/audits/131_erc4626_pessimistic_20250502.pdf"
+    },
+    {
+      "label": "FairyProof audit report (2025/04/14)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1faa46139aaec06e0eb2e48341bff22cd6c38c6c/audits/130_erc4626_fairyproof_20250414.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/03/20)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/e33dd9b60a29d3e69df554136383a6477fa904c5/audits/128_AsBNBOracle_certik_20250320.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/02/25)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/3b5aec61acb7d2c659c70e8fce7501cb49ea74cd/audits/124_oracles_certik_20250225.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/02/06)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/b6d581ddac010a8a80ba4c6fe819c756568c4a92/audits/123_erc4626Oracle_certik_20250206.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/12/26)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/de3c5a9ad4f7259870864dac1b6837e8908d799e/audits/119_pendleOracleUpdate_certik_20241226.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/10/07)",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/3a5a2740e86c9137ab17f4f3939c97b145a22803/audits/118_ACMCommandsAggregator_certik_20241007.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/07/31)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8be0034819eef313d6ffe216e5ba0f1152dbdcc0/audits/113_twoKinks_certik_20240731.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2024/08/04)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8be0034819eef313d6ffe216e5ba0f1152dbdcc0/audits/114_twoKinks_fairyproof_20240804.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/08/19)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8be0034819eef313d6ffe216e5ba0f1152dbdcc0/audits/115_twoKinks_quantstamp_20240819.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/04/09)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/e4c4dfe1b78945ea87dca5b7e0c724b6bd317359/audits/099_unlistMarkets_certik_20240409.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2024/03/28)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/e4c4dfe1b78945ea87dca5b7e0c724b6bd317359/audits/102_unlistMarkets_fairyproof_20240328.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/08/23)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/93a79c97e867f61652fc063abb5df323acc9bed4/audits/116_WeETHAccountantOracle_certik_20240823.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/07/17)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/5e4563ab0f2f98a04659e065b6c49acebf00df3b/audits/112_VBNBAdmin_certik_20240717.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/05/17)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/0b221a7bb7d8e04fd8b013806facb93bcb4038b9/audits/110_sfrxETHOracle_certik_20240517.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/05/30)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/0b221a7bb7d8e04fd8b013806facb93bcb4038b9/audits/111_sfrxETHOracle_quantstamp_20240530.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report - 2024/01/19",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/2915ea772d86d9cc63f88fb6e804eaae53193879/audits/084_multichainGovernance_openzeppelin_20240119.pdf"
+    },
+    {
+      "label": "Certik audit report - 2024/02/26",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/2915ea772d86d9cc63f88fb6e804eaae53193879/audits/085_multichainGovernance_certik_20240226.pdf"
+    },
+    {
+      "label": "Cantina audit report - 2024/04/25",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/2915ea772d86d9cc63f88fb6e804eaae53193879/audits/105_multichainGovernance_cantina_20240425.pdf"
+    },
+    {
+      "label": "Quantstamp audit report - 2024/04/29",
+      "url": "https://github.com/VenusProtocol/governance-contracts/blob/2915ea772d86d9cc63f88fb6e804eaae53193879/audits/106_multichainGovernance_quantstamp_20240429.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/01/17)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/aa1f7ae61b07839231ec16e9c4143905785d7aae/audits/088_timeBased_certik_20240117.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/03/19)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/470416836922656783eab52ded54744489e8c345/audits/089_timeBased_quantstamp_20240319.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2024/03/04)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/aa1f7ae61b07839231ec16e9c4143905785d7aae/audits/094_timeBased_fairyproof_20240304.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/04/26)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/0000b6b7bb9eaf1d6827993c306b776c371d41b7/audits/107_vaiController_certik_20240426.pdf"
+    },
+    {
+      "label": "Pessimistic audit report (2024/05/02)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/c01162eac8a911cd3a45c3d55b91e418e5ec2e6a/audits/109_vaiController_pessimistic_20240502.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2024/04/18)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/0000b6b7bb9eaf1d6827993c306b776c371d41b7/audits/108_vaiController_fairyproof_20240418.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/04/19)",
+      "url": "https://github.com/VenusProtocol/token-bridge/blob/7e13d370fbb8e9fcd6c8e0fde5943e44e0b64bfa/audits/104_mesh_architecture_certik_20240419.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/04/12)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/5cd52976a4c4d24e11ab34ca3aa5f99837eef593/audits/098_correlated_token_oracles_certik_20240412.pdf"
+    },
+    {
+      "label": "Certik audit report (2025/09/19)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/73fa9f21c321f9e1821a7b187aeca46033ca5484/audits/149_emode_certik_20250919.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2025/09/03)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/73fa9f21c321f9e1821a7b187aeca46033ca5484/audits/150_emode_quantstamp_20250903.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/04/12)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/5cd52976a4c4d24e11ab34ca3aa5f99837eef593/audits/100_correlated_token_oracles_quantstamp_20240412.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2024/03/28)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/5cd52976a4c4d24e11ab34ca3aa5f99837eef593/audits/101_correlated_token_oracles_fairyproof_20240328.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/02/26)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/652459fed7269dab84628f70c44d8fa56b34203e/audits/092_nativeTokenGateway_certik_20240226.pdf"
+    },
+    {
+      "label": "Pessimistic audit report (2024/02/29)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/652459fed7269dab84628f70c44d8fa56b34203e/audits/095_nativeTokenGateway_pessimistic_20240229.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/03/01)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/0ec94f4636e51d68197fe6918df096864acd0a23/audits/096_nativeTokenGateway_quantstamp_20240301.pdf"
+    },
+    {
+      "label": "Certik audit report (2024/01/26)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/e99feb67f4677168632f5bedd70034fba8dc55db/audits/090_wstETHOracle_certik_20240126.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2024/02/20)",
+      "url": "https://github.com/VenusProtocol/oracle/blob/f34d3114267929bbba26743f0a8591c1b016fb94/audits/093_wstETHOracle_quantstamp_20240220.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report (2023/10/10)",
+      "url": "https://github.com/VenusProtocol/protocol-reserve/blob/f31dc8bb433f1cff6c2124d27742004d82b24c32/audits/066_tokenConverter_openzeppelin_20231010.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/11/07)",
+      "url": "https://github.com/VenusProtocol/protocol-reserve/blob/f31dc8bb433f1cff6c2124d27742004d82b24c32/audits/074_tokenConverter_certik_20231107.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/09/27)",
+      "url": "https://github.com/VenusProtocol/protocol-reserve/blob/f31dc8bb433f1cff6c2124d27742004d82b24c32/audits/068_tokenConverter_peckshield_20230927.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2023/08/28)",
+      "url": "https://github.com/VenusProtocol/protocol-reserve/blob/f31dc8bb433f1cff6c2124d27742004d82b24c32/audits/067_tokenConverter_fairyproof_20230828.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/11/27)",
+      "url": "https://github.com/VenusProtocol/protocol-reserve/blob/f31dc8bb433f1cff6c2124d27742004d82b24c32/audits/081_privateConversions_certik_20231127.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/12/26)",
+      "url": "https://github.com/VenusProtocol/token-bridge/blob/323e95fa3c0167cca2fc1d2807e911e0bae54de9/audits/083_multichain_token_bridge_certik_20231226.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2023/12/19)",
+      "url": "https://github.com/VenusProtocol/token-bridge/blob/323e95fa3c0167cca2fc1d2807e911e0bae54de9/audits/064_multichain_token_bridge_quantstamp_20231219.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/10/20)",
+      "url": "https://github.com/VenusProtocol/token-bridge/blob/04b0a8526bb2fa916785c41eefd94b4f84c12819/audits/079_multichain_token_bridge_peckshield_20231020.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report (2023/10/03)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/e02832bb2716bc0a178d910f6698877bf1b191e1/audits/065_prime_openzeppelin_20231003.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/11/13)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/2425501070d28c36a73861d9cf6970f641403735/audits/060_prime_certik_20231113.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/08/26)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/e02832bb2716bc0a178d910f6698877bf1b191e1/audits/055_prime_peckshield_20230826.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2023/09/10)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/e02832bb2716bc0a178d910f6698877bf1b191e1/audits/056_prime_fairyproof_20230910.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/12/19) - Venus Prime update",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/9afe804f18cd02318626aea46686522542aa5e4d/audits/087_prime_certik_20231219.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2023/09/13)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/9ef8901dfef84a11338751881fd10a2d36c576ad/audits/058_automatic_income_allocation_quantstamp_20230913.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/09/12)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90f913fd345c24c60efa613ab5ab7e633b7aa07a/audits/059_automatic_income_allocation_certik_20230912.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/08/12)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90f913fd345c24c60efa613ab5ab7e633b7aa07a/audits/054_automatic_income_allocation_peckshield_20230812.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2023/08/03)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90f913fd345c24c60efa613ab5ab7e633b7aa07a/audits/050_automatic_income_allocation_fairyproof_20230803.pdf"
+    },
+    {
+      "label": "Fairyproof audit report (2023/06/25)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8553387f2277be152883b4ee22211b77a8cbe5f6/audits/040_diamondComptroller_fairyproof_20230625.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/07/18)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8553387f2277be152883b4ee22211b77a8cbe5f6/audits/042_diamondComptroller_peckshield_20230718.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/08/03)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8553387f2277be152883b4ee22211b77a8cbe5f6/audits/044_diamondComptroller_certik_20230803.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report (2023/08/17)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8553387f2277be152883b4ee22211b77a8cbe5f6/audits/049_diamondComptroller_openzeppelin_20230817.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2023/09/19)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/8553387f2277be152883b4ee22211b77a8cbe5f6/audits/047_diamondComptroller_quantstamp_20230919.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/10/20)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/b9dff61b16c4002db4cc01d3f25db160209a3d8d/audits/077_busdLiquidator_peckshield_20231020.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/10/16)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/41a96ca24b0e32b8087ea7b916ae2864cbf1a05f/audits/078_forcedLiquidations_certik_20231016.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/09/16)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/80cf9b36ea900d71c5e97a5b1d5e2706ecefb9c3/audits/072_forcedLiquidations_certik_20230916.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/09/16)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/80cf9b36ea900d71c5e97a5b1d5e2706ecefb9c3/audits/073_forcedLiquidations_peckshield_20230916.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/08/24",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1116c02c253e82cb0483afc47fb1fa104152601e/audits/061_riskFundShortfall_certik_20230824.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/08/25",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1116c02c253e82cb0483afc47fb1fa104152601e/audits/062_riskFundShortfall_peckshield_20230825.pdf"
+    },
+    {
+      "label": "Quantstamp audit report - 2023/08/07",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90dfde3af29470938032c88ad7f9b31b3a4c503b/audits/057_psm_quantstamp_20230807.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/05/24",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90dfde3af29470938032c88ad7f9b31b3a4c503b/audits/021_psm_certik_20230524.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/04/26",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90dfde3af29470938032c88ad7f9b31b3a4c503b/audits/022_psm_peckshield_20230426.pdf"
+    },
+    {
+      "label": "Hacken audit report - 2023/06/26",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/90dfde3af29470938032c88ad7f9b31b3a4c503b/audits/028_psm_hacken_20230626.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/07/12",
+      "url": "https://github.com/VenusProtocol/oracle/blob/fb02cdd3865fb5c34e0cd65cbeda02f87841371a/audits/045_getPrice_peckshield_20230712.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/07/17",
+      "url": "https://github.com/VenusProtocol/oracle/blob/fb02cdd3865fb5c34e0cd65cbeda02f87841371a/audits/043_getPrice_certik_20230717.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report - 2023/06/06",
+      "url": "https://github.com/VenusProtocol/oracle/blob/6f7a3d8769c28881661953e7ee3299b1d5b31e17/audits/026_oracles_openzeppelin_20230606.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/04/24",
+      "url": "https://github.com/VenusProtocol/oracle/blob/6f7a3d8769c28881661953e7ee3299b1d5b31e17/audits/013_oracles_peckshield_20230424.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/05/22",
+      "url": "https://github.com/VenusProtocol/oracle/blob/6f7a3d8769c28881661953e7ee3299b1d5b31e17/audits/024_oracles_certik_20230522.pdf"
+    },
+    {
+      "label": "Hacken audit report - 2023/04/26",
+      "url": "https://github.com/VenusProtocol/oracle/blob/6f7a3d8769c28881661953e7ee3299b1d5b31e17/audits/016_oracles_hacken_20230426.pdf"
+    },
+    {
+      "label": "Quantstamp audit report - 2023/05/19",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/cb91c322f9d267cac11f532924b07a4b1991be64/audits/031_vaults_quantstamp_20230519.pdf"
+    },
+    {
+      "label": "Peckshield audit report 1 - 2023/03/22",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/cb91c322f9d267cac11f532924b07a4b1991be64/audits/012_vaults_peckshield_20230322.pdf"
+    },
+    {
+      "label": "Peckshield audit report 2 - 2023/04/19",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/cb91c322f9d267cac11f532924b07a4b1991be64/audits/018_vaults_peckshield_20230419.pdf"
+    },
+    {
+      "label": "Fairyproof audit report - 2023/05/17",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/cb91c322f9d267cac11f532924b07a4b1991be64/audits/025_vaults_fairyproof_20230517.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/06/04",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/f01158edba6ecade4d8bf72d109d80e1f0c8f792/audits/038_vaults_certik_20230604.pdf"
+    },
+    {
+      "label": "Certik audit report",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1d60500e28d4912601bac461870c754dd9e72341/audits/036_isolatedPools_certik_20230619.pdf"
+    },
+    {
+      "label": "Certik audit report (RewardsDistributor)",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/95b1c8906774e5d849dd1e00ba7c608c679f8977/audits/051_rewardsDistributor_certik_20230610.pdf"
+    },
+    {
+      "label": "Peckshield audit report 1",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/c801e898e034e313e885c5d486ed27c15e7e2abf/audits/003_isolatedPools_peckshield_20230112.pdf"
+    },
+    {
+      "label": "Peckshield audit report 2",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/1d60500e28d4912601bac461870c754dd9e72341/audits/037_isolatedPools_peckshield_20230625.pdf"
+    },
+    {
+      "label": "Hacken audit report",
+      "url": "https://github.com/VenusProtocol/isolated-pools/blob/c801e898e034e313e885c5d486ed27c15e7e2abf/audits/016_isolatedPools_hacken_20230426.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report (2023/July/20)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/048_liquidator_openzeppelin_20230720.pdf"
+    },
+    {
+      "label": "Quantstamp audit report (2023/July/17)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/046_liquidator_quantstamp_20230717.pdf"
+    },
+    {
+      "label": "Certik audit report (2023/July/4)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/041_liquidator_certik_20230704.pdf"
+    },
+    {
+      "label": "Peckshield audit report (2023/July/5)",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/039_liquidator_peckshield_20230705.pdf"
+    },
+    {
+      "label": "OpenZeppelin audit report - 2023/06/16",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/027_swapRouter_openzeppelin_20230616.pdf"
+    },
+    {
+      "label": "Certik audit report - 2023/05/30",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/030_swapRouter_certik_20230530.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/04/19",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/014_swapRouter_peckshield_20230419.pdf"
+    },
+    {
+      "label": "Hacken audit report - 2023/06/28",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/029_swapRouter_hacken_20230628.pdf"
+    },
+    {
+      "label": "Peckshield audit report - 2023/02/27",
+      "url": "https://github.com/VenusProtocol/venus-protocol/blob/develop/audits/009_vtoken_peckshield_20230227.pdf"
+    }
+  ]
+}

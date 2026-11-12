@@ -1,0 +1,6 @@
+.venus-core-mode-table table { display: block; width: 100%; }
+.venus-core-mode-table :is(thead, tbody) { display: block; }
+.venus-core-mode-table thead { position: static; }
+.venus-core-mode-table tr { display: table; width: 100%; table-layout: fixed; }
+
+.venus-core-mode-table thead { padding-right: var(--table-scrollbar-width, 0px); }

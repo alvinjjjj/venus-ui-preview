@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-03",
+  "scope": "Final header burger icon; website only",
+  "figma": "1112:4172",
+  "finding": "18x12 SVG was displayed inside a 24x24 box, enlarging visible bars to 24x16 and line thickness to 2.67px",
+  "result": "Original exact SVG retained, rendered 18x12 with 2px bars; semantic neutral ink inherited; outer buttons unchanged",
+  "barsQa": [
+    {
+      "button": [
+        48,
+        48
+      ],
+      "ink": "rgb(170, 179, 202)",
+      "scale": 1,
+      "svg": [
+        18,
+        12
+      ],
+      "viewBox": "0 0 18 12",
+      "viewport": 768
+    },
+    {
+      "button": [
+        48,
+        48
+      ],
+      "ink": "rgb(170, 179, 202)",
+      "scale": 1,
+      "svg": [
+        18,
+        12
+      ],
+      "viewBox": "0 0 18 12",
+      "viewport": 640
+    },
+    {
+      "button": [
+        36,
+        36
+      ],
+      "ink": "rgb(254, 254, 255)",
+      "scale": 1,
+      "svg": [
+        18,
+        12
+      ],
+      "viewBox": "0 0 18 12",
+      "viewport": 390
+    }
+  ],
+  "xQa": {
+    "h": 20,
+    "w": 20
+  },
+  "gapQa": {
+    "gap": "8px",
+    "measured": [
+      8,
+      8,
+      8,
+      8
+    ]
+  },
+  "checks": {
+    "guestNavigationTests": 17,
+    "stylelint": "passed",
+    "biome": "passed",
+    "diffCheck": "passed",
+    "native": "iPhone 15 Pro / iOS 26.4 Safari screenshot confirms new bars"
+  },
+  "screenshots": [
+    "menu-bars-fixed-dark-390.png",
+    "menu-bars-fixed-light-390.png",
+    "menu-bars-fixed-iphone-safari.png"
+  ]
+}

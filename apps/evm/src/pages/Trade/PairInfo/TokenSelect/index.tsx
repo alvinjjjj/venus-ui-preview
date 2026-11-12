@@ -49,17 +49,18 @@ export const TokenSelect: React.FC<TokenSelectProps> = ({
     >
       <SelectButton
         className={cn(
-          'w-full p-0 overflow-hidden',
+          'trade-pair-select w-full p-0 overflow-hidden',
           type === 'long' ? 'border-green' : 'border-red',
         )}
         contentClassName="w-full"
         onClick={showTokenList}
         disabled={disabled}
         type="button"
+        aria-expanded={isTokenListShown}
       >
         <div
           className={cn(
-            'h-full flex w-12 shrink-0 items-center justify-center py-3 rounded-r-lg',
+            'trade-direction-label h-full flex w-12 shrink-0 items-center justify-center py-2 rounded-lg',
             type === 'long' ? 'bg-green' : 'bg-red',
           )}
         >

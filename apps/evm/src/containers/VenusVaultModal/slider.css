@@ -1,47 +1,47 @@
 /* Figma Leverage Bar 557:3185, Light variants 557:3207 / 1418:24037.
-   Keep the existing interactive Slider; these styles only repair Lite Vault
-   modals in Final Light. No shared palette or Dark/Pro styles are changed. */
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider'] {
+   Keep the existing interactive Slider; these styles repair Vault modals and Trade in Final Light.
+   No shared palette or Dark styles are changed. */
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider'] {
   /* Component-local shadow: Figma input/field/inner-shadow, using the existing
      Light foreground palette rather than adding a global colour token. */
   --vault-slider-shadow: color-mix(in srgb, var(--e-light-text-primary) 24%, transparent);
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-track'] {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-track'] {
   background: var(--venus-surface-field-fill);
   box-shadow: inset 0 2px 3px var(--vault-slider-shadow);
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-range'] {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-range'] {
   background: var(--e-light-action-fill);
   box-shadow: inset 0 1px 1px var(--venus-surface-glass-inset-top);
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-tick'] {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-tick'] {
   border: 0;
   background: url('./assets/slider-tick-light.svg') center no-repeat;
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-tick'][data-active] {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-tick'][data-active] {
   background-image: url('./assets/slider-tick-active-light.svg');
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-thumb'] {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-thumb'] {
   z-index: 1;
   border: 0;
   background: url('./assets/slider-thumb-light.svg') center no-repeat;
   box-shadow: 0 1px 4px var(--vault-slider-shadow);
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider-thumb']:focus-visible {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider-thumb']:focus-visible {
   outline: 2px solid var(--e-light-border-focus);
   outline-offset: 2px;
 }
 
 /* Figma includes the 0% and 100% markers; the Thumb covers its current marker.
    The existing three interactive tick marks and slider behaviour stay intact. */
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider']::before,
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider']::after {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider']::before,
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider']::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -52,15 +52,15 @@
   background: url('./assets/slider-tick-light.svg') center no-repeat;
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider']::before {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider']::before {
   left: 0;
   background-image: url('./assets/slider-tick-active-light.svg');
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider']::after {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider']::after {
   right: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] .venus-lite-vault-modal [data-slot='slider']:has([role='slider'][aria-valuenow='100'])::after {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(.venus-lite-vault-modal, .venus-trade-page) [data-slot='slider']:has([role='slider'][aria-valuenow='100'])::after {
   background-image: url('./assets/slider-tick-active-light.svg');
 }

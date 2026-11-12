@@ -1,0 +1,123 @@
+{
+  "figma": "3212:68745",
+  "fixtures": {
+    "USDC": "Campaign points layout preview",
+    "USDT": "Prime simulated APY"
+  },
+  "dark": [
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 27,
+      "rows": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "width": 1440
+    },
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 27,
+      "rows": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "width": 1280
+    },
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 27,
+      "rows": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "width": 1024
+    },
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 27,
+      "rows": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "width": 768
+    },
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 27,
+      "rows": [
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "width": 640
+    },
+    {
+      "boost": 2,
+      "clipped": [],
+      "inline": true,
+      "overflow": false,
+      "primeBorder": "rgb(155, 104, 80)",
+      "primeHeight": 0,
+      "rows": [],
+      "width": 390
+    }
+  ],
+  "light": [
+    {
+      "boost": 1,
+      "overflow": false,
+      "prime": [
+        {
+          "color": "rgb(126, 82, 60)",
+          "height": 27
+        }
+      ],
+      "width": 1280
+    },
+    {
+      "boost": 1,
+      "overflow": false,
+      "prime": [
+        {
+          "color": "rgb(126, 82, 60)",
+          "height": 27
+        }
+      ],
+      "width": 390
+    }
+  ]
+}

@@ -19,8 +19,14 @@ const RollingDigit = ({ character }: { character: string }) => {
   const changed = /[0-9]/.test(character) && snapshot.previous !== character;
   return (
     <span className="lite-e3-digit" data-changing={changed || undefined}>
-      {changed && <span key={`old-${character}`} className="lite-e3-digit-out">{snapshot.previous}</span>}
-      <span key={character} className={changed ? 'lite-e3-digit-in' : undefined}>{character}</span>
+      {changed && (
+        <span key={`old-${character}`} className="lite-e3-digit-out">
+          {snapshot.previous}
+        </span>
+      )}
+      <span key={character} className={changed ? 'lite-e3-digit-in' : undefined}>
+        {character}
+      </span>
     </span>
   );
 };
@@ -32,6 +38,7 @@ export const SimulatedMarketTotal = ({
   animateDigits = false,
   decimalPlaces = animateDigits ? 0 : 2,
   sleepBetweenUpdates = false,
+  simulateUpdates = true,
 }: {
   valueCents: BigNumber;
   field: 'supplyUsd' | 'liquidityUsd';
@@ -39,12 +46,17 @@ export const SimulatedMarketTotal = ({
   animateDigits?: boolean;
   decimalPlaces?: 0 | 2;
   sleepBetweenUpdates?: boolean;
+  simulateUpdates?: boolean;
 }) => {
   const node = useRef<HTMLSpanElement>(null);
   const [offsetCents, setOffsetCents] = useState(0);
   const baseKey = valueCents.toFixed();
 
   useEffect(() => {
+    if (!simulateUpdates) {
+      setOffsetCents(0);
+      return;
+    }
     const media = window.matchMedia?.('(prefers-reduced-motion: reduce)');
     const hasObserver = typeof IntersectionObserver === 'function';
     let visible = !hasObserver;
@@ -57,10 +69,13 @@ export const SimulatedMarketTotal = ({
     const running = () => !!media && !media.matches && visible && !document.hidden && positiveBase;
     const schedule = () => {
       if (sleepBetweenUpdates && updateIntervalMs && updateIntervalMs > 0) {
-        timer = setTimeout(() => {
-          timer = undefined;
-          if (running()) frame = requestAnimationFrame(tick);
-        }, updateIntervalMs - elapsed % updateIntervalMs);
+        timer = setTimeout(
+          () => {
+            timer = undefined;
+            if (running()) frame = requestAnimationFrame(tick);
+          },
+          updateIntervalMs - (elapsed % updateIntervalMs),
+        );
       } else frame = requestAnimationFrame(tick);
     };
     const tick = (time: number) => {
@@ -97,7 +112,8 @@ export const SimulatedMarketTotal = ({
       } else {
         if (frame !== undefined) cancelAnimationFrame(frame);
         if (timer !== undefined) clearTimeout(timer);
-        if (sleepBetweenUpdates && previousTime !== undefined) elapsed += performance.now() - previousTime;
+        if (sleepBetweenUpdates && previousTime !== undefined)
+          elapsed += performance.now() - previousTime;
         frame = undefined;
         timer = undefined;
         previousTime = undefined;
@@ -126,11 +142,13 @@ export const SimulatedMarketTotal = ({
       document.removeEventListener('visibilitychange', sync);
       media?.removeEventListener('change', sync);
     };
-  }, [baseKey, field, updateIntervalMs, sleepBetweenUpdates]);
+  }, [baseKey, field, updateIntervalMs, sleepBetweenUpdates, simulateUpdates]);
 
   const displayCents = BigNumber.maximum(0, valueCents.plus(offsetCents));
   // Display precision is independent of motion; underlying cents remain intact.
-  const displayValue = displayCents.isZero() ? '$0' : `$${displayCents.shiftedBy(-2).toFormat(decimalPlaces, BigNumber.ROUND_DOWN)}`;
+  const displayValue = displayCents.isZero()
+    ? '$0'
+    : `$${displayCents.shiftedBy(-2).toFormat(decimalPlaces, BigNumber.ROUND_DOWN)}`;
 
   return (
     <span ref={node} className="lite-e2-preview-total" aria-live="off">
@@ -143,7 +161,9 @@ export const SimulatedMarketTotal = ({
             ))}
           </span>
         </>
-      ) : displayValue}
+      ) : (
+        displayValue
+      )}
     </span>
   );
 };

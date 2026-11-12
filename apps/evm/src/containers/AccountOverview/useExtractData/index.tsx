@@ -8,7 +8,14 @@ import {
 } from 'utilities';
 import calculateNetApy from './calculateNetApy';
 
+export interface AccountBalanceAdjustment {
+  supplyCents: BigNumber;
+  borrowCents: BigNumber;
+  yearlyEarningsCents: BigNumber;
+}
+
 interface UseExtractDataInput {
+  balanceAdjustment?: AccountBalanceAdjustment;
   pool?: Pool;
   xvsPriceCents?: BigNumber;
   vaiPriceCents?: BigNumber;
@@ -18,6 +25,7 @@ interface UseExtractDataInput {
 export const useExtractData = ({
   pool,
   vaults,
+  balanceAdjustment,
   xvsPriceCents = new BigNumber(0),
   vaiPriceCents = new BigNumber(0),
 }: UseExtractDataInput) => {
@@ -49,13 +57,13 @@ export const useExtractData = ({
     });
   }
 
-  const supplyBalanceCents = new BigNumber(pool?.userSupplyBalanceCents || 0)?.plus(
-    userTotalVaultStakeCents || 0,
-  );
+  const supplyBalanceCents = new BigNumber(pool?.userSupplyBalanceCents || 0)
+    ?.plus(userTotalVaultStakeCents || 0)
+    .plus(balanceAdjustment?.supplyCents ?? 0);
 
-  const yearlyEarningsCents = new BigNumber(pool?.userYearlyEarningsCents || 0)?.plus(
-    yearlyVaultEarningsCents || 0,
-  );
+  const yearlyEarningsCents = new BigNumber(pool?.userYearlyEarningsCents || 0)
+    ?.plus(yearlyVaultEarningsCents || 0)
+    .plus(balanceAdjustment?.yearlyEarningsCents ?? 0);
 
   const userNetApyPercentage = calculateNetApy({
     supplyBalanceCents,

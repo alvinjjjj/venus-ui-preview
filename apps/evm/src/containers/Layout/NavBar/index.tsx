@@ -12,9 +12,10 @@ import { useInterfaceMode } from 'demo/useInterfaceMode';
 import { useLiquidityLightPreview } from 'demo/useLiquidityLightPreview';
 import { useBreakpointUp } from 'hooks/responsive';
 import { useTranslation } from 'libs/translations';
-import { useAccountAddress } from 'libs/wallet';
+import { useAccountAddress, useChainId } from 'libs/wallet';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { ChainId } from 'types';
 import { useStore } from '../store';
 import TEST_IDS from '../testIds';
 import { ChainSelect } from './ChainSelect';
@@ -42,6 +43,8 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
   const { supportsModes: original, isNew, mode, isLite } = useInterfaceMode();
   const ModeButton = isNew ? ButtonWrapper : 'button';
   const { accountAddress } = useAccountAddress();
+  const { chainId } = useChainId();
+  const proHome = chainId === ChainId.BSC_MAINNET ? routes.liquidityHubs.path : routes.markets.path;
   const openModal = useStore(state => state.openModal);
   const isMobileMenuOpen = openModal === 'mobileMenu';
   const isDesktop = useBreakpointUp('lg');
@@ -150,7 +153,7 @@ export const NavBar: React.FC<NavBarProps> = ({ className, ...containerProps }) 
               'venus-header-logo flex h-full flex-none items-center justify-center px-5 py-6',
               original && 'pl-2 pr-0 sm:pl-5',
             )}
-            to={routes.landing.path}
+            to={isFinal && mode === 'pro' ? proHome : routes.landing.path}
             onClick={closeMobileMenu}
           >
             {isFinal ? (

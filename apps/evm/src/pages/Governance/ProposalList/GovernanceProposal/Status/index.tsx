@@ -75,7 +75,7 @@ export const Status: React.FC<StatusProps> = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-3 overflow-hidden text-white sm:flex-col sm:text-center',
+        'venus-governance-status flex items-center gap-3 overflow-hidden text-white sm:flex-col sm:text-center',
         className,
       )}
       {...otherProps}
@@ -86,7 +86,7 @@ export const Status: React.FC<StatusProps> = ({
             <LabeledProgressCircle
               total={totalPayloadsCount}
               value={executedPayloadsCount}
-              className="mx-auto"
+              className="venus-governance-status-progress mx-auto"
               fillColor={hasRemoteCommandsCanceled ? theme.colors.red : undefined}
             />
 

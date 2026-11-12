@@ -3,13 +3,14 @@ import {
   type CellProps,
   InfoIcon,
   LayeredValues,
+  MultiSelect,
   Page,
   PageStatHeader,
-  Select,
   Table,
   type TableColumn,
   TextField,
   Toggle,
+  TokenIcon,
   TokenIconWithSymbol,
   Tooltip,
   Wrapper,
@@ -28,7 +29,6 @@ import {
 import { type SpokeLoanAsset, type SpokeOverviewPool, getSpokeOverview } from './overview';
 import './styles.css';
 
-const ALL = 'all';
 // Hero stats show one decimal: $160.8K, not $160.86K.
 const oneDecimal = (value: string) => value.replace(/(\.\d)\d+(?=[KMBT]?$)/, '$1');
 const MAX_STACKED_ICONS = 4;
@@ -50,37 +50,37 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
   // Same tooltip component; long lists (20 bStocks) scroll inside it.
   const collateralInfo = (
     <div className="overflow-auto pr-1">
-    <table className="w-full text-b1r">
-      <thead className="text-grey">
-        <tr>
-          <th className="pb-3 pr-8 text-left font-normal">
-            {t('liquidityHubs.table.columns.asset')}
-          </th>
-          <th className="pb-3 text-right font-normal">{t('spoke.market.maxLtv')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pool.collateralAssets.map(collateral => (
-          <tr key={collateral.symbol}>
-            <td className="py-2 pr-8">
-              <span className="inline-flex items-center gap-x-3">
-                <img
-                  src={collateral.iconSrc}
-                  alt={collateral.symbol}
-                  width={20}
-                  height={20}
-                  className="spoke-collateral-icon rounded-full"
-                />
-                {collateral.symbol}
-              </span>
-            </td>
-            <td className="py-2 text-right">
-              {formatPercentageToReadableValue(collateral.maxLtvPercentage)}
-            </td>
+      <table className="w-full text-b1r">
+        <thead className="text-grey">
+          <tr>
+            <th className="pb-3 pr-8 text-left font-normal">
+              {t('liquidityHubs.table.columns.asset')}
+            </th>
+            <th className="pb-3 text-right font-normal">{t('spoke.market.maxLtv')}</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {pool.collateralAssets.map(collateral => (
+            <tr key={collateral.symbol}>
+              <td className="py-2 pr-8">
+                <span className="inline-flex items-center gap-x-3">
+                  <img
+                    src={collateral.iconSrc}
+                    alt={collateral.symbol}
+                    width={20}
+                    height={20}
+                    className="spoke-collateral-icon rounded-full"
+                  />
+                  {collateral.symbol}
+                </span>
+              </td>
+              <td className="py-2 text-right">
+                {formatPercentageToReadableValue(collateral.maxLtvPercentage)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 
@@ -210,7 +210,13 @@ const SpokePoolTable: React.FC<{ pool: SpokeOverviewPool; markets: SpokeLoanAsse
       tableLayout="auto"
       breakpoint="md"
       hideCardDelimiter
-      getRowHref={({ market }) => (market ? getSpokeMarketPath(market) : '')}
+      getRowHref={({ market, token }) =>
+        market
+          ? getSpokeMarketPath(market)
+          : pool.address === 'preview-bstock-mainstream'
+            ? `/spoke/preview-bstock-mainstream/${token.symbol}`
+            : ''
+      }
       header={
         <div className="spoke-pool-table__title">
           <h3>{pool.name}</h3>
@@ -227,9 +233,9 @@ const Spoke: React.FC = () => {
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
 
   const [search, setSearch] = useState('');
-  const [loanAsset, setLoanAsset] = useState<string>(ALL);
-  const [collateral, setCollateral] = useState<string>(ALL);
-  const [poolAddress, setPoolAddress] = useState<string>(ALL);
+  const [loanAsset, setLoanAsset] = useState<string[]>([]);
+  const [collateral, setCollateral] = useState<string[]>([]);
+  const [poolAddress, setPoolAddress] = useState<string[]>([]);
   const [showPaused, setShowPaused] = useState(false);
 
   const overview = useMemo(() => getSpokeOverview(data?.pools ?? []), [data]);
@@ -246,17 +252,18 @@ const Spoke: React.FC = () => {
   }, [pools]);
 
   const filteredPools = pools
-    .filter(pool => poolAddress === ALL || pool.address === poolAddress)
+    .filter(pool => poolAddress.length === 0 || poolAddress.includes(pool.address))
     .filter(
       pool =>
-        collateral === ALL || pool.collateralAssets.some(asset => asset.symbol === collateral),
+        collateral.length === 0 ||
+        pool.collateralAssets.some(asset => collateral.includes(asset.symbol)),
     )
     .map(pool => ({
       pool,
       markets: pool.loanAssets.filter(
         ({ token, market }) =>
           (showPaused || !market?.isPaused) &&
-          (loanAsset === ALL || token.symbol === loanAsset) &&
+          (loanAsset.length === 0 || loanAsset.includes(token.symbol)) &&
           (!search || token.symbol.toLowerCase().includes(search.toLowerCase())),
       ),
     }))
@@ -321,41 +328,75 @@ const Spoke: React.FC = () => {
                   leftIconSrc="magnifier"
                   className="spoke-filters__search"
                 />
-                <Select
+                <MultiSelect
                   size="medium"
-                  variant="primary"
                   className="spoke-filters__select"
-                  buttonClassName={loanAsset === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={loanAsset}
-                  onChange={value => setLoanAsset(String(value))}
-                  options={[
-                    option(ALL, t('spoke.filters.allLoanAssets')),
-                    ...loanSymbols.map(s => option(s, s)),
-                  ]}
+                  onChange={setLoanAsset}
+                  placeholder={t('spoke.filters.allLoanAssets')}
+                  title={t('spokePools.filter.selectLoanAssets')}
+                  resetLabel={t('vault.filter.reset')}
+                  renderCount={count => t('spokePools.filter.nLoanAssets', { count })}
+                  searchPlaceholder={t('spokePools.filter.searchLoanAssets')}
+                  options={loanSymbols.map(symbol => {
+                    const token = pools
+                      .flatMap(pool => pool.loanAssets)
+                      .find(asset => asset.token.symbol === symbol)?.token;
+                    return {
+                      value: symbol,
+                      searchText: symbol,
+                      label: (
+                        <span className="flex items-center gap-2">
+                          {token && <TokenIcon token={token} size="md" />}
+                          <span>{symbol}</span>
+                        </span>
+                      ),
+                    };
+                  })}
                 />
-                <Select
+                <MultiSelect
                   size="medium"
-                  variant="primary"
                   className="spoke-filters__select"
-                  buttonClassName={collateral === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={collateral}
-                  onChange={value => setCollateral(String(value))}
-                  options={[
-                    option(ALL, t('spoke.filters.allCollaterals')),
-                    ...collateralSymbols.map(s => option(s, s)),
-                  ]}
+                  onChange={setCollateral}
+                  placeholder={t('spoke.filters.allCollaterals')}
+                  title={t('spokePools.filter.selectCollaterals')}
+                  resetLabel={t('vault.filter.reset')}
+                  renderCount={count => t('spokePools.filter.nCollaterals', { count })}
+                  searchPlaceholder={t('spokePools.filter.searchCollaterals')}
+                  options={collateralSymbols.map(symbol => {
+                    const asset = pools
+                      .flatMap(pool => pool.collateralAssets)
+                      .find(asset => asset.symbol === symbol);
+                    return {
+                      value: symbol,
+                      searchText: symbol,
+                      label: (
+                        <span className="flex items-center gap-2">
+                          {asset && (
+                            <img
+                              src={asset.iconSrc}
+                              alt={symbol}
+                              className="size-5 shrink-0 object-contain"
+                            />
+                          )}
+                          <span>{symbol}</span>
+                        </span>
+                      ),
+                    };
+                  })}
                 />
-                <Select
+                <MultiSelect
                   size="medium"
-                  variant="primary"
                   className="spoke-filters__select spoke-filters__select--pool"
-                  buttonClassName={poolAddress === ALL ? 'spoke-filters__placeholder' : undefined}
                   value={poolAddress}
-                  onChange={value => setPoolAddress(String(value))}
-                  options={[
-                    option(ALL, t('spoke.filters.allPools')),
-                    ...pools.map(pool => option(pool.address, pool.name)),
-                  ]}
+                  onChange={setPoolAddress}
+                  placeholder={t('spoke.filters.allPools')}
+                  title={t('spokePools.filter.selectPools')}
+                  resetLabel={t('vault.filter.reset')}
+                  renderCount={count => t('spokePools.filter.nPools', { count })}
+                  searchPlaceholder={t('spokePools.filter.searchPools')}
+                  options={pools.map(pool => option(pool.address, pool.name))}
                 />
               </div>
               <div className="spoke-filters__toggles">

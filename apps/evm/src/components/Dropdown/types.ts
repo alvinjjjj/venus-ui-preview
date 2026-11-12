@@ -21,8 +21,12 @@ export interface DropdownProps {
   variant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
   menuTitle?: React.ReactNode;
   menuPosition?: 'left' | 'right';
+  /** Open above the trigger; the default chooses a side from the available space. */
+  menuPlacement?: 'auto' | 'top';
   matchTriggerWidth?: boolean;
   menuClassName?: string;
+  manageContentScroll?: boolean;
+  onOpenChange?: (open: boolean) => void;
   triggerOnHover?: boolean;
   modalPortalContainer?: Element | DocumentFragment | null;
 }

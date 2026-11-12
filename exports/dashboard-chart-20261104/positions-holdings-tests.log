@@ -1,0 +1,16 @@
+
+ RUN  v3.2.7 /Users/alvin/Documents/Claude/Projects/Venus project/venus-ui-preview/apps/evm
+
+stdout | src/pages/Dashboard/LitePositions.spec.tsx
+🌐 i18next is made possible by our own product, Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+
+stderr | src/pages/Dashboard/LitePositions.spec.tsx
+Invalid Sentry Dsn: fakeSentryDsn
+
+ ✓ src/pages/Dashboard/LitePositions.spec.tsx (17 tests) 734ms
+
+ Test Files  1 passed (1)
+      Tests  17 passed (17)
+   Start at  04:01:33
+   Duration  14.52s (transform 3.29s, setup 258ms, collect 10.73s, tests 734ms, environment 799ms, prepare 289ms)
+

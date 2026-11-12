@@ -1,0 +1,35 @@
+Components QA | 全站共用元件 QA
+Status: Backlog — collect now, review together later
+狀態：先記錄、待集中檢視；尚未安排 FE 修改，未完成複驗。
+
+Purpose
+集中記錄全站共用元件的視覺與互動一致性問題；按元件逐項累積，待之後一併確認優先級、設計規格及實作安排。
+
+01 · Scrollbar appearance consistency
+捲動條樣式一致性
+
+Status: Reported / Pending reproduction
+Priority: Future improvement / Review later
+狀態：已記錄，待重播確認；後續優化，暫不要求立即修改。
+
+Observation | 觀察
+兩張截圖中的垂直 Scrollbar 外觀不同：彈窗右側可見較明顯的深色 track 及偏藍灰 thumb；All transactions 下拉面板則呈現淺色 thumb、較不明顯的 track。先記錄 thumb 顏色、track、視覺粗幼及與面板邊界距離的一致性問題。
+目前只有截圖證據，未在相同瀏覽器、作業系統、縮放、主題及畫面寬度下重新量度，不將截圖中的視覺差異直接當作已確認的 CSS 尺寸差異。
+
+Expected direction | 後續方向
+集中檢視全站需要捲動的共用介面，包括彈窗、Dropdown／Select 面板及表格內部捲動區；確認哪些可共用同一套 Scrollbar 規格。以既有設計系統為基礎，統一適用情境下的 thumb、track、圓角、寬度、邊界間距及 Hover／Active 表現。最終規格待設計 review 確認，暫不指定其中一張截圖為標準。
+
+Recheck | 後續驗收
+在相同瀏覽器、作業系統、縮放、主題及 viewport 下比較；確認適用情境中的樣式一致、捲動功能正常，且沒有壓住內容、破壞圓角或造成新的溢出。依最終確認範圍補驗 Light／Dark 及桌面／手機。
+
+[ ] 01 | Shared scrollbar styling reviewed, implemented and rechecked
+備註：只有完成規格確認、實作及複驗後才勾選。
+
+Evidence | 截圖
+1. 01-scrollbar-overlay.png — 彈窗右側捲動區
+2. 01-scrollbar-transactions.png — All transactions 下拉面板
+
+Destination | 預定 Notion 位置
+Venus Website QA > Components QA
+Parent: https://app.notion.com/p/Venus-Website-QA-40eb4e5771bb80ec9a74da120497aab5
+Notion write status: NOT CREATED — connection unavailable

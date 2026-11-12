@@ -89,80 +89,94 @@ export const KLineChart: React.FC<KLineChartProps> = ({
 
     chartRef.current = chart;
 
-    const darkBlueHover = rgb('--color-dark-blue-hover-rgb');
-    const darkBlueActive = rgb('--color-dark-blue-active-rgb');
-    const grey = rgb('--color-grey-rgb');
-    const white = rgb('--color-white-rgb');
-    const green = rgb('--color-green-rgb');
-    const red = rgb('--color-red-rgb');
+    const updateChartStyles = () => {
+      const tradeStyles = chartContainerRef.current?.closest('.venus-trade-page')
+        ? getComputedStyle(chartContainerRef.current)
+        : undefined;
+      const token = (name: string, fallback: string) =>
+        tradeStyles?.getPropertyValue(name).trim() || fallback;
+      const darkBlueHover = token('--venus-form-line', rgb('--color-dark-blue-hover-rgb'));
+      const darkBlueActive = token('--venus-form-line', rgb('--color-dark-blue-active-rgb'));
+      const grey = token('--color-grey', rgb('--color-grey-rgb'));
+      const white = token('--color-white', rgb('--color-white-rgb'));
+      const green = rgb('--color-green-rgb');
+      const red = rgb('--color-red-rgb');
 
-    chart.setStyles({
-      grid: {
-        horizontal: { color: darkBlueHover, dashedValue: [3, 3] },
-        vertical: { color: darkBlueHover, dashedValue: [3, 3] },
-      },
-      candle: {
-        bar: {
-          upColor: green,
-          downColor: red,
-          upBorderColor: green,
-          downBorderColor: red,
-          upWickColor: green,
-          downWickColor: red,
-          noChangeColor: grey,
-          noChangeBorderColor: grey,
-          noChangeWickColor: grey,
+      chart.setStyles({
+        grid: {
+          horizontal: { color: darkBlueHover, dashedValue: [3, 3] },
+          vertical: { color: darkBlueHover, dashedValue: [3, 3] },
         },
-        tooltip: {
-          rect: {
-            color: darkBlueHover,
-            borderColor: darkBlueActive,
+        candle: {
+          bar: {
+            upColor: green,
+            downColor: red,
+            upBorderColor: green,
+            downBorderColor: red,
+            upWickColor: green,
+            downWickColor: red,
+            noChangeColor: grey,
+            noChangeBorderColor: grey,
+            noChangeWickColor: grey,
           },
-          title: { color: white },
-          legend: {
-            color: grey,
-            template: [
-              { title: 'time', value: '{time}' },
-              { title: 'open', value: '{open}' },
-              { title: 'high', value: '{high}' },
-              { title: 'low', value: '{low}' },
-              { title: 'close', value: '{close}' },
-            ],
-          },
-        },
-      },
-      xAxis: {
-        axisLine: { color: darkBlueActive },
-        tickLine: { color: darkBlueActive },
-        tickText: { color: grey },
-      },
-      yAxis: {
-        axisLine: { color: darkBlueActive },
-        tickLine: { color: darkBlueActive },
-        tickText: { color: grey },
-      },
-      crosshair: {
-        horizontal: {
-          line: { color: grey },
-          text: {
-            color: white,
-            borderColor: darkBlueActive,
-            backgroundColor: darkBlueHover,
+          tooltip: {
+            rect: {
+              color: darkBlueHover,
+              borderColor: darkBlueActive,
+            },
+            title: { color: white },
+            legend: {
+              color: grey,
+              template: [
+                { title: 'time', value: '{time}' },
+                { title: 'open', value: '{open}' },
+                { title: 'high', value: '{high}' },
+                { title: 'low', value: '{low}' },
+                { title: 'close', value: '{close}' },
+              ],
+            },
           },
         },
-        vertical: {
-          line: { color: grey },
-          text: {
-            color: white,
-            borderColor: darkBlueActive,
-            backgroundColor: darkBlueHover,
+        xAxis: {
+          axisLine: { color: darkBlueActive },
+          tickLine: { color: darkBlueActive },
+          tickText: { color: grey },
+        },
+        yAxis: {
+          axisLine: { color: darkBlueActive },
+          tickLine: { color: darkBlueActive },
+          tickText: { color: grey },
+        },
+        crosshair: {
+          horizontal: {
+            line: { color: grey },
+            text: {
+              color: white,
+              borderColor: darkBlueActive,
+              backgroundColor: darkBlueHover,
+            },
+          },
+          vertical: {
+            line: { color: grey },
+            text: {
+              color: white,
+              borderColor: darkBlueActive,
+              backgroundColor: darkBlueHover,
+            },
           },
         },
-      },
-      separator: {
-        color: darkBlueActive,
-        activeBackgroundColor: darkBlueHover,
-      },
+        separator: {
+          color: darkBlueActive,
+          activeBackgroundColor: darkBlueHover,
+        },
+      });
+
+    };
+    updateChartStyles();
+    const themeObserver = new MutationObserver(updateChartStyles);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-liquidity-theme', 'data-glass-variant'],
     });
 
     const resizeObserver = new ResizeObserver(() => {
@@ -174,6 +188,7 @@ export const KLineChart: React.FC<KLineChartProps> = ({
     return () => {
       chartRef.current = null;
       resizeObserver?.disconnect();
+      themeObserver.disconnect();
       dispose(chart);
     };
   }, []);

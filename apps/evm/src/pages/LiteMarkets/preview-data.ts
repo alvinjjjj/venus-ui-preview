@@ -24,7 +24,6 @@ export function getPreviewCollateral(symbol: string) {
     TSLAB: 25_000,
     NVDAB: 12_000,
     SKHYB: 14_000,
-    BPN: 100,
   };
   return {
     ...getPreviewBalances(new BigNumber(prices[symbol] ?? 10_000)),

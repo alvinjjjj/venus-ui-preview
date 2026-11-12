@@ -77,6 +77,7 @@ export const VaultList: FC<VaultListProps> = ({ vaults, className, ...props }) =
               placeholder={t('vault.filter.allCategories')}
               renderCount={count => t('vault.filter.nCategories', { count })}
               title={t('vault.filter.selectCategories')}
+              searchPlaceholder={t('vault.filter.searchCategories')}
               resetLabel={t('vault.filter.reset')}
             />
             <MultiSelect
@@ -87,6 +88,7 @@ export const VaultList: FC<VaultListProps> = ({ vaults, className, ...props }) =
               placeholder={t('vault.filter.allVenues')}
               renderCount={count => t('vault.filter.nVenues', { count })}
               title={t('vault.filter.selectVenues')}
+              searchPlaceholder={t('vault.filter.searchVenues')}
               resetLabel={t('vault.filter.reset')}
             />
             <MultiSelect
@@ -97,6 +99,7 @@ export const VaultList: FC<VaultListProps> = ({ vaults, className, ...props }) =
               placeholder={t('vault.filter.allStates')}
               renderCount={count => t('vault.filter.nStates', { count })}
               title={t('vault.filter.selectStates')}
+              searchPlaceholder={t('vault.filter.searchStates')}
               resetLabel={t('vault.filter.reset')}
             />
           </div>

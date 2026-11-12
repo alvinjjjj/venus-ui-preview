@@ -1,4 +1,4 @@
-import venusCoreIcon from 'assets/img/venusCoreIcon.png';
+import venusCoreIcon from 'assets/img/venusCoreIcon.svg';
 import venusLogo from 'assets/img/venusLogo.svg';
 import { Icon, ProgressBar } from 'components';
 import { useEffect, useRef, useState } from 'react';

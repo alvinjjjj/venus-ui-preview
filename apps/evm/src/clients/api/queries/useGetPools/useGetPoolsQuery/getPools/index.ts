@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { isEmptyDemoAddress } from 'demo/state';
 import snapshot from 'demo/pools.json';
+import { isEmptyDemoAddress } from 'demo/state';
 import type { GetPoolsInput, GetPoolsOutput } from '../../types';
 import { formatOutput } from './formatOutput';
 import { type ApiTokenMetadata, type GetApiPoolsResponse, getApiPools } from './getApiPools';
@@ -36,6 +36,11 @@ export const getPools = async ({
       userPoolEModeGroupIdMapping: {},
       vaiPriceMantissa: 1000000000000000000n,
       vaiRepayRateMantissa: 10000000000000000n,
+      // Local BNB demo accounts have no minted VAI. Supply the explicit zero so
+      // the overview can distinguish it from an unavailable account balance.
+      ...(chainId === 56 && accountAddress
+        ? { userVaiBorrowBalanceMantissa: new BigNumber(0) }
+        : {}),
       userTokenBalances: hasDemoFunds
         ? tokens.map(token => ({
             token,

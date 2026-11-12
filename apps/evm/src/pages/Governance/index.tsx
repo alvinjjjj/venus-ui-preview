@@ -3,12 +3,13 @@ import { type UseUrlPaginationOutput, useUrlPagination } from 'hooks/useUrlPagin
 import { Page } from 'components';
 import ProposalList from './ProposalList';
 import VotingWallet from './VotingWallet';
+import './governance.css';
 
 export type GovernancePageUiProps = UseUrlPaginationOutput;
 
 export const GovernanceUi: React.FC<GovernancePageUiProps> = ({ currentPage, setCurrentPage }) => (
   <Page>
-    <div className="space-y-10 lg:space-y-0 sm:grid lg:grid-cols-[2fr_1fr] lg:gap-x-6">
+    <div className="venus-governance-page space-y-10 lg:space-y-0 sm:grid lg:grid-cols-[2fr_1fr] lg:gap-x-6">
       <VotingWallet className="lg:order-2" />
 
       <ProposalList

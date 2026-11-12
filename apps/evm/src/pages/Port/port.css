@@ -1,0 +1,18 @@
+/* Final import panels share the solid card backing; keep nested boundaries separate from dividers. */
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-port-page :is(.venus-glass-card, .border.border-lightGrey) {
+  background: linear-gradient(var(--venus-surface-card-fill), var(--venus-surface-card-fill)), var(--color-background) !important;
+  border-color: var(--venus-surface-card-edge) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-port-page hr {
+  border-color: var(--venus-form-line, rgb(255 255 255 / 8%)) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-port-page :is(.venus-glass-card, .border.border-lightGrey) {
+  background: var(--e-light-surface-raised) !important;
+  border-color: var(--e-light-border-subtle) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-port-page hr {
+  border-color: var(--venus-form-line, rgb(0 0 0 / 6%)) !important;
+}

@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import './bridge.css';
 import { useCallback, useMemo, useRef } from 'react';
 import { Controller, useFormState } from 'react-hook-form';
 import type { Chain } from 'viem';
@@ -287,8 +288,8 @@ const BridgePage: React.FC = () => {
 
   return (
     <Page>
-      <div className="mx-auto w-full space-y-6 md:max-w-[544px]">
-        <Card>
+      <div className="venus-bridge-page mx-auto w-full space-y-6 md:max-w-[544px]">
+        <Card className="bridge-action-card">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div className="md:flex md:items-end md:justify-between md:gap-4 grow">
@@ -377,7 +378,7 @@ const BridgePage: React.FC = () => {
             </div>
 
             <ConnectWallet
-              className={cn('space-y-6', isUserConnected ? 'mt-4' : 'mt-6')}
+              className={cn('bridge-action-footer space-y-6', isUserConnected ? 'mt-4' : 'mt-6')}
               analyticVariant="bridge"
             >
               <div className="space-y-4">
@@ -441,7 +442,7 @@ const BridgePage: React.FC = () => {
             <LayerZeroLogo className="w-[80px]" />
           </div>
 
-          <div className="bg-lightGrey h-5 w-px" />
+          <div className="bridge-footer-divider bg-lightGrey h-5 w-px" />
 
           <Link href={BRIDGE_DOC_URL} className="flex items-center text-sm">
             {t('bridgePage.footer.bridgeDocLink')}

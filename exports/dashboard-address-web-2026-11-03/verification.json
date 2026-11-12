@@ -1,0 +1,4847 @@
+{
+  "checkedAt": "2026-11-03",
+  "environment": "Local Final preview on http://127.0.0.1:5176, simulated accounts",
+  "figma": {
+    "file": "ffh5VFqviRERdBN5rhJkgv",
+    "accountComponent": "3290:114452",
+    "dashboardButton": "5589:21717",
+    "written": false
+  },
+  "scope": "Move Dashboard from Final outer navigation into Address menu for Lite and Pro, retaining mode and chain",
+  "widths": [
+    1440,
+    1280,
+    1024,
+    768,
+    640,
+    390
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "normalAccountScreens": 24,
+  "primeAccountWidths": 6,
+  "guestWidths": 6,
+  "responsiveMenuStates": 6,
+  "geometryIssues": [],
+  "observations": [
+    {
+      "issue": "Floating Telegram widget and expanded design-preview tools can cover the bottom-right Theme control in an open responsive menu",
+      "status": "Observed during QA; collapsed tools and hid widget through UI to complete menu tests; unrelated widget behavior was not changed"
+    }
+  ],
+  "limitations": [
+    "Browser viewport tests, not physical-device tests",
+    "Local preview only; no deployment",
+    "The additional legacy NavBar real-wallet integration suite has five setup failures (ResizeObserver missing, connector uid undefined); the three targeted suites pass 98 tests"
+  ],
+  "records": [
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 949,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 1021.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 1128.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 1202.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1369,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 924,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1440,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 949,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 1019.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 1126.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 1200.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1369,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 924,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1440,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 789,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 861.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 968.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 1042.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1209,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 764,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1280,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 789,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 859.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 966.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 1040.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1209,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 764,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1280,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 533,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 112.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 80.34375,
+            "x": 298.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 51.1875,
+            "x": 382.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 65.375,
+            "x": 437.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 77.5703125,
+            "x": 507.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 605.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 712.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 786.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 953,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 508,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1024,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 533,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 112.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 80.34375,
+            "x": 298.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 51.1875,
+            "x": 382.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 65.375,
+            "x": 437.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 77.5703125,
+            "x": 507.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 603.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 710.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 784.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 953,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 508,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 1024,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 277,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 293.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 400.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 474.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 641,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 704,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 252,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 768,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 277,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 291.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 398.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 472.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 641,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 704,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 252,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 768,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 149,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 272.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 346.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 513,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 576,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 124,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 640,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 149,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 270.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 344.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 513,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 576,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 124,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 640,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 603,
+        "scroll": 603
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 308,
+          "x": 41,
+          "y": 550
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 64.96875,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 158.34375,
+            "x": 122.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 603,
+        "width": 358,
+        "x": 16,
+        "y": 80
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 390,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 603,
+        "scroll": 603
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 308,
+          "x": 41,
+          "y": 550
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 64.96875,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 160.34375,
+            "x": 120.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 603,
+        "width": 358,
+        "x": 16,
+        "y": 80
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=lite&chainId=56",
+      "width": 390,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 64.96875,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 160.34375,
+            "x": 120.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/dashboard?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "pro-dashboard-navigation"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 64.96875,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 160.34375,
+            "x": 120.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/dashboard?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "pro-dashboard-reload"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 949,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 1095.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 1202.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1369,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 924,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1440,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 949,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 1093.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 1200.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1369,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 924,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1440,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 789,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 935.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 1042.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1209,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 764,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1280,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 789,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 933.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 1040.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1209,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 764,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1280,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 533,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 679.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 786.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 953,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 508,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1024,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 533,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 677.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 784.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 953,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 508,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 1024,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 277,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 423.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 530.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 697,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 252,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 768,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 277,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 99.296875,
+            "x": 421.359375,
+            "y": 8
+          },
+          "label": "< $0.01"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 528.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 697,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 252,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 768,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 149,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 158.34375,
+            "x": 402.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 569,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 124,
+        "y": 76
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 640,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 587,
+        "scroll": 587
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 149,
+          "y": 530
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 157.671875,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 160.34375,
+            "x": 400.65625,
+            "y": 8
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 569,
+            "y": 8
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 587,
+        "width": 492,
+        "x": 124,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 640,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 603,
+        "scroll": 603
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 308,
+          "x": 41,
+          "y": 550
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 66.40625,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 158.34375,
+            "x": 166.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 333,
+            "y": 14
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 603,
+        "width": 358,
+        "x": 16,
+        "y": 80
+      },
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "normal-account"
+    },
+    {
+      "accountScroll": {
+        "client": 603,
+        "scroll": 603
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 308,
+          "x": 41,
+          "y": 550
+        },
+        "href": "#/dashboard?interface=lite&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 66.40625,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 160.34375,
+            "x": 164.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 333,
+            "y": 14
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Universal Money Markets"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 603,
+        "width": 358,
+        "x": 16,
+        "y": 80
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "normal-account"
+    },
+    {
+      "height": 900,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 684,
+          "x": 40,
+          "y": -129
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 328,
+          "x": 48,
+          "y": -85
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 328,
+          "x": 388,
+          "y": -85
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 684,
+          "x": 40,
+          "y": 23
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 328,
+          "x": 48,
+          "y": 67
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 328,
+          "x": 388,
+          "y": 67
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 684,
+          "x": 40,
+          "y": 175
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 684,
+          "x": 40,
+          "y": 223
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 684,
+          "x": 40,
+          "y": 271
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 684,
+          "x": 40,
+          "y": 307
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 684,
+          "x": 40,
+          "y": 377
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 684,
+          "x": 40,
+          "y": 447
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 684,
+          "x": 40,
+          "y": 517
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 684,
+          "x": 40,
+          "y": 587
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 684,
+          "x": 40,
+          "y": 657
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 632,
+          "y": 772
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 676,
+          "y": 772
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 564,
+          "y": 828
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 92,
+            "width": 684,
+            "x": 40,
+            "y": -93
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 48,
+                "y": -85
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 388,
+                "y": -85
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 92,
+            "width": 684,
+            "x": 40,
+            "y": 59
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 48,
+                "y": 67
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 388,
+                "y": 67
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 836,
+        "height": 1109,
+        "top": 273
+      },
+      "theme": "light",
+      "width": 768,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "height": 900,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 684,
+          "x": 40,
+          "y": -129
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 328,
+          "x": 48,
+          "y": -85
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 328,
+          "x": 388,
+          "y": -85
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 684,
+          "x": 40,
+          "y": 23
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 328,
+          "x": 48,
+          "y": 67
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 328,
+          "x": 388,
+          "y": 67
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 684,
+          "x": 40,
+          "y": 175
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 684,
+          "x": 40,
+          "y": 223
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 684,
+          "x": 40,
+          "y": 271
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 684,
+          "x": 40,
+          "y": 307
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 684,
+          "x": 40,
+          "y": 377
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 684,
+          "x": 40,
+          "y": 447
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 684,
+          "x": 40,
+          "y": 517
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 684,
+          "x": 40,
+          "y": 587
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 684,
+          "x": 40,
+          "y": 657
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 632,
+          "y": 772
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 676,
+          "y": 772
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 564,
+          "y": 828
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 92,
+            "width": 684,
+            "x": 40,
+            "y": -93
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 48,
+                "y": -85
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 388,
+                "y": -85
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 92,
+            "width": 684,
+            "x": 40,
+            "y": 59
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 48,
+                "y": 67
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 328,
+                "x": 388,
+                "y": 67
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 836,
+        "height": 1109,
+        "top": 273
+      },
+      "theme": "dark",
+      "width": 768,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "height": 900,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 572,
+          "x": 32,
+          "y": -129
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 272,
+          "x": 40,
+          "y": -85
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 272,
+          "x": 324,
+          "y": -85
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 572,
+          "x": 32,
+          "y": 23
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 272,
+          "x": 40,
+          "y": 67
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 272,
+          "x": 324,
+          "y": 67
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 572,
+          "x": 32,
+          "y": 175
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 572,
+          "x": 32,
+          "y": 223
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 572,
+          "x": 32,
+          "y": 271
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 572,
+          "x": 32,
+          "y": 307
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 572,
+          "x": 32,
+          "y": 377
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 572,
+          "x": 32,
+          "y": 447
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 572,
+          "x": 32,
+          "y": 517
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 572,
+          "x": 32,
+          "y": 587
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 572,
+          "x": 32,
+          "y": 657
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 512,
+          "y": 772
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 556,
+          "y": 772
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 444,
+          "y": 828
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 92,
+            "width": 572,
+            "x": 32,
+            "y": -93
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 40,
+                "y": -85
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 324,
+                "y": -85
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 92,
+            "width": 572,
+            "x": 32,
+            "y": 59
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 40,
+                "y": 67
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 324,
+                "y": 67
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 836,
+        "height": 1109,
+        "top": 273
+      },
+      "theme": "light",
+      "width": 640,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "height": 900,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 572,
+          "x": 32,
+          "y": -129
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 272,
+          "x": 40,
+          "y": -85
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 272,
+          "x": 324,
+          "y": -85
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 572,
+          "x": 32,
+          "y": 23
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 272,
+          "x": 40,
+          "y": 67
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 272,
+          "x": 324,
+          "y": 67
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 572,
+          "x": 32,
+          "y": 175
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 572,
+          "x": 32,
+          "y": 223
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 572,
+          "x": 32,
+          "y": 271
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 572,
+          "x": 32,
+          "y": 307
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 572,
+          "x": 32,
+          "y": 377
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 572,
+          "x": 32,
+          "y": 447
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 572,
+          "x": 32,
+          "y": 517
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 572,
+          "x": 32,
+          "y": 587
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 572,
+          "x": 32,
+          "y": 657
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 512,
+          "y": 772
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 556,
+          "y": 772
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 444,
+          "y": 828
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 92,
+            "width": 572,
+            "x": 32,
+            "y": -93
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 40,
+                "y": -85
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 324,
+                "y": -85
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 92,
+            "width": 572,
+            "x": 32,
+            "y": 59
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 40,
+                "y": 67
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 272,
+                "x": 324,
+                "y": 67
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 836,
+        "height": 1109,
+        "top": 273
+      },
+      "theme": "dark",
+      "width": 640,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "height": 844,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 335,
+          "x": 25.5,
+          "y": -470
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 319,
+          "x": 33.5,
+          "y": -426
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 319,
+          "x": 33.5,
+          "y": -338
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 335,
+          "x": 25.5,
+          "y": -230
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 311,
+          "x": 37.5,
+          "y": -182
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 311,
+          "x": 37.5,
+          "y": -94
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 335,
+          "x": 25.5,
+          "y": 18
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 335,
+          "x": 25.5,
+          "y": 66
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 335,
+          "x": 25.5,
+          "y": 114
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 335,
+          "x": 25.5,
+          "y": 150
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 335,
+          "x": 25.5,
+          "y": 220
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 335,
+          "x": 25.5,
+          "y": 290
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 335,
+          "x": 25.5,
+          "y": 360
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 335,
+          "x": 25.5,
+          "y": 430
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 335,
+          "x": 25.5,
+          "y": 500
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "",
+          "width": 335,
+          "x": 25.5,
+          "y": 615
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 268.5,
+          "y": 716
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 312.5,
+          "y": 716
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 200.5,
+          "y": 772
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 180,
+            "width": 335,
+            "x": 25.5,
+            "y": -434
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 319,
+                "x": 33.5,
+                "y": -426
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 319,
+                "x": 33.5,
+                "y": -338
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 188,
+            "width": 335,
+            "x": 25.5,
+            "y": -194
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 311,
+                "x": 37.5,
+                "y": -182
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 311,
+                "x": 37.5,
+                "y": -94
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 780,
+        "height": 1394,
+        "top": 614
+      },
+      "theme": "light",
+      "width": 390,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "height": 844,
+      "labels": [
+        {
+          "height": 24,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 335,
+          "x": 25.5,
+          "y": -470
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources.",
+          "width": 319,
+          "x": 33.5,
+          "y": -426
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus VaultSingle-strategy supply vault for target rewards.",
+          "width": 319,
+          "x": 33.5,
+          "y": -338
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Earn5.66%",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Borrow",
+          "width": 335,
+          "x": 25.5,
+          "y": -230
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage.",
+          "width": 311,
+          "x": 37.5,
+          "y": -182
+        },
+        {
+          "height": 76,
+          "label": null,
+          "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market.",
+          "width": 311,
+          "x": 37.5,
+          "y": -94
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Borrow",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Prime",
+          "width": 335,
+          "x": 25.5,
+          "y": 18
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Flux",
+          "width": 335,
+          "x": 25.5,
+          "y": 66
+        },
+        {
+          "height": 24,
+          "label": null,
+          "text": "Others",
+          "width": 335,
+          "x": 25.5,
+          "y": 114
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "GovernanceVote on Venus proposals with $XVS.",
+          "width": 335,
+          "x": 25.5,
+          "y": 150
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "VAIMint the native stablecoin of Venus.",
+          "width": 335,
+          "x": 25.5,
+          "y": 220
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "BridgeCross-chain $XVS transfers on Venus.",
+          "width": 335,
+          "x": 25.5,
+          "y": 290
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "PortGasless import of lending positions.",
+          "width": 335,
+          "x": 25.5,
+          "y": 360
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "StatsReal-time Risk Parameters",
+          "width": 335,
+          "x": 25.5,
+          "y": 430
+        },
+        {
+          "height": 66,
+          "label": null,
+          "text": "TradebetaLong one, short the other, earn the spread.",
+          "width": 335,
+          "x": 25.5,
+          "y": 500
+        },
+        {
+          "height": 0,
+          "label": null,
+          "text": "Others",
+          "width": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "",
+          "width": 335,
+          "x": 25.5,
+          "y": 615
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Dark mode",
+          "width": 44,
+          "x": 268.5,
+          "y": 716
+        },
+        {
+          "height": 40,
+          "label": null,
+          "text": "Light mode",
+          "width": 44,
+          "x": 312.5,
+          "y": 716
+        },
+        {
+          "height": 48,
+          "label": null,
+          "text": "English",
+          "width": 160,
+          "x": 200.5,
+          "y": 772
+        }
+      ],
+      "mode": "pro",
+      "outerDashboard": 0,
+      "overflow": false,
+      "products": [
+        {
+          "box": {
+            "height": 180,
+            "width": 335,
+            "x": 25.5,
+            "y": -434
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 319,
+                "x": 33.5,
+                "y": -426
+              },
+              "text": "Liquidity Hub5.66%One supply, auto-allocated across multiple yield sources."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 319,
+                "x": 33.5,
+                "y": -338
+              },
+              "text": "Venus VaultSingle-strategy supply vault for target rewards."
+            }
+          ]
+        },
+        {
+          "box": {
+            "height": 188,
+            "width": 335,
+            "x": 25.5,
+            "y": -194
+          },
+          "items": [
+            {
+              "box": {
+                "height": 76,
+                "width": 311,
+                "x": 37.5,
+                "y": -182
+              },
+              "text": "Venus CoreClassic lending and borrowing with easy, optimized leverage."
+            },
+            {
+              "box": {
+                "height": 76,
+                "width": 311,
+                "x": 37.5,
+                "y": -94
+              },
+              "text": "Venus SpokeNewBorrow assets against your supplied collateral from dedicated market."
+            }
+          ]
+        }
+      ],
+      "scroll": {
+        "client": 780,
+        "height": 1394,
+        "top": 614
+      },
+      "theme": "dark",
+      "width": 390,
+      "scenario": "pro-mobile-menu"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 949,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 1137.625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 149.375,
+            "x": 1211.625,
+            "y": 8
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1369,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 924,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1440,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 789,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 977.625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 149.375,
+            "x": 1051.625,
+            "y": 8
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1209,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 764,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1280,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 533,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 112.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 80.34375,
+            "x": 298.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 51.1875,
+            "x": 382.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 65.375,
+            "x": 437.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 77.5703125,
+            "x": 507.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 721.625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 149.375,
+            "x": 795.625,
+            "y": 8
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 953,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 508,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1024,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 277,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 409.625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 149.375,
+            "x": 483.625,
+            "y": 8
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 641,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 704,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 252,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 768,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": {
+        "client": 527,
+        "scroll": 527
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 442,
+          "x": 149,
+          "y": 470
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 281.625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 149.375,
+            "x": 355.625,
+            "y": 8
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 513,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 576,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 527,
+        "width": 492,
+        "x": 124,
+        "y": 76
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 640,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": {
+        "client": 573,
+        "scroll": 573
+      },
+      "dashboard": {
+        "box": {
+          "height": 48,
+          "width": 308,
+          "x": 41,
+          "y": 520
+        },
+        "href": "#/dashboard?interface=pro&chainId=56"
+      },
+      "header": [
+        {
+          "box": {
+            "height": 38.7890625,
+            "width": 64.96875,
+            "x": 16,
+            "y": 12.6015625
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 149.375,
+            "x": 131.625,
+            "y": 14
+          },
+          "label": "0x00...0001"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 844,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": {
+        "height": 573,
+        "width": 358,
+        "x": 16,
+        "y": 80
+      },
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "prime-account"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 47.09375,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8.453125
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 1111.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 119.34375,
+            "x": 1185.65625,
+            "y": 8
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1313,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 1376,
+            "y": 8
+          },
+          "label": "Settings"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1440,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 120.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 88.34375,
+            "x": 306.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 59.1875,
+            "x": 398.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 73.375,
+            "x": 461.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 85.5703125,
+            "x": 539.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 951.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 119.34375,
+            "x": 1025.65625,
+            "y": 8
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 1153,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 1216,
+            "y": 8
+          },
+          "label": "Settings"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1280,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 112.0703125,
+            "x": 182.234375,
+            "y": 6
+          },
+          "label": "Earn5.66%"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 80.34375,
+            "x": 298.3046875,
+            "y": 6
+          },
+          "label": "Borrow"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 51.1875,
+            "x": 382.6484375,
+            "y": 6
+          },
+          "label": "Prime"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 65.375,
+            "x": 437.8359375,
+            "y": 6
+          },
+          "label": "Flux"
+        },
+        {
+          "box": {
+            "height": 52,
+            "width": 77.5703125,
+            "x": 507.2109375,
+            "y": 6
+          },
+          "label": "Others"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 695.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 119.34375,
+            "x": 769.65625,
+            "y": 8
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 897,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 960,
+            "y": 8
+          },
+          "label": "Settings"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 1024,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 439.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 119.34375,
+            "x": 513.65625,
+            "y": 8
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 641,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 704,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 768,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 48,
+            "width": 154.234375,
+            "x": 16,
+            "y": 8
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 66,
+            "x": 311.65625,
+            "y": 8
+          },
+          "label": "BNB Chain"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 119.34375,
+            "x": 385.65625,
+            "y": 8
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 55,
+            "x": 513,
+            "y": 8
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 48,
+            "width": 48,
+            "x": 576,
+            "y": 8
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 900,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 640,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 39.8125,
+            "width": 64.96875,
+            "x": 16,
+            "y": 12.09375
+          },
+          "label": "Pro"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 119.34375,
+            "x": 161.65625,
+            "y": 14
+          },
+          "label": "Connect wallet"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 289,
+            "y": 14
+          },
+          "label": "Switch to Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 36,
+            "x": 338,
+            "y": 14
+          },
+          "label": "Open menu"
+        }
+      ],
+      "headings": [
+        "Liquidity Hub"
+      ],
+      "height": 844,
+      "horizontalOverflow": false,
+      "mode": "pro",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "dark",
+      "url": "http://127.0.0.1:5176/#/liquidity-hubs?interface=pro&chainId=56&tab=pools",
+      "width": 390,
+      "scenario": "pro-guest"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 66.40625,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 158.34375,
+            "x": 166.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 333,
+            "y": 14
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Positions",
+        "Transaction"
+      ],
+      "height": 844,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/dashboard?interface=lite&chainId=56",
+      "width": 390,
+      "scenario": "lite-dashboard-keyboard-navigation"
+    },
+    {
+      "accountScroll": null,
+      "dashboard": null,
+      "header": [
+        {
+          "box": {
+            "height": 36,
+            "width": 66.40625,
+            "x": 16,
+            "y": 14
+          },
+          "label": "Lite"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 158.34375,
+            "x": 166.65625,
+            "y": 14
+          },
+          "label": "0x00...dEaD"
+        },
+        {
+          "box": {
+            "height": 36,
+            "width": 41,
+            "x": 333,
+            "y": 14
+          },
+          "label": "Switch to Pro"
+        }
+      ],
+      "headings": [
+        "Positions",
+        "Transaction"
+      ],
+      "height": 844,
+      "horizontalOverflow": false,
+      "mode": "lite",
+      "outerDashboard": 0,
+      "panel": null,
+      "theme": "light",
+      "url": "http://127.0.0.1:5176/#/dashboard?interface=lite&chainId=56",
+      "width": 390,
+      "scenario": "lite-dashboard-reload"
+    }
+  ],
+  "cleanup": {
+    "temporaryTabClosed": true,
+    "viewportOverrideReset": true,
+    "testAccountDisconnected": true,
+    "themeRestored": "light"
+  },
+  "automatedTests": {
+    "passed": 98,
+    "failed": 0,
+    "report": "targeted-tests.json"
+  }
+}

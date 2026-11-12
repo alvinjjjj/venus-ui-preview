@@ -256,10 +256,10 @@
       "logoAlt": "Prime logo",
       "tooltip": {
         "calculatorLink": "Calculate your Prime rewards",
-        "primeBorrowSimulation": "APY boosted by Prime based on the average user borrow of {{borrowBalance}} and vault supply of {{xvsStaked}}.",
+        "primeBorrowSimulation": "APY boosted by <PrimeLink>Prime program</PrimeLink> based on the average user borrow of {{borrowBalance}} and vault supply of {{xvsStaked}}.",
         "primeDocLink": "Learn more",
         "primeMarket": "APY boosted by Prime.",
-        "primeSupplySimulation": "APY boosted by Prime based on the average user supply of {{supplyBalance}} and vault supply of {{xvsStaked}}."
+        "primeSupplySimulation": "APY boosted by <PrimeLink>Prime program</PrimeLink> based on the average user supply of {{supplyBalance}} and vault supply of {{xvsStaked}}."
       }
     }
   },
@@ -463,7 +463,8 @@
       "nCategories_one": "{{count}} Category",
       "nCategories_other": "{{count}} Categories",
       "reset": "Reset",
-      "title": "Select Categories"
+      "title": "Select Categories",
+      "search": "Search category"
     },
     "pausedAssetsToggle": {
       "label": "Paused assets"
@@ -2446,7 +2447,10 @@
       "resetFilters": "Reset filters",
       "selectCategories": "Select categories",
       "selectStates": "Select states",
-      "selectVenues": "Select venues"
+      "selectVenues": "Select venues",
+      "searchCategories": "Search category",
+      "searchVenues": "Search venue",
+      "searchStates": "Search state"
     },
     "header": "Vaults",
     "modals": {
@@ -2887,5 +2891,29 @@
   "hubApyBanner": {
     "buttonLabel": "Start earning",
     "title": "Earn up to <Apy>{{apy}} APY</Apy> on <Strong>{{symbol}}</Strong> with Liquidity Hub. Supply once, auto-allocated."
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "Search loan asset",
+      "searchCollaterals": "Search collateral",
+      "searchPools": "Search pool",
+      "selectLoanAssets": "Select loan",
+      "selectCollaterals": "Select collaterals",
+      "selectPools": "Select pools",
+      "nLoanAssets": "{{count}} loan assets",
+      "nCollaterals": "{{count}} collaterals",
+      "nPools": "{{count}} pools"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "Search category",
+      "searchCollateral": "Search collateral"
+    }
+  },
+  "multiSelect": {
+    "noResults": "No results found",
+    "clearSearch": "Clear search",
+    "search": "Search options"
   }
 }

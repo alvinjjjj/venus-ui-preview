@@ -1,0 +1,17 @@
+{
+  "dashboard": true,
+  "line": "#ffffff14",
+  "mode": "pro",
+  "oldTabs": 0,
+  "overflow": 0,
+  "scripts": [
+    "./assets/index-Ch-l5zTy.js"
+  ],
+  "starDensity": "0.3333333333333333",
+  "tables": [
+    628,
+    628
+  ],
+  "url": "https://venus-ui-preview.vercel.app/#/dashboard?interface=pro&chainId=56",
+  "width": 1440
+}

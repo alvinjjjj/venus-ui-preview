@@ -66,7 +66,7 @@ const bStockCollaterals: SpokeCollateralAsset[] = [
 
 // Draft listing: Notion "bStock mainstream spoke pool listing" (CF used as Max LTV).
 const MAINSTREAM_POOL_ADDRESS = 'preview-bstock-mainstream';
-const mainstreamCollaterals: SpokeCollateralAsset[] = [
+export const mainstreamCollaterals: SpokeCollateralAsset[] = [
   { symbol: 'NVDAB', iconSrc: nvdabIcon, maxLtvPercentage: 75 },
   { symbol: 'TSLAB', iconSrc: tslabIcon, maxLtvPercentage: 75 },
   { symbol: 'SPCXB', iconSrc: spcxbIcon, maxLtvPercentage: 50 },
@@ -102,7 +102,7 @@ const getMainstreamPool = (): SpokeOverviewPool => ({
     const token = tokens[ChainId.BSC_TESTNET].find(token => token.symbol === symbol);
     return token ? [{ token, preview }] : [];
   }),
-  collateralAssets: mainstreamCollaterals,
+  collateralAssets: mainstreamCollaterals.slice(0, 16),
 });
 
 export const getSpokeOverview = (pools: SpokePool[]) => {

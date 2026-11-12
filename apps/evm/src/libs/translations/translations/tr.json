@@ -256,10 +256,10 @@
       "logoAlt": "Prime logosu",
       "tooltip": {
         "calculatorLink": "Prime ödüllerinizi hesaplayın",
-        "primeBorrowSimulation": "Prime ile APY, kullanıcıların ortalama {{borrowBalance}} borcuna ve {{xvsStaked}} vault yatırımına göre artırılır.",
+        "primeBorrowSimulation": "<PrimeLink>Prime</PrimeLink> ile APY, kullanıcıların ortalama {{borrowBalance}} borcuna ve {{xvsStaked}} vault yatırımına göre artırılır.",
         "primeDocLink": "Daha fazla bilgi",
         "primeMarket": "Prime ile APY artırılır.",
-        "primeSupplySimulation": "Prime ile APY, kullanıcıların ortalama {{supplyBalance}} tedarikine ve {{xvsStaked}} vault yatırımına göre artırılır."
+        "primeSupplySimulation": "<PrimeLink>Prime</PrimeLink> ile APY, kullanıcıların ortalama {{supplyBalance}} tedarikine ve {{xvsStaked}} vault yatırımına göre artırılır."
       }
     }
   },
@@ -462,7 +462,8 @@
       "nCategories_one": "{{count}} Kategori",
       "nCategories_other": "{{count}} Kategori",
       "reset": "Sıfırla",
-      "title": "Kategorileri Seç"
+      "title": "Kategorileri Seç",
+      "search": "Kategori ara"
     },
     "pausedAssetsToggle": {
       "label": "Durdurulan varlıklar"
@@ -2402,7 +2403,10 @@
       "resetFilters": "Filtreleri sıfırla",
       "selectCategories": "Kategorileri seç",
       "selectStates": "Durumları seç",
-      "selectVenues": "Platformları seç"
+      "selectVenues": "Platformları seç",
+      "searchCategories": "Kategori ara",
+      "searchVenues": "Platform ara",
+      "searchStates": "Durum ara"
     },
     "header": "Kasa",
     "modals": {
@@ -2767,5 +2771,29 @@
   },
   "yieldsGroups": {
     "protocol": "Protokol"
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "Borçlanma varlığı ara",
+      "searchCollaterals": "Teminat ara",
+      "searchPools": "Havuz ara",
+      "selectLoanAssets": "Borçlanma varlığı seç",
+      "selectCollaterals": "Teminat seç",
+      "selectPools": "Havuz seç",
+      "nLoanAssets": "{{count}} borçlanma varlığı",
+      "nCollaterals": "{{count}} teminat",
+      "nPools": "{{count}} havuz"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "Kategori ara",
+      "searchCollateral": "Teminat ara"
+    }
+  },
+  "multiSelect": {
+    "noResults": "Sonuç bulunamadı",
+    "clearSearch": "Aramayı temizle",
+    "search": "Seçenek ara"
   }
 }

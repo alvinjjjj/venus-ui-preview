@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { useState } from 'react';
 
 import { renderComponent } from 'testUtils/render';
@@ -124,5 +124,102 @@ describe('MultiSelect', () => {
     fireEvent.scroll(window);
     expect(floatingMenu).toHaveStyle({ top: '248px' });
     rectSpy.mockRestore();
+  });
+});
+
+describe('MultiSelect search and scroll', () => {
+  const symbols = ['QQQB', 'AMDB', 'MRNAB', 'MSFTB', 'METAB', 'MSTRB', 'TSMB', 'TSLAB'];
+  const Harness = ({ count = symbols.length }: { count?: number }) => {
+    const [value, setValue] = useState<string[]>([]);
+    return (
+      <MultiSelect
+        options={symbols.slice(0, count).map(symbol => ({ value: symbol, label: symbol }))}
+        value={value}
+        onChange={setValue}
+        placeholder="All collaterals"
+        title="Select collaterals"
+        searchPlaceholder="Search collateral"
+        resetLabel="Reset"
+        renderCount={count => `${count} collaterals`}
+      />
+    );
+  };
+  const open = () => fireEvent.click(screen.getByRole('button', { name: 'All collaterals' }));
+  const list = () => {
+    const node = document.querySelector<HTMLElement>('.venus-multiselect-options');
+    if (!node) throw new Error('Expected scrollable option list');
+    return node;
+  };
+
+  it('preserves the short panel through six options', () => {
+    renderComponent(<Harness count={6} />);
+    open();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    expect(document.querySelector('.venus-multiselect-options')).not.toBeInTheDocument();
+  });
+
+  it('focuses desktop search and ranks starts-with results ahead of contains, preserving order', () => {
+    renderComponent(<Harness />);
+    open();
+    const input = screen.getByRole('textbox', { name: 'Search collateral' });
+    expect(input).toHaveFocus();
+    fireEvent.change(input, { target: { value: ' m ' } });
+    expect(
+      within(list())
+        .getAllByRole('button')
+        .map(button => button.textContent),
+    ).toEqual(['MRNAB', 'MSFTB', 'METAB', 'MSTRB', 'AMDB', 'TSMB']);
+    expect(list()).not.toHaveAttribute('data-multiselect-scroll');
+    expect(input).toBeInTheDocument();
+  });
+
+  it('keeps hidden selections, applies ticks immediately, and resets every selection without clearing search', () => {
+    renderComponent(<Harness />);
+    open();
+    fireEvent.click(screen.getByRole('button', { name: 'QQQB', pressed: false }));
+    const input = screen.getByRole('textbox', { name: 'Search collateral' });
+    fireEvent.change(input, { target: { value: 'MS' } });
+    fireEvent.click(screen.getByRole('button', { name: 'MSFTB', pressed: false }));
+    expect(screen.getByRole('button', { name: '2 collaterals' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(input).toHaveValue('MS');
+    expect(screen.getByRole('button', { name: 'Reset' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect(screen.getByRole('button', { name: 'QQQB', pressed: false })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'MSFTB', pressed: false })).toBeInTheDocument();
+  });
+
+  it('shows an empty-result message and restores options with the clear button', () => {
+    renderComponent(<Harness />);
+    open();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'XYZ' } });
+    expect(screen.getByRole('status')).toHaveTextContent('No results found');
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect(within(list()).getAllByRole('button')).toHaveLength(8);
+    expect(list()).toHaveAttribute('data-multiselect-scroll', 'true');
+  });
+
+  it('clears the query on close while preserving selected values', () => {
+    renderComponent(<Harness />);
+    open();
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'MS' } });
+    fireEvent.click(screen.getByRole('button', { name: 'MSFTB', pressed: false }));
+    fireEvent.click(screen.getByRole('button', { name: 'MSFTB', expanded: true }));
+    fireEvent.click(screen.getByRole('button', { name: 'MSFTB', expanded: false }));
+    expect(screen.getByRole('textbox')).toHaveValue('');
+    expect(screen.getByRole('button', { name: 'MSFTB', pressed: true })).toBeInTheDocument();
+  });
+
+  it('returns to the pre-search scroll position when the query is cleared', () => {
+    renderComponent(<Harness />);
+    open();
+    list().scrollTop = 96;
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'MS' } });
+    expect(list().scrollTop).toBe(0);
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect(list().scrollTop).toBe(96);
   });
 });

@@ -277,7 +277,7 @@ exports[`formatToLiquidityHub > formats yield groups 1`] = `
       "allocationTokens": "400",
       "averageSupplyApyPercentage": "4",
       "bgClassName": "bg-blue",
-      "iconSrc": "/src/assets/img/venusCoreIcon.png",
+      "iconSrc": "/src/assets/img/venusCoreIcon.svg",
       "liquidityCents": "75000",
       "liquidityTokens": "300",
       "nameTranslationKey": "liquidityHub.allocationDetails.yieldGroup.names.core",

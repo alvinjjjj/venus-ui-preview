@@ -139,3 +139,15 @@ describe.each(['v1', 'v5', 'lite-experiment', 'lite-experiment-v2', 'lite-experi
     });
   },
 );
+
+it('restores the Final Lite root when browser history returns from a committed Pro mode', () => {
+  preview.mode = 'lite-experiment-v2';
+  useInterfaceModeStore.getState().setMode('pro');
+  const { result } = renderHook(() => useInterfaceMode(), {
+    wrapper: ({ children }) => (
+      <MemoryRouter initialEntries={['/?chainId=56&tab=borrow']}>{children}</MemoryRouter>
+    ),
+  });
+  expect(result.current.isLite).toBe(true);
+  expect(result.current.mode).toBe('lite');
+});

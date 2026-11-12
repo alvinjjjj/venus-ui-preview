@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>How Hub-Funded Spoke Markets Work · Venus</title>
+<style>
+  @font-face { font-family: 'Proxima Nova'; src: url('fonts/proximaNovaRegular.woff2') format('woff2'); font-weight: 400; }
+  @font-face { font-family: 'Proxima Nova'; src: url('fonts/proximaNovaMedium.woff2') format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Proxima Nova'; src: url('fonts/proximaNovaSemibold.woff2') format('woff2'); font-weight: 600; }
+  :root {
+    --blue: #2a9df4;
+    --blue-light: #85ccff;
+    --green: #2fd39a;
+    --ink: #eef3fb;
+    --muted: #9aa8c2;
+    --card: rgb(16 24 40 / 72%);
+    --edge: rgb(133 204 255 / 22%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1920px; height: 1080px; overflow: hidden; background: #050913; }
+  body { font-family: 'Proxima Nova', system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 70% at 30% 45%, rgb(20 62 140 / 55%), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 85% 20%, rgb(16 40 96 / 45%), transparent 70%),
+      linear-gradient(160deg, #071228 0%, #050a17 55%, #04070f 100%);
+  }
+  #grid { position: absolute; inset: 0; background-image: radial-gradient(circle, rgb(133 204 255 / 9%) 1px, transparent 1.4px); background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, #000 30%, transparent 85%); }
+  canvas { position: absolute; inset: 0; }
+  .layer { position: absolute; inset: 0; pointer-events: none; }
+  .abs { position: absolute; will-change: transform, opacity; }
+
+  /* Brand + step rail */
+  #logo { left: 72px; top: 56px; height: 40px; }
+  #steps { right: 72px; top: 60px; display: flex; gap: 28px; font-size: 18px; color: var(--muted); }
+  #steps span { display: inline-flex; align-items: center; gap: 10px; transition: none; }
+  #steps b { display: inline-grid; place-items: center; width: 30px; height: 22px; border-radius: 5px; font-size: 13px; font-weight: 600; background: rgb(255 255 255 / 6%); color: var(--muted); }
+  #steps span.on { color: var(--ink); }
+  #steps span.on b { background: var(--blue); color: #fff; }
+
+  /* Opening title */
+  #title { left: 0; right: 0; top: 330px; text-align: center; }
+  #title h1 { font-size: 92px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.04; }
+  #title h1 em { font-style: normal; font-weight: 600; background: linear-gradient(100deg, #5cc4ff, #2a9df4 60%, #1a7be0); -webkit-background-clip: text; color: transparent; }
+  #title p { margin-top: 22px; font-size: 32px; color: var(--muted); }
+
+  /* Glass cards (actors) */
+  .card { display: flex; align-items: center; gap: 18px; padding: 20px 26px 20px 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--edge);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), 0 18px 50px rgb(0 0 0 / 45%), 0 0 40px rgb(42 157 244 / 10%); backdrop-filter: blur(12px); }
+  .card .avatar { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #9fd8ff, #2a9df4 55%, #135fb8); box-shadow: inset 0 1px 1px rgb(255 255 255 / 45%); }
+  .card h3 { font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
+  .card p { margin-top: 4px; font-size: 20px; color: var(--muted); }
+
+  /* Node labels under spheres */
+  .label { text-align: center; width: 420px; margin-left: -210px; }
+  .label h4 { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+  .label h4 em { font-style: normal; color: var(--blue-light); }
+  .label p { margin-top: 6px; font-size: 20px; color: var(--muted); }
+  .chips { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+  .chip { padding: 7px 16px; border-radius: 999px; font-size: 17px; color: #dff1ff; background: rgb(42 157 244 / 18%); border: 1px solid rgb(133 204 255 / 35%); }
+
+  /* Flow captions */
+  .flow { font-size: 21px; color: var(--muted); white-space: nowrap; }
+  .flow b { color: var(--ink); font-weight: 600; margin-right: 8px; }
+  .flow.green b { color: var(--green); }
+
+  /* Gate */
+  #gateLabel { width: 360px; margin-left: -180px; text-align: center; }
+  #gateLabel h5 { font-size: 22px; font-weight: 600; }
+  #gateLabel p { font-size: 17px; color: var(--muted); margin-top: 4px; }
+  .limit { margin: 12px auto 0; width: 240px; height: 8px; border-radius: 999px; background: rgb(255 255 255 / 8%); overflow: hidden; position: relative; }
+  .limit i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, #2a9df4, #85ccff); border-radius: inherit; }
+  .limit u { position: absolute; top: -4px; bottom: -4px; width: 2px; left: 70%; background: #fff; opacity: .7; }
+  .limitText { margin-top: 8px; font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* Collateral options */
+  .coll { width: 132px; height: 112px; border-radius: 16px; display: grid; place-items: center; align-content: center; gap: 12px;
+    background: linear-gradient(160deg, rgb(64 150 240 / 55%), rgb(26 82 170 / 55%)); border: 1px solid rgb(133 204 255 / 45%);
+    box-shadow: inset 0 1px 1px rgb(255 255 255 / 30%), 0 14px 34px rgb(0 0 0 / 40%), 0 0 30px rgb(42 157 244 / 25%); }
+  .coll span { font-size: 21px; font-weight: 500; }
+  .coll .ic { display: flex; height: 40px; align-items: center; }
+  .coll .ic img { width: 38px; height: 38px; border-radius: 50%; margin-left: -10px; box-shadow: 0 0 0 2px rgb(20 50 110); background: #fff; }
+  .coll .ic img:first-child { margin-left: 0; }
+  #collTitle { font-size: 19px; font-weight: 600; color: var(--ink); width: 300px; margin-left: -150px; text-align: center; }
+
+  /* Market UI card (from the Spoke page) */
+  #market { width: 390px; padding: 22px 24px; border-radius: 16px; background: rgb(14 20 32 / 88%); border: 1px solid rgb(255 255 255 / 10%); box-shadow: 0 24px 60px rgb(0 0 0 / 55%); }
+  #market .row { display: flex; align-items: center; justify-content: space-between; }
+  #market .tok { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; }
+  #market .tok img { width: 34px; height: 34px; }
+  #market .pool { font-size: 15px; color: var(--muted); }
+  #market .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+  #market .stats small { display: block; font-size: 14px; color: var(--muted); }
+  #market .stats strong { display: block; margin-top: 4px; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  #market .btn { margin-top: 18px; height: 46px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; font-weight: 600; background: linear-gradient(115deg, #2469d8, #307fee 46%, #2168d6); }
+  #market .stack { display: flex; }
+  #market .stack img { width: 26px; height: 26px; border-radius: 50%; margin-left: -8px; background: #fff; box-shadow: 0 0 0 2px rgb(14 20 32); }
+
+  /* Yield badge */
+  #yield { padding: 12px 20px; border-radius: 999px; background: rgb(47 211 154 / 14%); border: 1px solid rgb(47 211 154 / 45%); font-size: 26px; font-weight: 600; color: var(--green); font-variant-numeric: tabular-nums; box-shadow: 0 0 40px rgb(47 211 154 / 20%); }
+  #yield small { font-size: 18px; font-weight: 500; color: #bdf3de; margin-left: 6px; }
+
+  /* Finale */
+  #tag { left: 0; right: 0; top: 820px; text-align: center; }
+  #tag h2 { font-size: 66px; font-weight: 500; letter-spacing: -0.02em; }
+  #tag h2 em { font-style: normal; color: var(--blue-light); }
+  #cta { left: 0; right: 0; top: 920px; text-align: center; font-size: 26px; color: var(--muted); }
+  #cta b { color: var(--ink); font-weight: 600; }
+  .spokeName { width: 200px; margin-left: -100px; text-align: center; font-size: 18px; color: var(--muted); }
+
+  /* Subtitles */
+  #subs { left: 0; right: 0; bottom: 46px; text-align: center; }
+  #subs span { display: inline-block; padding: 10px 22px; border-radius: 10px; background: rgb(3 6 14 / 62%); font-size: 30px; font-weight: 500; color: #f4f8ff; letter-spacing: 0.005em; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="grid"></div>
+  <div id="gl"></div>
+  <div class="layer" id="ui">
+    <img id="logo" class="abs" src="assets/venusLogoWithText.svg" alt="Venus" />
+    <div id="steps" class="abs">
+      <span data-s="1"><b>01</b>Supply</span>
+      <span data-s="2"><b>02</b>Allocate</span>
+      <span data-s="3"><b>03</b>Borrow</span>
+      <span data-s="4"><b>04</b>Repay &amp; earn</span>
+    </div>
+
+    <div id="title" class="abs">
+      <h1>How Hub-Funded<br /><em>Spoke Markets</em> Work</h1>
+      <p>One deposit in the Liquidity Hub funds specialized lending markets.</p>
+    </div>
+
+    <div id="depositors" class="abs card">
+      <div class="avatar"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><circle cx="9" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.6" opacity=".85"/><path d="M2.5 19c.6-3.6 3.3-5.6 6.5-5.6s5.9 2 6.5 5.6z"/><path d="M14.6 13.6c2.7-.3 5.6 1.2 6.4 5.4h-4.3c-.3-2.2-1-3.9-2.1-5.4z" opacity=".85"/></svg></div>
+      <div><h3>Depositors / LPs</h3><p>Deposit into the Liquidity Hub</p></div>
+    </div>
+    <div id="borrowers" class="abs card">
+      <div class="avatar"><svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><circle cx="9" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.6" opacity=".85"/><path d="M2.5 19c.6-3.6 3.3-5.6 6.5-5.6s5.9 2 6.5 5.6z"/><path d="M14.6 13.6c2.7-.3 5.6 1.2 6.4 5.4h-4.3c-.3-2.2-1-3.9-2.1-5.4z" opacity=".85"/></svg></div>
+      <div><h3>Borrowers</h3><p>Borrow from the Spoke market</p></div>
+    </div>
+
+    <div id="hubLabel" class="abs label">
+      <h4>Liquidity Hub</h4><p>Unified liquidity layer</p>
+      <div class="chips"><span class="chip">Shared liquidity</span><span class="chip">Capital allocation</span></div>
+    </div>
+    <div id="spokeLabel" class="abs label">
+      <h4>Hub-Funded <em>Spoke Market</em></h4><p>Specialized lending market</p>
+    </div>
+    <div id="gateLabel" class="abs">
+      <h5>Risk &amp; Allocation Logic</h5>
+      <p>Allocation limits and market parameters</p>
+      <div class="limit"><i id="limitFill"></i><u></u></div>
+      <div class="limitText" id="limitText">Allocated 0% · limit 70%</div>
+    </div>
+
+    <div id="fDeposit" class="abs flow"><b>Deposit</b>Supply once</div>
+    <div id="fAllocate" class="abs flow"><b>Allocate</b>Hub funds the Spoke</div>
+    <div id="fBorrow" class="abs flow"><b>Borrow</b>Use market assets</div>
+    <div id="fRepay" class="abs flow green"><b>Repay</b>With interest</div>
+    <div id="fYield" class="abs flow green"><b>Yield</b>Back to depositors</div>
+
+    <div id="collTitle" class="abs">Collateral options</div>
+    <div id="c1" class="abs coll">
+      <div class="ic"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5S9.4 5.9 12 3.5z"/></svg></div>
+      <span>RWA</span>
+    </div>
+    <div id="c2" class="abs coll">
+      <div class="ic"><img src="assets/tslab.svg" /><img src="assets/nvdab.png" /><img src="assets/spcxb.png" /></div>
+      <span>bStock</span>
+    </div>
+    <div id="c3" class="abs coll">
+      <div class="ic"><img src="assets/bnb.svg" /><img src="assets/btcb.svg" /><img src="assets/eth.svg" /></div>
+      <span>Bluechips</span>
+    </div>
+
+    <div id="market" class="abs">
+      <div class="row"><div class="tok"><img src="assets/usdt.svg" />USDT</div><div class="pool">Hub-funded spoke</div></div>
+      <div class="stats">
+        <div><small>Borrow APY</small><strong>2.91%</strong></div>
+        <div><small>Liquidity</small><strong id="liq">$4.31K</strong></div>
+        <div><small>Collateral</small><span class="stack" style="margin-top:6px;display:flex"><img src="assets/tslab.svg" style="margin-left:0"/><img src="assets/nvdab.png"/><img src="assets/spcxb.png"/></span></div>
+      </div>
+      <div class="btn" id="borrowBtn">Borrow USDT</div>
+    </div>
+
+    <div id="yield" class="abs"><span id="yieldNum">+0.00%</span><small>APY to depositors</small></div>
+
+    <div id="sB" class="abs spokeName">Spoke Market B</div>
+    <div id="sC" class="abs spokeName">Spoke Market C</div>
+    <div id="sD" class="abs spokeName">Spoke Market D</div>
+
+    <div id="tag" class="abs"><h2>One deposit. <em>Every market.</em></h2></div>
+    <div id="cta" class="abs">Explore Spoke markets on <b>venus.io</b></div>
+
+    <div id="subs" class="abs"><span id="subText"></span></div>
+  </div>
+</div>
+
+<script type="importmap">{ "imports": { "three": "./three.module.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+
+// ---------- Timeline (seconds). Voiceover lines start 0.4s into each scene. ----------
+const VO = [
+  { t: 0.5, d: 2.13, text: 'How do Hub-Funded Spoke Markets work?' },
+  { t: 3.8, d: 3.29, text: 'Depositors supply once, into the Venus Liquidity Hub.' },
+  { t: 8.8, d: 4.05, text: 'The Hub allocates capital to Spoke markets, within set risk limits.' },
+  { t: 14.3, d: 5.87, text: 'Borrowers post collateral, like real-world assets, tokenized stocks, or bluechips, and borrow.' },
+  { t: 21.0, d: 4.25, text: 'Repayments, with interest, flow back to the Hub as yield for depositors.' },
+  { t: 26.0, d: 4.07, text: 'One deposit. Every market. Explore Spoke markets on Venus.' },
+];
+const DURATION = 31.2;
+window.VIDEO = { duration: DURATION, vo: VO };
+
+// ---------- Helpers ----------
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+const easeInOut = x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const back = x => { const c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const win = (t, a, b, fi = 0.5, fo = 0.5) => Math.min(easeOut(lin(t, a, a + fi)), 1 - easeInOut(lin(t, b - fo, b)));
+const mix = (a, b, k) => a + (b - a) * k;
+const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+// Screen <-> world: world units are pixels at z=0, origin at the centre, y up.
+const W = 1920, H = 1080;
+const sx = x => W / 2 + x;
+const sy = y => H / 2 - y;
+const $ = id => document.getElementById(id);
+function place(id, x, y, opacity, extra = '') {
+  const el = $(id);
+  el.style.opacity = opacity.toFixed(3);
+  el.style.visibility = opacity <= 0.001 ? 'hidden' : 'visible';
+  el.style.transform = `translate(${sx(x).toFixed(1)}px, ${sy(y).toFixed(1)}px) ${extra}`;
+}
+
+// ---------- Renderer ----------
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W, H);
+renderer.setClearColor(0x000000, 0);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+$('gl').appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const FOV = 30;
+const DIST = (H / 2) / Math.tan(THREE.MathUtils.degToRad(FOV / 2));
+const camera = new THREE.PerspectiveCamera(FOV, W / H, 10, 6000);
+camera.position.set(0, 0, DIST);
+
+scene.add(new THREE.AmbientLight(0x8fb4ff, 0.55));
+const key = new THREE.DirectionalLight(0xffffff, 2.3); key.position.set(-600, 700, 900); scene.add(key);
+const rim = new THREE.DirectionalLight(0x5cc4ff, 1.4); rim.position.set(700, -300, -400); scene.add(rim);
+const fill = new THREE.PointLight(0x2a9df4, 2.0, 0, 0); fill.position.set(0, -400, 600); scene.add(fill);
+
+const loader = new THREE.TextureLoader();
+const tex = src => { const t = loader.load(src); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return t; };
+
+// Soft glow sprite texture.
+function glowTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d'); const r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(0.25, 'rgba(255,255,255,.45)'); r.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = r; g.fillRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const GLOW = glowTexture();
+function makeGlow(color, size) {
+  const m = new THREE.SpriteMaterial({ map: GLOW, color, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, opacity: 0.6 });
+  const s = new THREE.Sprite(m); s.scale.set(size, size, 1); return s;
+}
+
+// Product sphere: glossy planet with a white icon decal and a soft halo.
+function makePlanet({ color, radius, icon, halo = color, iconScale = 0.95 }) {
+  const group = new THREE.Group();
+  const mat = new THREE.MeshPhysicalMaterial({ color, roughness: 0.32, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.25, sheen: 0.4, sheenColor: new THREE.Color(0xffffff), transparent: true });
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 96, 64), mat);
+  group.add(mesh);
+  const halo1 = makeGlow(halo, radius * 4.2); halo1.position.z = -radius; group.add(halo1);
+  let decal = null;
+  if (icon) {
+    const dm = new THREE.MeshBasicMaterial({ map: tex(icon), transparent: true, depthWrite: false, toneMapped: false });
+    decal = new THREE.Mesh(new THREE.PlaneGeometry(radius * iconScale, radius * iconScale), dm);
+    decal.position.z = radius * 1.01; group.add(decal);
+  }
+  scene.add(group);
+  return { group, mesh, mat, halo: halo1, decal, radius,
+    set(x, y, scale, opacity) {
+      group.position.set(x, y, 0); group.scale.setScalar(Math.max(scale, 0.0001));
+      group.visible = opacity > 0.002 && scale > 0.002;
+      mat.opacity = opacity; halo1.material.opacity = 0.42 * opacity; if (decal) decal.material.opacity = opacity;
+    } };
+}
+
+const hub = makePlanet({ color: 0x2a9df4, radius: 92, icon: 'assets/product-hub.svg', halo: 0x2a9df4 });
+const spoke = makePlanet({ color: 0x3a424d, radius: 92, icon: 'assets/product-spoke.svg', halo: 0x5d6b80 });
+const extraSpokes = [0, 1, 2, 3, 4].map(() => makePlanet({ color: 0x3a424d, radius: 58, icon: 'assets/product-spoke.svg', halo: 0x5d6b80 }));
+
+// Risk & Allocation gate: a tilted ring the capital passes through.
+const gateMat = new THREE.MeshPhysicalMaterial({ color: 0x85ccff, emissive: 0x2a9df4, emissiveIntensity: 0.55, roughness: 0.25, metalness: 0.3, transparent: true });
+const gate = new THREE.Mesh(new THREE.TorusGeometry(70, 4.5, 24, 120), gateMat);
+gate.rotation.y = THREE.MathUtils.degToRad(68);
+scene.add(gate);
+const gateGlow = makeGlow(0x2a9df4, 300); scene.add(gateGlow);
+
+// Background stars (slow drift).
+const STAR_N = 420;
+const starGeo = new THREE.BufferGeometry();
+const starBase = new Float32Array(STAR_N * 3);
+for (let i = 0; i < STAR_N; i++) { starBase[i * 3] = (hash(i) - 0.5) * 2300; starBase[i * 3 + 1] = (hash(i + 99) - 0.5) * 1300; starBase[i * 3 + 2] = -400 - hash(i + 7) * 900; }
+starGeo.setAttribute('position', new THREE.BufferAttribute(starBase.slice(), 3));
+const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0x9cc8ff, size: 2.2, sizeAttenuation: false, transparent: true, opacity: 0.55, depthWrite: false }));
+scene.add(stars);
+
+// ---------- Particle streams (comets along bezier paths) ----------
+const cometMat = color => new THREE.ShaderMaterial({
+  uniforms: { uColor: { value: new THREE.Color(color) }, uOpacity: { value: 1 } },
+  vertexShader: `attribute float aSize; attribute float aAlpha; varying float vAlpha;
+    void main(){ vAlpha = aAlpha; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_Position = projectionMatrix * mv; gl_PointSize = aSize; }`,
+  fragmentShader: `uniform vec3 uColor; uniform float uOpacity; varying float vAlpha;
+    void main(){ float d = length(gl_PointCoord - 0.5); float core = 1.0 - smoothstep(0.0, 0.18, d); float halo = 1.0 - smoothstep(0.1, 0.5, d);
+      float a = (core * 1.0 + halo * 0.55) * vAlpha * uOpacity; if (a < 0.003) discard; gl_FragColor = vec4(mix(uColor, vec3(1.0), core * 0.55) * a, a); }`,
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+});
+const lineMatFor = color => new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending });
+
+class Stream {
+  constructor({ color, count = 70, speed = 0.32, spread = 10, size = 13, trail = 6 }) {
+    this.color = color; this.count = count; this.speed = speed; this.spread = spread; this.trail = trail;
+    const n = count * trail;
+    this.geo = new THREE.BufferGeometry();
+    this.pos = new Float32Array(n * 3); this.size = new Float32Array(n); this.alpha = new Float32Array(n);
+    for (let i = 0; i < count; i++) for (let k = 0; k < trail; k++) this.size[i * trail + k] = (size * (0.7 + hash(i * 3.1) * 0.7)) * (1 - k / trail * 0.65);
+    this.geo.setAttribute('position', new THREE.BufferAttribute(this.pos, 3));
+    this.geo.setAttribute('aSize', new THREE.BufferAttribute(this.size, 1));
+    this.geo.setAttribute('aAlpha', new THREE.BufferAttribute(this.alpha, 1));
+    this.points = new THREE.Points(this.geo, cometMat(color)); scene.add(this.points);
+    this.curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3());
+    this.lineGeo = new THREE.BufferGeometry().setFromPoints(new Array(64).fill(0).map(() => new THREE.Vector3()));
+    this.line = new THREE.Line(this.lineGeo, lineMatFor(color)); scene.add(this.line);
+  }
+  path(a, b, bend = 0) {
+    const mid = new THREE.Vector3((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, 0);
+    const dir = new THREE.Vector2(b[0] - a[0], b[1] - a[1]); const nrm = new THREE.Vector2(-dir.y, dir.x).normalize();
+    this.curve.v0.set(a[0], a[1], 0); this.curve.v1.set(mid.x + nrm.x * bend, mid.y + nrm.y * bend, 0); this.curve.v2.set(b[0], b[1], 0);
+    const pts = this.curve.getPoints(63); this.lineGeo.setFromPoints(pts);
+    return this;
+  }
+  update(t, opacity, { from = 0, to = 1, grow = 1 } = {}) {
+    this.points.visible = this.line.visible = opacity > 0.002;
+    this.points.material.uniforms.uOpacity.value = opacity;
+    this.line.material.opacity = 0.34 * opacity;
+    const p = new THREE.Vector3(); const tan = new THREE.Vector3();
+    for (let i = 0; i < this.count; i++) {
+      const phase = (hash(i * 7.3) + t * this.speed * (0.8 + hash(i * 1.7) * 0.5)) % 1;
+      const off = (hash(i * 5.9) - 0.5) * this.spread;
+      for (let k = 0; k < this.trail; k++) {
+        const u = phase - k * 0.008;
+        const idx = i * this.trail + k;
+        const visible = u >= 0 && u <= grow;
+        const uu = clamp(from + (to - from) * clamp(u));
+        this.curve.getPoint(uu, p); this.curve.getTangent(uu, tan);
+        this.pos[idx * 3] = p.x - tan.y * off; this.pos[idx * 3 + 1] = p.y + tan.x * off; this.pos[idx * 3 + 2] = 2;
+        const edge = Math.min(lin(u, 0, 0.08), 1 - lin(u, 0.9, 1));
+        this.alpha[idx] = visible ? edge * (1 - k / this.trail) * (0.55 + hash(i * 2.3) * 0.45) : 0;
+      }
+    }
+    this.geo.attributes.position.needsUpdate = true; this.geo.attributes.aAlpha.needsUpdate = true;
+  }
+}
+
+// Positions (world px).
+const P = {
+  dep: [-660, 250], hub: [-450, -40], gate: [-60, -40], spoke: [330, -40], bor: [700, 250],
+};
+const sDeposit = new Stream({ color: 0x5cc4ff, count: 60, speed: 0.45, spread: 14 });
+const sAllocate = new Stream({ color: 0x5cc4ff, count: 90, speed: 0.38, spread: 18 });
+const sBorrow = new Stream({ color: 0x8fd6ff, count: 55, speed: 0.45, spread: 12 });
+const sRepay = new Stream({ color: 0x2fd39a, count: 55, speed: 0.45, spread: 12 });
+const sBack = new Stream({ color: 0x2fd39a, count: 80, speed: 0.38, spread: 16 });
+const sYield = new Stream({ color: 0x2fd39a, count: 55, speed: 0.45, spread: 12 });
+const sFinale = [0, 1, 2, 3, 4, 5].map(() => new Stream({ color: 0x5cc4ff, count: 34, speed: 0.5, spread: 8, size: 8 }));
+
+// Opening: many lanes converge into the Hub (the site's hero motif).
+const LANES = 36;
+const laneLines = [];
+for (let i = 0; i < LANES; i++) {
+  const s = new Stream({ color: 0x3d8bff, count: 6, speed: 0.22, spread: 0, size: 7, trail: 4 });
+  const y0 = -560 + (i / (LANES - 1)) * 1120;
+  s.path([-1000, y0], P.hub, (hash(i) - 0.5) * 120);
+  laneLines.push(s);
+}
+
+// ---------- Frame ----------
+const SCN = { s1: [0, 3.4], s2: [3.4, 8.4], s3: [8.4, 14.0], s4: [14.0, 20.6], s5: [20.6, 25.6], s6: [25.6, DURATION] };
+
+function renderAt(t) {
+  // Stars drift slowly left.
+  const sp = starGeo.attributes.position.array;
+  for (let i = 0; i < STAR_N; i++) { let x = starBase[i * 3] - t * (6 + hash(i) * 10); x = ((x + 1150) % 2300 + 2300) % 2300 - 1150; sp[i * 3] = x; }
+  starGeo.attributes.position.needsUpdate = true;
+
+  // Finale transition 0..1.
+  const fin = easeInOut(lin(t, 25.6, 27.0));
+
+  // ---- Opening title and converging lanes ----
+  const titleOp = win(t, 0.15, 3.3, 0.7, 0.6);
+  place('title', 0, 0, titleOp, `translateX(-50%) translateY(${(1 - easeOut(lin(t, 0.15, 1.0))) * 24}px)`);
+  $('title').style.transform = `translate(0px, ${((1 - easeOut(lin(t, 0.15, 1.0))) * 24).toFixed(1)}px)`;
+  const laneOp = win(t, 0.0, 9.0, 1.0, 2.0) * 0.9;
+  laneLines.forEach((s, i) => s.update(t + i * 0.13, laneOp));
+
+  // ---- Step rail ----
+  const step = t < 8.4 ? 1 : t < 14.0 ? 2 : t < 20.6 ? 3 : 4;
+  document.querySelectorAll('#steps span').forEach(el => el.classList.toggle('on', +el.dataset.s === step && t > 3.4 && t < 25.8));
+  place('steps', 0, 0, win(t, 3.4, 25.9, 0.6, 0.6));
+  $('steps').style.transform = 'none';
+  place('logo', 0, 0, 1); $('logo').style.transform = 'none';
+
+  // ---- Hub ----
+  const hubIn = back(lin(t, 3.2, 4.0));
+  const hubPos = [mix(P.hub[0], 0, fin), mix(P.hub[1], 110, fin)];
+  hub.set(hubPos[0], hubPos[1], hubIn * mix(1, 1.25, fin), clamp(hubIn * 1.2));
+  hub.mesh.rotation.y = t * 0.25; hub.decal.rotation.z = 0;
+  place('hubLabel', P.hub[0], P.hub[1] - 120, win(t, 3.8, 25.8, 0.6, 0.5));
+
+  // ---- Depositors + deposit flow ----
+  place('depositors', P.dep[0] - 190, P.dep[1] + 46, win(t, 3.6, 25.8, 0.6, 0.5), `translateY(${(1 - easeOut(lin(t, 3.6, 4.3))) * 18}px)`);
+  sDeposit.path([P.dep[0], P.dep[1] - 50], [P.hub[0] - 20, P.hub[1] + 80], 60);
+  sDeposit.update(t, win(t, 4.1, 25.8, 0.6, 0.6), { grow: easeOut(lin(t, 4.1, 5.0)) });
+  place('fDeposit', -430, 170, win(t, 4.4, 25.6, 0.5, 0.5));
+
+  // ---- Gate (risk & allocation) ----
+  const gateIn = back(lin(t, 8.6, 9.4));
+  gate.position.set(P.gate[0], P.gate[1], 0); gate.scale.setScalar(Math.max(gateIn, 0.001)); gate.rotation.x = Math.sin(t * 0.6) * 0.08;
+  const gateOp = win(t, 8.6, 25.8, 0.5, 0.5); gateMat.opacity = gateOp; gate.visible = gateOp > 0.002;
+  gateGlow.position.set(P.gate[0], P.gate[1], -20); gateGlow.material.opacity = 0.35 * gateOp;
+  place('gateLabel', P.gate[0], P.gate[1] - 105, win(t, 9.4, 25.8, 0.5, 0.5));
+  const alloc = easeInOut(lin(t, 10.0, 13.0)) * 62;
+  $('limitFill').style.width = `${alloc.toFixed(1)}%`;
+  $('limitText').textContent = `Allocated ${Math.round(alloc)}% · limit 70%`;
+
+  // ---- Spoke ----
+  const spokeIn = back(lin(t, 9.0, 9.8));
+  spoke.set(mix(P.spoke[0], 290 * Math.cos(-0.5), fin), mix(P.spoke[1], 110 + 290 * Math.sin(-0.5), fin), spokeIn * mix(1, 0.63, fin), clamp(spokeIn * 1.2));
+  spoke.mesh.rotation.y = t * 0.25;
+  place('spokeLabel', P.spoke[0], P.spoke[1] + 175, win(t, 9.6, 25.8, 0.5, 0.5));
+  sAllocate.path([P.hub[0] + 95, P.hub[1]], [P.spoke[0] - 95, P.spoke[1]], 0);
+  sAllocate.update(t, win(t, 9.4, 25.8, 0.5, 0.6), { grow: easeOut(lin(t, 9.4, 10.6)) });
+  place('fAllocate', -372, P.hub[1] + 104, win(t, 9.8, 25.6, 0.5, 0.5));
+
+  // ---- Collateral options rise and dock under the Spoke ----
+  const collY = P.spoke[1] - 250;
+  [['c1', -210], ['c2', -60], ['c3', 90]].forEach(([id, dx], i) => {
+    const k = easeOut(lin(t, 14.6 + i * 0.35, 15.5 + i * 0.35));
+    place(id, P.spoke[0] + dx - 66, mix(collY - 220, collY, k) + 60, k * win(t, 14.6, 25.8, 0.01, 0.5), `scale(${mix(0.85, 1, k).toFixed(3)})`);
+  });
+  place('collTitle', P.spoke[0] - 60, collY + 100, win(t, 14.8, 25.8, 0.5, 0.5));
+  // Spoke label moves up when collateral docks under it.
+  // Borrowers + borrow flow
+  place('borrowers', P.bor[0] - 160, P.bor[1] + 46, win(t, 16.0, 25.8, 0.6, 0.5), `translateY(${(1 - easeOut(lin(t, 16.0, 16.7))) * 18}px)`);
+  sBorrow.path([P.spoke[0] + 80, P.spoke[1] + 45], [P.bor[0] - 20, P.bor[1] - 50], 70);
+  sBorrow.update(t, win(t, 16.6, 25.8, 0.5, 0.6), { grow: easeOut(lin(t, 16.6, 17.5)) });
+  place('fBorrow', P.bor[0] - 10, P.bor[1] - 110, win(t, 17.0, 25.6, 0.5, 0.5));
+  // Market card from the Spoke page.
+  const mk = easeOut(lin(t, 17.4, 18.2));
+  place('market', 555, -150, mk * win(t, 17.4, 21.4, 0.01, 0.6), `translateX(${(1 - mk) * 60}px)`);
+  const press = win(t, 18.9, 19.5, 0.15, 0.3);
+  $('borrowBtn').style.transform = `scale(${(1 - press * 0.04).toFixed(3)})`;
+  $('borrowBtn').style.filter = `brightness(${(1 + press * 0.25).toFixed(2)})`;
+
+  // ---- Repay with interest and yield back ----
+  sRepay.path([P.bor[0] - 60, P.bor[1] - 80], [P.spoke[0] + 95, P.spoke[1] - 10], -50);
+  sRepay.update(t, win(t, 21.0, 25.8, 0.5, 0.6), { grow: easeOut(lin(t, 21.0, 21.9)) });
+  place('fRepay', P.bor[0] - 60, P.bor[1] - 200, win(t, 21.2, 25.6, 0.5, 0.5));
+  sBack.path([P.spoke[0] - 95, P.spoke[1] - 30], [P.hub[0] + 95, P.hub[1] - 30], -140);
+  sBack.update(t, win(t, 21.9, 25.8, 0.5, 0.6), { grow: easeOut(lin(t, 21.9, 23.0)) });
+  sYield.path([P.hub[0] - 70, P.hub[1] + 70], [P.dep[0] - 70, P.dep[1] - 50], 80);
+  sYield.update(t, win(t, 22.9, 25.8, 0.5, 0.6), { grow: easeOut(lin(t, 22.9, 23.7)) });
+  place('fYield', -905, 40, win(t, 23.1, 25.6, 0.5, 0.5));
+  const y = easeOut(lin(t, 23.2, 24.6)) * 3.73;
+  $('yieldNum').textContent = `+${y.toFixed(2)}%`;
+  place('yield', P.dep[0] + 230, P.dep[1] + 40, win(t, 23.2, 25.8, 0.5, 0.5), `translateY(${(1 - easeOut(lin(t, 23.2, 23.8))) * 14}px)`);
+
+  // ---- Finale: the Hub funds many Spoke markets ----
+  const ringR = 290, hubC = [0, 110];
+  const rot = (t - 25.6) * 0.18;
+  const orbitAngles = [0, 1, 2, 3, 4, 5].map(i => -0.5 + i * Math.PI / 3 + rot * fin);
+  // Move the main spoke into the ring at index 0 during the finale.
+  if (fin > 0) {
+    const a0 = orbitAngles[0];
+    spoke.set(mix(P.spoke[0], hubC[0] + ringR * Math.cos(a0), fin), mix(P.spoke[1], hubC[1] + ringR * Math.sin(a0), fin), spokeIn * mix(1, 0.63, fin), 1);
+  }
+  extraSpokes.forEach((s, i) => {
+    const k = back(lin(t, 26.2 + i * 0.18, 26.9 + i * 0.18));
+    const a = orbitAngles[i + 1];
+    s.set(hubC[0] + ringR * Math.cos(a), hubC[1] + ringR * Math.sin(a), k, clamp(k * 1.2));
+    s.mesh.rotation.y = t * 0.3;
+  });
+  sFinale.forEach((s, i) => {
+    const a = orbitAngles[i];
+    s.path([hubC[0] + 115 * Math.cos(a), hubC[1] + 115 * Math.sin(a)], [hubC[0] + (ringR - 62) * Math.cos(a), hubC[1] + (ringR - 62) * Math.sin(a)], 30);
+    s.update(t, win(t, 26.6 + i * 0.12, DURATION + 1, 0.5, 0.5), { grow: easeOut(lin(t, 26.6 + i * 0.12, 27.4 + i * 0.12)) });
+  });
+  ['sB', 'sC', 'sD'].forEach(id => place(id, 0, 0, 0));
+  place('tag', 0, 0, win(t, 26.4, DURATION + 1, 0.7, 0.5)); $('tag').style.transform = `translateY(${((1 - easeOut(lin(t, 26.4, 27.2))) * 20).toFixed(1)}px)`;
+  place('cta', 0, 0, win(t, 28.2, DURATION + 1, 0.7, 0.5)); $('cta').style.transform = 'none';
+
+  // ---- Subtitles ----
+  const line = VO.slice(1, 5).find(v => t >= v.t - 0.1 && t <= v.t + v.d + 0.25);
+  $('subText').textContent = line ? line.text : '';
+  place('subs', 0, 0, line ? 1 : 0); $('subs').style.transform = 'none';
+
+  renderer.render(scene, camera);
+}
+
+window.renderAt = renderAt;
+window.ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(img => img.complete ? null : new Promise(r => { img.onload = img.onerror = r; })));
+  await new Promise(r => setTimeout(r, 500));
+  renderAt(0);
+  return true;
+})();
+
+if (new URLSearchParams(location.search).has('play')) {
+  const start = performance.now();
+  const loop = () => { renderAt(((performance.now() - start) / 1000) % DURATION); requestAnimationFrame(loop); };
+  loop();
+}
+</script>
+</body>
+</html>

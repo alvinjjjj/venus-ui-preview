@@ -1,0 +1,21 @@
+{
+  "title": "Components QA",
+  "subtitle": "全站共用元件 QA",
+  "parentPageId": "40eb4e5771bb80ec9a74da120497aab5",
+  "notionCreated": false,
+  "status": "Backlog",
+  "items": [
+    {
+      "number": "01",
+      "title": "Scrollbar appearance consistency",
+      "priority": "Future improvement",
+      "state": "Reported / Pending reproduction",
+      "checked": false
+    }
+  ],
+  "draft": "Components-QA-draft.txt",
+  "evidence": [
+    "01-scrollbar-overlay.png",
+    "01-scrollbar-transactions.png"
+  ]
+}

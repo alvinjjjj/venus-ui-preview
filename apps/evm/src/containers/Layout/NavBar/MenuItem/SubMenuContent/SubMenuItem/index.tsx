@@ -37,6 +37,7 @@ export const SubMenuItem: React.FC<SubMenuItemProps> = ({
   return (
     <Link
       data-submenu-variant={variant}
+      data-static-menu-icon={to === routes.port.path || undefined}
       data-governance-preview={to === routes.governance.path || undefined}
       data-earn-motion={
         to === routes.liquidityHubs.path

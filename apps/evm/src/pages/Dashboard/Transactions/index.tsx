@@ -349,6 +349,7 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
               {allowDemoPreview ? (
                 <>
                   <MultiSelect
+                    enableSearch={false}
                     className="lite-transaction-filter w-full sm:w-60"
                     menuClassName="lite-transaction-multiselect"
                     optionsClassName={
@@ -372,6 +373,7 @@ export const Transactions: React.FC<{ allowDemoPreview?: boolean }> = ({
                       }))}
                   />
                   <MultiSelect
+                    enableSearch={false}
                     className="lite-transaction-filter w-full sm:w-60"
                     menuClassName="lite-transaction-multiselect"
                     optionsClassName={

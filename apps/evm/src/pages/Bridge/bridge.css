@@ -1,0 +1,26 @@
+/* Final Bridge follows the existing VAI action-card and divider treatment. */
+:root[data-glass-variant='lite-experiment-v2'] #root .bridge-action-card {
+  background: linear-gradient(var(--venus-surface-card-fill), var(--venus-surface-card-fill)), var(--color-background) !important;
+  border-color: var(--color-blue) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .bridge-action-footer {
+  margin-top: calc(var(--spacing) * 4);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .bridge-action-footer > :not(:last-child) {
+  margin-block-start: 0;
+  margin-block-end: calc(var(--spacing) * 4);
+}
+
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-bridge-page .bridge-footer-divider {
+  background: var(--venus-form-line, rgb(255 255 255 / 8%));
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .bridge-action-card {
+  background: var(--e-light-surface-raised) !important;
+}
+
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-bridge-page .bridge-footer-divider {
+  background: var(--venus-form-line, rgb(0 0 0 / 6%));
+}

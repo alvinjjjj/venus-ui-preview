@@ -18,6 +18,10 @@ type Position = {
 };
 
 export const bStockPreviewHealthFactor = 4.2;
+export const bStockPreviewBalances = {
+  index: { supplyCents: 70000, borrowCents: 10000, yearlyEarningsCents: -426 },
+  growth: { supplyCents: 70000, borrowCents: 10000, yearlyEarningsCents: -525 },
+};
 
 // Display-only fixtures: no market links, collateral mutations or transaction forms.
 export function BStockPositions({
@@ -86,13 +90,13 @@ export function BStockPositions({
         ...corePool,
         vai: undefined,
         userHealthFactor: bStockPreviewHealthFactor,
-        userSupplyBalanceCents: new BigNumber(70000),
-        userBorrowBalanceCents: new BigNumber(10000),
-        userBorrowBalanceProtectedCents: new BigNumber(10000),
+        userSupplyBalanceCents: new BigNumber(bStockPreviewBalances[variant].supplyCents),
+        userBorrowBalanceCents: new BigNumber(bStockPreviewBalances[variant].borrowCents),
+        userBorrowBalanceProtectedCents: new BigNumber(bStockPreviewBalances[variant].borrowCents),
         userBorrowLimitCents: new BigNumber(35000),
         userBorrowLimitProtectedCents: new BigNumber(35000),
         userLiquidationThresholdCents: new BigNumber(42000),
-        userYearlyEarningsCents: new BigNumber(variant === 'index' ? -426 : -525),
+        userYearlyEarningsCents: new BigNumber(bStockPreviewBalances[variant].yearlyEarningsCents),
         assets: [],
       }
     : undefined;

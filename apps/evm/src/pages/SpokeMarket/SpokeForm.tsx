@@ -19,6 +19,7 @@ import { formatPercentageToReadableValue, formatTokensToReadableValue } from 'ut
 interface SpokeFormProps {
   pool: SpokePool;
   market: SpokeMarket;
+  collateralSelection?: { address: string; revision: number };
 }
 
 /**
@@ -35,8 +36,7 @@ const PREVIEW = {
 };
 const PRESET_PERCENTAGES = [25, 50, 75, 100];
 
-const tokens = (value: BigNumber, token: Token) =>
-  formatTokensToReadableValue({ value, token });
+const tokens = (value: BigNumber, token: Token) => formatTokensToReadableValue({ value, token });
 
 // Preview: the CTA turns on for any amount within the limit; submitting is a no-op.
 const SubmitButton: React.FC<{ amount: string; limit: BigNumber; label: string }> = ({
@@ -56,11 +56,13 @@ const SubmitButton: React.FC<{ amount: string; limit: BigNumber; label: string }
 
 const toInput = (value: BigNumber) => value.decimalPlaces(6, BigNumber.ROUND_DOWN).toFixed();
 
-const CollateralForm: React.FC<SpokeFormProps> = ({ pool }) => {
+const CollateralForm: React.FC<SpokeFormProps> = ({ pool, collateralSelection }) => {
   const { t } = useTranslation();
   const [action, setAction] = useState(0);
   const [amount, setAmount] = useState('');
-  const [address, setAddress] = useState<string>(pool.collateralMarkets[0]?.address ?? '');
+  const [address, setAddress] = useState<string>(
+    collateralSelection?.address ?? pool.collateralMarkets[0]?.address ?? '',
+  );
   const collateral =
     pool.collateralMarkets.find(market => market.address === address) ?? pool.collateralMarkets[0];
 
@@ -84,7 +86,9 @@ const CollateralForm: React.FC<SpokeFormProps> = ({ pool }) => {
       <SelectTokenTextField
         selectedToken={collateral.token}
         onChangeSelectedToken={token => {
-          const next = pool.collateralMarkets.find(market => market.token.address === token.address);
+          const next = pool.collateralMarkets.find(
+            market => market.token.address === token.address,
+          );
           if (next) setAddress(next.address);
           setAmount('');
         }}
@@ -94,7 +98,10 @@ const CollateralForm: React.FC<SpokeFormProps> = ({ pool }) => {
         }))}
         value={amount}
         onChange={setAmount}
-        rightMaxButton={{ label: t('spoke.form.max'), onClick: () => setAmount(toInput(collateralLimit)) }}
+        rightMaxButton={{
+          label: t('spoke.form.max'),
+          onClick: () => setAmount(toInput(collateralLimit)),
+        }}
       />
       <div className="spoke-form__rows">
         <LabeledInlineContent label={t('spoke.form.walletBalance')}>
@@ -237,7 +244,12 @@ export const SpokeForm: React.FC<SpokeFormProps> = props => {
         {
           id: 'collateral',
           title: t('spoke.form.collateral'),
-          content: <CollateralForm {...props} />,
+          content: (
+            <CollateralForm
+              key={`${props.collateralSelection?.address}-${props.collateralSelection?.revision}`}
+              {...props}
+            />
+          ),
         },
         { id: 'loan', title: t('spoke.form.loan'), content: <LoanForm {...props} /> },
       ]}

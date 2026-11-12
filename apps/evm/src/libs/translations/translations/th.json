@@ -256,10 +256,10 @@
       "logoAlt": "โลโก้ Prime",
       "tooltip": {
         "calculatorLink": "คำนวณรางวัล Prime ของคุณ",
-        "primeBorrowSimulation": "APY ถูกบูสต์ด้วย Prime โดยอิงจากการยืมค่าเฉลี่ยของผู้ใช้ {{borrowBalance}} และการฝากในวอลต์ {{xvsStaked}}.",
+        "primeBorrowSimulation": "APY ถูกบูสต์ด้วย <PrimeLink>Prime</PrimeLink> โดยอิงจากการยืมค่าเฉลี่ยของผู้ใช้ {{borrowBalance}} และการฝากในวอลต์ {{xvsStaked}}.",
         "primeDocLink": "เรียนรู้เพิ่มเติม",
         "primeMarket": "APY ถูกบูสต์ด้วย Prime.",
-        "primeSupplySimulation": "APY ถูกบูสต์ด้วย Prime โดยอิงจากยอดฝากค่าเฉลี่ยของผู้ใช้ {{supplyBalance}} และการฝากในวอลต์ {{xvsStaked}}."
+        "primeSupplySimulation": "APY ถูกบูสต์ด้วย <PrimeLink>Prime</PrimeLink> โดยอิงจากยอดฝากค่าเฉลี่ยของผู้ใช้ {{supplyBalance}} และการฝากในวอลต์ {{xvsStaked}}."
       }
     }
   },
@@ -461,7 +461,8 @@
       "allCategories": "ทุกหมวดหมู่",
       "nCategories_other": "{{count}} หมวดหมู่",
       "reset": "รีเซ็ต",
-      "title": "เลือกหมวดหมู่"
+      "title": "เลือกหมวดหมู่",
+      "search": "ค้นหาหมวดหมู่"
     },
     "pausedAssetsToggle": {
       "label": "สินทรัพย์ที่หยุดไว้"
@@ -2396,7 +2397,10 @@
       "resetFilters": "รีเซ็ตตัวกรอง",
       "selectCategories": "เลือกหมวดหมู่",
       "selectStates": "เลือกสถานะ",
-      "selectVenues": "เลือกแพลตฟอร์ม"
+      "selectVenues": "เลือกแพลตฟอร์ม",
+      "searchCategories": "ค้นหาหมวดหมู่",
+      "searchVenues": "ค้นหาแพลตฟอร์ม",
+      "searchStates": "ค้นหาสถานะ"
     },
     "header": "วอลต์",
     "modals": {
@@ -2761,5 +2765,29 @@
   },
   "yieldsGroups": {
     "protocol": "โปรโตคอล"
+  },
+  "spokePools": {
+    "filter": {
+      "searchLoanAssets": "ค้นหาสินทรัพย์กู้ยืม",
+      "searchCollaterals": "ค้นหาหลักประกัน",
+      "searchPools": "ค้นหาพูล",
+      "selectLoanAssets": "เลือกสินทรัพย์กู้ยืม",
+      "selectCollaterals": "เลือกหลักประกัน",
+      "selectPools": "เลือกพูล",
+      "nLoanAssets": "สินทรัพย์กู้ยืม {{count}} รายการ",
+      "nCollaterals": "หลักประกัน {{count}} รายการ",
+      "nPools": "พูล {{count}} รายการ"
+    }
+  },
+  "lite": {
+    "filters": {
+      "searchCategory": "ค้นหาหมวดหมู่",
+      "searchCollateral": "ค้นหาหลักประกัน"
+    }
+  },
+  "multiSelect": {
+    "noResults": "ไม่พบผลลัพธ์",
+    "clearSearch": "ล้างการค้นหา",
+    "search": "ค้นหาตัวเลือก"
   }
 }

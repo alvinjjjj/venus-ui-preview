@@ -1,0 +1,102 @@
+{
+  "url": "https://venus-ui-preview.vercel.app/",
+  "htmlMatchesBuild": true,
+  "assets": [
+    {
+      "file": "./assets/index-BIRV1-S1.js",
+      "bytes": 631425,
+      "sha256": "f206f68b1fc3fc5da8ab28d562399e30acf1f1e5d5e1cdb229032b2ecd81ab6b"
+    },
+    {
+      "file": "./assets/emotion-react-jsx-runtime.browser.esm-CZhAEqtq.js",
+      "bytes": 28241,
+      "sha256": "0c6be686e13e16b0172bf1b23795237f0e39adbacc460e22768ab8e3852bd472"
+    },
+    {
+      "file": "./assets/preload-helper-B7Ylgxju.js",
+      "bytes": 2190,
+      "sha256": "b8d9785438b499557425d14fd191c1bdde1e320ff6f69a693dea6ce29d33a895"
+    },
+    {
+      "file": "./assets/utils-CAtZw9z3.js",
+      "bytes": 7464,
+      "sha256": "0e367d1a17bad0d0df05bb2771e1fea63b4bb6bfe1f8497dfe4677e33132dd50"
+    },
+    {
+      "file": "./assets/secp256k1-BSdjN-F6.js",
+      "bytes": 27403,
+      "sha256": "46432ef180cfbf6033d21502988342dd7dddc162771ed3026c7968005a253c44"
+    },
+    {
+      "file": "./assets/localBatchGatewayRequest-DIExpmTM.js",
+      "bytes": 114960,
+      "sha256": "d916a28500c95042e544610219ddc8d50586ecd0a24b6ec4add5a3e4ebaf44af"
+    },
+    {
+      "file": "./assets/chunk-RDNMH5RE-mZLyVvE4.js",
+      "bytes": 56290,
+      "sha256": "af0acfafb745c2ce462665916b7d9fd074c201943c66d994a1fff2da9f33199c"
+    },
+    {
+      "file": "./assets/bignumber-DDFEeqf8.js",
+      "bytes": 19646,
+      "sha256": "adcbe8553f69fd34cc8ee00f453bb343a1583e8f59a45bf172b1c016d2f32c9c"
+    },
+    {
+      "file": "./assets/translations-iXOXR-al.js",
+      "bytes": 253877,
+      "sha256": "eb482962c570e85a26ac900bb2806e0f9b6b2880461fbc7e7cb4077c1908a1e6"
+    },
+    {
+      "file": "./assets/hooks-DqL3gDTU.js",
+      "bytes": 21897,
+      "sha256": "3a1737ec0242d6c40a5f912633f0df40eeb39bdf14af730acbef3d9516a8dcad"
+    },
+    {
+      "file": "./assets/address-BZMS7uys.js",
+      "bytes": 1093,
+      "sha256": "462578f953dc5e2da7e4ae6784faf2c28cc93c17cf0437507b3eb2ff1ce4fc69"
+    },
+    {
+      "file": "./assets/utilities-DAAUG95Q.js",
+      "bytes": 6550226,
+      "sha256": "767f35775c070a4e36c1a86d19ecb49c1209f320e18074d670f4caf0cbec4dc7"
+    },
+    {
+      "file": "./assets/production-CyTWu_8A.js",
+      "bytes": 3850,
+      "sha256": "2cc437c7c4b4a7b8c941eb9695197daeee0cf1e10e9af126605fa28c0a21801f"
+    },
+    {
+      "file": "./assets/components-DhdGxyVS.js",
+      "bytes": 1041515,
+      "sha256": "20d9e3acf9add011bf09769d50997184f2ef459f6e3725263a871f01e5df1cfc"
+    },
+    {
+      "file": "./assets/store-BXUZ4cG5.js",
+      "bytes": 2214,
+      "sha256": "ec7751541712d13e96e6c3eef3aba22b8a6e044d1c3d4c6b1adc3cb65823f3ed"
+    },
+    {
+      "file": "./assets/utilities-DR00Q9RG.css",
+      "bytes": 27674,
+      "sha256": "a93e4e53af8a54c7bcad573d250ba5a2bb65742d05bef57232112d392fcd1e0e"
+    },
+    {
+      "file": "./assets/components-n3DRS_7Q.css",
+      "bytes": 28202,
+      "sha256": "47eaf074ff5c6501a2327f886c19133fb37edd7e99ddd8dffe5c622c4dcc5e05"
+    },
+    {
+      "file": "./assets/index-CgZDNC0n.css",
+      "bytes": 552677,
+      "sha256": "ae76a3241d25e2650c50c062637923a42c98ba3758911640fb1810f4941e75d0"
+    }
+  ],
+  "tests": {
+    "accountDashboardNavigation": 4,
+    "accountOverview": 9,
+    "interfaceMode": 81
+  },
+  "visualBrowserCheck": "not repeated this turn"
+}

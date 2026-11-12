@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-09",
+  "url": "https://venus-ui-preview.vercel.app",
+  "deploymentId": "dpl_2jxwvrL2WHLy49k8AuaWcf1aNWRE",
+  "htmlMatchesLocalBuild": true,
+  "htmlSha256": "e1a5ef98a99e45822394faa4b0456df7c880aeaa3ae4ccdf51fa4acfaed9c48f",
+  "assets": [
+    {
+      "asset": "./assets/index-DZN_fHfw.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/emotion-react-jsx-runtime.browser.esm-CZhAEqtq.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/preload-helper-B7Ylgxju.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/utils-CAtZw9z3.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/secp256k1-BSdjN-F6.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/localBatchGatewayRequest-DIExpmTM.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/chunk-RDNMH5RE-mZLyVvE4.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/bignumber-DDFEeqf8.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/translations-iXOXR-al.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/hooks-DqL3gDTU.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/address-BZMS7uys.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/utilities-DAAUG95Q.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/production-CyTWu_8A.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/components-DhdGxyVS.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/store-BXUZ4cG5.js",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/utilities-DR00Q9RG.css",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/components-n3DRS_7Q.css",
+      "status": 200,
+      "matchesLocal": true
+    },
+    {
+      "asset": "./assets/index-DpbActTB.css",
+      "status": 200,
+      "matchesLocal": true
+    }
+  ],
+  "validation": {
+    "typeScript": "passed",
+    "scopedBiome": "passed",
+    "scopedStylelint": "passed",
+    "tests": 235,
+    "testFiles": 18
+  },
+  "browserChecks": [
+    "1440px Dark Account panel",
+    "1280px Light Account panel",
+    "390px Light Account panel",
+    "390px Dark Borrow list and sources",
+    "Normal Empty and Prime demo profiles",
+    "Browser Back: form to sources to assets",
+    "Account Core position opens Supply form",
+    "Desktop Spoke preview collateral picker",
+    "Deployed Earn: USDT estimate first; only badge shown",
+    "Deployed Borrow: lowest source APY and summed source values",
+    "Deployed single-source FDUSD: direct modal; browser Back to asset list",
+    "Lite to Pro reaches Liquidity Hubs",
+    "Deployed Account panel loads shared Dashboard in Pro without Rewards",
+    "Local Pro to Lite browser Back verified after mode-state fix",
+    "Final deployment: Pro to Lite browser Back verified online",
+    "Final deployment: Dark and Light Earn screenshots saved"
+  ],
+  "limitations": [
+    "Spoke preview rates and balances remain fixtures; no chain transactions submitted",
+    "Live multi-product Spoke/FRV account data still needs production API wiring",
+    "Notion PRD and Figma unchanged"
+  ],
+  "screenshots": [
+    "deployed-dark.png",
+    "deployed-light.png",
+    "deployed-account-dark.png"
+  ]
+}

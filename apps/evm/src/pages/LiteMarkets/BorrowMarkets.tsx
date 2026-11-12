@@ -1,28 +1,17 @@
-import { useEffect, useState } from 'react';
-import {
-  AssetApy,
-  type TableColumn,
-  TextField,
-  TokenIconWithSymbol,
-} from 'components';
+import { Apy, type TableColumn, TextField, TokenIconWithSymbol } from 'components';
 import { PAGE_CONTAINER_ID } from 'constants/layout';
+import { useGlassPreview } from 'demo/GlassVersions/store';
+import { useEffect, useState } from 'react';
 import type { Asset } from 'types';
 import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
-import getCombinedApy from 'utilities/getCombinedApy';
-import { useGlassPreview } from 'demo/GlassVersions/store';
-import type { LiteAsset } from './data';
 import { BorrowSources } from './BorrowSources';
 import { LiteMarketAction } from './LiteMarketAction';
 import { LiteMarketAmount } from './LiteMarketAmount';
 import { LiteMarketTable } from './LiteMarketTable';
+import { getApyOffer } from './apy';
+import { getBorrowAssetMetrics } from './borrow-data';
 import './borrow-filter.css';
-
-const borrowApy = (asset: Asset) =>
-  getCombinedApy({
-    type: 'borrow',
-    baseApyPercentage: asset.borrowApyPercentage,
-    tokenDistributions: asset.borrowTokenDistributions,
-  }).totalApyPercentage;
+import type { LiteAsset } from './data';
 
 export function BorrowMarkets({
   rows,
@@ -45,7 +34,9 @@ export function BorrowMarkets({
   selected?: string;
   onSelect: (address: string | undefined) => void;
 }) {
-  const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
+  const isE2 = useGlassPreview(
+    state => state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy',
+  );
   const isLegacyE2 = useGlassPreview(state => state.mode === 'lite-experiment-v2-legacy');
   const [search, setSearch] = useState('');
   useEffect(() => {
@@ -59,8 +50,8 @@ export function BorrowMarkets({
     ),
   );
   const active = assets.find(asset => asset.vToken.address === selected);
-  const filtered = assets.filter(
-    asset => asset.vToken.underlyingToken.symbol.toLowerCase().includes(search.trim().toLowerCase()),
+  const filtered = assets.filter(asset =>
+    asset.vToken.underlyingToken.symbol.toLowerCase().includes(search.trim().toLowerCase()),
   );
 
   const columns: TableColumn<Asset>[] = [
@@ -71,14 +62,13 @@ export function BorrowMarkets({
       renderCell: asset => (
         <button
           type="button"
-          className={`text-left cursor-pointer ${isE2 ? 'font-normal' : 'font-semibold'} hover:text-blue focus-visible:outline-2 focus-visible:outline-blue`}
+          className={`text-left cursor-pointer ${
+            isE2 ? 'font-normal' : 'font-semibold'
+          } hover:text-blue focus-visible:outline-2 focus-visible:outline-blue`}
           aria-label={`Compare ${asset.vToken.underlyingToken.symbol} borrowing`}
           onClick={() => setSelected(asset.vToken.address)}
         >
-          <TokenIconWithSymbol
-            token={asset.vToken.underlyingToken}
-            size="xl"
-          />
+          <TokenIconWithSymbol token={asset.vToken.underlyingToken} size="xl" />
         </button>
       ),
     },
@@ -87,9 +77,28 @@ export function BorrowMarkets({
       label: 'APY',
       selectOptionLabel: 'APY',
       align: 'right',
-      renderCell: asset => <AssetApy asset={asset} type="borrow" className={isE2 ? 'lite-base-apy lite-borrow-apy' : undefined} />,
+      renderCell: asset => {
+        const { best } = getBorrowAssetMetrics(asset, rows);
+        return best.apy === undefined ? (
+          <Apy
+            type="borrow"
+            token={asset.vToken.underlyingToken}
+            baseApyPercentage={asset.borrowApyPercentage}
+            tokenDistributions={
+              getApyOffer('borrow', asset.borrowApyPercentage, asset.borrowTokenDistributions)
+                .tokenDistributions
+            }
+            userBalanceTokens={asset.userBorrowBalanceTokens}
+            badgeOnlyEstimate
+            className={isE2 ? 'lite-base-apy lite-borrow-apy' : undefined}
+          />
+        ) : (
+          <span className="lite-base-apy lite-borrow-apy">{best.apy}%</span>
+        );
+      },
       sortRows: (a, b, direction) =>
-        (borrowApy(a).comparedTo(borrowApy(b)) ?? 0) * (direction === 'asc' ? 1 : -1),
+        (getBorrowAssetMetrics(a, rows).apy.comparedTo(getBorrowAssetMetrics(b, rows).apy) ?? 0) *
+        (direction === 'asc' ? 1 : -1),
     },
     ...(['liquidity', 'borrow'] as const).map(field => ({
       key: field,
@@ -97,89 +106,123 @@ export function BorrowMarkets({
       selectOptionLabel: field === 'borrow' ? 'Total Borrow' : 'Liquidity',
       align: 'right' as const,
       sortRows: (a: Asset, b: Asset, direction: 'asc' | 'desc') =>
-        (a[field === 'borrow' ? 'borrowBalanceCents' : 'liquidityCents'].comparedTo(
-          b[field === 'borrow' ? 'borrowBalanceCents' : 'liquidityCents'],
+        (getBorrowAssetMetrics(a, rows)[
+          field === 'borrow' ? 'borrowedCents' : 'liquidityCents'
+        ].comparedTo(
+          getBorrowAssetMetrics(b, rows)[field === 'borrow' ? 'borrowedCents' : 'liquidityCents'],
         ) ?? 0) * (direction === 'asc' ? 1 : -1),
       renderCell: (asset: Asset) => (
         <LiteMarketAmount
           value={formatTokensToReadableValue({
-            value: field === 'borrow' ? asset.borrowBalanceTokens : asset.cashTokens,
+            value: getBorrowAssetMetrics(asset, rows)[
+              field === 'borrow' ? 'borrowed' : 'liquidity'
+            ],
             token: asset.vToken.underlyingToken,
             addSymbol: false,
           })}
           usdValue={formatCentsToReadableValue({
-            value: field === 'borrow' ? asset.borrowBalanceCents : asset.liquidityCents,
+            value: getBorrowAssetMetrics(asset, rows)[
+              field === 'borrow' ? 'borrowedCents' : 'liquidityCents'
+            ],
           })}
           symbol={asset.vToken.underlyingToken.symbol}
           liquidity={field === 'liquidity'}
         />
       ),
     })),
-    ...(isLegacyE2 ? [{
-      key: 'borrowAction',
-      label: <span className="sr-only">Action</span>,
-      selectOptionLabel: 'Action',
-      align: 'right' as const,
-      renderCell: (asset: Asset, rowIndex: number) => (
-        <LiteMarketAction
-          action="Borrow"
-          promoted={rowIndex === 0}
-          symbol={asset.vToken.underlyingToken.symbol}
-          onSelect={() => setSelected(asset.vToken.address)}
-        />
-      ),
-    }] : []),
+    ...(isLegacyE2
+      ? [
+          {
+            key: 'borrowAction',
+            label: <span className="sr-only">Action</span>,
+            selectOptionLabel: 'Action',
+            align: 'right' as const,
+            renderCell: (asset: Asset, rowIndex: number) => (
+              <LiteMarketAction
+                action="Borrow"
+                promoted={rowIndex === 0}
+                symbol={asset.vToken.underlyingToken.symbol}
+                onSelect={() => setSelected(asset.vToken.address)}
+              />
+            ),
+          },
+        ]
+      : []),
   ];
 
   return (
     <div className={experimental ? 'lite-experiment-earn' : undefined}>
-      <div className={experimental ? `lite-experiment-scroll${active ? ` lite-borrow-sources${isE2 ? ' lite-e2-borrow-sources' : ''}` : isE2 ? ' lite-e2-asset-list lite-e2-borrow-list' : ''}` : undefined}
+      <div
+        className={
+          experimental
+            ? `lite-experiment-scroll${
+                active
+                  ? ` lite-borrow-sources${isE2 ? ' lite-e2-borrow-sources' : ''}`
+                  : isE2
+                    ? ' lite-e2-asset-list lite-e2-borrow-list'
+                    : ''
+              }`
+            : undefined
+        }
         data-loading={experimental && loading && !active ? 'true' : undefined}
         role={experimental ? 'region' : undefined}
         aria-label={experimental ? 'Borrow markets, scroll for more assets' : undefined}
-        tabIndex={experimental ? 0 : undefined}>
-      {active ? (
-        <BorrowSources mobile={mobile} experimental={experimental} asset={active} rows={rows} onBack={() => setSelected(undefined)} />
-      ) : (
-        <LiteMarketTable
-          data={ready ? filtered : []}
-          key={mobile ? 'mobile' : 'desktop'}
-          className={mobile ? 'lite-mobile-table' : undefined}
-          columns={mobile ? columns.slice(0, 2) : columns}
-          rowKeyExtractor={asset => asset.vToken.address}
-          rowOnClick={(_, asset) => setSelected(asset.vToken.address)}
-          initialOrder={{ orderBy: columns[mobile ? 1 : 3], orderDirection: 'desc' }}
-          tableLayout="auto"
-          breakpoint={mobile ? undefined : 'md'}
-          hideCardDelimiter
-          isFetching={loading}
-          placeholder={
-            loading
-              ? undefined
-              : !ready
-                ? 'Market data is unavailable. Please refresh to try again.'
-                : 'No borrowable assets found.'
-          }
-          header={
-            <div className={experimental ? 'lite-market-toolbar' : undefined}>
-            {modeSwitch}
-            <div className={experimental ? 'lite-experiment-controls' : 'flex flex-col gap-3 sm:flex-row sm:items-center'}>
-              <TextField
-                aria-label="Search assets"
-                placeholder="Search asset"
-                size="sm"
-                inputContainerClassName="venus-market-search-surface"
-                leftIconSrc="magnifier"
-                value={search}
-                onChange={event => setSearch(event.target.value)}
-                className="sm:max-w-75"
-              />
-              {categoryFilter}
-            </div>
-            </div>
-          }
-        />
-      )}
+        tabIndex={experimental ? 0 : undefined}
+      >
+        {active ? (
+          <BorrowSources
+            mobile={mobile}
+            experimental={experimental}
+            asset={active}
+            rows={rows}
+            onBack={() => setSelected(undefined)}
+          />
+        ) : (
+          <LiteMarketTable
+            data={ready ? filtered : []}
+            key={mobile ? 'mobile' : 'desktop'}
+            className={mobile ? 'lite-mobile-table' : undefined}
+            columns={mobile ? columns.slice(0, 2) : columns}
+            rowKeyExtractor={asset => asset.vToken.address}
+            rowOnClick={(_, asset) => setSelected(asset.vToken.address)}
+            initialOrder={{ orderBy: columns[3], orderDirection: 'desc' }}
+            tableLayout="auto"
+            breakpoint={mobile ? undefined : 'md'}
+            hideCardDelimiter
+            isFetching={loading}
+            placeholder={
+              loading
+                ? undefined
+                : !ready
+                  ? 'Market data is unavailable. Please refresh to try again.'
+                  : 'No borrowable assets found.'
+            }
+            header={
+              <div className={experimental ? 'lite-market-toolbar' : undefined}>
+                {modeSwitch}
+                <div
+                  className={
+                    experimental
+                      ? 'lite-experiment-controls'
+                      : 'flex flex-col gap-3 sm:flex-row sm:items-center'
+                  }
+                >
+                  <TextField
+                    aria-label="Search assets"
+                    placeholder="Search asset"
+                    size="sm"
+                    inputContainerClassName="venus-market-search-surface"
+                    leftIconSrc="magnifier"
+                    value={search}
+                    onChange={event => setSearch(event.target.value)}
+                    className="sm:max-w-75"
+                  />
+                  {categoryFilter}
+                </div>
+              </div>
+            }
+          />
+        )}
       </div>
     </div>
   );

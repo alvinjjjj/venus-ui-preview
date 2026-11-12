@@ -1,0 +1,25 @@
+{
+  "deploymentId": "dpl_35SRP5epou33yiVSE6w8V4ReXvoG",
+  "status": 200,
+  "htmlMatchesBuild": true,
+  "entry": "./assets/index-DAhSKKSR.js",
+  "htmlSha256": "6b05adf95862c7c8fee85a311b226471dfa82a9aa50ce1d5fc8314589428006e",
+  "localChecks": [
+    "Light 0%, 58%, 100%",
+    "375px modal 343px, no horizontal overflow",
+    "Slider End key updates input to 2000",
+    "Dark thumb unchanged: blue fill, 4px white border"
+  ],
+  "liveChecks": [
+    "Lite Light Dashboard XVS Vault at 58%",
+    "Figma SVG thumb, border 0px",
+    "2 active white tick marks",
+    "Track rgba(30,55,85,0.05)"
+  ],
+  "checks": [
+    "TypeScript passed",
+    "Component CSS Stylelint passed",
+    "Production build passed",
+    "git diff --check passed"
+  ]
+}

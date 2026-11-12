@@ -63,7 +63,7 @@
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--color-grey) 45%, transparent) transparent;
 }
-:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-panel { max-height: 298px !important; }
+:root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-panel:not(:has(.venus-multiselect-content)) { max-height: 298px !important; }
 :root[data-glass-study='lite-experiment'] :is(#root, body) .venus-multiselect-title { min-height: calc(var(--spacing) * 12); padding: calc(var(--spacing) * 3); }
 :root[data-glass-study='lite-experiment'] :is(#root, body) :is(.venus-multiselect-option, [data-select-option]) {
   height: calc(var(--spacing) * 10);

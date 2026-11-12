@@ -1,19 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
 import BigNumber from 'bignumber.js';
-import { AssetApy, Icon, InfoIcon, Modal, SecondaryButton, Select, Tabs, TokenIcon } from 'components';
-import { MarketForm } from 'containers/MarketForm';
+import {
+  AssetApy,
+  Icon,
+  InfoIcon,
+  Modal,
+  SecondaryButton,
+  Select,
+  Tabs,
+  TokenIcon,
+} from 'components';
 import { GatedAssetAcknowledgementModal } from 'containers/GatedAssetAcknowledgementModal';
-import { useChain } from 'hooks/useChain';
-import { useUserChainSettings } from 'hooks/useUserChainSettings';
-import type { Asset } from 'types';
-import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
-import type { LiteAsset } from './data';
-import type { BorrowSource } from './BorrowSources';
+import { MarketForm } from 'containers/MarketForm';
 import { useGlassPreview } from 'demo/GlassVersions/store';
 import { isLiteExperimentMode } from 'demo/GlassVersions/variants';
 import { NATIVE_SUFFIX, useLiteNativeCollateralStore } from 'demo/liteNativeCollateral';
+import { useChain } from 'hooks/useChain';
+import { useUserChainSettings } from 'hooks/useUserChainSettings';
+import { useEffect, useRef, useState } from 'react';
+import type { Asset } from 'types';
+import { formatCentsToReadableValue, formatTokensToReadableValue } from 'utilities';
+import type { BorrowSource } from './BorrowSources';
 import { CollateralPicker } from './CollateralPicker';
 import { LiteMarketBreadcrumb } from './LiteMarketBreadcrumb';
+import type { LiteAsset } from './data';
 import { getPreviewBalances, getPreviewCollateral } from './preview-data';
 
 export function BorrowSourceModal({
@@ -35,7 +44,9 @@ export function BorrowSourceModal({
 }) {
   const { corePoolComptrollerContractAddress } = useChain();
   const experimental = useGlassPreview(state => isLiteExperimentMode(state.mode));
-  const isE2 = useGlassPreview(state => (state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy'));
+  const isE2 = useGlassPreview(
+    state => state.mode === 'lite-experiment-v2' || state.mode === 'lite-experiment-v2-legacy',
+  );
   const isFinal = useGlassPreview(state => state.mode === 'lite-experiment-v2');
   const [settings] = useUserChainSettings();
   const isPreview = source.apy !== undefined;
@@ -46,18 +57,24 @@ export function BorrowSourceModal({
     ),
   );
   const [selectedCollateral, setSelectedCollateral] = useState(
-    collateralAssets.find(item => item.vToken.underlyingToken.symbol === initialCollateralSymbol)?.vToken.address
-      ?? collateralAssets[0]?.vToken.address,
+    collateralAssets.find(item => item.vToken.underlyingToken.symbol === initialCollateralSymbol)
+      ?.vToken.address ?? collateralAssets[0]?.vToken.address,
   );
-  const [previewCollateralSymbol, setPreviewCollateralSymbol] = useState(initialCollateralSymbol ?? source.collateral[0]?.symbol);
+  const [previewCollateralSymbol, setPreviewCollateralSymbol] = useState(
+    initialCollateralSymbol ?? source.collateral[0]?.symbol,
+  );
   // Borrow modal always opens on Loan (Borrow / Repay); a picked collateral stays preselected.
   const [activeTab, setActiveTab] = useState('loan');
   const [pickerOpen, setPickerOpen] = useState(false);
   const backRef = useRef<HTMLButtonElement>(null);
   // "address#native" = WBNB market, supplied with native BNB ("BNB (WBNB market)").
-  const [selectedCollateralAddress, selectedNativeFlag] = (selectedCollateral ?? '').split(NATIVE_SUFFIX);
+  const [selectedCollateralAddress, selectedNativeFlag] = (selectedCollateral ?? '').split(
+    NATIVE_SUFFIX,
+  );
   const isNativeCollateral = selectedNativeFlag !== undefined;
-  const collateral = collateralAssets.find(item => item.vToken.address === selectedCollateralAddress);
+  const collateral = collateralAssets.find(
+    item => item.vToken.address === selectedCollateralAddress,
+  );
   const setLiteNativeCollateral = useLiteNativeCollateralStore(state => state.set);
   useEffect(() => {
     setLiteNativeCollateral(isNativeCollateral ? collateral?.vToken.address : undefined);
@@ -68,18 +85,36 @@ export function BorrowSourceModal({
   const previewCollateral = source.collateral.find(item => item.symbol === previewCollateralSymbol);
   const previewBalances = getPreviewBalances(asset.tokenPriceCents);
   const previewCollateralBalances = getPreviewCollateral(previewCollateralSymbol ?? '');
-  const previewAmount = (value: BigNumber) => formatTokensToReadableValue({ value, token, addSymbol: false });
+  const previewAmount = (value: BigNumber) =>
+    formatTokensToReadableValue({ value, token, addSymbol: false });
   const mobileCollateralSelector = (
     <SecondaryButton
       size="sm"
       className="px-3"
-      aria-label={`Choose ${isPreview ? previewCollateralSymbol ?? '' : collateral?.vToken.underlyingToken.symbol ?? ''} collateral`}
+      aria-label={`Choose ${
+        isPreview ? previewCollateralSymbol ?? '' : collateral?.vToken.underlyingToken.symbol ?? ''
+      } collateral`}
       aria-haspopup="dialog"
       onClick={() => setPickerOpen(true)}
     >
       <span className="inline-flex items-center gap-2">
-        {!isPreview && collateral ? <TokenIcon token={isNativeCollateral && collateral.vToken.underlyingToken.tokenWrapped ? collateral.vToken.underlyingToken.tokenWrapped : collateral.vToken.underlyingToken} size="md" /> : previewCollateral?.iconSrc ? <img src={previewCollateral.iconSrc} alt="" className="size-5" /> : null}
-        {isPreview ? previewCollateralSymbol : collateral && isNativeCollateral ? collateral.vToken.underlyingToken.tokenWrapped?.symbol : collateral?.vToken.underlyingToken.symbol}
+        {!isPreview && collateral ? (
+          <TokenIcon
+            token={
+              isNativeCollateral && collateral.vToken.underlyingToken.tokenWrapped
+                ? collateral.vToken.underlyingToken.tokenWrapped
+                : collateral.vToken.underlyingToken
+            }
+            size="md"
+          />
+        ) : previewCollateral?.iconSrc ? (
+          <img src={previewCollateral.iconSrc} alt="" className="size-5" />
+        ) : null}
+        {isPreview
+          ? previewCollateralSymbol
+          : collateral && isNativeCollateral
+            ? collateral.vToken.underlyingToken.tokenWrapped?.symbol
+            : collateral?.vToken.underlyingToken.symbol}
         <Icon name="chevronDown" className="size-3" />
       </span>
     </SecondaryButton>
@@ -100,11 +135,11 @@ export function BorrowSourceModal({
               <span>Asset</span>
               <span>
                 Max LTV{' '}
-                <InfoIcon tooltip="The maximum you can borrow against this asset, as a share of its value." />
+                <InfoIcon tooltip="The maximum you can borrow against this collateral, as a percentage of its value." />
               </span>
               <span>
                 LT{' '}
-                <InfoIcon tooltip="Liquidation threshold: when your debt reaches this share of the collateral value, the position can be liquidated." />
+                <InfoIcon tooltip="If your borrowed amount reaches this percentage of your collateral value, your position can be liquidated." />
               </span>
             </div>
           </div>
@@ -143,15 +178,27 @@ export function BorrowSourceModal({
         const options = [build(item.vToken.address, underlying, underlying.symbol)];
         // WBNB market: also offer native BNB, labelled "BNB (WBNB market)".
         if (underlying.tokenWrapped)
-          options.push(build(`${item.vToken.address}${NATIVE_SUFFIX}`, underlying.tokenWrapped, nativeLabel(item)));
+          options.push(
+            build(
+              `${item.vToken.address}${NATIVE_SUFFIX}`,
+              underlying.tokenWrapped,
+              nativeLabel(item),
+            ),
+          );
         return options;
       })}
     />
   );
   const penalty = (
     <div className="flex items-center justify-between gap-4 text-sm">
-      <span className="text-light-grey">Liquidation penalty{collateral ? ` (${collateral.vToken.underlyingToken.symbol})` : ''}</span>
-      <span>{collateral && Number.isFinite(collateral.liquidationPenaltyPercentage) ? `${collateral.liquidationPenaltyPercentage}%` : '—'}</span>
+      <span className="text-light-grey">
+        Liquidation penalty{collateral ? ` (${collateral.vToken.underlyingToken.symbol})` : ''}
+      </span>
+      <span>
+        {collateral && Number.isFinite(collateral.liquidationPenaltyPercentage)
+          ? `${collateral.liquidationPenaltyPercentage}%`
+          : '—'}
+      </span>
     </div>
   );
   useEffect(() => {
@@ -268,12 +315,7 @@ export function BorrowSourceModal({
       <div className="flex items-center justify-between rounded-lg border border-light-grey/20 p-4">
         <span className="inline-flex items-center gap-2">
           {action === 'Collateral' ? (
-            inline ? mobileCollateralSelector : <>
-              {previewCollateral?.iconSrc && (
-                <img src={previewCollateral.iconSrc} alt="" className="size-5 rounded-full" />
-              )}
-              {previewCollateralSymbol ?? 'Collateral'}
-            </>
+            mobileCollateralSelector
           ) : (
             <>
               <TokenIcon token={token} size="md" />
@@ -286,11 +328,26 @@ export function BorrowSourceModal({
       <dl className="space-y-4 text-sm">
         {(action === 'Collateral'
           ? [
-              ['Wallet balance', isFinal ? previewCollateralBalances.walletTokens.decimalPlaces(4).toFormat() : '—'],
-              ['Supply balance', isFinal ? previewCollateralBalances.supplyTokens.decimalPlaces(4).toFormat() : '—'],
+              [
+                'Wallet balance',
+                isFinal ? previewCollateralBalances.walletTokens.decimalPlaces(4).toFormat() : '—',
+              ],
+              [
+                'Supply balance',
+                isFinal ? previewCollateralBalances.supplyTokens.decimalPlaces(4).toFormat() : '—',
+              ],
             ]
           : [
-              [action === 'Repay' ? 'Wallet balance' : 'Available to borrow', isFinal ? `${previewAmount(action === 'Repay' ? previewBalances.walletTokens : previewBalances.availableTokens)} ${token.symbol}` : '—'],
+              [
+                action === 'Repay' ? 'Wallet balance' : 'Available to borrow',
+                isFinal
+                  ? `${previewAmount(
+                      action === 'Repay'
+                        ? previewBalances.walletTokens
+                        : previewBalances.availableTokens,
+                    )} ${token.symbol}`
+                  : '—',
+              ],
               ['Borrow balance', isFinal ? previewAmount(previewBalances.borrowTokens) : '—'],
               ['Total borrow APY', `${source.apy}%`],
               ['Health factor', isFinal ? previewBalances.healthFactor : '—'],
@@ -298,7 +355,9 @@ export function BorrowSourceModal({
         ).map(([label, value]) => (
           <div
             key={label}
-            className={`flex justify-between gap-4 border-b border-light-grey/20 pb-3${isFinal ? ' last:border-b-0 last:pb-0' : ''}`}
+            className={`flex justify-between gap-4 border-b border-light-grey/20 pb-3${
+              isFinal ? ' last:border-b-0 last:pb-0' : ''
+            }`}
           >
             <dt className="text-light-grey">{label}</dt>
             <dd className="tabular-nums">{value}</dd>
@@ -316,7 +375,11 @@ export function BorrowSourceModal({
   );
   const content = (
     <>
-      {isE2 && !isFinal && isPreview && <p className="lite-e2-preview-source-label mb-4">Preview market · Transactions unavailable</p>}
+      {isE2 && !isFinal && isPreview && (
+        <p className="lite-e2-preview-source-label mb-4">
+          Preview market · Transactions unavailable
+        </p>
+      )}
       <Tabs
         className={isFinal ? 'lite-borrow-action-tabs space-y-3' : undefined}
         headerClassName={experimental ? 'lite-borrow-popup-tabs' : undefined}
@@ -337,11 +400,19 @@ export function BorrowSourceModal({
                   collateral.isGated && !settings.doNotShowGatedAssetModal ? (
                     <div className="space-y-3">
                       {experimental && collateralSelector}
-                      <p className="text-sm text-light-grey">Open this asset from Earn to review its access requirements.</p>
+                      <p className="text-sm text-light-grey">
+                        Open this asset from Earn to review its access requirements.
+                      </p>
                     </div>
                   ) : (
                     <MarketForm
-                      collateralSelector={experimental ? inline ? mobileCollateralSelector : collateralSelector : undefined}
+                      collateralSelector={
+                        experimental
+                          ? inline
+                            ? mobileCollateralSelector
+                            : collateralSelector
+                          : undefined
+                      }
                       key={`${collateral.vToken.address}${isNativeCollateral ? NATIVE_SUFFIX : ''}`}
                       vToken={collateral.vToken}
                       poolComptrollerAddress={corePoolComptrollerContractAddress}
@@ -378,41 +449,68 @@ export function BorrowSourceModal({
               />
             ),
           },
-          ...(!experimental ? [{ id: 'info', title: <span className="font-normal">Info</span>, content: info }] : []),
+          ...(!experimental
+            ? [{ id: 'info', title: <span className="font-normal">Info</span>, content: info }]
+            : []),
         ]}
       />
     </>
   );
-  if (inline) return (
-    <section className={`lite-inline-market lite-mobile-borrow-form${isFinal ? ' venus-form-surface' : ''}`} aria-label={`${token.symbol} ${source.name} form`}>
-      <LiteMarketBreadcrumb
-        mode="Borrow"
-        token={token}
-        onBackToAssets={onBackAssets ?? onClose}
-        onBackToSources={onClose}
-        marketName={source.name}
-        backButtonRef={backRef}
-      />
-      <div className="lite-inline-market-body"><div className="lite-inline-market-form">{content}</div></div>
-      {pickerOpen && <CollateralPicker
-        source={source}
-        rows={rows}
-        onClose={() => setPickerOpen(false)}
-        onSelect={choice => {
-          if (choice.asset) setSelectedCollateral(`${choice.asset.vToken.address}${choice.native ? NATIVE_SUFFIX : ''}`);
-          setPreviewCollateralSymbol(choice.symbol);
-          setActiveTab('collateral');
-          setPickerOpen(false);
-        }}
-      />}
-    </section>
+  const picker = pickerOpen && (
+    <CollateralPicker
+      source={source}
+      rows={rows}
+      onClose={() => setPickerOpen(false)}
+      onSelect={choice => {
+        if (choice.asset)
+          setSelectedCollateral(
+            `${choice.asset.vToken.address}${choice.native ? NATIVE_SUFFIX : ''}`,
+          );
+        setPreviewCollateralSymbol(choice.symbol);
+        setActiveTab('collateral');
+        setPickerOpen(false);
+      }}
+    />
   );
+  if (inline)
+    return (
+      <section
+        className={`lite-inline-market lite-mobile-borrow-form${
+          isFinal ? ' venus-form-surface' : ''
+        }`}
+        aria-label={`${token.symbol} ${source.name} form`}
+      >
+        <LiteMarketBreadcrumb
+          mode="Borrow"
+          token={token}
+          onBackToAssets={onBackAssets ?? onClose}
+          onBackToSources={onClose}
+          marketName={source.name}
+          backButtonRef={backRef}
+        />
+        <div className="lite-inline-market-body">
+          <div className="lite-inline-market-form">{content}</div>
+        </div>
+
+        {picker}
+      </section>
+    );
   return (
-    <Modal
-      isOpen
-      className={isE2 ? 'lite-e2-borrow-modal' : undefined}
-      handleClose={onClose}
-      title={<span className="inline-flex items-center gap-2 font-normal"><TokenIcon token={token} size="md" />{token.symbol} / {source.name}</span>}
-    >{content}</Modal>
+    <>
+      <Modal
+        isOpen
+        className={isE2 ? 'lite-e2-borrow-modal' : undefined}
+        handleClose={onClose}
+        title={
+          <span className="inline-flex items-center gap-2 font-normal">
+            <TokenIcon token={token} size="md" />
+            {token.symbol} / {source.name}
+          </span>
+        }
+      >
+        {content}
+      </Modal>
+      {picker}
+    </>
   );
 }

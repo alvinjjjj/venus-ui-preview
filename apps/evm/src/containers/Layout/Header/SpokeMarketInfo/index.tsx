@@ -1,4 +1,4 @@
-import { type CellProps, ImgGroup } from 'components';
+import { type CellProps, TokenIcon } from 'components';
 import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { useSpokeMarket } from 'pages/SpokeMarket/useSpokeMarket';
@@ -30,10 +30,16 @@ export const SpokeMarketInfo = () => {
     {
       label: t('spoke.market.collateral'),
       value: (
-        <ImgGroup
-          className="h-full"
-          imgSrcs={pool?.collateralMarkets.map(collateral => collateral.token.iconSrc) ?? []}
-        />
+        <div className="inline-flex items-center" aria-label={t('spoke.market.collateral')}>
+          {pool?.collateralMarkets.slice(0, 5).map((collateral, index) => (
+            <span key={collateral.address} title={collateral.token.symbol} className={index > 0 ? '-ml-1' : undefined}>
+              <TokenIcon token={collateral.token} className="shrink-0 overflow-hidden rounded-full" />
+            </span>
+          ))}
+          {(pool?.collateralMarkets.length ?? 0) > 5 && (
+            <span className="ml-2 text-sm text-white font-normal">+{pool!.collateralMarkets.length - 5}</span>
+          )}
+        </div>
       ),
     },
   ];

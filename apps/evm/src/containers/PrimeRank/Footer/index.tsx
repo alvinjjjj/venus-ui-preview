@@ -32,7 +32,11 @@ export const Footer: React.FC<FooterProps> = ({ hideLeaderboardLink }) => {
         i18nKey="primeLeaderboard.rankFooter.learnMore"
         components={{
           LeaderboardLink: (
-            <Link className="text-blue underline" to={routes.primeLeaderboard.path} />
+            <Link
+              className="text-blue underline"
+              to={routes.primeLeaderboard.path}
+              state={{ interfaceMode: 'pro' }}
+            />
           ),
         }}
       />

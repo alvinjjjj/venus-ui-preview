@@ -1,0 +1,2992 @@
+[
+  {
+    "theme": "dark",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1440
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1280
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1231.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1024
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1231.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 768
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1223.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 640
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1043.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1043.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core supplied",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "dark",
+    "market": "Venus Core borrowed",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "dark",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "dark",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "dark",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1440
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1440
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1280
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 689.5,
+        "height": 40
+      },
+      {
+        "bottom": 689.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1280
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1231.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 1024
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 1024
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1231.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 768
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 825.5,
+        "height": 40
+      },
+      {
+        "bottom": 1051.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 768
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1223.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60,
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 640
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1043.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [
+      {
+        "bottom": 817.5,
+        "height": 40
+      },
+      {
+        "bottom": 1043.5,
+        "height": 40
+      }
+    ],
+    "overflow": false,
+    "rows": [
+      60,
+      60,
+      60
+    ],
+    "width": 640
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "light",
+    "market": "Venus Core borrowed",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "light",
+    "market": "Liquidity Hub",
+    "amounts": [],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "light",
+    "market": "bStock index",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  },
+  {
+    "theme": "light",
+    "market": "bStock growth",
+    "amounts": [
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      },
+      {
+        "font": "14px",
+        "leading": "21px"
+      }
+    ],
+    "apy": [
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      },
+      {
+        "font": "14px",
+        "leading": "21px",
+        "weight": "600"
+      }
+    ],
+    "clipped": [],
+    "headers": [],
+    "overflow": false,
+    "rows": [],
+    "width": 390
+  }
+]

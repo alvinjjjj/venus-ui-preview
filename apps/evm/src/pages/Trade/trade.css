@@ -1,0 +1,67 @@
+/* Basic Final Trade surfaces reuse the existing card and divider tokens. */
+.venus-trade-page .trade-pair-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+}
+@media (min-width: 768px) {
+  .venus-trade-page .trade-pair-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page :is(.venus-glass-card, .trade-pair-info, .token-list-dropdown) {
+  background: var(--venus-prim-slate-950) !important;
+  border-color: var(--venus-surface-card-edge) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .trade-action-card {
+  border-color: var(--color-blue) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page :is(hr, [role='separator']) {
+  border-color: var(--venus-form-line) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .venus-token-list-item:hover {
+  background: var(--venus-surface-dropdown-item-hover) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .trade-pair-select {
+  padding: var(--spacing) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .trade-pair-select[aria-expanded='true'] {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .trade-direction-label {
+  color: var(--venus-text-primary-on-accent) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .trade-pair-metrics .text-b1r {
+  font-size: var(--text-b2r);
+  line-height: var(--text-b2r--line-height);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .token-list-dropdown {
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px var(--venus-surface-popup-drop);
+}
+:root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .token-list-dropdown .venus-text-field {
+  background: var(--venus-prim-slate-950) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-trade-page :is(.venus-glass-card, .trade-pair-info, .token-list-dropdown) {
+  background: var(--e-light-surface-raised) !important;
+  border-color: var(--e-light-border-subtle) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-trade-page .trade-action-card {
+  border-color: var(--color-blue) !important;
+}
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root .venus-trade-page .token-list-dropdown .venus-text-field {
+  background: var(--e-light-surface-panel) !important;
+}
+
+/* Same open selector and neutral popup treatment as Core. */
+@layer final-button-material {
+  :root[data-glass-variant='lite-experiment-v2'] #root .venus-trade-page .venus-token-selector:is([aria-expanded='true'], :focus-visible) {
+    outline: 1px solid var(--color-blue) !important;
+    outline-offset: calc(var(--spacing) / 2) !important;
+  }
+}
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-trade-page .token-list-dropdown,
+:root[data-glass-variant='lite-experiment-v2']:not([data-liquidity-theme='light']) #root .venus-trade-page .token-list-dropdown .venus-text-field {
+  background: var(--color-background) !important;
+}

@@ -1,0 +1,237 @@
+{
+  "createdNodeIds": [],
+  "mutatedNodeIds": [
+    "0:1",
+    "I189:30034;299:3706",
+    "I189:35075;1584:9860",
+    "I2351:81575;75:3332",
+    "I3342:271521;75:3332",
+    "I3342:274435;75:3332",
+    "I293:39054;75:3332",
+    "I293:39057;299:3706",
+    "I293:39085;1584:9860",
+    "I1828:162127;75:3332",
+    "I1828:162150;299:3706",
+    "I1828:162170;1584:9860",
+    "I3561:46096;75:3332",
+    "189:28604",
+    "189:28605",
+    "189:28606",
+    "189:28607",
+    "189:28609",
+    "631:53501",
+    "2351:81573",
+    "3342:271519",
+    "3342:274433",
+    "293:39041",
+    "293:39055",
+    "293:39084",
+    "293:39096",
+    "310:36738",
+    "1828:129419",
+    "631:56486",
+    "1828:162125",
+    "1828:162148",
+    "1828:162168",
+    "1828:162188",
+    "1956:184199",
+    "1828:162263",
+    "3561:46095"
+  ],
+  "screenCount": 23,
+  "screens": [
+    {
+      "id": "189:28604",
+      "name": "Grid 1440px",
+      "width": 1440,
+      "height": 1116,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "189:28605",
+      "name": "Grid 1280px",
+      "width": 1280,
+      "height": 1116,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "189:28606",
+      "name": "Grid 1024px",
+      "width": 1024,
+      "height": 1116,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "189:28607",
+      "name": "Grid 768px",
+      "width": 768,
+      "height": 1100,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "189:28609",
+      "name": "375",
+      "width": 375,
+      "height": 1225,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "631:53501",
+      "name": "Grid 640px",
+      "width": 640,
+      "height": 1105,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "2351:81573",
+      "name": "Protection mode",
+      "width": 1440,
+      "height": 1290,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "3342:271519",
+      "name": "E-mode mode",
+      "width": 1440,
+      "height": 1290,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "3342:274433",
+      "name": "Isolated",
+      "width": 1440,
+      "height": 1290,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "293:39041",
+      "name": "Grid 1440px",
+      "width": 1440,
+      "height": 2785,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "293:39055",
+      "name": "Grid 1280px",
+      "width": 1280,
+      "height": 2816,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "293:39084",
+      "name": "Grid 1024px",
+      "width": 1024,
+      "height": 3256,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "293:39096",
+      "name": "Grid 768px",
+      "width": 768,
+      "height": 3449,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "310:36738",
+      "name": "375_Borrowed",
+      "width": 375,
+      "height": 2339,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:129419",
+      "name": "375_Supplied",
+      "width": 375,
+      "height": 5379.197265625,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "631:56486",
+      "name": "Grid 640px",
+      "width": 640,
+      "height": 4848,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:162125",
+      "name": "Grid 1440px",
+      "width": 1440,
+      "height": 1285,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:162148",
+      "name": "Grid 1280px",
+      "width": 1280,
+      "height": 1285,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:162168",
+      "name": "Grid 1024px",
+      "width": 1024,
+      "height": 1340,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:162188",
+      "name": "Grid 768px",
+      "width": 768,
+      "height": 1765,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1956:184199",
+      "name": "375_Supplied",
+      "width": 375,
+      "height": 2064.197021484375,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "1828:162263",
+      "name": "Grid 640px",
+      "width": 640,
+      "height": 1794,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    },
+    {
+      "id": "3561:46095",
+      "name": "Grid 1440px",
+      "width": 1440,
+      "height": 2895,
+      "backgroundBinding": "VariableID:0af33e84f88c41ffa4f4e145f0991f948e8fa00d/5670:70"
+    }
+  ],
+  "removedOldAppearanceOverrides": 12,
+  "pageModes": {
+    "VariableCollectionId:4e176fed30bc3b81f0808830238bcd184235068f/3963:5": "3929:1",
+    "VariableCollectionId:95868dd89048cada4ad3d17ede5d493f60fba8c6/3170:182": "1:0"
+  },
+  "newColorsCreated": false,
+  "layoutChanged": false,
+  "fileKey": "M9TnELYwKwAfzONJx9PUzP",
+  "pageId": "0:1",
+  "pageName": "v5 ⭐",
+  "visualChecks": [
+    {
+      "nodeId": "293:39041",
+      "viewport": 1440,
+      "theme": "Dark",
+      "result": "Background updated and reviewed"
+    },
+    {
+      "nodeId": "1956:184199",
+      "viewport": 375,
+      "theme": "Dark",
+      "result": "Background updated and reviewed"
+    }
+  ],
+  "libraryPublished": false,
+  "backgroundHierarchy": {
+    "screen": "#101218",
+    "section": "#181A20",
+    "canvas": "#1E1E1E",
+    "sectionCount": 6,
+    "verifiedWholePageScreenshot": true
+  }
+}

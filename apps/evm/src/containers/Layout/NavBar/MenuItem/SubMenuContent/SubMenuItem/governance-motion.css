@@ -201,3 +201,11 @@
   :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='1'] { animation-delay: 90ms; }
   :root[data-glass-preview='v5'] .venus-navigation-menu [data-earn-motion='spoke'] .venus-spoke-dot[data-ring='2'] { animation-delay: 180ms; }
 }
+/* Port keeps its import icon still, including hover and keyboard focus. */
+[data-static-menu-icon] .venus-submenu-icon,
+[data-static-menu-icon] .venus-submenu-icon * {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+

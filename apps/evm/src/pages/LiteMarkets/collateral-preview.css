@@ -1,0 +1,54 @@
+/* The icon stack and overflow count share one centered line in every viewport. */
+.lite-markets .lite-mobile-collateral-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing);
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.lite-markets .lite-mobile-collateral-trigger img {
+  display: block;
+  flex-shrink: 0;
+}
+.lite-markets .lite-mobile-collateral-trigger:focus-visible {
+  outline: calc(var(--spacing) / 2) solid var(--color-blue);
+  outline-offset: var(--spacing);
+  border-radius: var(--radius-sm);
+}
+
+/* Reuse the shared floating dropdown surface, viewport bounds and scroll area.
+   Header and rows keep the same material without an extra header fill. */
+.lite-collateral-preview-panel .lite-collateral-preview-table {
+  table-layout: fixed;
+  margin: 0;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table :is(th, td) {
+  padding: calc(var(--spacing) * 2) var(--spacing);
+  border: 0;
+  background: transparent;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table :is(th, td):first-child {
+  width: 46%;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table th {
+  white-space: nowrap;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table button {
+  min-height: calc(var(--spacing) * 8);
+  gap: var(--spacing);
+  max-width: 100%;
+  font-weight: var(--font-weight-semibold);
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table button > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table img {
+  flex-shrink: 0;
+}
+.lite-collateral-preview-panel .lite-collateral-preview-table tbody tr:hover {
+  background: color-mix(in srgb, var(--color-grey) 8%, transparent);
+}

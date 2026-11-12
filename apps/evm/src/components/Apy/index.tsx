@@ -24,6 +24,8 @@ export interface ApyProps {
   showPrimeSimulation?: boolean;
   // The Prime page already identifies itself, so it turns the leading Prime icon off
   showPrimeIcon?: boolean;
+  /** Aggregate token rows show only the best estimated offer. */
+  badgeOnlyEstimate?: boolean;
   // Trade positions are out of the campaigns' scope, so that page leaves them out entirely
   showCampaignRewards?: boolean;
   vTokenAddress?: Address;
@@ -40,6 +42,7 @@ export const Apy: React.FC<ApyProps> = ({
   isMuted = false,
   showPrimeSimulation = true,
   showPrimeIcon = true,
+  badgeOnlyEstimate = false,
   showCampaignRewards = true,
   vTokenAddress,
   className,
@@ -50,10 +53,15 @@ export const Apy: React.FC<ApyProps> = ({
         distribution => distribution.type !== 'merkl' || !distribution.collateralGate,
       );
 
+  const eligibleDistributions = shownDistributions.map(distribution =>
+    distribution.type === 'merkl' && distribution.collateralGate?.isUserEligible === false
+      ? { ...distribution, apyPercentage: distribution.apyPercentage.times(0) }
+      : distribution,
+  );
   const combinedApy = getCombinedApy({
     type,
     baseApyPercentage,
-    tokenDistributions: shownDistributions,
+    tokenDistributions: eligibleDistributions,
   });
   const readableApy = formatPercentageToReadableValue(combinedApy.totalApyPercentage);
   let primeDistribution: PrimeDistribution | undefined;
@@ -76,7 +84,7 @@ export const Apy: React.FC<ApyProps> = ({
 
   const isPrimeAsset = !!(primeDistribution || primeSimulationDistribution);
   let simulatedApyPercentage: BigNumber | undefined;
-  const isApyBoostedByPrime = !!primeDistribution && !!userBalanceTokens?.isGreaterThan(0);
+  const isApyBoostedByPrime = !!primeDistribution && primeDistribution.apyPercentage.gt(0);
 
   const isApyBoosted =
     isApyBoostedByPrime ||
@@ -108,7 +116,7 @@ export const Apy: React.FC<ApyProps> = ({
   // Only one badge fits: the campaign takes the slot until the user qualifies for it
   let badgeDom: React.ReactNode;
 
-  if (gatedMerklApyPercentages.length > 0) {
+  if (gatedMerklApyPercentages.some(apy => apy.gt(0))) {
     // The badge advertises the APY once qualified, so every unearned reward comes off it
     const missedApyPercentage = gatedMerklApyPercentages
       .reduce((acc, apyPercentage) => acc.plus(apyPercentage))
@@ -117,11 +125,21 @@ export const Apy: React.FC<ApyProps> = ({
     badgeDom = (
       <MerklBadge
         className="shrink-0"
-        simulatedApyPercentage={combinedApy.totalApyPercentage.minus(missedApyPercentage)}
+        simulatedApyPercentage={
+          type === 'supply'
+            ? combinedApy.totalApyPercentage.plus(missedApyPercentage)
+            : combinedApy.totalApyPercentage.minus(missedApyPercentage)
+        }
         {...distributionListProps}
       />
     );
-  } else if (showPrimeSimulation && isPrimeAsset && !isApyBoostedByPrime) {
+  } else if (
+    showPrimeSimulation &&
+    isPrimeAsset &&
+    !isApyBoostedByPrime &&
+    simulatedApyPercentage &&
+    combinedApy.apyPrimeSimulationPercentage.gt(0)
+  ) {
     badgeDom = (
       <PrimeBadge
         className="shrink-0"
@@ -142,13 +160,14 @@ export const Apy: React.FC<ApyProps> = ({
         <PrimeBadge className="shrink-0" type={type} token={token} vTokenAddress={vTokenAddress} />
       )}
 
-      {isApyBoosted ? (
-        <BoostTooltip {...distributionListProps}>
-          <p className="font-semibold text-green whitespace-nowrap">{readableApy}</p>
-        </BoostTooltip>
-      ) : (
-        <p className={cn('whitespace-nowrap shrink-0', isMuted && 'text-grey')}>{readableApy}</p>
-      )}
+      {!(badgeOnlyEstimate && badgeDom) &&
+        (isApyBoosted ? (
+          <BoostTooltip {...distributionListProps}>
+            <p className="font-semibold text-green whitespace-nowrap">{readableApy}</p>
+          </BoostTooltip>
+        ) : (
+          <p className={cn('whitespace-nowrap shrink-0', isMuted && 'text-grey')}>{readableApy}</p>
+        ))}
 
       {badgeDom}
     </div>

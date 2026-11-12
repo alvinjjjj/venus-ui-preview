@@ -1,0 +1,18 @@
+{
+  "scope": "Local Dashboard Summary",
+  "route": "http://127.0.0.1:5176/#/dashboard?chainId=56",
+  "field": "Minted VAI",
+  "source": "pool.vai.userBorrowBalanceCents",
+  "format": "USD, matching the existing VAI summary field",
+  "demoBalance": "Explicit zero VAI debt for local BNB demo accounts",
+  "desktop": "1440px: same row as Net APY and Daily earnings, third column",
+  "tablet": "1024px: wraps below the two-column metrics, no horizontal overflow",
+  "mobile": "375px: wraps below the two-column metrics",
+  "themesChecked": ["Dark", "Light"],
+  "hiddenBalanceChecked": "Minted VAI masks to ****** with other balances",
+  "unitTests": "AccountOverview: 11 passed",
+  "otherChecks": ["Biome", "Stylelint", "git diff --check"],
+  "screenshot": "desktop-dark.jpg",
+  "deployed": false,
+  "figmaEdited": false
+}

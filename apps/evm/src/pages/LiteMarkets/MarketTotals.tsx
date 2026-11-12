@@ -26,6 +26,8 @@ export const MarketTotals = ({
     poolQuery.data?.pool.assets ?? [],
     hubsQuery.data?.liquidityHubs ?? [],
     corePoolComptrollerContractAddress,
+    [],
+    { protocolTotals: true },
   );
 
   return (
@@ -43,7 +45,9 @@ export const MarketTotals = ({
         <div key={field} className={inline ? 'lite-e2-market-total' : undefined}>
           <p className="mb-3 text-light-grey text-sm">{label}</p>
           <p
-            className={`${inline ? 'text-3xl xl:text-4xl' : 'text-xl xl:text-2xl'} font-normal tabular-nums`}
+            className={`${
+              inline ? 'text-3xl xl:text-4xl' : 'text-xl xl:text-2xl'
+            } font-normal tabular-nums`}
           >
             {ready ? (
               inline ? (
@@ -54,6 +58,7 @@ export const MarketTotals = ({
                   animateDigits={supplyUpdateIntervalMs !== undefined}
                   updateIntervalMs={supplyUpdateIntervalMs}
                   sleepBetweenUpdates={isFinal}
+                  simulateUpdates={!isFinal}
                 />
               ) : (
                 formatCentsToReadableValue({

@@ -5,6 +5,7 @@ import { useGlassPreview } from 'demo/GlassVersions/store';
 import { useTranslation } from 'libs/translations';
 import { Borrow } from './Borrow';
 import { Repay } from './Repay';
+import './vai.css';
 
 const VAI_DOC_URL = `${VENUS_DOC_URL}/guides/borrowing-vai`;
 
@@ -33,11 +34,12 @@ const Vai: React.FC = () => {
           }
         />
 
-        <Card>
+        <Card className="vai-action-card">
           <Tabs
             tabs={tabsContent}
             navType="searchParam"
             variant={isFinal ? 'secondary' : undefined}
+            className={isFinal ? 'space-y-4' : undefined}
           />
         </Card>
       </div>

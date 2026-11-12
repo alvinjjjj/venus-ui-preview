@@ -1,3 +1,5 @@
+import { routes } from 'constants/routing';
+import { Link } from 'containers/Link';
 import { useGetToken } from 'libs/tokens';
 import { useTranslation } from 'libs/translations';
 import type { PrimeSimulationDistribution, Token } from 'types';
@@ -10,7 +12,7 @@ export interface SimulationTextProps {
 }
 
 export const SimulationText: React.FC<SimulationTextProps> = ({ token, type, referenceValues }) => {
-  const { t } = useTranslation();
+  const { Trans } = useTranslation();
 
   const xvs = useGetToken({
     symbol: 'XVS',
@@ -29,10 +31,24 @@ export const SimulationText: React.FC<SimulationTextProps> = ({ token, type, ref
       addSymbol: true,
     });
 
-    return t('apy.primeBadge.tooltip.primeSupplySimulation', {
-      supplyBalance: readableReferenceSupplyBalance,
-      xvsStaked: readableReferenceXvsStaked,
-    });
+    return (
+      <Trans
+        i18nKey="apy.primeBadge.tooltip.primeSupplySimulation"
+        values={{
+          supplyBalance: readableReferenceSupplyBalance,
+          xvsStaked: readableReferenceXvsStaked,
+        }}
+        components={{
+          PrimeLink: (
+            <Link
+              to={routes.primeLeaderboard.path}
+              state={{ interfaceMode: 'pro' }}
+              onClick={event => event.stopPropagation()}
+            />
+          ),
+        }}
+      />
+    );
   }
 
   const readableReferenceBorrowBalance = formatTokensToReadableValue({
@@ -41,8 +57,22 @@ export const SimulationText: React.FC<SimulationTextProps> = ({ token, type, ref
     addSymbol: true,
   });
 
-  return t('apy.primeBadge.tooltip.primeBorrowSimulation', {
-    borrowBalance: readableReferenceBorrowBalance,
-    xvsStaked: readableReferenceXvsStaked,
-  });
+  return (
+    <Trans
+      i18nKey="apy.primeBadge.tooltip.primeBorrowSimulation"
+      values={{
+        borrowBalance: readableReferenceBorrowBalance,
+        xvsStaked: readableReferenceXvsStaked,
+      }}
+      components={{
+        PrimeLink: (
+          <Link
+            to={routes.primeLeaderboard.path}
+            state={{ interfaceMode: 'pro' }}
+            onClick={event => event.stopPropagation()}
+          />
+        ),
+      }}
+    />
+  );
 };

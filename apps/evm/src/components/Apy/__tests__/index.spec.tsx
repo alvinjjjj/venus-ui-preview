@@ -1,3 +1,4 @@
+import { cleanup } from '@testing-library/react';
 import BigNumber from 'bignumber.js';
 
 import { assetData } from '__mocks__/models/asset';
@@ -62,8 +63,9 @@ const primeSimulationDistribution: TokenDistribution = {
 };
 
 describe('Apy', () => {
+  afterEach(cleanup);
   it('renders a base APY without a boost', () => {
-    const { getByText, queryByAltText } = renderComponent(
+    const { getByText, queryByRole } = renderComponent(
       <Apy
         type="supply"
         token={token}
@@ -73,7 +75,7 @@ describe('Apy', () => {
     );
 
     expect(getByText('2%')).toBeInTheDocument();
-    expect(queryByAltText(en.apy.boost.iconAlt)).not.toBeInTheDocument();
+    expect(queryByRole('img', { name: en.apy.boost.iconAlt })).not.toBeInTheDocument();
   });
 
   it.each([
@@ -88,7 +90,7 @@ describe('Apy', () => {
       expectedApy: '-3%',
     },
   ] as const)('renders a boosted $type APY', ({ type, baseApyPercentage, expectedApy }) => {
-    const { getByAltText, getByText } = renderComponent(
+    const { getByRole, getByText } = renderComponent(
       <Apy
         type={type}
         token={token}
@@ -98,11 +100,11 @@ describe('Apy', () => {
     );
 
     expect(getByText(expectedApy)).toBeInTheDocument();
-    expect(getByAltText(en.apy.boost.iconAlt)).toBeInTheDocument();
+    expect(getByRole('img', { name: en.apy.boost.iconAlt })).toBeInTheDocument();
   });
 
   it('ignores inactive and zero token distributions', () => {
-    const { getByText, queryByAltText } = renderComponent(
+    const { getByText, queryByRole } = renderComponent(
       <Apy
         type="supply"
         token={token}
@@ -122,11 +124,11 @@ describe('Apy', () => {
     );
 
     expect(getByText('2%')).toBeInTheDocument();
-    expect(queryByAltText(en.apy.boost.iconAlt)).not.toBeInTheDocument();
+    expect(queryByRole('img', { name: en.apy.boost.iconAlt })).not.toBeInTheDocument();
   });
 
   it('shows the boost tooltip trigger for point distributions', () => {
-    const { getByAltText, getByText } = renderComponent(
+    const { getByRole, getByText } = renderComponent(
       <Apy
         type="supply"
         token={token}
@@ -142,7 +144,7 @@ describe('Apy', () => {
     );
 
     expect(getByText('2%')).toBeInTheDocument();
-    expect(getByAltText(en.apy.boost.iconAlt)).toBeInTheDocument();
+    expect(getByRole('img', { name: en.apy.boost.iconAlt })).toBeInTheDocument();
   });
 
   it('applies muted styling', () => {
@@ -161,7 +163,7 @@ describe('Apy', () => {
   });
 
   it('renders an active Prime boost', () => {
-    const { getByAltText, getByText } = renderComponent(
+    const { getAllByAltText, getByText } = renderComponent(
       <Apy
         type="supply"
         token={token}
@@ -179,11 +181,11 @@ describe('Apy', () => {
     );
 
     expect(getByText('3%')).toBeInTheDocument();
-    expect(getByAltText(en.apy.primeBadge.logoAlt)).toBeInTheDocument();
+    expect(getAllByAltText(en.apy.primeBadge.logoAlt)[0]).toBeInTheDocument();
   });
 
   it('renders a Prime APY simulation', () => {
-    const { getByAltText, getByText } = renderComponent(
+    const { getAllByAltText, getByText } = renderComponent(
       <Apy
         type="supply"
         token={token}
@@ -206,11 +208,11 @@ describe('Apy', () => {
 
     expect(getByText('2%')).toBeInTheDocument();
     expect(getByText('3%')).toBeInTheDocument();
-    expect(getByAltText(en.apy.primeBadge.logoAlt)).toBeInTheDocument();
+    expect(getAllByAltText(en.apy.primeBadge.logoAlt)[0]).toBeInTheDocument();
   });
 
   it('renders the base borrow APY plus a Merkl badge when the user is missing the required collateral', () => {
-    const { getByAltText, getByText, queryByAltText } = renderComponent(
+    const { getAllByAltText, getByText, queryByRole } = renderComponent(
       <Apy
         type="borrow"
         token={token}
@@ -221,12 +223,12 @@ describe('Apy', () => {
 
     expect(getByText('-2%')).toBeInTheDocument();
     expect(getByText('-9%')).toBeInTheDocument();
-    expect(getByAltText(en.apy.merklBadge.logoAlt)).toBeInTheDocument();
-    expect(queryByAltText(en.apy.boost.iconAlt)).not.toBeInTheDocument();
+    expect(getAllByAltText(en.apy.merklBadge.logoAlt)[0]).toBeInTheDocument();
+    expect(queryByRole('img', { name: en.apy.boost.iconAlt })).not.toBeInTheDocument();
   });
 
   it('folds the Merkl reward into the borrow APY once the user is eligible', () => {
-    const { getByAltText, getByText, queryByAltText } = renderComponent(
+    const { getByRole, getByText, queryByAltText } = renderComponent(
       <Apy
         type="borrow"
         token={token}
@@ -236,7 +238,7 @@ describe('Apy', () => {
     );
 
     expect(getByText('-5%')).toBeInTheDocument();
-    expect(getByAltText(en.apy.boost.iconAlt)).toBeInTheDocument();
+    expect(getByRole('img', { name: en.apy.boost.iconAlt })).toBeInTheDocument();
     expect(queryByAltText(en.apy.merklBadge.logoAlt)).not.toBeInTheDocument();
   });
 
@@ -288,26 +290,27 @@ describe('Apy', () => {
       expectedBadgeApy,
     }) => {
       it('renders the expected APY and badge', () => {
-        const { getByText, queryByText, getByAltText, queryByAltText } = renderComponent(
-          <Apy
-            type="borrow"
-            token={token}
-            baseApyPercentage={new BigNumber(-2)}
-            tokenDistributions={tokenDistributions}
-            userBalanceTokens={userBalanceTokens}
-          />,
-        );
+        const { getByText, queryByText, getAllByAltText, getByRole, queryByRole, queryByAltText } =
+          renderComponent(
+            <Apy
+              type="borrow"
+              token={token}
+              baseApyPercentage={new BigNumber(-2)}
+              tokenDistributions={tokenDistributions}
+              userBalanceTokens={userBalanceTokens}
+            />,
+          );
 
         expect(getByText(expectedApy)).toBeInTheDocument();
 
         if (expectedApyIsBoosted) {
-          expect(getByAltText(en.apy.boost.iconAlt)).toBeInTheDocument();
+          expect(getByRole('img', { name: en.apy.boost.iconAlt })).toBeInTheDocument();
         } else {
-          expect(queryByAltText(en.apy.boost.iconAlt)).not.toBeInTheDocument();
+          expect(queryByRole('img', { name: en.apy.boost.iconAlt })).not.toBeInTheDocument();
         }
 
         if (expectedBadgeLogoAlt && expectedBadgeApy) {
-          expect(getByAltText(expectedBadgeLogoAlt)).toBeInTheDocument();
+          expect(getAllByAltText(expectedBadgeLogoAlt)[0]).toBeInTheDocument();
           expect(getByText(expectedBadgeApy)).toBeInTheDocument();
         } else {
           expect(queryByAltText(en.apy.merklBadge.logoAlt)).not.toBeInTheDocument();
@@ -374,18 +377,18 @@ describe('Apy', () => {
   });
 
   it('keeps the Prime icon next to the APY when the campaign badge is displayed', () => {
-    const { getByAltText } = renderComponent(
+    const { getAllByAltText, getByRole } = renderComponent(
       <Apy
         type="borrow"
         token={token}
         baseApyPercentage={new BigNumber(-2)}
-        tokenDistributions={[buildGatedMerklDistribution(false), buildPrimeDistribution(0)]}
+        tokenDistributions={[buildGatedMerklDistribution(false), buildPrimeDistribution(2)]}
         userBalanceTokens={new BigNumber(1)}
       />,
     );
 
-    expect(getByAltText(en.apy.boost.iconAlt)).toBeInTheDocument();
-    expect(getByAltText(en.apy.primeBadge.logoAlt)).toBeInTheDocument();
-    expect(getByAltText(en.apy.merklBadge.logoAlt)).toBeInTheDocument();
+    expect(getByRole('img', { name: en.apy.boost.iconAlt })).toBeInTheDocument();
+    expect(getAllByAltText(en.apy.primeBadge.logoAlt)[0]).toBeInTheDocument();
+    expect(getAllByAltText(en.apy.merklBadge.logoAlt)[0]).toBeInTheDocument();
   });
 });

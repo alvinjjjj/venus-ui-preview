@@ -266,3 +266,14 @@
     }
   }
 }
+
+/* Figma Dropdown / Active: one outer blue ring, neutral glass rim inside. */
+@layer final-button-material {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root, body)
+    :is([data-select-trigger], .venus-multiselect-trigger):is([aria-expanded='true'], :focus-visible) {
+    --final-button-edge: transparent !important;
+    border-color: transparent !important;
+    outline: 2px solid var(--color-blue) !important;
+    outline-offset: 2px !important;
+  }
+}

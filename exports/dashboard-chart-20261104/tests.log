@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /Users/alvin/Documents/Claude/Projects/Venus project/venus-ui-preview/apps/evm
+
+ ✓ src/containers/AccountOverview/PerformanceChart/getLineChartYAxis.spec.ts (8 tests) 3ms
+ ✓ src/clients/api/queries/getAccountPerformanceHistory/__tests__/period.spec.ts (3 tests) 2ms
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  03:29:52
+   Duration  1.03s (transform 73ms, setup 273ms, collect 20ms, tests 5ms, environment 786ms, prepare 160ms)
+

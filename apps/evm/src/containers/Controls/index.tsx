@@ -63,6 +63,7 @@ export const Controls: React.FC<ControlsProps> = ({
               placeholder={t('controls.categoryFilter.allCategories')}
               renderCount={count => t('controls.categoryFilter.nCategories', { count })}
               title={t('controls.categoryFilter.title')}
+              searchPlaceholder={t('controls.categoryFilter.search')}
               resetLabel={t('controls.categoryFilter.reset')}
               className="shrink-0 sm:w-52"
             />

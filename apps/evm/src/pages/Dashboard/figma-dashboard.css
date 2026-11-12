@@ -1,7 +1,7 @@
 /* Dashboard M9TnELYwKwAfzONJx9PUzP, 293:39041 / 1828:119865.
    Scope the new geometry to Final Lite. The existing Dark star layer remains
    owned by Layout/GhostBackground; these rules never replace the page sky. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard {
   --dashboard-card-fill: var(--venus-surface-card-fill, rgb(0 0 0 / 10%));
   /* Composite the existing card tint over the existing page color, not the
      moving sky. This keeps the approved tone while making every card opaque. */
@@ -15,53 +15,53 @@
   min-width: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] #root #page-container .lite-dashboard {
+:root[data-glass-variant='lite-experiment-v2'][data-liquidity-theme='light'] :is(#root #page-container, .venus-account-panel) .lite-dashboard {
   --dashboard-card-fill: var(--venus-surface-card-fill, rgb(255 255 255 / 64%));
   --dashboard-card-edge: var(--venus-border-card-default, var(--color-dark-blue-hover));
   --dashboard-card-shadow: var(--venus-surface-card-shadow, rgb(30 40 55 / 12%));
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard > * {
   margin-block: 0;
 }
 
 /* Section and internal dividers use the same translucent stroke.
    Each 24px margin joins the page's 24px gap to leave 48px on both sides. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard > :is(.dashboard-positions-divider, .dashboard-transactions-divider) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard > :is(.dashboard-positions-divider, .dashboard-transactions-divider) {
   margin-block: calc(var(--spacing) * 6);
   border-color: var(--dashboard-line-stroke);
 }
 
 /* Table/card and section dividers share one stroke; card rims stay separate. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(thead, thead tr, th, hr:not(.dashboard-positions-divider, .dashboard-transactions-divider)) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(thead, thead tr, th, hr:not(.dashboard-positions-divider, .dashboard-transactions-divider)) {
   border-color: var(--dashboard-line-stroke) !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-summary-metrics > div {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-summary-metrics > div {
   border-color: var(--dashboard-line-stroke);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-layout {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-layout {
   align-items: start;
   gap: calc(var(--spacing) * 6);
   grid-template-columns: minmax(0, 1fr);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-networth {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-networth {
   margin-bottom: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-networth > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-networth > * {
   margin-block: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-networth-value {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-networth-value {
   font-size: var(--text-3xl);
   line-height: 1.5;
   font-weight: var(--font-weight-semibold);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: calc(var(--spacing) * 4);
@@ -69,13 +69,13 @@
   overflow: visible;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div {
   position: relative;
   min-width: 0;
   white-space: normal;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -86,7 +86,7 @@
   transform: translateY(-50%);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values {
   flex-wrap: nowrap;
   align-items: center;
   gap: var(--spacing);
@@ -94,30 +94,30 @@
 }
 
 /* The daily percentage is secondary to the amount: 16px Regular in all sizes. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-percentage {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-percentage {
   font-size: var(--text-base);
   line-height: 1.5;
   font-weight: var(--font-weight-normal);
 }
 
 /* Compact phone values keep the amount and percentage together in a 2x2 grid. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
   font-size: var(--text-base);
   line-height: 1.5;
   font-variant-numeric: tabular-nums;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values svg {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values svg {
   width: calc(var(--spacing) * 3);
   height: calc(var(--spacing) * 3);
   flex-shrink: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values > * {
   margin-inline: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-chart {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-chart {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 3);
@@ -127,30 +127,30 @@
   box-shadow: none !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-chart > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-chart > * {
   margin-block: 0;
 }
 
 /* Keep the chart's approved width, 12px inset and plot height without a card rim. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-chart {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-chart {
   height: calc(var(--spacing) * 42.75);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-chart text {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-chart text {
   fill: var(--venus-text-secondary-default, var(--color-light-grey));
   font-size: var(--text-xs);
   font-family: inherit;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-chart .recharts-yAxis text {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-chart .recharts-yAxis text {
   dominant-baseline: middle;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-overview-networth .text-grey, .venus-account-performance-cells .text-grey, .dashboard-health-summary .text-grey) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-overview-networth .text-grey, .venus-account-performance-cells .text-grey, .dashboard-health-summary .text-grey) {
   color: var(--venus-text-secondary-default, var(--color-light-grey));
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :where(h2, #lite-transactions-title) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :where(h2, #lite-transactions-title) {
   font-size: var(--text-lg);
   line-height: 1.5;
   font-weight: var(--font-weight-semibold);
@@ -158,7 +158,7 @@
 
 /* One heading treatment for Summary, Positions and Transaction. The 48px
    title row matches the controls; content starts 24px below each header. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-section-title {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-section-title {
   display: flex;
   align-items: center;
   min-height: calc(var(--spacing) * 12);
@@ -168,33 +168,33 @@
   font-weight: var(--font-weight-semibold);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-section {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-section {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-section > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-section > * {
   margin-block: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-positions, .dashboard-positions > :first-child) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-positions, .dashboard-positions > :first-child) {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-positions > :first-child {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-positions > :first-child {
   gap: calc(var(--spacing) * 4);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-positions, .dashboard-positions > :first-child) > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-positions, .dashboard-positions > :first-child) > * {
   margin-block: 0;
 }
 
 /* Match the Transaction filters' approved 48px minimum height while keeping
    the approved 12px inset and allowing longer labels to grow. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is([aria-label='Position market'] > button, .dashboard-position-picker [data-select-trigger]) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is([aria-label='Position market'] > button, .dashboard-position-picker [data-select-trigger]) {
   min-height: calc(var(--spacing) * 12);
   height: auto;
   padding: calc(var(--spacing) * 3);
@@ -212,7 +212,7 @@
 
 /* Keep the shared card tone opaque at every size, with stars outside cards.
    Sorting, collateral controls and the data-driven row count stay unchanged. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-table, .dashboard-transactions-list, .dashboard-empty-state:not(.dashboard-overview-chart)) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-table, .dashboard-transactions-list, .dashboard-empty-state:not(.dashboard-overview-chart)) {
   background: var(--dashboard-card-surface) !important;
   border: 1px solid var(--dashboard-card-edge) !important;
   border-radius: var(--radius-lg) !important;
@@ -221,62 +221,62 @@
   -webkit-backdrop-filter: none !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-card, .dashboard-mobile-assets [data-table-card-row]) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-card, .dashboard-mobile-assets [data-table-card-row]) {
   background: var(--dashboard-card-surface) !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table > div:first-child {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table > div:first-child {
   height: calc(var(--spacing) * 6);
   margin-bottom: 0;
   font-size: var(--text-base);
   line-height: 1.5;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table :is(th, td) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table :is(th, td) {
   font-size: var(--text-sm);
   line-height: 1.5;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table [data-layered-value='secondary'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table [data-layered-value='secondary'] {
   color: var(--venus-text-secondary-default, var(--color-light-grey));
 }
 
 /* All position tables follow the approved Supplied typography and rhythm.
    Include the Core phone cards while retaining their responsive structure. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-table, .dashboard-mobile-assets) [data-layered-value] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-table, .dashboard-mobile-assets) [data-layered-value] {
   font-size: var(--text-sm);
   line-height: 1.5;
   font-weight: var(--font-weight-normal);
   font-variant-numeric: tabular-nums;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-table, .dashboard-mobile-assets) :is(.venus-market-apy p, [data-position-apy]) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-table, .dashboard-mobile-assets) :is(.venus-market-apy p, [data-position-apy]) {
   font-size: var(--text-sm);
   line-height: 1.5;
   font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-card .dashboard-position-metric > .text-p2s {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-card .dashboard-position-metric > .text-p2s {
   font-size: var(--text-sm);
   line-height: 1.5;
   font-weight: var(--font-weight-normal);
   font-variant-numeric: tabular-nums;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-card .dashboard-position-apy > .text-p2s {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-card .dashboard-position-apy > .text-p2s {
   font-weight: var(--font-weight-semibold);
 }
 
 /* The demo wallet shows USDC campaign rewards and the existing USDT Prime
    fixture so the compact APY column can be reviewed with both states. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-supplied-table .venus-market-reward-preview {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-supplied-table .venus-market-reward-preview {
   display: inline-flex;
 }
 
 /* Figma 3212:68745, Prime / VIP=false: keep the existing PrimeBadge and
    its icon, with the component's copper stroke and 4px by 2px inset. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime'] {
   height: auto;
   min-height: 0;
   padding: calc(var(--spacing) / 2) var(--spacing);
@@ -287,50 +287,50 @@
   line-height: 1.5;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']::after {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']::after {
   display: none !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']:hover {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']:hover {
   background: var(--venus-surface-interactive-hover) !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']:active {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-supplied-table [data-apy-badge='prime']:active {
   background: var(--venus-surface-interactive-active) !important;
 }
 
 @media (width >= 640px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells {
     column-gap: calc(var(--spacing) * 10);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
     left: calc(var(--spacing) * -5);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
     font-size: var(--text-lg);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values {
     gap: calc(var(--spacing) * 2);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values svg {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values svg {
     width: calc(var(--spacing) * 4);
     height: calc(var(--spacing) * 4);
   }
 
   /* A 600px card keeps the asset, rate/reward pair and balances readable.
      Fit columns to the actual container rather than the viewport breakpoint. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-tables {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-tables {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--spacing) * 150)), 1fr));
   }
 
   /* Numeric columns align at their right edge. A rate and any reward badge
      form one group; rows without a badge do not retain an empty reward slot. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table .venus-market-apy-cell {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table .venus-market-apy-cell {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -338,55 +338,55 @@
   }
 
   /* A real distribution takes precedence over the illustrative demo badge. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table .venus-market-apy-cell:has(.venus-market-apy > [data-tooltip-trigger]:not(.venus-apy-boost)) > .venus-market-reward-preview {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table .venus-market-apy-cell:has(.venus-market-apy > [data-tooltip-trigger]:not(.venus-apy-boost)) > .venus-market-reward-preview {
     display: none;
   }
 
   /* The percentage stays readable; only the rail yields on narrower cards. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) {
     gap: calc(var(--spacing) * 2);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) > * {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) > * {
     margin-inline: 0;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) > span {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table td:last-child > div:has(> .venus-progress-rail) > span {
     flex: none;
     white-space: nowrap;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table td:last-child .venus-progress-rail {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table td:last-child .venus-progress-rail {
     min-width: 0;
     flex: 0 1 calc(var(--spacing) * 20);
   }
 
   /* Keep the shared Table header height (h-14 / 56px), as in Markets. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table tbody tr {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table tbody tr {
     height: calc(var(--spacing) * 15);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-table :is(th, td) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-table :is(th, td) {
     padding-inline: calc(var(--spacing) * 6);
     padding-block: 0;
   }
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard > section[aria-labelledby='lite-transactions-title'] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard > section[aria-labelledby='lite-transactions-title'] {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 2);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard > section[aria-labelledby='lite-transactions-title'] > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard > section[aria-labelledby='lite-transactions-title'] > * {
   margin-block: 0;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions {
   gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-header {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -394,11 +394,11 @@
   row-gap: calc(var(--spacing) * 6);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-toolbar {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-toolbar {
   display: contents;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters {
   grid-column: 1 / -1;
   grid-row: 2;
   display: flex;
@@ -407,19 +407,19 @@
   gap: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters > * {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters > * {
   width: 0;
   min-width: 0;
   flex: 1;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters .venus-multiselect-trigger {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters .venus-multiselect-trigger {
   min-height: calc(var(--spacing) * 12);
   height: auto;
   padding-block: calc(var(--spacing) * 3);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters :is(.text-ellipsis, [data-token-symbol]) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters :is(.text-ellipsis, [data-token-symbol]) {
   white-space: normal;
   overflow-wrap: anywhere;
   text-overflow: clip;
@@ -449,17 +449,17 @@
   font-weight: var(--font-weight-normal);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions-list {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions-list {
   padding: calc(var(--spacing) * 4);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions-list > li > span {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions-list > li > span {
   padding-inline: 0;
   font-size: var(--text-base);
   line-height: 1.5;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-download-csv {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-download-csv {
   grid-column: 2;
   grid-row: 1;
   gap: var(--spacing);
@@ -471,89 +471,89 @@
   color: var(--venus-text-secondary-default, var(--color-light-grey));
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-download-csv:hover {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-download-csv:hover {
   color: var(--venus-text-primary-default, var(--color-white));
   font-weight: var(--font-weight-semibold);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-static-icon {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-static-icon {
   flex-shrink: 0;
   color: var(--venus-text-secondary-default, var(--color-light-grey));
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-static-icon [stroke] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-static-icon [stroke] {
   stroke: currentColor;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-static-icon [fill]:not([fill='none']) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-static-icon [fill]:not([fill='none']) {
   fill: currentColor;
 }
 
 @media (width < 640px) {
   /* Mobile frame 1828:129419: keep section rhythm without desktop rules. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard > :is(.dashboard-positions-divider, .dashboard-transactions-divider) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard > :is(.dashboard-positions-divider, .dashboard-transactions-divider) {
     display: none;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-section-title {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-section-title {
     min-height: 0;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-section {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-section {
     gap: calc(var(--spacing) * 3);
   }
 
   /* Let real amounts claim the space they need rather than clipping them to
      the reference's fixed 150px sample column. Both columns remain aligned. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells {
     grid-template-columns: minmax(min-content, 1fr) minmax(0, 1fr);
     column-gap: calc(var(--spacing) * 5);
     row-gap: calc(var(--spacing) * 3);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div:nth-child(2n)::before {
     left: calc(var(--spacing) * -2.5);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells > div > .text-p2s {
     font-size: var(--text-lg);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-percentage svg {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-percentage svg {
     width: calc(var(--spacing) * 4);
     height: calc(var(--spacing) * 4);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-health-summary :is(.text-b1r, .text-p3r) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-health-summary :is(.text-b1r, .text-p3r) {
     font-size: var(--text-sm);
     line-height: 1.5;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-health-factor :is(p, div:last-child) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-health-factor :is(p, div:last-child) {
     font-size: var(--text-xs);
     font-weight: var(--font-weight-semibold);
     line-height: 1.5;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets [data-token-symbol] {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets [data-token-symbol] {
     font-size: var(--text-base);
     font-weight: var(--font-weight-semibold);
     line-height: 1.5;
   }
 
   /* The divider reaches the inner rim while asset content keeps its 16px inset. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets [data-table-card-row] > div > hr {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets [data-table-card-row] > div > hr {
     width: calc(100% + var(--spacing) * 8);
     margin-inline: calc(var(--spacing) * -4);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets :is(.venus-market-apy, .venus-market-apy p, [data-position-apy]) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets :is(.venus-market-apy, .venus-market-apy p, [data-position-apy]) {
     font-weight: var(--font-weight-normal);
   }
 
   /* The phone frame starts Positions with its market picker, then a full-width
      supplied/borrowed control. Keep market names rather than Figma placeholders. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-picker > h2 {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-picker > h2 {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -563,17 +563,17 @@
     white-space: nowrap;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets-header {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets-header {
     margin-bottom: calc(var(--spacing) * 6);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets-header h4 {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets-header h4 {
     margin-bottom: calc(var(--spacing) * 3);
     font-size: var(--text-base);
     line-height: 1.5;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets-header [data-venus-button-group] {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets-header [data-venus-button-group] {
     width: 100% !important;
     margin-bottom: 0;
   }
@@ -583,40 +583,40 @@
 /* At smaller-than-reference widths, retain the type scale and allow the
    percentage to wrap as a unit instead of overflowing the metric column. */
 @media (width < 375px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-performance-values {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-performance-values {
     flex-wrap: wrap;
   }
 }
 
 @container transactionList (width >= 672px) {
   /* Let row feedback reach the card edges; keep the content inset unchanged. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions-list {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions-list {
     padding-inline: 0;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions-list > li > span {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions-list > li > span {
     padding-inline: calc(var(--spacing) * 4);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-row {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-row {
     height: calc(var(--spacing) * 15); /* Match the approved 60px position rows. */
     padding-inline: calc(var(--spacing) * 4);
   }
 }
 
 @media (width >= 1280px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-summary-healthbar {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-summary-healthbar {
     width: calc(var(--spacing) * 100);
     min-width: 0;
     margin-left: calc(var(--spacing) * 6);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-summary-metrics {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-summary-metrics {
     gap: calc(var(--spacing) * 8);
     overflow: visible;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-summary-metrics > div + div::before {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-summary-metrics > div + div::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -627,11 +627,11 @@
     transform: translateY(-50%);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-summary-metrics > div {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-summary-metrics > div {
     position: relative;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-layout {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-layout {
     /* A 1280px content frame minus the 24px gap gives two 628px cards.
        The right chart shares both horizontal edges with Borrowed below. */
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -639,11 +639,11 @@
 }
 
 @media (width >= 640px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters {
     width: auto;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters > * {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters > * {
     width: calc(var(--spacing) * 60);
     flex: none;
   }
@@ -651,59 +651,59 @@
 
 @media (width >= 1024px) {
   /* Keep the heading left and the market controls right on a shared row. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-positions > .dashboard-position-picker {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-positions > .dashboard-position-picker {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-picker > h2 {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-picker > h2 {
     flex-shrink: 0;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-position-picker > [aria-label='Position market'] {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-position-picker > [aria-label='Position market'] {
     justify-content: flex-end;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters > * {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters > * {
     width: calc(var(--spacing) * 70);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-header {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-header {
     grid-template-columns: minmax(0, 1fr) auto auto;
     column-gap: calc(var(--spacing) * 4);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-filters {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-filters {
     grid-column: 2;
     grid-row: 1;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-download-csv {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-download-csv {
     grid-column: 3;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard {
     padding-top: calc(var(--spacing) * 2);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .venus-account-performance-cells {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells {
     grid-template-columns: repeat(2, max-content);
   }
 }
 
 /* Confirmed empty history has no chart placeholder or reserved chart column.
    Keep the phone's 2x2 metrics; the 640px Figma frame already uses one row. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-layout.dashboard-overview-empty {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-layout.dashboard-overview-empty {
   grid-template-columns: minmax(0, 1fr);
 }
 
 @media (width >= 640px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-empty .venus-account-performance-cells {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-empty .venus-account-performance-cells {
     grid-template-columns: repeat(4, max-content);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-overview-empty .venus-account-performance-cells > div + div::before {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-overview-empty .venus-account-performance-cells > div + div::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -715,22 +715,56 @@
   }
 }
 
+/* Minted VAI adds a third metric beside Daily earnings on wide screens.
+   Smaller layouts retain two columns and let the extra metric wrap. */
+@media (width >= 1280px) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells.dashboard-overview-with-vai {
+    grid-template-columns: repeat(3, max-content);
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells.dashboard-overview-with-vai > div:nth-child(3) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells.dashboard-overview-with-vai > div:nth-child(4) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells .dashboard-overview-minted-vai {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .venus-account-performance-cells .dashboard-overview-minted-vai::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: calc(var(--spacing) * -2);
+    width: 1px;
+    height: calc(var(--spacing) * 10);
+    background: var(--dashboard-line-stroke);
+    transform: translateY(-50%);
+  }
+}
+
 /* Reuse Lite Markets' neutral row feedback for positions and history. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-table tbody tr, .dashboard-mobile-assets [data-table-card-row], .dashboard-transaction-row):is(:hover, :focus-within) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-table tbody tr, .dashboard-mobile-assets [data-table-card-row], .dashboard-transaction-row):is(:hover, :focus-within) {
   background: var(--lite-row-feedback-fill) !important;
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-mobile-assets [data-table-card-row]:is(:hover, :focus-within) {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-mobile-assets [data-table-card-row]:is(:hover, :focus-within) {
   background: var(--lite-row-feedback-fill), var(--dashboard-card-surface) !important;
 }
 
 /* Match the outer market list: hover emphasizes the asset name only. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard :is(.dashboard-position-table tbody tr, .dashboard-mobile-assets [data-table-card-row]):is(:hover, :focus-within) [data-token-symbol] {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard :is(.dashboard-position-table tbody tr, .dashboard-mobile-assets [data-table-card-row]):is(:hover, :focus-within) [data-token-symbol] {
   font-weight: var(--font-weight-bold) !important;
 }
 
 /* Figma empty cards are 242px high, with the same frame as populated cards. */
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-empty-state {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-empty-state {
   min-height: calc(var(--spacing) * 60.5);
 }
 
@@ -738,7 +772,7 @@
    transaction cards. Match the shared card rule's specificity (its :is() also
    counts :not(.dashboard-overview-chart)) so it cannot restore a second rim. */
 @container transactionList (width < 672px) {
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions .dashboard-transactions-list {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions .dashboard-transactions-list {
     padding: 0;
     border: 0 !important;
     border-radius: 0 !important;
@@ -748,11 +782,11 @@
     -webkit-backdrop-filter: none !important;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions .dashboard-transactions-list::after {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions .dashboard-transactions-list::after {
     content: none;
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-row {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-row {
     padding-inline: calc(var(--spacing) * 3);
     background: var(--dashboard-card-surface);
     border-color: var(--dashboard-card-edge);
@@ -760,22 +794,22 @@
   }
 
   /* Figma 417:50196: 12px content inset, edge-to-edge internal divider. */
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-row > div > hr {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-row > div > hr {
     width: calc(100% + var(--spacing) * 6);
     margin-inline: calc(var(--spacing) * -3);
   }
 
-  :root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transactions-list .dashboard-transaction-row:is(:hover, :focus-within) {
+  :root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transactions-list .dashboard-transaction-row:is(:hover, :focus-within) {
     background: var(--lite-row-feedback-fill), var(--dashboard-card-surface) !important;
   }
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-pagination {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-pagination {
   margin-block: calc(var(--spacing) * 3) 0;
   color: var(--color-light-grey);
 }
 
-:root[data-glass-variant='lite-experiment-v2'] #root #page-container .lite-dashboard .dashboard-transaction-pagination > p {
+:root[data-glass-variant='lite-experiment-v2'] :is(#root #page-container, .venus-account-panel) .lite-dashboard .dashboard-transaction-pagination > p {
   font-size: var(--text-sm);
   line-height: 1.5;
 }

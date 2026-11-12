@@ -1,0 +1,370 @@
+<title>Venus Stack Scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Layout: one pinned stage; scroll drives a build-up, as measured on the reference.
+   Committed single dark theme — the model is rendered white on black. */
+:root{
+  --ink:#000;
+  --fg:#fff;
+  --muted:#9AA6BC;
+  --chip:rgba(104,106,110,.58);
+  --chip-open:rgba(92,94,99,.72);
+  --line:rgba(255,255,255,.14);
+  --accent:#1199fa;
+  --display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--display);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+.lead,.tail{
+  display:grid;place-items:center;padding:64px 20px;min-height:46svh;
+  color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+}
+
+.scroller{position:relative}
+.pin{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden}
+#gl{display:block;width:100%;height:100%}
+
+/* ---- chips ---- */
+.rail{
+  position:absolute;z-index:2;left:0;top:0;
+  display:flex;flex-direction:column;gap:7px;
+  width:min(44%,440px);min-width:250px;padding:clamp(18px,2.4vw,38px);
+}
+.chip{
+  align-self:flex-start;max-width:100%;overflow:hidden;
+  border-radius:999px;background:var(--chip);
+  backdrop-filter:blur(9px) saturate(1.1);-webkit-backdrop-filter:blur(9px) saturate(1.1);
+  transition:border-radius .42s cubic-bezier(.22,1,.36,1),background .3s ease,align-self 0s;
+}
+.chip.is-open{align-self:stretch;border-radius:20px;background:var(--chip-open)}
+.chip-head{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px 9px 17px;border:0;background:none;color:#fff;font:inherit;cursor:pointer;text-align:left}
+.chip-head:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.chip-title{
+  font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:opacity .22s ease,transform .32s cubic-bezier(.22,1,.36,1);
+}
+.chip.is-open .chip-title{opacity:0;transform:translateY(-6px)}
+.chip-plus{
+  flex:none;display:grid;place-items:center;width:19px;height:19px;border-radius:50%;
+  background:rgba(255,255,255,.26);font-size:13px;line-height:1;
+  transition:transform .42s cubic-bezier(.22,1,.36,1);
+}
+.chip.is-open .chip-plus{transform:rotate(45deg)}
+.chip-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s cubic-bezier(.22,1,.36,1)}
+.chip.is-open .chip-body{grid-template-rows:1fr}
+.chip-body>div{overflow:hidden}
+.chip-inner{padding:0 22px 17px}
+.chip-label{
+  display:block;margin:-26px 0 9px;color:rgba(255,255,255,.62);font-size:13.5px;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .3s ease .08s,transform .36s cubic-bezier(.22,1,.36,1) .08s;
+}
+.chip-copy{
+  margin:0;max-width:40ch;font-size:15px;line-height:1.5;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .34s ease .13s,transform .4s cubic-bezier(.22,1,.36,1) .13s;
+}
+.chip.is-open .chip-label,.chip.is-open .chip-copy{opacity:1;transform:none}
+
+/* ---- read-out, so the timing can be judged against the reference ---- */
+.hud{
+  position:absolute;z-index:2;left:0;bottom:0;padding:clamp(18px,2.4vw,38px);
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+}
+.track{width:148px;height:9px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar{height:100%;width:0%;border-radius:999px;background:color-mix(in srgb,var(--accent) 72%,#fff)}
+.hud b{color:#fff;font-weight:400;font-variant-numeric:tabular-nums}
+
+.spec{
+  max-width:860px;margin:0 auto;padding:0 20px 72px;color:var(--muted);font-size:13px;line-height:1.65;
+}
+.spec h2{color:#fff;font-size:14px;font-weight:500;margin:28px 0 8px;letter-spacing:.01em}
+.spec code{font-family:var(--mono);font-size:12px;color:#cfe2f7}
+.spec table{border-collapse:collapse;width:100%;margin-top:6px}
+.spec td{border-top:1px solid var(--line);padding:6px 10px 6px 0;vertical-align:top}
+.spec td:first-child{color:#fff;white-space:nowrap;width:40%}
+
+@media (max-width:760px){ .rail{width:calc(100% - 6px);min-width:0} .hud{gap:9px} .track{width:92px} }
+@media (prefers-reduced-motion:reduce){ *{transition-duration:.01ms!important} }
+</style>
+
+<div class="lead">scroll to build the stack</div>
+
+<div class="scroller" id="scroller">
+  <div class="pin">
+    <canvas id="gl"></canvas>
+    <div class="rail" id="rail"></div>
+    <div class="hud">
+      <span>progress</span>
+      <span class="track"><span class="bar" id="bar"></span></span>
+      <span>t <b id="tsec">0.00</b>s</span>
+      <span>layer <b id="tlayer">—</b></span>
+    </div>
+  </div>
+</div>
+
+<div class="tail">stack complete</div>
+
+<div class="spec">
+  <h2>Timing, taken from the reference</h2>
+  <table>
+    <tr><td>Scrub rate</td><td>368&nbsp;px of scroll per second of sequence (measured: y700→t0.72, y1200→t2.04, y1700→t3.42, y2300→t5.05)</td></tr>
+    <tr><td>Sequence length</td><td>11.03&nbsp;s over roughly 4,060&nbsp;px of pinned scroll</td></tr>
+    <tr><td>Per layer</td><td>7 layers ÷ 11.03&nbsp;s ≈ 1.58&nbsp;s, about 580&nbsp;px of scroll each</td></tr>
+    <tr><td>Smoothing</td><td>the reference never jumps: its time lerps toward the scroll target, so this uses the same <code>lerp(0.1)</code></td></tr>
+    <tr><td>This mock-up</td><td>6 layers × 600&nbsp;px = 3,600&nbsp;px pinned, equivalent to 9.8&nbsp;s at the reference's rate</td></tr>
+  </table>
+  <h2>What is different from the reference</h2>
+  <p>The reference plays a pre-rendered 11&nbsp;s MP4 with the layer names baked in, paused, with <code>currentTime</code> driven by scroll — there is no WebGL on that page at all. Everything here is drawn live, so the labels come from a data array and stay editable. The gap you will see is in the glass: offline rendering gets caustics and multi-bounce refraction that a real-time transmission pass cannot.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.145.0/three.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var LAYERS = [
+    { name:"Chains & Assets", body:"Venus did not build the chains. Six of them carry it today, and everything that lands on one is capital sitting still until a market gives it somewhere to go." },
+    { name:"The Hub",         body:"One entry per asset. You deposit once and hold a share token that grows on its own. Where the money goes is set by caps and a priority order governance controls." },
+    { name:"The Spokes",      body:"The venues the Hub allocates into. Core Pool, Venus Flux and Fixed Rate Vaults run today. Governance can add another without touching the ones already holding capital.", tiles:true },
+    { name:"Borrowers",       body:"The other side of every market. Collateral in, liquidity out, priced on-chain and liquidated by whoever is watching." },
+    { name:"Interfaces",      body:"The app, Venus Prime and agent skills. Three ways into the same stack. None of them is the protocol." },
+    { name:"Risk & Governance", body:"The cover. A risk fund, round-the-clock monitoring, and an audit history that starts in 2020. 662 proposals have executed." }
+  ];
+  var SPOKES = ["Core Pool","Venus Flux","Fixed Rate"], SLOTS = 4;
+  var TILE = 2, LID = LAYERS.length - 1;
+
+  var PX_PER_LAYER = 600;           /* reference pace: ~580px per layer */
+  var REF_SECONDS_PER_LAYER = 1.58; /* 11.03s / 7 layers */
+
+  /* ---------- chips ---------- */
+  var rail = document.getElementById("rail"), bar = document.getElementById("bar");
+  var tsec = document.getElementById("tsec"), tlayer = document.getElementById("tlayer");
+  var scroller = document.getElementById("scroller");
+  scroller.style.height = (PX_PER_LAYER * LAYERS.length + window.innerHeight) + "px";
+
+  LAYERS.forEach(function(L,i){
+    var el = document.createElement("div");
+    el.className = "chip";
+    el.innerHTML =
+      '<button class="chip-head" type="button"><span class="chip-title"></span>' +
+      '<span class="chip-plus" aria-hidden="true">+</span></button>' +
+      '<div class="chip-body"><div><div class="chip-inner">' +
+      '<span class="chip-label"></span><p class="chip-copy"></p></div></div></div>';
+    el.querySelector(".chip-title").textContent = L.name;
+    el.querySelector(".chip-label").textContent = L.name;
+    el.querySelector(".chip-copy").textContent = L.body;
+    el.querySelector(".chip-head").addEventListener("click", function(){
+      window.scrollTo({ top: scroller.offsetTop + i*PX_PER_LAYER + PX_PER_LAYER*0.55, behavior:"smooth" });
+    });
+    rail.appendChild(el);
+    L.el = el;
+  });
+
+  /* ---------- three ---------- */
+  var canvas = document.getElementById("gl"), host = canvas.parentElement;
+  if(!window.THREE){ return; }
+
+  var W = host.clientWidth||1200, H = host.clientHeight||700;
+  var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,1.75));
+  renderer.setSize(W,H,false);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(22, W/H, 0.1, 100);
+  camera.position.set(7.0, 5.4, 9.7);
+  camera.lookAt(0,0,0);
+
+  function grad(stops,w,h,radial){
+    var c=document.createElement("canvas"); c.width=w; c.height=h;
+    var x=c.getContext("2d");
+    var g = radial ? x.createRadialGradient(w*.5,h*.34,0,w*.5,h*.34,h) : x.createLinearGradient(0,0,0,h);
+    stops.forEach(function(s){ g.addColorStop(s[0],s[1]); });
+    x.fillStyle=g; x.fillRect(0,0,w,h);
+    return new THREE.CanvasTexture(c);
+  }
+  /* black room, one bright strip — that strip is what draws the acrylic edges */
+  var envSrc = grad([[0,"#2b3342"],[0.17,"#ffffff"],[0.27,"#c3cad6"],[0.4,"#20262f"],[0.72,"#06080c"],[1,"#000000"]],32,256,false);
+  envSrc.mapping = THREE.EquirectangularReflectionMapping;
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromEquirectangular(envSrc).texture;
+  envSrc.dispose(); pmrem.dispose();
+
+  scene.add(new THREE.HemisphereLight(0xffffff,0x14181f,0.85));
+  var key = new THREE.DirectionalLight(0xffffff,2.1); key.position.set(2.6,7.5,3.2); scene.add(key);
+  var fill = new THREE.DirectionalLight(0xdfe8f5,0.55); fill.position.set(-5.5,2.4,-3.6); scene.add(fill);
+
+  var PW=3.0, PD=3.0, PT=0.12, GAP=0.17, SKIRT=0.2, WALL=0.085;
+
+  function rr(Ctor,w,d,r){
+    var s=new Ctor(), x=-w/2, y=-d/2;
+    s.moveTo(x+r,y);
+    s.lineTo(x+w-r,y); s.quadraticCurveTo(x+w,y,x+w,y+r);
+    s.lineTo(x+w,y+d-r); s.quadraticCurveTo(x+w,y+d,x+w-r,y+d);
+    s.lineTo(x+r,y+d); s.quadraticCurveTo(x,y+d,x,y+d-r);
+    s.lineTo(x,y+r); s.quadraticCurveTo(x,y,x+r,y);
+    return s;
+  }
+  function plate(w,d,t,r){
+    var g=new THREE.ExtrudeGeometry(rr(THREE.Shape,w,d,r),
+      {depth:t,bevelEnabled:true,bevelThickness:.022,bevelSize:.022,bevelSegments:3,curveSegments:12});
+    g.rotateX(-Math.PI/2); g.translate(0,t,0); return g;
+  }
+  function skirt(w,d,t,r){
+    var s=rr(THREE.Shape,w,d,r);
+    s.holes.push(rr(THREE.Path,w-WALL*2,d-WALL*2,Math.max(r-WALL,.02)));
+    var g=new THREE.ExtrudeGeometry(s,{depth:t,bevelEnabled:false,curveSegments:12});
+    g.rotateX(-Math.PI/2); g.translate(0,t,0); return g;
+  }
+  function acrylic(o){
+    o=o||{};
+    return new THREE.MeshPhysicalMaterial({
+      /* Frosted acrylic is mostly a bright diffuse body: on a black ground a high
+         transmission just shows the black through. Keep it low enough that the
+         plate stays white, high enough that the label below still ghosts up. */
+      color:o.dim?0xcfd2cf:0xf6f6f3, metalness:0,
+      roughness:o.dim?0.72:(o.rough!==undefined?o.rough:0.42),
+      transmission:o.dim?0.18:0.38, thickness:o.thick!==undefined?o.thick:0.5,
+      ior:1.46, specularIntensity:1, clearcoat:.62, clearcoatRoughness:.22,
+      envMapIntensity:1.35, transparent:true, opacity:0
+    });
+  }
+  function labelTex(text,o){
+    o=o||{};
+    var c=document.createElement("canvas"); c.width=1024; c.height=256;
+    var x=c.getContext("2d");
+    x.fillStyle=o.color||"#16243F"; x.textAlign="center"; x.textBaseline="middle";
+    x.shadowColor="rgba(255,255,255,0.7)"; x.shadowOffsetY=3; x.shadowBlur=2;
+    x.font=(o.weight||500)+" "+(o.size||72)+"px 'Schibsted Grotesk', Helvetica, Arial, sans-serif";
+    if(o.track){
+      var a=text.split(""), tot=0, ws=[];
+      a.forEach(function(k){ var w=x.measureText(k).width+o.track; ws.push(w); tot+=w; });
+      var cx=c.width/2-tot/2;
+      a.forEach(function(k,i){ x.fillText(k,cx+ws[i]/2,c.height/2); cx+=ws[i]; });
+    } else x.fillText(text,c.width/2,c.height/2);
+    var t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace||t.colorSpace; t.anisotropy=4; return t;
+  }
+  function label(text,w,o){
+    var m=new THREE.Mesh(new THREE.PlaneGeometry(w,w/4),
+      new THREE.MeshBasicMaterial({map:labelTex(text,o),transparent:true,alphaTest:0.02,depthWrite:false,depthTest:false,opacity:0}));
+    m.rotation.x=-Math.PI/2; m.renderOrder=999; return m;
+  }
+
+  var group=new THREE.Group(); group.position.y=-0.35; scene.add(group);
+  var recs=[];
+
+  for(var i=0;i<LID;i++){
+    var g=new THREE.Group(); g.position.y=i*GAP; group.add(g);
+    var rec={grp:g, mats:[], label:null, baseY:i*GAP, tileLive:null};
+    if(i!==TILE){
+      var m=acrylic();
+      g.add(new THREE.Mesh(plate(PW,PD,PT,0.22),m));
+      rec.mats.push(m);
+      var lb=label(LAYERS[i].name, PW*0.84, {size:72});
+      lb.position.y=PT+0.03; g.add(lb); rec.label=lb;
+    } else {
+      var cols=SLOTS<=4?2:3, rows=Math.ceil(SLOTS/cols), pad=.08;
+      var tw=(PW-pad*(cols+1))/cols, td=(PD-pad*(rows+1))/rows;
+      rec.tileLive=[];
+      for(var k=0;k<SLOTS;k++){
+        var r=Math.floor(k/cols), c=k%cols, live=k<SPOKES.length;
+        var tm=acrylic(live?{rough:.26,thick:.28}:{dim:true});
+        var mesh=new THREE.Mesh(plate(tw,td,PT,0.075),tm);
+        mesh.position.x=-PW/2+pad+tw/2+c*(tw+pad);
+        mesh.position.z=-PD/2+pad+td/2+r*(td+pad);
+        g.add(mesh); rec.mats.push(tm); rec.tileLive.push(live);
+        if(live){
+          var tl=label(SPOKES[k], tw*0.9, {size:58});
+          tl.position.set(mesh.position.x, PT+0.03, mesh.position.z);
+          g.add(tl); rec.tileLabels=(rec.tileLabels||[]).concat([tl]);
+        }
+      }
+    }
+    recs.push(rec);
+  }
+
+  /* cover */
+  var lidGrp=new THREE.Group(); lidGrp.position.y=LID*GAP; group.add(lidGrp);
+  var lidMats=[];
+  var OW=PW*1.055, OD=PD*1.055;
+  var tm2=acrylic({rough:.2,thick:.4});
+  lidGrp.add(new THREE.Mesh(plate(OW,OD,PT*1.25,0.25),tm2)); lidMats.push(tm2);
+  var sm=acrylic({rough:.3,thick:.3});
+  var sk=new THREE.Mesh(skirt(OW,OD,SKIRT,0.25),sm); sk.position.y=-SKIRT; lidGrp.add(sk); lidMats.push(sm);
+  var lidLabel=label("VENUS", PW*0.6, {size:62,track:17,weight:700});
+  lidLabel.position.y=PT*1.25+0.03; lidGrp.add(lidLabel);
+
+  /* ---------- scroll-driven build-up ---------- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var smooth = 0, target = 0;
+  function easeOut(t){ return 1-Math.pow(1-t,3); }
+  function clamp01(v){ return v<0?0:v>1?1:v; }
+
+  function readScroll(){
+    var top = scroller.offsetTop;
+    var span = scroller.offsetHeight - window.innerHeight;
+    target = clamp01((window.scrollY - top) / Math.max(span,1));
+  }
+  window.addEventListener("scroll", readScroll, {passive:true});
+  readScroll();
+
+  function frame(){
+    requestAnimationFrame(frame);
+    smooth += (target - smooth) * (reduce ? 1 : 0.1);   /* same easing feel as the reference */
+
+    var p = smooth * LAYERS.length;      /* layers of progress */
+    var activeIdx = Math.min(LAYERS.length-1, Math.floor(p));
+
+    bar.style.width = (smooth*100).toFixed(1) + "%";
+    tsec.textContent = (smooth * LAYERS.length * REF_SECONDS_PER_LAYER).toFixed(2);
+    tlayer.textContent = String(activeIdx+1).padStart(2,"0");
+
+    LAYERS.forEach(function(L,i){
+      var on = i === activeIdx && smooth > 0.001;
+      if(L.el.classList.contains("is-open") !== on) L.el.classList.toggle("is-open", on);
+    });
+
+    var locals = recs.map(function(_,i){ return easeOut(clamp01((p - i) / 0.72)); });
+    recs.forEach(function(rec,i){
+      var local = locals[i];                            /* enters over the first 72% of its slot */
+      rec.grp.position.y = rec.baseY + (1 - local) * 1.9;
+      rec.mats.forEach(function(m,k){
+        var base = (rec.tileLive && !rec.tileLive[k]) ? 0.62 : 1;
+        m.opacity = base * local;
+      });
+      /* once the plate above has landed, this label sinks to a ghost under the frosting */
+      var covered = i + 1 < locals.length ? locals[i+1] : easeOut(clamp01((p - LID) / 0.72));
+      var vis = local * (1 - 0.84 * covered);
+      if(rec.label) rec.label.material.opacity = vis;
+      if(rec.tileLabels) rec.tileLabels.forEach(function(t){ t.material.opacity = vis; });
+    });
+
+    var lidLocal = easeOut(clamp01((p - LID) / 0.72));
+    lidGrp.position.y = LID*GAP + (1 - lidLocal) * 2.4;
+    lidMats.forEach(function(m){ m.opacity = lidLocal; });
+    lidLabel.material.opacity = lidLocal;
+
+    group.rotation.y = -0.1 + smooth * 0.2;             /* a slow drift, as on the reference */
+
+    renderer.render(scene,camera);
+  }
+  frame();
+
+  window.addEventListener("resize", function(){
+    var w=host.clientWidth, h=host.clientHeight;
+    scroller.style.height = (PX_PER_LAYER * LAYERS.length + window.innerHeight) + "px";
+    if(!w||!h) return;
+    renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+    readScroll();
+  });
+})();
+</script>

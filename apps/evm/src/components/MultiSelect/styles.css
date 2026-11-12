@@ -1,0 +1,45 @@
+.venus-multiselect-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.venus-multiselect-header {
+  flex-shrink: 0;
+}
+
+.venus-multiselect-options {
+  min-height: 0;
+  max-height: calc(var(--spacing) * 72);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+/* The searchable PRD list uses six 48px rows, including in the preview theme. */
+.venus-multiselect-content .venus-multiselect-option {
+  height: calc(var(--spacing) * 12) !important;
+  min-height: calc(var(--spacing) * 12);
+}
+
+.venus-multiselect-options[data-multiselect-scroll='true'] {
+  border-top: 1px solid var(--venus-surface-line-stroke);
+}
+
+.venus-dropdown-modal--managed > div:last-child {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.venus-multiselect-search input {
+  min-width: 0;
+}
+
+/* Match the open filter panel to its active trigger. */
+:root :is(#root, body) .venus-dropdown-surface.venus-multiselect-panel,
+:root[data-glass-version][data-glass-variant][data-liquidity-theme] :is(#root, body) .venus-dropdown-surface.venus-multiselect-panel {
+  border-color: var(--color-blue) !important;
+}

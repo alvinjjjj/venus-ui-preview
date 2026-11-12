@@ -1,0 +1,83 @@
+[
+  {
+    "amountSize": "20px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "otherSize": "20px",
+    "otherWeight": "600",
+    "pageOverflow": false,
+    "percent": "27.84%",
+    "size": "16px",
+    "theme": "light",
+    "weight": "400",
+    "width": 1440
+  },
+  {
+    "amountSize": "20px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "otherSize": "20px",
+    "otherWeight": "600",
+    "pageOverflow": false,
+    "percent": "27.84%",
+    "size": "16px",
+    "theme": "light",
+    "weight": "400",
+    "width": 640
+  },
+  {
+    "amountSize": "16px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=pro&chainId=56",
+    "otherSize": "16px",
+    "otherWeight": "600",
+    "pageOverflow": false,
+    "percent": "27.84%",
+    "size": "16px",
+    "theme": "light",
+    "weight": "400",
+    "width": 390
+  },
+  {
+    "amountSize": "20px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "pageOverflow": false,
+    "size": "16px",
+    "theme": "dark",
+    "weight": "400",
+    "width": 1440
+  },
+  {
+    "amountSize": "20px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "pageOverflow": false,
+    "size": "16px",
+    "theme": "dark",
+    "weight": "400",
+    "width": 640
+  },
+  {
+    "amountSize": "16px",
+    "amountWeight": "600",
+    "lineHeight": "24px",
+    "metricOverflow": false,
+    "mode": "#/dashboard?interface=lite&chainId=56",
+    "pageOverflow": false,
+    "size": "16px",
+    "theme": "dark",
+    "weight": "400",
+    "width": 390
+  }
+]

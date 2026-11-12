@@ -1,3 +1,6 @@
+import BigNumber from 'bignumber.js';
+import { useSearchParams } from 'react-router';
+import { mainstreamCollaterals } from '../Spoke/overview';
 import '../LiquidityHub/detail.css';
 import { type SpokeHistoryRange, type SpokeMarket, useGetSpokeMarketHistory } from 'clients/api';
 import {
@@ -16,6 +19,9 @@ import { routes } from 'constants/routing';
 import { Redirect } from 'containers/Redirect';
 import { useTranslation } from 'libs/translations';
 import { useState } from 'react';
+import { useAccountAddress } from 'libs/wallet';
+import { useTableBodyScroll } from 'hooks/useTableBodyScroll';
+import { sortCollateralRows, getUserSupplyCents, type CollateralRow } from './collateralOrder';
 import {
   formatCentsToReadableValue,
   formatPercentageToReadableValue,
@@ -30,10 +36,22 @@ const DAYS_PER_YEAR = 365;
 
 const SpokeMarketPage: React.FC = () => {
   const { t } = useTranslation();
-  const { pool, market, isLoading } = useSpokeMarket();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { accountAddress } = useAccountAddress();
+  const [collateralSelection, setCollateralSelection] = useState<{
+    address: string;
+    revision: number;
+  }>();
+  const { pool, market, isLoading, isPreview } = useSpokeMarket();
+  const collateralScrollRef = useTableBodyScroll(
+    pool?.collateralMarkets.length ?? 0,
+    5,
+    `${pool?.address}-${accountAddress}`,
+    false, // Mobile cards scroll with the page, without a nested scroll area.
+  );
   const [range, setRange] = useState<SpokeHistoryRange>('1m');
   const { data: history, isLoading: isHistoryLoading } = useGetSpokeMarketHistory({
-    marketAddress: market?.address,
+    marketAddress: isPreview ? undefined : market?.address,
     range,
   });
 
@@ -49,19 +67,64 @@ const SpokeMarketPage: React.FC = () => {
     return <Redirect to={routes.spoke.path} />;
   }
 
-  const collateralColumns: TableColumn<SpokeMarket>[] = [
+  // Layout-only scenario: never pass synthetic collateral to the action form.
+  const previewCollateral = searchParams.get('previewCollateral') === '16';
+  const collateralRows =
+    previewCollateral && pool.collateralMarkets[0]
+      ? mainstreamCollaterals.slice(0, 16).map((asset, index) => ({
+          ...pool.collateralMarkets[0],
+          token: {
+            ...pool.collateralMarkets[0].token,
+            symbol: asset.symbol,
+            iconSrc: asset.iconSrc,
+          },
+          supplyTokens: new BigNumber(index === 0 ? 10000 : index === 1 ? 2890 : 15 + index),
+          supplyCapTokens: new BigNumber(10000),
+        }))
+      : pool.collateralMarkets;
+
+  // Illustrative positions are restricted to the dedicated design preview route.
+  // Production: hydrate userSupplyTokens from the connected Spoke account query.
+  const demoPositionsEnabled = isPreview;
+  const demoSupplyTokens: Record<string, number> = { SKHYB: 750, TSLAB: 120, MRNAB: 50, NVDAB: 20 };
+  const positionRows: CollateralRow[] = demoPositionsEnabled
+    ? collateralRows.map(row => ({
+        ...row,
+        userSupplyTokens: new BigNumber(demoSupplyTokens[row.token.symbol] ?? 0),
+      }))
+    : collateralRows;
+  const sortedCollateralRows = sortCollateralRows(
+    positionRows,
+    demoPositionsEnabled || !!accountAddress,
+  );
+
+  const collateralColumns: TableColumn<CollateralRow>[] = [
     {
       key: 'collateral',
       label: t('spoke.market.collateral'),
       selectOptionLabel: t('spoke.market.collateral'),
-      renderCell: collateral => <TokenIconWithSymbol token={collateral.token} />,
+      renderCell: collateral => (
+        <TokenIconWithSymbol token={collateral.token} className="[&_img]:rounded-full" />
+      ),
     },
     {
       key: 'supplied',
       label: t('spoke.market.supplied'),
       selectOptionLabel: t('spoke.market.supplied'),
       align: 'right',
-      renderCell: () => <span className="text-grey">-</span>,
+      renderCell: collateral =>
+        (demoPositionsEnabled || accountAddress) && collateral.userSupplyTokens?.gt(0) ? (
+          <LayeredValues
+            topValue={formatTokensToReadableValue({
+              value: collateral.userSupplyTokens,
+              token: collateral.token,
+              addSymbol: false,
+            })}
+            bottomValue={formatCentsToReadableValue({ value: getUserSupplyCents(collateral) })}
+          />
+        ) : (
+          <span className="text-grey">-</span>
+        ),
     },
     {
       key: 'maxLtv',
@@ -123,85 +186,103 @@ const SpokeMarketPage: React.FC = () => {
   return (
     <Page>
       <div className="venus-liquidity-hub-page venus-spoke-market-page">
-      <MarketPageGrid
-        form={<SpokeForm pool={pool} market={market} />}
-        content={
-          <div className="spoke-market space-y-6">
-            <MarketHistoryCard<SpokeHistoryRange>
-              title={t('spoke.market.borrowInfo')}
-              cells={[
-                {
-                  label: t('spoke.market.currentApy'),
-                  value: formatPercentageToReadableValue(market.borrowApyPercentage),
-                },
-              ]}
-              cap={{
-                token: market.token,
-                title: t('spoke.market.totalBorrowed'),
-                tokenPriceCents: market.tokenPriceCents,
-                limitTokens: market.supplyTokens,
-                valueTokens: market.borrowTokens,
-              }}
-              history={{
-                type: 'borrow',
-                data: history?.points ?? [],
-                isLoading: isHistoryLoading,
-                selectedPeriod: range,
-                setSelectedPeriod: setRange,
-                periodOptions: (['1w', '1m', '3m', '1y', 'all'] as const).map(value => ({
-                  value,
-                  label: value.toUpperCase(),
-                })),
-              }}
-            />
+        <MarketPageGrid
+          form={<SpokeForm pool={pool} market={market} collateralSelection={collateralSelection} />}
+          content={
+            <div className="spoke-market space-y-6">
+              <MarketHistoryCard<SpokeHistoryRange>
+                title={t('spoke.market.borrowInfo')}
+                cells={[
+                  {
+                    label: t('spoke.market.currentApy'),
+                    value: formatPercentageToReadableValue(market.borrowApyPercentage),
+                  },
+                ]}
+                cap={{
+                  token: market.token,
+                  title: t('spoke.market.totalBorrowed'),
+                  tokenPriceCents: market.tokenPriceCents,
+                  limitTokens: market.supplyTokens,
+                  valueTokens: market.borrowTokens,
+                }}
+                history={{
+                  type: 'borrow',
+                  data: history?.points ?? [],
+                  isLoading: isHistoryLoading,
+                  selectedPeriod: range,
+                  setSelectedPeriod: setRange,
+                  periodOptions: (['1w', '1m', '3m', '1y', 'all'] as const).map(value => ({
+                    value,
+                    label: value.toUpperCase(),
+                  })),
+                }}
+              />
 
-            <Table
-              className="spoke-collateral-table"
-              title={t('spoke.market.supportedCollateral')}
-              data={pool.collateralMarkets}
-              columns={collateralColumns}
-              rowKeyExtractor={collateral => collateral.address}
-              tableLayout="auto"
-              breakpoint="md"
-              hideCardDelimiter
-            />
+              <div ref={collateralScrollRef}>
+                <Table
+                  className="spoke-collateral-table spoke-collateral-table--scroll"
+                  title={t('spoke.market.supportedCollateral')}
+                  data={sortedCollateralRows}
+                  rowOnClick={(_event, collateral) => {
+                    setCollateralSelection(previous => ({
+                      address: collateral.address,
+                      revision: (previous?.revision ?? 0) + 1,
+                    }));
+                    setSearchParams(
+                      previous => {
+                        const next = new URLSearchParams(previous);
+                        next.set('tab', 'collateral');
+                        return next;
+                      },
+                      { replace: true },
+                    );
+                  }}
+                  columns={collateralColumns}
+                  rowKeyExtractor={collateral =>
+                    previewCollateral ? collateral.token.symbol : collateral.address
+                  }
+                  tableLayout="auto"
+                  breakpoint="md"
+                  hideCardDelimiter
+                />
+              </div>
 
-            <MarketInfo
-              title={t('spoke.market.loanInfo')}
-              items={[
-                { label: t('spoke.market.borrowers'), children: market.borrowerCount },
-                {
-                  label: t('spoke.market.marketContract'),
-                  children: truncateAddress(market.address),
-                },
-                {
-                  label: t('spoke.market.reserveFactor'),
-                  children: formatPercentageToReadableValue(market.reserveFactorPercentage),
-                },
-                {
-                  label: t('spoke.market.dailyInterests'),
-                  children: formatCentsToReadableValue({ value: dailyInterestCents }),
-                },
-                {
-                  label: t('spoke.market.fundedByHub'),
-                  children: (
-                    <LayeredValues
-                      topValue={formatTokensToReadableValue({
-                        value: market.hubSuppliedTokens,
-                        token: market.token,
-                      })}
-                    />
-                  ),
-                },
-                {
-                  label: t('spoke.market.suppliable'),
-                  children: market.suppliable ? t('spoke.market.yes') : t('spoke.market.no'),
-                },
-              ]}
-            />
-          </div>
-        }
-      />
+              <MarketInfo
+                title={t('spoke.market.loanInfo')}
+                items={[
+                  { label: t('spoke.market.borrowers'), children: market.borrowerCount },
+                  {
+                    label: t('spoke.market.marketContract'),
+                    children: isPreview ? '—' : truncateAddress(market.address),
+                  },
+                  {
+                    label: t('spoke.market.reserveFactor'),
+                    children: formatPercentageToReadableValue(market.reserveFactorPercentage),
+                  },
+                  {
+                    label: t('spoke.market.dailyInterests'),
+                    children: formatCentsToReadableValue({ value: dailyInterestCents }),
+                  },
+                  {
+                    label: t('spoke.market.fundedByHub'),
+                    children: (
+                      <LayeredValues
+                        topValue={formatTokensToReadableValue({
+                          value: market.hubSuppliedTokens,
+                          token: market.token,
+                        })}
+                      />
+                    ),
+                  },
+                  {
+                    label: t('spoke.market.suppliable'),
+                    children: market.suppliable ? t('spoke.market.yes') : t('spoke.market.no'),
+                  },
+                ]}
+              />
+            </div>
+          }
+        />
       </div>
     </Page>
   );

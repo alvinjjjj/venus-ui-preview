@@ -1,0 +1,39 @@
+{
+  "deploymentId": "dpl_B7gvuSnF3aWQyFzSqvZ7GtPsx4rJ",
+  "http": 200,
+  "htmlMatchesBuild": true,
+  "entry": "./assets/index-Dbhyq8-o.js",
+  "htmlSha256": "d11fec9bdf8f4ffb72371c6aeb0c836e10707c0eefaa4542d155fe0c4596c7f4",
+  "scope": "Final Liquidity Hub heading and subtitle only",
+  "title": {
+    "desktop": 60,
+    "tablet": 48,
+    "phone": 40,
+    "weight": 500
+  },
+  "subtitle": {
+    "size": 20,
+    "gap": 12
+  },
+  "verifiedViewports": [
+    1440,
+    768,
+    375
+  ],
+  "verifiedThemes": [
+    "dark",
+    "light"
+  ],
+  "horizontalOverflow": false,
+  "liveVerified": [
+    "Light title 60px, weight 500, subtitle 20px and gap 12px",
+    "Light approved blue gradient",
+    "Dark approved light-to-blue gradient"
+  ],
+  "checks": [
+    "Stylelint passed",
+    "git diff --check passed",
+    "Production build passed"
+  ],
+  "gitCommitCreated": false
+}

@@ -1,0 +1,7 @@
+/* A single isolated paint surface: no animated filter, transform or container opacity. */
+.lite-ascii-starfield {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; color: var(--color-light-grey);
+  contain: strict;
+}
+.lite-ascii-starfield[data-light='true'] { color: var(--e-light-text-secondary); }

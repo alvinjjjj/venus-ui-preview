@@ -31,9 +31,11 @@ export const useInterfaceMode = () => {
       ? routeMode
       : dashboardMode === 'lite' || dashboardMode === 'pro'
         ? dashboardMode
-        : isProPage(pathname)
-          ? 'pro'
-          : mode;
+        : preview === 'lite-experiment-v2' && pathname === '/'
+          ? 'lite'
+          : isProPage(pathname)
+            ? 'pro'
+            : mode;
   return {
     supportsModes,
     isNew: preview === 'v5',

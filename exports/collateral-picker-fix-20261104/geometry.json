@@ -1,0 +1,70 @@
+{
+  "issue": "Header omitted the option checkmark gutter, offsetting both numeric columns by 24px.",
+  "checks": [
+    {
+      "theme": "dark",
+      "headerRightEdges": [
+        670,
+        750,
+        830
+      ],
+      "maxColumnDelta": 0,
+      "panel": {
+        "bottom": 714,
+        "left": 482,
+        "right": 882,
+        "top": 394
+      },
+      "rowCount": 25,
+      "viewport": [
+        1440,
+        900
+      ],
+      "withinViewport": true
+    },
+    {
+      "theme": "dark",
+      "headerRightEdges": [
+        334,
+        414,
+        494
+      ],
+      "maxColumnDelta": 0,
+      "panel": {
+        "bottom": 592,
+        "left": 146,
+        "right": 546,
+        "top": 300
+      },
+      "rowCount": 25,
+      "viewport": [
+        768,
+        600
+      ],
+      "withinViewport": true
+    },
+    {
+      "theme": "light",
+      "headerRightEdges": [
+        377,
+        457,
+        537
+      ],
+      "maxColumnDelta": 0,
+      "panel": {
+        "bottom": 741,
+        "left": 189,
+        "right": 589,
+        "top": 421
+      },
+      "rowCount": 25,
+      "viewport": [
+        854,
+        954
+      ],
+      "withinViewport": true
+    }
+  ],
+  "mobileSelectionVerified": true,
+  "escapeVerified": true
+}
